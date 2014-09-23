@@ -1,0 +1,21 @@
+# ~/.gitconfig
+
+[user]
+  name = Tyler Brazier
+  email = tyler@tylerbrazier.com
+
+[core]
+  editor = vim
+
+[color]
+  ui = true
+
+[alias]
+  s = status
+  a = add -A
+  c = commit
+  b = branch
+  up = "!git add -A; git commit --allow-empty-message -m ''; git push"
+
+[push]
+  default = simple  # push current branch upstream by default

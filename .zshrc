@@ -1,1 +1,3 @@
+# ~/.zshrc
+
 source ~/.bashrc

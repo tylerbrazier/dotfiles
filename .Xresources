@@ -1,0 +1,47 @@
+! ~/.Xresources
+
+! `xrdb [-merge] ~/.Xresources` to load them.
+
+URxvt.background: Black
+URxvt.foreground: White
+
+URxvt.font: xft:monospace:size=8
+
+URxvt.scrollBar: false
+
+! shading 0 = darkest, 200 = lightest
+URxvt.transparent: true
+URxvt.shading: 20
+
+!! Black        (default #000000)
+URxvt.color0:            #000000
+!! Red3         (default #ff6565)
+URxvt.color1:            #aa0000
+!! Green3       (default #93d44f)
+URxvt.color2:            #00aa00
+!! Yellow3      (default #eab93d)
+URxvt.color3:            #aa5500
+!! Blue3        (default #204a87)
+URxvt.color4:            #0000aa
+!! Magenta3     (default #ce5c00)
+URxvt.color5:            #aa00aa
+!! Cyan3        (default #89b6e2)
+URxvt.color6:            #00aaaa
+!! AntiqueWhite (default #cccccc)
+URxvt.color7:            #aaaaaa
+!! Grey25       (default #555753)
+URxvt.color8:            #555555
+!! Red          (default #ff8d8d)
+URxvt.color9:            #ff5555
+!! Green        (default #c8e7a8)
+URxvt.color10:           #55ff55
+!! Yellow       (default #ffc123)
+URxvt.color11:           #ffff55
+!! Blue         (default #3465a4)
+URxvt.color12:           #5555ff
+!! Magenta      (default #f57900)
+URxvt.color13:           #ff55ff
+!! Cyan         (default #46a4ff)
+URxvt.color14:           #00ffff
+!! White        (default #ffffff)
+URxvt.color15:           #ffffff
