@@ -25,19 +25,8 @@ for file in ${thisdir}/.*; do
   if contains $base; then
     echo "Skipping $base"
   else
-    rm -rf $HOME/$base
     echo "Linking $base"
+    rm -rf $HOME/$base
     ln -s $file $HOME/$base
   fi
-#  if [[ -e ${thisdir}/${file} ]]; then
-#
-#    rm -rf ${HOME}/${file}
-#
-#    echo "ln -s ${thisdir}/${file} ${HOME}/${file}"
-#
-#    ln -s ${thisdir}/${file} ${HOME}/${file}
-#
-#  else
-#    echo "No ${file} in ${thisdir}. Skipping."
-#  fi
 done
