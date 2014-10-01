@@ -1,7 +1,5 @@
 # ~/.bash_profile
 
-source ~/.bashrc
-
 PATH+=":${HOME}/bin"
 export PATH
 
@@ -12,3 +10,5 @@ eval $(keychain --eval --agents ssh -Q --quiet id_rsa)
 [[ -z $DISPLAY ]]         &&  # and we're not already in a gui
 [[ $XDG_VTNR -eq 1 ]]     &&  # and we're on virtual terminal 1
 exec startx                   # then start X
+
+source ~/.bashrc

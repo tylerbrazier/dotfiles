@@ -30,11 +30,19 @@ set showcmd                  " show incomplete commands
 set showmode                 " show current mode
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
+
 filetype plugin indent on    " detect filetype and automatically indent
 syntax on                    " syntax highlighting
+let g:git_branch = ''        " initialize git branch for statusline
+
+" set git branch for statusline on buffer read
+autocmd bufread * call SetGitBranch()
+
+" set syntax highlighting for *.md files
+autocmd bufread *.md set syntax=markdown
 
 " going back into normal mode also saves (if you're editing a file)
-inoremap <expr> <esc> empty(expand('%')) ? "\<esc>" : "\<esc>:w<cr>"
+autocmd insertleave ?\+ write
 
 " faster way to enter commands
 noremap <cr> :
@@ -106,7 +114,7 @@ function! TabComplete()
   if empty(char) || char =~ '\s'       " if there isn't one or it's white space
     return "\<tab>"                    " tab as usual
   else
-    return "\<c-n>"                    " completion
+    return "\<c-n>"                    " otherwise do completion
   endif
 endfunction
 
@@ -144,10 +152,10 @@ function! GetStl()
   let stl  = BufferList()                    " show buffer numbers
   let stl .= '%1*%='                         " divide left/right alignment
   let stl .= '%2*%M '                        " modified flag
-  let stl .= '%7*%t '                        " file name
+  "let stl .= '%7*%t '                       " file name
   let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
   let stl .= '%8*%{&ff} '                    " file format (line ending)
-  let stl .= GitBranch()                     " current git branch
+  let stl .= '%3*%{g:git_branch}'            " current git branch
   return stl
 endfunction
 
@@ -158,17 +166,18 @@ function! BufferList()
   let i = 1
   let ret = ''
   while i <= last
+    let name = bufname(i)           " i for buf num, bufname(i) for filename
     if i == cur
-      if (getbufvar(i, "&mod"))  " if current buffer is modified
-        let ret .= '%2* '.i.' '  " color it red
+      if (getbufvar(i, "&mod"))     " if current buffer is modified
+        let ret .= '%2* '.name.' '  " color it red
       else
-        let ret .= '%7* '.i.' '  " otherwise color it cyan
+        let ret .= '%7* '.name.' '  " otherwise color it cyan
       endif
     elseif buflisted(i)
-      if (getbufvar(i, "&mod"))  " if other buffer is modified
-        let ret .= '%2* '.i.' '  " color it red
+      if (getbufvar(i, "&mod"))     " if other buffer is modified
+        let ret .= '%2* '.name.' '  " color it red
       else
-        let ret .= '%9* '.i.' '  " otherwise color it gray
+        let ret .= '%9* '.name.' '  " otherwise color it gray
       endif
     endif
     let i += 1
@@ -176,15 +185,15 @@ function! BufferList()
   return ret
 endfunction
 
-" get current git branch for statusline
-function! GitBranch()
+" set current git branch for statusline
+function! SetGitBranch()
   if has('win32')
-    return ''
+    let g:git_branch = ''
   else
-    let ret = system("git branch 2>/dev/null | grep ^*")
-    let ret = substitute(ret, '* ', '(', '')
-    let ret = substitute(ret, "\n", ') ', '')
-    return '%3*'.ret
+    let b = system('git branch 2>/dev/null | grep ^*')
+    let b = substitute(b, '* ', '(', '')
+    let b = substitute(b, "\n", ') ', '')
+    let g:git_branch = b
   endif
 endfunction
 
