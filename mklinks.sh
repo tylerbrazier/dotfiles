@@ -3,30 +3,21 @@
 # Creates symlinks from home to each dotfile.
 
 thisdir=$(cd $(dirname $0); pwd)
-# these won't be linked:
-ignore=(
-.
-..
-.git
-.gitignore
-.gitattributes
+dotfiles=(
+.bash_profile
+.bashrc
+.gitconfig
+.inputrc
+.tmux.conf
+.vimrc
+.zshrc
+.xinitrc
+.Xresources
+.i3
 )
 
-contains() {
-  for i in ${ignore[@]}; do
-    [[ $1 == $i ]] && return 0
-  done
-  return 1
-}
-
-for file in ${thisdir}/.*; do
-  base=$(basename $file)
-
-  if contains $base; then
-    echo "Skipping $base"
-  else
-    echo "Linking $base"
-    rm -rf $HOME/$base
-    ln -s $file $HOME/$base
-  fi
+for file in ${dotfiles[@]}; do
+  echo "Linking $file"
+  [[ -L $HOME/$file ]] && rm -f $HOME/$file  # remove existing symlinks
+  ln -s $thisdir/$file $HOME/$file
 done

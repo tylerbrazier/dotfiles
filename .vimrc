@@ -12,7 +12,7 @@ set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
 set background=dark          " lighter-color text to contrast a dark background
-set colorcolumn=80           " show a red line at column
+set colorcolumn=80           " show a line at column
 set mouse=a                  " enable mouse in all modes
 set nobackup                 " don't make example.txt~ files
 set noswapfile               " swap files are annoying
@@ -25,9 +25,15 @@ set ignorecase               " searches are case insensitive
 set smartcase                " unless the search contains a capital letter
 set wildignorecase           " case insensitive file name completion
 set autoread                 " reload file when external changes are made
-set autochdir                " automatically cd to dir of file in current buffer
+set autowrite                " write when doing some commands, including :!
+set autochdir                " auto cd to dir of file in current buffer
 set showcmd                  " show incomplete commands
 set showmode                 " show current mode
+set foldmethod=expr          " use a custom foldmethod
+set foldexpr=GetFold(v:lnum) " defined below
+set foldlevelstart=99        " initially open all folds
+set foldtext=GetFoldText()   " the text to show on folded lines
+set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
 
@@ -91,6 +97,9 @@ noremap <c-h> :set invhlsearch<cr>
 
 " toggle using [t]abs or spaces
 noremap <c-t> :set invexpandtab<cr>
+
+" toggle fold [z]
+noremap <c-z> za
 
 " line and multiline [c]ommenting
 " ctrl-/ triggers <c-_> in some terminals but not in gvim :(
@@ -166,7 +175,7 @@ function! BufferList()
   let i = 1
   let ret = ''
   while i <= last
-    let name = bufname(i)           " i for buf num, bufname(i) for filename
+    let name = fnamemodify(bufname(i), ':t')  " basename of file in buffer i
     if i == cur
       if (getbufvar(i, "&mod"))     " if current buffer is modified
         let ret .= '%2* '.name.' '  " color it red
@@ -195,6 +204,57 @@ function! SetGitBranch()
     let b = substitute(b, "\n", ') ', '')
     let g:git_branch = b
   endif
+endfunction
+
+" Vim's indent foldmethod doesn't do exactly what I'd like it to do.
+" The next three functions are used to define a better foldmethod.
+" Toggling fold on a line will fold everthing below it with greater indent.
+" It stops folding before it reaches a line with indent equal to or less
+" than the current line or before whitespace (empty) line(s) preceding a
+" line with equal or less indent.
+" The functions were taken verbatim from this awesome site:
+" http://learnvimscriptthehardway.stevelosh.com/chapters/49.html
+function! GetFold(lnum)
+  if getline(a:lnum) =~ '\v^\s*$'
+    return '-1'
+  endif
+
+  let this_indent = IndentLevel(a:lnum)
+  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+
+  if next_indent == this_indent
+    return this_indent
+  elseif next_indent < this_indent
+    return this_indent
+  elseif next_indent > this_indent
+    return '>' . next_indent
+  endif
+endfunction
+function! IndentLevel(lnum)
+  return indent(a:lnum) / &shiftwidth
+endfunction
+function! NextNonBlankLine(lnum)
+  let numlines = line('$')
+  let current = a:lnum + 1
+  while current <= numlines
+    if getline(current) =~ '\v\S'
+      return current
+    endif
+    let current += 1
+  endwhile
+  return -2
+endfunction
+
+" custom text to be shown for folded lines
+function! GetFoldText()
+  let line = getline(v:foldstart)
+  "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
+  let prefix = '+'.repeat('-', indent(v:foldstart)-2).' '  " +----
+  let postfix = ' '
+
+  let line = substitute(line, '\v^\s+', prefix, '')  " sub leading whitespace
+  let line = substitute(line, '\v$', postfix, '')    " sub the ending
+  return line
 endfunction
 
 " can be used instead of a colorscheme
@@ -229,6 +289,8 @@ function! ApplyCustomTheme()
   " keyword      any otherkeyword; links to statement by default
   " pmenu        completion menu nonselected
   " pmenusel     completion menu selected
+  " folded       colors of closed fold
+  " colorcolumn  the 80 character mark
   " userN        where N is 1..9; usedin statusline (:h hl-User1..9)
   "
   " There are more groups; ':help group-name' for more info.
@@ -240,8 +302,10 @@ function! ApplyCustomTheme()
   hi comment                     ctermfg=grey                  guifg=grey
   hi constant                    ctermfg=blue                  guifg=blue
   hi special                     ctermfg=cyan                  guifg=cyan
+  hi folded      ctermbg=black   ctermfg=white   guibg=black   guifg=white
   hi pmenu       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
   hi pmenusel    ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
+  hi colorcolumn ctermbg=gray    ctermfg=black   guibg=gray    guifg=black
   hi user1       ctermbg=black   ctermfg=black   guibg=black   guifg=black
   hi user2       ctermbg=black   ctermfg=red     guibg=black   guifg=red
   hi user3       ctermbg=black   ctermfg=green   guibg=black   guifg=green
