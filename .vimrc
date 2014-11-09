@@ -93,7 +93,7 @@ noremap <c-w> ea<c-x>s
 noremap <c-u> :set invnumber<cr>
 
 " toggle showing h[i]ghlighted stuff
-noremap <c-h> :set invhlsearch<cr>
+noremap <c-i> :set invhlsearch<cr>
 
 " toggle using [t]abs or spaces
 noremap <c-t> :set invexpandtab<cr>
