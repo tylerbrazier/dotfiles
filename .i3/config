@@ -6,7 +6,7 @@
 set $font -*-*-medium-*-*-*-*-140-*-*-*-*-iso10646-*
 
 # Archlinux colors
-set $current_bg #1793d1
+#set $current_bg #1793d1
 set $current_fg #ffffff
 set $dormant_bg #333333
 set $dormant_fg #999999
@@ -14,6 +14,8 @@ set $info_bg    #000000
 set $info_fg    #ffffff
 set $urgent_bg  #ffffff
 set $urgent_fg  #000000
+# dark orange instead of arch blue
+set $current_bg #ee7600
 
 # windows key to do everything
 set $mod mod4
@@ -21,8 +23,11 @@ set $mod mod4
 # set the font
 font $font
 
-# set startup layout
-workspace_layout default
+# set startup layout [default|stacking|tabbed]
+workspace_layout stacking
+
+# windows will have a 2 pixel border and no title bar
+#new_window pixel 2
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -128,7 +133,7 @@ client.urgent            $urgent_bg   $urgent_bg   $urgent_fg
 # i3status bar
 bar {
     status_command i3status -c ~/.i3/status.conf
-    position bottom
+    position top
     font $font
     colors {
         background $info_bg

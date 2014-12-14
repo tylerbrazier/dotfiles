@@ -2,7 +2,6 @@
 
 # Creates symlinks from home to each dotfile.
 
-thisdir=$(cd $(dirname $0); pwd)
 dotfiles=(
 .bash_profile
 .bashrc
@@ -13,11 +12,17 @@ dotfiles=(
 .zshrc
 .xinitrc
 .Xresources
+.gtkrc-2.0
 .i3
 )
 
+cd $(dirname $0)
+
 for file in ${dotfiles[@]}; do
-  echo "Linking $file"
-  [[ -L $HOME/$file ]] && rm -f $HOME/$file  # remove existing symlinks
-  ln -s $thisdir/$file $HOME/$file
+  if [[ -e $HOME/$file ]] && [[ ! -h $HOME/$file ]]; then
+    echo "$HOME/$file already exists; skipping"
+  else
+    echo "Linking $file"
+    ln -sfn $(realpath $file) $HOME/$file
+  fi
 done

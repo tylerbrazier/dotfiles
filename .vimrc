@@ -13,7 +13,7 @@ set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
 set background=dark          " lighter-color text to contrast a dark background
 set colorcolumn=80           " show a line at column
-set mouse=a                  " enable mouse in all modes
+set mouse=n                  " enable mouse in normal mode ('a' for all modes)
 set nobackup                 " don't make example.txt~ files
 set noswapfile               " swap files are annoying
 set hidden                   " can switch buffers w/out save
@@ -113,7 +113,7 @@ inoremap <expr> <tab> TabComplete()
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 
 " pressing enter selects the highlighted completion option and escapes
-inoremap <expr> <cr> pumvisible() ? "\<c-y><esc>" : "\<cr>"
+"inoremap <expr> <cr> pumvisible() ? "\<c-y><esc>" : "\<cr>"
 
 " convert file to uft-8, unix line ending, and convert tabs to spaces
 noremap <c-f> :call Fix()<cr>

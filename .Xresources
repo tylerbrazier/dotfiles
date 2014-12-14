@@ -2,16 +2,22 @@
 
 ! `xrdb [-merge] ~/.Xresources` to load them.
 
-URxvt.background: Black
-URxvt.foreground: White
-
-URxvt.font: xft:monospace:size=8
+URxvt.font: xft:monospace:size=11
 
 URxvt.scrollBar: false
 
+! Native transparency - does not require compositor
 ! shading 0 = darkest, 200 = lightest
-URxvt.transparent: true
 URxvt.shading: 20
+URxvt.transparent: true
+URxvt.background: Black
+
+! True transparency - requires compositing window manager
+! [xy] determines transparency percentage
+!URxvt.depth: 32
+!URxvt.background: [80]#000000
+
+URxvt.foreground: White
 
 !! Black        (default #000000)
 URxvt.color0:            #000000
@@ -38,7 +44,7 @@ URxvt.color10:           #55ff55
 !! Yellow       (default #ffc123)
 URxvt.color11:           #ffff55
 !! Blue         (default #3465a4)
-URxvt.color12:           #5555ff
+URxvt.color12:           #1793d1
 !! Magenta      (default #f57900)
 URxvt.color13:           #ff55ff
 !! Cyan         (default #46a4ff)

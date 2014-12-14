@@ -21,6 +21,7 @@ alias la='ls -alh'
 alias df='df -h'
 alias du='du -h --summarize'
 alias htop='htop --delay=5'
+alias curls='curl -OL'  # always output to file and follow redirects
 alias pingg='ping google.com'
 alias ping8='ping 8.8.8.8'
 alias pacautoremove='sudo pacman -Rns $(pacman -Qdtq)'

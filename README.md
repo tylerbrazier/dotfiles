@@ -9,7 +9,7 @@ Secret files/dirs like .ssh should not be in this repo since it's public on
 github. There should be a separate private repo for those.
 
 You might want to make machine-specific changes to the following files; you
-should checkout a local only branch before doing that.
+should checkout a local-only branch before doing that.
 
 * Change the font in .Xresources
 * Comment or change the number for 'order += battery' in .i3/status.conf
