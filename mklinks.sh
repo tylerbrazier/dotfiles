@@ -3,6 +3,7 @@
 # Creates symlinks from home to each dotfile.
 
 dotfiles=(
+.bash_profile
 .bashrc
 .gitconfig
 .inputrc
