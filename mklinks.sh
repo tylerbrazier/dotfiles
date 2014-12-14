@@ -3,17 +3,12 @@
 # Creates symlinks from home to each dotfile.
 
 dotfiles=(
-.bash_profile
 .bashrc
 .gitconfig
 .inputrc
 .tmux.conf
 .vimrc
 .zshrc
-.xinitrc
-.Xresources
-.gtkrc-2.0
-.i3
 )
 
 cd $(dirname $0)
