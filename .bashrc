@@ -2,17 +2,14 @@
 
 [[ $- != *i* ]] && return   # If not running interactively, don't do anything
 
-### Editing options
 #set -o vi           # lets you ESC and use vim commands at bash prompt
-stty stop undef      # ctrl-s doesn't freeze term
-stty start undef     # ctrl-q doesn't unfreeze term
+stty -ixon           # disable flow control (ctrl-s doesn't stop the term)
+bind 'set completion-ignore-case on'
 
-### Environment Variables
-export HISTCONTROL=ignoredups   # no duplicate entries in bash history
+export HISTCONTROL=ignoredups       # no duplicate entries in bash history
 type vim 1>/dev/null 2>&1 && export EDITOR=vim || export EDITOR=vi
 type vimpager 1>/dev/null 2>&1 && export PAGER=vimpager || export PAGER=less
 
-### Aliases
 alias cp='cp -r'
 alias grep='grep --color=auto'
 alias ls='ls -b -F --color=auto' # -b is show escape chars. -F is indicators
@@ -21,13 +18,11 @@ alias la='ls -alh'
 alias df='df -h'
 alias du='du -h --summarize'
 alias htop='htop --delay=5'
+alias tma='tmux attach-session'
 alias curls='curl -OL'  # always output to file and follow redirects
 alias pingg='ping google.com'
 alias ping8='ping 8.8.8.8'
-alias pacautoremove='sudo pacman -Rns $(pacman -Qdtq)'
-alias yogurt='yaourt --noconfirm'
-alias mntsdb1='sudo mount /dev/sdb1 /mnt'
-alias umntsdb1='sudo umount /mnt'
+alias yogurt='yaourt'
 
 # ls after cd
 cd() { [[ -d "$1" ]] && { builtin cd "$1" && ls; } || { builtin cd ~ && ls; } }

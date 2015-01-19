@@ -6,13 +6,11 @@ set expandtab                " spaces instead of tabs
 set tabstop=2                " number of spaces to use for tab
 set shiftwidth=2             " number of spaces used for indentation
 set softtabstop=2            " backspace correctly over tab distance
-set list                     " show listchars
 set listchars=tab:>-,trail:_ " what to show when :set list is on
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
 set background=dark          " lighter-color text to contrast a dark background
-set colorcolumn=80           " show a line at column
 set mouse=n                  " enable mouse in normal mode ('a' for all modes)
 set nobackup                 " don't make example.txt~ files
 set noswapfile               " swap files are annoying
@@ -37,6 +35,25 @@ set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
 
+" use system clipboard
+if has('win32')
+  set clipboard=unnamed
+else
+  set clipboard=unnamedplus
+endif
+
+if &modifiable
+  set list                   " show listchars
+  set colorcolumn=80         " show a line at column
+endif
+
+" set font in gvim
+if has('gui_running')
+  if has('win32')
+    set guifont=Bitstream\ Vera\ Sans\ Mono:h8
+  endif
+endif
+
 filetype plugin indent on    " detect filetype and automatically indent
 syntax on                    " syntax highlighting
 let g:git_branch = ''        " initialize git branch for statusline
@@ -59,64 +76,70 @@ noremap ! :!
 " q is more annoying than useful
 noremap q :q
 
+" capital Y should behave like capital C and D
+noremap Y y$
+
 " make j and k able to move up and down wrapped lines
 noremap j gj
 noremap k gk
 
-" quit shortcut
-noremap <c-q> :q<cr>
-
-" faster buffer movement
+" [n]ext and [p]revious buffer
 noremap <c-n> :bnext<cr>
 noremap <c-p> :bprevious<cr>
-
-" emacs-style bindings for beginning and end of line
-noremap <c-a> ^
-noremap <c-e> $
-
-" faster window movement
-noremap <c-h> <c-w>h
-noremap <c-j> <c-w>j
-noremap <c-k> <c-w>K
-noremap <c-l> <c-w>l
 
 " [d]elete the current buffer
 noremap <c-d> :bdelete<cr>
 
-" toggle [s]pell check
-noremap <c-s> :set invspell<cr>
+" [q]uit
+noremap <c-q> :quit<cr>
 
-" fix misspelled [w]ord
-noremap <c-w> ea<c-x>s
-
-" toggle showing line n[u]mbers
-noremap <c-u> :set invnumber<cr>
-
-" toggle showing h[i]ghlighted stuff
-noremap <c-i> :set invhlsearch<cr>
+" move to next [w]indow
+noremap <c-w> <c-w>w
 
 " toggle using [t]abs or spaces
 noremap <c-t> :set invexpandtab<cr>
 
-" toggle fold [z]
-noremap <c-z> za
+" toggle showing [h]ighlighted stuff
+noremap <c-h> :set invhlsearch<cr>
 
-" line and multiline [c]ommenting
+" toggle [s]pell check
+noremap <c-s> :set invspell<cr>
+
+" [f]ix misspelled word under cursor
+noremap <c-f> ea<c-x>s
+
+" [c]onvert file to uft-8, unix line ending, tabs to spaces, trim trailing ws
+noremap <c-c> :call ConvertFile()<cr>
+
+" toggle showing line n[u]mbers
+noremap <c-u> :set invnumber<cr>
+
+" line and multiline c[o]mmenting
 " ctrl-/ triggers <c-_> in some terminals but not in gvim :(
-" To uncomment, block select comment chars with c-v then x or d.
-noremap <expr> <c-_> Comment()
-noremap <expr> <c-c> Comment()
+noremap <expr> <c-_> ToggleComment()
+noremap <expr> <c-o> ToggleComment()
+
+" toggle fo[l]d
+noremap <c-l> za
+
+" emacs-style bindings for st[a]rt and [e]nd of line
+noremap <c-a> ^
+noremap <c-e> $
+
+" standard copy and cut using c-c and c-x in visual mode
+vnoremap <c-c> y
+vnoremap <c-x> d
+" standard paste and undo using c-v and c-z in insert mode
+inoremap <c-v> <c-r>"
+inoremap <c-z> <c-o>u
 
 " tab completion
 " tab/ctrl-n to move down, shift-tab/ctrl-p to move up
 inoremap <expr> <tab> TabComplete()
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
+" pressing enter selects the highlighted completion option
+inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 
-" pressing enter selects the highlighted completion option and escapes
-"inoremap <expr> <cr> pumvisible() ? "\<c-y><esc>" : "\<cr>"
-
-" convert file to uft-8, unix line ending, and convert tabs to spaces
-noremap <c-f> :call Fix()<cr>
 
 function! TabComplete()
   let char = getline('.')[col('.')-2]  " get the char behind cursor
@@ -127,7 +150,22 @@ function! TabComplete()
   endif
 endfunction
 
-function! Comment()
+function! IsCommented(comment)
+  let v = line("v")
+  let cur = line(".")
+  let i = v < cur ? v : cur
+  let end = v < cur ? cur : v
+  while i <= end
+    let line = getline(i)
+    if line !~ '^\s*'.a:comment  " if line doesn't start with comment char
+      return 0                   " return false
+    endif
+    let i+=1
+  endwhile
+  return 1                       " return true
+endfunction
+
+function! ToggleComment()
   let type = &filetype
   if type =~ '\vc(pp)?$' || type =~ '\vjava(script)?$'  " c(pp) or java(script)
     let comment = '//'
@@ -138,20 +176,28 @@ function! Comment()
   else
     let comment = '#'
   endif
-  return substitute(":s!^!com!\|nohlsearch\<cr>", 'com', comment, '')
+  if IsCommented(comment)
+    return substitute(":normal ^lenx\<cr>", 'len', len(comment), '')
+  else
+    return substitute(":normal Icom\<cr>", 'com', comment, '')
+  endif
 endfunction
 
-" convert file to uft-8, unix line ending, and convert tabs to spaces
-function! Fix()
-  let msg = 'Convert file?'
+" convert file to uft-8, unix line ending, tabs to spaces, trim trailing ws
+function! ConvertFile()
+  let msg = "Convert file?\n
+        \This will set encoding to utf8, convert cr/lf to lf,
+        \ convert tabs to spaces, and trim all trailing whitespace."
   let choices = "&yes\n&no"
-  let default = 1  " yes
+  let default = 2  " 1=yes, 2=no
   if confirm(msg, choices, default) == 1
     write                " save
     edit ++ff=dos        " reload the file in dos format
     setlocal ff=unix     " set file format
     setlocal fenc=utf-8  " set file encoding
+    set expandtab        " make sure we're using expandtab
     retab                " convert tabs to spaces
+    %s/\s\+$//e          " trim trailing ws (e means don't fail if not found)
     write                " save
   endif
 endfunction
@@ -257,6 +303,16 @@ function! GetFoldText()
   return line
 endfunction
 
+" mostly just for debugging - if file doesn't exist it will be created
+function! AppendToFile(file, lines)
+  if filewritable(a:file)
+    call writefile(readfile(a:file)+a:lines, a:file)
+  else
+    call writefile(a:lines, a:file)
+  endif
+endfunction
+
+
 " can be used instead of a colorscheme
 function! ApplyCustomTheme()
   " boilerplate for applying a theme
@@ -287,6 +343,7 @@ function! ApplyCustomTheme()
   " repeat       for, do, wle, ...; links to statement by default
   " operator     +, -, *, /, ...; links to statement by default
   " keyword      any otherkeyword; links to statement by default
+  " search       highlighted search terms
   " pmenu        completion menu nonselected
   " pmenusel     completion menu selected
   " folded       colors of closed fold
@@ -300,12 +357,13 @@ function! ApplyCustomTheme()
 
   hi normal                                      guibg=black   guifg=white
   hi comment                     ctermfg=grey                  guifg=grey
-  hi constant                    ctermfg=blue                  guifg=blue
+  hi constant                    ctermfg=blue                  guifg=green
   hi special                     ctermfg=cyan                  guifg=cyan
   hi folded      ctermbg=black   ctermfg=white   guibg=black   guifg=white
   hi pmenu       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
   hi pmenusel    ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
   hi colorcolumn ctermbg=gray    ctermfg=black   guibg=gray    guifg=black
+  hi search      ctermbg=cyan    ctermfg=black   guibg=cyan    guifg=black
   hi user1       ctermbg=black   ctermfg=black   guibg=black   guifg=black
   hi user2       ctermbg=black   ctermfg=red     guibg=black   guifg=red
   hi user3       ctermbg=black   ctermfg=green   guibg=black   guifg=green
