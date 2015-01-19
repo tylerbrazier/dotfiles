@@ -81,3 +81,37 @@ a-d     | kill current pane
 a-q     | kill current window
 a-c     | go into copy mode (so you can scroll)
 
+
+.gitconfig
+----------
+**Aliases** (with definitions below each)
+
+    git ready <remote> <branch>
+
+If `<branch>` exists on `<remote>`, check it out. If it doesn't, create the
+branch and push it to `<remote>`. This is useful when starting a new feature
+branch or grabbing one that was started on another machine.
+
+    git up
+
+Add everything to the index, commit, and push. This is a fast alternative to
+typing the common sequence of commands.
+
+    git down
+
+Add everything to the index, stash, fetch, merge, and pop stash. This is a
+quick way to update your local branch.
+
+    git out [<remote>] <branch>
+
+Delete `<branch>`. If `<remote>` is given, also delete the `<branch>` on that
+remote. This is a quick way to clean up a temporary feature branch.
+
+Some other shortcuts for common commands:
+
+Alias | What it does
+------|------------------
+s     | status
+a     | add -A
+c     | commit
+b     | branch

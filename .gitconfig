@@ -15,21 +15,19 @@
   a = add -A
   c = commit
   b = branch
-  up = "!git add -A && git commit --allow-empty-message && git push"
+  up = "!git add -A && git commit && git push"
   down = "!git add -A && git stash && git fetch && git merge && git stash pop"
 
   # Usage: git ready <remote> <branch>
   # If <branch> exists on <remote>, check it out.
   # If it doesn't, create the branch and push it to <remote>.
   ready = "!ready() { \
-    set -e; \
     (( $# != 2 )) && { \
       echo 'Usage: git ready <remote> <branch>' >&2; exit 1; }; \
     git fetch $1; \
     existing=$(git branch -r | grep \"$1/$2\\$\"); \
     if [[ -z $existing ]]; then \
-      git checkout -b $2; \
-      git push --set-upstream $1 $2; \
+      git checkout -b $2 && git push --set-upstream $1 $2; \
     else \
       git checkout $2;\
     fi \
@@ -39,7 +37,6 @@
   # Delete <branch>.
   # If <remote> is given, also delete <branch> on that remote.
   out = "!out() { \
-    set -e; \
     if (( $# == 1 )); then \
       git branch -D $1; \
     elif (( $# == 2)); then \
