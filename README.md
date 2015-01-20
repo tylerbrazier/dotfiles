@@ -4,6 +4,8 @@ dotfiles
 My home configuration files for linux.
 
 Run `mklinks.sh` to create links from home to each dotfile.
+When files are added/removed to/from the repo, remember to update the array
+in `mklinks.sh`.
 
 Secret files/dirs like `.ssh` should *not* be in this repo since it's public on
 github. There should be a separate private repo for those.

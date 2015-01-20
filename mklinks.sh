@@ -6,10 +6,8 @@ dotfiles=(
 .bash_profile
 .bashrc
 .gitconfig
-.inputrc
 .tmux.conf
 .vimrc
-.zshrc
 )
 
 cd $(dirname $0)
