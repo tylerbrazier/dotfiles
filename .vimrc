@@ -34,24 +34,11 @@ set foldtext=GetFoldText()   " the text to show on folded lines
 set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
-
-" use system clipboard
-if has('win32')
-  set clipboard=unnamed
-else
-  set clipboard=unnamedplus
-endif
+set clipboard=unnamedplus    " use the system clipboard
 
 if &modifiable
   set list                   " show listchars
   set colorcolumn=80         " show a line at column
-endif
-
-" set font in gvim
-if has('gui_running')
-  if has('win32')
-    set guifont=Bitstream\ Vera\ Sans\ Mono:h8
-  endif
 endif
 
 filetype plugin indent on    " detect filetype and automatically indent
@@ -242,14 +229,10 @@ endfunction
 
 " set current git branch for statusline
 function! SetGitBranch()
-  if has('win32')
-    let g:git_branch = ''
-  else
-    let b = system('git branch 2>/dev/null | grep ^*')
-    let b = substitute(b, '* ', '(', '')
-    let b = substitute(b, "\n", ') ', '')
-    let g:git_branch = b
-  endif
+  let b = system('git branch 2>/dev/null | grep ^*')
+  let b = substitute(b, '* ', '(', '')
+  let b = substitute(b, "\n", ') ', '')
+  let g:git_branch = b
 endfunction
 
 " Vim's indent foldmethod doesn't do exactly what I'd like it to do.

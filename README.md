@@ -3,6 +3,8 @@ dotfiles
 
 My home configuration files for linux.
 
+To use these on windows, checkout the `windows` branch.
+
 Run `mklinks.sh` to create links from home to each dotfile.
 When files are added/removed to/from the repo, remember to update the array
 in `mklinks.sh`.
