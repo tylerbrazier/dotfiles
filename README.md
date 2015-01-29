@@ -90,26 +90,30 @@ a-c     | go into copy mode (so you can scroll)
 ----------
 **Aliases** (with definitions below each)
 
-    git ready <remote> <branch>
+    git ready [<remote>] <branch>
 
-If `<branch>` exists on `<remote>`, check it out. If it doesn't, create the
-branch and push it to `<remote>`. This is useful when starting a new feature
-branch or grabbing one that was started on another machine.
+If `<remote>` isn't given, it defaults to `origin`.
+If `<branch>` exists on `<remote>`, check it out.
+If it doesn't, create the branch and push it to `<remote>`.
+In either case, the local `<branch>` will track `<remote>/<branch>`.
+This is useful when starting a new feature branch or grabbing one that was
+started on another machine.
 
     git up
 
-Add everything to the index, commit, and push. This is a fast alternative to
-typing the common sequence of commands.
+Add everything to the index, commit, and push.
+This is a fast alternative to typing the common sequence of commands.
 
     git down
 
-Add everything to the index, stash, fetch, merge, and pop stash. This is a
-quick way to update your local branch.
+Add everything to the index, stash, fetch all, merge, and pop stash.
+This is a quick way to update your local branch.
 
     git out [<remote>] <branch>
 
-Delete `<branch>`. If `<remote>` is given, also delete the `<branch>` on that
-remote. This is a quick way to clean up a temporary feature branch.
+If `<remote>` isn't given, it defaults to `origin`.
+Delete `<branch>` locally and on `<remote>`.
+Useful for cleaning up temporary feature branches.
 
 Some other shortcuts for common commands:
 
