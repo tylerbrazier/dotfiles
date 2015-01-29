@@ -34,7 +34,7 @@ set foldtext=GetFoldText()   " the text to show on folded lines
 set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
-set clipboard=unnamedplus    " use the system clipboard
+set clipboard=unnamedplus    " use the X11 system clipboard
 
 if &modifiable
   set list                   " show listchars
@@ -117,7 +117,7 @@ noremap <c-e> $
 vnoremap <c-c> y
 vnoremap <c-x> d
 " standard paste and undo using c-v and c-z in insert mode
-inoremap <c-v> <c-r>"
+inoremap <c-v> <c-r>+
 inoremap <c-z> <c-o>u
 
 " tab completion
