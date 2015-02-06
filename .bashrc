@@ -23,6 +23,7 @@ alias curls='curl -OL'  # always output to file and follow redirects
 alias pingg='ping google.com'
 alias ping8='ping 8.8.8.8'
 alias yogurt='yaourt'
+alias pi='ssh -l pi -p 2222 localhost'
 
 # ls after cd
 cd() { [[ -d "$1" ]] && { builtin cd "$1" && ls; } || { builtin cd ~ && ls; } }
