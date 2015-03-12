@@ -10,8 +10,7 @@ set listchars=tab:>-,trail:_ " what to show when :set list is on
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
-set background=dark          " lighter-color text to contrast a dark background
-set mouse=n                  " enable mouse in normal mode ('a' for all modes)
+set mouse=n                  " enable mouse in normal mode
 set nobackup                 " don't make example.txt~ files
 set noswapfile               " swap files are annoying
 set hidden                   " can switch buffers w/out save
@@ -35,30 +34,43 @@ set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
 set clipboard=unnamedplus    " use the X11 system clipboard
+" Note about clipboards: the * register is used to access the system clipboard
+" in X11 when using X's select-to-copy and middle click to paste.
+" The + register is used to access the clipboard of graphical environments like
+" gnome and kde when doing copy and paste with c-c and c-v and such.
+" When clipboard=unnamed, vim will use the * register when yanking, deleting,
+" putting, etc. When clipboard=unnamedplus, vim uses the + register instead.
 
 if &modifiable
   set list                   " show listchars
   set colorcolumn=80         " show a line at column
 endif
 
+" reset autocmds so that sourcing vimrc again doesn't run autocmds twice
+autocmd!
+
 filetype plugin indent on    " detect filetype and automatically indent
 syntax on                    " syntax highlighting
-let g:git_branch = ''        " initialize git branch for statusline
 
 " set git branch for statusline on buffer read
+let g:git_branch = ''
 autocmd bufread * call SetGitBranch()
 
 " set syntax highlighting for *.md files
 autocmd bufread *.md set syntax=markdown
 
-" going back into normal mode also saves (if you're editing a file)
-autocmd insertleave ?\+ write
+" write (if changed) every updatetime millis if editing a modifiable file
+set updatetime=500
+autocmd cursorhold ?\+ if &modifiable | update | endif
 
 " faster way to enter commands
 noremap <cr> :
 
-" ! is faster than :! for entering shell commands
+" ! is faster than :! for entering shell commands (!! to repeat prev command)
 noremap ! :!
+
+" triple bang to execute current file (it must be executable)
+noremap !!! :!%:p<cr>
 
 " q is more annoying than useful
 noremap q :q
@@ -117,7 +129,7 @@ noremap <c-e> $
 vnoremap <c-c> y
 vnoremap <c-x> d
 " standard paste and undo using c-v and c-z in insert mode
-inoremap <c-v> <c-r>+
+inoremap <expr> <c-v> has('clipboard') ? "\<c-r>+" : "\<c-r>\""
 inoremap <c-z> <c-o>u
 
 " tab completion
@@ -126,6 +138,14 @@ inoremap <expr> <tab> TabComplete()
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 " pressing enter selects the highlighted completion option
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
+
+" edit a scratch file
+noremap <c-x> :edit /tmp/scratch<cr>
+
+" Don't rebind these keys:
+" c-r because that's for redo
+" c-v because that's for visual block selection
+" c-m because pressing enter will trigger this (:help key-notation)
 
 
 function! TabComplete()

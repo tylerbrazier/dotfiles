@@ -6,10 +6,6 @@
 stty -ixon           # disable flow control (ctrl-s doesn't stop the term)
 bind 'set completion-ignore-case on'
 
-export HISTCONTROL=ignoredups       # no duplicate entries in bash history
-type vim 1>/dev/null 2>&1 && export EDITOR=vim || export EDITOR=vi
-type vimpager 1>/dev/null 2>&1 && export PAGER=vimpager || export PAGER=less
-
 alias cp='cp -r'
 alias grep='grep --color=auto'
 alias ls='ls -b -F --color=auto' # -b is show escape chars. -F is indicators

@@ -17,6 +17,6 @@ for file in ${dotfiles[@]}; do
     echo "$HOME/$file already exists; skipping"
   else
     echo "Linking $file"
-    ln -sfn $(realpath $file) $HOME/$file
+    ln -sfn $(readlink -f $file) $HOME/$file
   fi
 done

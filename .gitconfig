@@ -4,39 +4,42 @@
   name = Tyler Brazier
   email = tyler@tylerbrazier.com
 
-[core]
-  editor = vim
-
 [color]
   ui = true
 
-[push]
-  # push current branch to upstream tracking branch when no args are given
-  default = simple
-
-[merge]
-  # merge with upstream tracking branch when no args are given
-  defaultToUpstream = true
+[core]
+  editor = vim
 
 [diff]
   tool = vimdiff
 
+[push]
+  # when pushing without specifying a branch, use the name of the current branch
+  default = current
+
+[branch]
+  # a new branch will always --track its remote
+  autosetupmerge = always
+
 [alias]
-  s = status
   a = add -A
-  c = commit
   b = branch
+  c = commit
+  f = fetch --all
+  s = status
 
-  up = "!git add -A && git commit && git push"
+  # Usage: git up [args for push]
+  # Add everything to the index, commit, and push.
+  # Additional arguments given will be passed onto `git push`.
+  up = "!up() { git add -A && git commit && git push $@; }; up"
 
-  down = "!git add -A \
-    && git stash \
-    && git fetch --all \
-    && git merge \
-    && git stash pop"
+  # git down [args for pull]
+  # Stash everything (including untracked files), pull, and pop stash.
+  # Additional arguments given will be passed onto `git pull`.
+  down = "!down() { git stash -u && git pull $@; git stash pop; }; down"
 
   # Usage: git ready [<remote>] <branch>
-  # If <remote> isn't given, it defaults to origin
+  # If <remote> isn't given, it defaults to origin.
   # If <branch> exists on <remote>, check it out.
   # If it doesn't, create the branch and push it to <remote>.
   ready = "!ready() { \
@@ -60,7 +63,7 @@
     }; ready"
 
   # Usage: git out [<remote>] <branch>
-  # If <remote> isn't given, it defaults to origin
+  # If <remote> isn't given, it defaults to origin.
   # Delete <branch> locally and on <remote>.
   out = "!out() { \
     if (( $# == 1 )); then \

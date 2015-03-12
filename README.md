@@ -27,17 +27,20 @@ entries in `.gitconfig`.
 
 * tab completion
 * line and multiline toggle comment
-* better indent code folding
+* code folding (on indent - better than default implementation)
 * convert file: to utf-8, unix line ends, tabs to spaces, trim whitespace
 * statusline with buffer list and current git branch
+* autosave (while in normal mode)
 * other useful and practical settings and keybindings
 
 **Custom keybindings** (`c-x` means `ctrl + x`)
 
 Binding   | What it does
 ----------|----------------------------------------
-Enter     | faster way to enter vim commands (:)
+[Enter]   | faster way to enter vim commands (:)
 !         | faster way to run shell commands (:!)
+!!        | repeat previous shell command (:!!)
+!!!       | execute current file (:!%:p)
 q         | :q instead of recording
 Y         | capital Y behaves like capital C and D (y$)
 c-n       | [n]ext buffer
@@ -55,6 +58,7 @@ c-/, c-o  | toggle c[o]mment on line or visual selection
 c-l       | toggle code fo[l]d
 c-a       | emacs-style go to st[a]rt of line
 c-e       | emacs-style go to [e]nd of line
+c-x       | edit scratch file `/tmp/scratch`
 
 Note: `c-/` for toggle comment works on some terminals but not in Gvim :(
 If it doesn't work, just use `c-o` instead.
@@ -72,16 +76,17 @@ proceeded by a non-whitespace character.
 
 Binding | What it does
 --------|----------------------------
-a-\     | split window vertically
-a--     | split window horizontally
+a-\     | split pane vertically
+a--     | split pane horizontally
 a-h     | vim-style move to left pane
 a-j     | vim-style move to left down
 a-k     | vim-style move to left up
 a-l     | vim-style move to left right
+a-d     | kill current pane
+a-t     | create new window
 a-n     | move to next window
 a-p     | move to previous window
-a-t     | create new window
-a-d     | kill current pane
+a-r     | rename current window
 a-q     | kill current window
 a-c     | go into copy mode (so you can scroll)
 
@@ -89,6 +94,18 @@ a-c     | go into copy mode (so you can scroll)
 .gitconfig
 ----------
 **Aliases** (with definitions below each)
+
+    git up [args for push]
+
+Add everything to the index, commit, and push.
+Additional arguments given will be passed onto `git push`.
+This is a fast alternative to typing the common sequence of commands.
+
+    git down [args for pull]
+
+Stash everything (including untracked files), pull, and pop stash.
+Additional arguments given will be passed onto `git pull`.
+This is a quick way to update your local branch.
 
     git ready [<remote>] <branch>
 
@@ -98,16 +115,6 @@ If it doesn't, create the branch and push it to `<remote>`.
 In either case, the local `<branch>` will track `<remote>/<branch>`.
 This is useful when starting a new feature branch or grabbing one that was
 started on another machine.
-
-    git up
-
-Add everything to the index, commit, and push.
-This is a fast alternative to typing the common sequence of commands.
-
-    git down
-
-Add everything to the index, stash, fetch all, merge, and pop stash.
-This is a quick way to update your local branch.
 
     git out [<remote>] <branch>
 
@@ -119,7 +126,8 @@ Some other shortcuts for common commands:
 
 Alias | What it does
 ------|------------------
-s     | status
 a     | add -A
-c     | commit
 b     | branch
+c     | commit
+f     | fetch --all
+s     | status
