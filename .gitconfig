@@ -22,16 +22,19 @@
   autosetupmerge = always
 
 [alias]
-  a = add -A
-  b = branch
-  c = commit
-  f = fetch --all
+  a = add -A                       # add everything
+  b = branch -a -vv                # be super verbose
+  c = commit -v                    # show diff when committing
+  ch = checkout
+  d = difftool -y -t vimdiff HEAD  # no prompt, use vimdiff tool
+  f = fetch -a -p                  # fetch all branches and prune dead ones
+  l = log --stat                   # also show changed files
   s = status
 
   # Usage: git up [args for push]
   # Add everything to the index, commit, and push.
   # Additional arguments given will be passed onto `git push`.
-  up = "!up() { git add -A && git commit && git push $@; }; up"
+  up = "!up() { git add -A && git commit -v && git push $@; }; up"
 
   # git down [args for pull]
   # Stash everything (including untracked files), pull, and pop stash.
@@ -43,10 +46,10 @@
   # If <branch> exists on <remote>, check it out.
   # If it doesn't, create the branch and push it to <remote>.
   ready = "!ready() { \
-    if (( $# == 1 )); then \
+    if [ $# -eq 1 ]; then \
       remote=origin; \
       branch=$1; \
-    elif (( $# == 2 )); then \
+    elif [ $# -eq 2 ]; then \
       remote=$1; \
       branch=$2; \
     else \
@@ -55,7 +58,7 @@
     fi; \
     git fetch $remote; \
     existing=$(git branch -r | grep \"$remote/$branch\\$\"); \
-    if [[ -z $existing ]]; then \
+    if [ -z $existing ]; then \
       git checkout -b $branch && git push -u $remote $branch; \
     else \
       git checkout -b $branch $remote/$branch; \
@@ -66,10 +69,10 @@
   # If <remote> isn't given, it defaults to origin.
   # Delete <branch> locally and on <remote>.
   out = "!out() { \
-    if (( $# == 1 )); then \
+    if [ $# -eq 1 ]; then \
       remote=origin; \
       branch=$1; \
-    elif (( $# == 2 )); then \
+    elif [ $# -eq 2 ]; then \
       remote=$1; \
       branch=$2; \
     else \

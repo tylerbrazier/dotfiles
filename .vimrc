@@ -89,8 +89,8 @@ noremap <c-p> :bprevious<cr>
 " [d]elete the current buffer
 noremap <c-d> :bdelete<cr>
 
-" [q]uit
-noremap <c-q> :quit<cr>
+" [q]uit all
+noremap <c-q> :qall<cr>
 
 " move to next [w]indow
 noremap <c-w> <c-w>w

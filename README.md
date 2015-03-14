@@ -46,7 +46,7 @@ Y         | capital Y behaves like capital C and D (y$)
 c-n       | [n]ext buffer
 c-p       | [p]revious buffer
 c-d       | [d]elete current buffer
-c-q       | [q]uit
+c-q       | [q]uit all buffers
 c-w       | move to next [w]indow
 c-t       | toggle using [t]abs or spaces for tab key
 c-h       | toggle showing [h]ighlighted stuff
@@ -126,8 +126,11 @@ Some other shortcuts for common commands:
 
 Alias | What it does
 ------|------------------
-a     | add -A
-b     | branch
-c     | commit
-f     | fetch --all
-s     | status
+a     | `add -A`                      - add everything
+b     | `branch -a -vv`               - be super verbose
+c     | `commit -v`                   - show file diffs when committing
+ch    | `checkout`
+d     | `difftool -y -t vimdiff HEAD` - don't prompt, use vimdiff tool
+f     | `fetch -a -p`                 - fetch all branches and prune dead ones
+l     | `log --stat`                  - also show what files changed in log
+s     | `status`
