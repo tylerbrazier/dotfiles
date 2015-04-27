@@ -6,7 +6,11 @@
 stty -ixon           # disable flow control (ctrl-s doesn't stop the term)
 bind 'set completion-ignore-case on'
 
+alias rm='rm -r'
 alias cp='cp -r'
+alias scp='scp -r'
+alias chown='chown -R'
+alias chmod='chmod -R'
 alias grep='grep --color=auto'
 alias ls='ls -b -F --color=auto' # -b is show escape chars. -F is indicators
 alias ll='ls -lh'
@@ -22,7 +26,7 @@ alias yogurt='yaourt'
 alias pi='ssh -l pi -p 2222 localhost'
 
 # ls after cd
-cd() { [[ -d "$1" ]] && { builtin cd "$1" && ls; } || { builtin cd ~ && ls; } }
+cd() { [ -d "$1" ] && { builtin cd "$1" && ls; } || { builtin cd ~ && ls; } }
 
 # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
 set_prompt() {
@@ -43,22 +47,22 @@ set_prompt() {
   rst='\[\e[00m\]'   # color reset
 
   # green smiley for status 0 and red unsmiley otherwise
-  [[ $sta == 0 ]] && PS1="${grn}:) " || PS1="${red}:( "
+  [ $sta -eq 0 ] && PS1="${grn}:) " || PS1="${red}:( "
 
   # red username if root and green otherwise
-  [[ $(id -u) == 0 ]] && PS1+="${red}${usr}" || PS1+="${grn}${usr}"
+  [ $(id -u) -eq 0 ] && PS1+="${red}${usr}" || PS1+="${grn}${usr}"
 
   # white @
   PS1+="${wht}@"
 
   # cyan hostname if over ssh and white otherwise
-  [[ $SSH_CLIENT == "" ]] && PS1+="${wht}${hst} " || PS1+="${cyn}${hst} "
+  [ "$SSH_CLIENT" == "" ] && PS1+="${wht}${hst} " || PS1+="${cyn}${hst} "
 
-  # current working dir
+  # white current working dir
   PS1+="${wht}${cwd} "
 
-  # current git branch
-  PS1+="$(git branch 2>/dev/null | grep ^* | sed 's/\* /(/g' | sed 's/$/) /g')"
+  # red current git branch
+  PS1+="${red}$(git branch 2>/dev/null | grep ^* | tr -d '* ' | sed 's/$/ /')"
 
   # white prompt; '$' if normal user, '#' if root
   PS1+="${wht}${pmt} "
