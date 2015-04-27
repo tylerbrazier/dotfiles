@@ -21,6 +21,9 @@
   # a new branch will always --track its remote
   autosetupmerge = always
 
+[include]
+  path = .git-back
+
 [alias]
   a = add -A                       # add everything
   b = branch -a -vv                # be super verbose
