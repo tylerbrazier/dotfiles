@@ -107,15 +107,6 @@ Stash everything (including untracked files), pull, and pop stash.
 Additional arguments given will be passed onto `git pull`.
 This is a quick way to update your local branch.
 
-    git ready [<remote>] <branch>
-
-If `<remote>` isn't given, it defaults to `origin`.
-If `<branch>` exists on `<remote>`, check it out.
-If it doesn't, create the branch and push it to `<remote>`.
-In either case, the local `<branch>` will track `<remote>/<branch>`.
-This is useful when starting a new feature branch or grabbing one that was
-started on another machine.
-
     git out [<remote>] <branch>
 
 If `<remote>` isn't given, it defaults to `origin`.
@@ -127,10 +118,11 @@ Some other shortcuts for common commands:
 Alias | What it does
 ------|------------------
 a     | `add -A`                      - add everything
-b     | `branch -a -vv`               - be super verbose
+b     | `branch`                      - easier to type
 c     | `commit -v`                   - show file diffs when committing
-ch    | `checkout`
+ch    | `checkout`                    - easier to type
 d     | `difftool -y -t vimdiff HEAD` - don't prompt, use vimdiff tool
 f     | `fetch -a -p`                 - fetch all branches and prune dead ones
 l     | `log --stat`                  - also show what files changed in log
-s     | `status`
+r     | `remote`                      - easier to type
+s     | `status`                      - easier to type

@@ -14,25 +14,21 @@
   tool = vimdiff
 
 [push]
-  # when pushing without specifying a branch, use the name of the current branch
-  default = current
-
-[branch]
-  # a new branch will always --track its remote
-  autosetupmerge = always
+  default = simple  # default behavior
 
 [include]
   path = .git-back
 
 [alias]
   a = add -A                       # add everything
-  b = branch -a -vv                # be super verbose
+  b = branch                       # easier to type
   c = commit -v                    # show diff when committing
-  ch = checkout
+  ch = checkout                    # easier to type
   d = difftool -y -t vimdiff HEAD  # no prompt, use vimdiff tool
   f = fetch -a -p                  # fetch all branches and prune dead ones
   l = log --stat                   # also show changed files
-  s = status
+  r = remote                       # easier to type
+  s = status                       # easier to type
 
   # Usage: git up [args for push]
   # Add everything to the index, commit, and push.
@@ -42,31 +38,12 @@
   # git down [args for pull]
   # Stash everything (including untracked files), pull, and pop stash.
   # Additional arguments given will be passed onto `git pull`.
-  down = "!down() { git stash -u && git pull $@; git stash pop; }; down"
-
-  # Usage: git ready [<remote>] <branch>
-  # If <remote> isn't given, it defaults to origin.
-  # If <branch> exists on <remote>, check it out.
-  # If it doesn't, create the branch and push it to <remote>.
-  ready = "!ready() { \
-    if [ $# -eq 1 ]; then \
-      remote=origin; \
-      branch=$1; \
-    elif [ $# -eq 2 ]; then \
-      remote=$1; \
-      branch=$2; \
-    else \
-      echo 'Usage: git ready [<remote>] <branch>' >&2; \
-      exit 1; \
-    fi; \
-    git fetch $remote; \
-    existing=$(git branch -r | grep \"$remote/$branch\\$\"); \
-    if [ -z $existing ]; then \
-      git checkout -b $branch && git push -u $remote $branch; \
-    else \
-      git checkout -b $branch $remote/$branch; \
-    fi; \
-    }; ready"
+  down = "!down() { \
+    [ -n \"$(git status --porcelain)\" ] && git stash -u; \
+    stashed=$?; \
+    git pull $@; \
+    [ $stashed -ne 0 ] || git stash pop; \
+  }; down"
 
   # Usage: git out [<remote>] <branch>
   # If <remote> isn't given, it defaults to origin.
@@ -84,5 +61,5 @@
     fi; \
     git branch -D $branch; \
     git push $remote --delete $branch; \
-    }; out"
+  }; out"
 
