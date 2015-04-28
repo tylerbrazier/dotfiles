@@ -5,124 +5,48 @@ My home configuration files for linux.
 
 To use these on windows, checkout the `windows` branch.
 
-Run `mklinks.sh` to create links from home to each dotfile.
+Run `mklinks.sh` to create links from home to each file.
 When files are added/removed to/from the repo, remember to update the array
 in `mklinks.sh`.
 
 Secret files/dirs like `.ssh` should *not* be in this repo since it's public on
 github. There should be a separate private repo for those.
 
-Experimental changes should be made on feature branches and can be pushed for
-backup/sync using `git up` (alias defined in .gitconfig).
-Use `git merge --squash` when merging a feature branch into `master` so that
-`master` retains a clean log.
-
 If you fork this repo, you'll probably want to change the `name` and `email`
 entries in `.gitconfig`.
 
+.bashrc
+-------
+- auto `ls` after `cd`
+- case insensitive tab completion
+- disabled flow control (`ctrl-s` doesn't freeze the terminal)
+- colorful prompt with git branch and [un]smiley for previous command status
+- and aliases, of course
 
 .vimrc
 ------
-**Features**
-
-* tab completion
-* line and multiline toggle comment
-* code folding (on indent - better than default implementation)
-* convert file: to utf-8, unix line ends, tabs to spaces, trim whitespace
-* statusline with buffer list and current git branch
-* autosave (while in normal mode)
-* other useful and practical settings and keybindings
-
-**Custom keybindings** (`c-x` means `ctrl + x`)
-
-Binding   | What it does
-----------|----------------------------------------
-[Enter]   | faster way to enter vim commands (:)
-!         | faster way to run shell commands (:!)
-!!        | repeat previous shell command (:!!)
-!!!       | execute current file (:!%:p)
-q         | :q instead of recording
-Y         | capital Y behaves like capital C and D (y$)
-c-n       | [n]ext buffer
-c-p       | [p]revious buffer
-c-d       | [d]elete current buffer
-c-q       | [q]uit all buffers
-c-w       | move to next [w]indow
-c-t       | toggle using [t]abs or spaces for tab key
-c-h       | toggle showing [h]ighlighted stuff
-c-s       | toggle [s]pell check
-c-f       | [f]ix misspelled word under cursor
-c-c       | [c]onvert file to uft8, unix line ending, tabs to spaces, trim ws
-c-u       | toggle showing line n[u]mbers
-c-/, c-o  | toggle c[o]mment on line or visual selection
-c-l       | toggle code fo[l]d
-c-a       | emacs-style go to st[a]rt of line
-c-e       | emacs-style go to [e]nd of line
-c-x       | edit scratch file `/tmp/scratch`
-
-Note: `c-/` for toggle comment works on some terminals but not in Gvim :(
-If it doesn't work, just use `c-o` instead.
-
-In visual mode, `c-c` and `c-x` work like the standard copy and cut bindings.
-In insert mode, `c-v` and `c-z` work like the standard paste and undo bindings.
-
-In insert mode, `tab` can be used for word completion if the cursor is
-proceeded by a non-whitespace character.
-
+- tab completion
+- line and multiline toggle comment
+- code folding (on indent - better than the default implementation)
+- autosave while in normal mode
+- cut, copy, paste from system clipboard using `ctrl-x`, `ctrl-c`, `ctrl-v`
+- statusline with buffer list, file encoding+format, and current git branch
+- convert file: to utf-8, unix line ends, tabs to spaces, trim whitespace
+- nice theme
+- lots of other useful and practical settings and keybindings
+- no plugin dependencies - all of this is defined in the file
 
 .tmux.conf
 ----------
-**Custom keybindings** (`a-x` means `alt + x` or `meta + x`)
-
-Binding | What it does
---------|----------------------------
-a-\     | split pane vertically
-a--     | split pane horizontally
-a-h     | vim-style move to left pane
-a-j     | vim-style move to left down
-a-k     | vim-style move to left up
-a-l     | vim-style move to left right
-a-d     | kill current pane
-a-t     | create new window
-a-n     | move to next window
-a-p     | move to previous window
-a-r     | rename current window
-a-q     | kill current window
-a-c     | go into copy mode (so you can scroll)
-
+- all `alt-x` style keybindings (`ctrl-b x` is too much to type)
+- bindings for split window, new window, vi-style movement, etc.
+- nice theme
 
 .gitconfig
 ----------
-**Aliases** (with definitions below each)
-
-    git up [args for push]
-
-Add everything to the index, commit, and push.
-Additional arguments given will be passed onto `git push`.
-This is a fast alternative to typing the common sequence of commands.
-
-    git down [args for pull]
-
-Stash everything (including untracked files), pull, and pop stash.
-Additional arguments given will be passed onto `git pull`.
-This is a quick way to update your local branch.
-
-    git out [<remote>] <branch>
-
-If `<remote>` isn't given, it defaults to `origin`.
-Delete `<branch>` locally and on `<remote>`.
-Useful for cleaning up temporary feature branches.
-
-Some other shortcuts for common commands:
-
-Alias | What it does
-------|------------------
-a     | `add -A`                      - add everything
-b     | `branch`                      - easier to type
-c     | `commit -v`                   - show file diffs when committing
-ch    | `checkout`                    - easier to type
-d     | `difftool -y -t vimdiff HEAD` - don't prompt, use vimdiff tool
-f     | `fetch -a -p`                 - fetch all branches and prune dead ones
-l     | `log --stat`                  - also show what files changed in log
-r     | `remote`                      - easier to type
-s     | `status`                      - easier to type
+- lots of shortcut aliases (`a = add -A`, `s = status`, etc.)
+- include [git-back](https://github.com/tylerbrazier/git-back)
+- common command sequence aliases
+  - `git up`   - add everything to the index, commit, and push
+  - `git down` - stash everything, pull, and pop the stash
+  - `git out`  - delete a branch locally and on a remote

@@ -35,7 +35,7 @@
   # Additional arguments given will be passed onto `git push`.
   up = "!up() { git add -A && git commit -v && git push $@; }; up"
 
-  # git down [args for pull]
+  # Usage: git down [args for pull]
   # Stash everything (including untracked files), pull, and pop stash.
   # Additional arguments given will be passed onto `git pull`.
   down = "!down() { \

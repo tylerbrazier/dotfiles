@@ -1,5 +1,47 @@
 " ~/.vimrc
 
+" Normal mode key binding reference
+" ---------------------------------
+" [enter]   :     (faster way to enter vim commands)
+" !         :!    (faster way to enter shell commands)
+" !!        :!!   (repeat previous shell command)
+" !!!       :!%:p (execute current file (if executable); useful for scripts)
+" q         :q    (recording is more annoying than useful)
+" j         gj    (able to move down over wrapped lines)
+" k         gk    (able to move up over wrapped lines)
+" Y         y$    (capital Y behaves like capital C and D)
+" ctrl-n    [n]ext buffer
+" ctrl-p    [p]revious buffer
+" ctrl-d    [d]elete current buffer
+" ctrl-q    [q]uit all buffers
+" ctrl-w    move to next [w]indow
+" ctrl-t    toggle using [t]abs or spaces for tab key
+" ctrl-h    toggle showing [h]ighlighted stuff
+" ctrl-s    toggle [s]pell check
+" ctrl-f    [f]ix misspelled word under cursor
+" ctrl-c    [c]onvert file to uft8, unix line ending, tabs to spaces, trim ws
+" ctrl-u    toggle showing line n[u]mbers
+" ctrl-l    toggle code fo[l]d
+" ctrl-a    emacs-style go to st[a]rt of line
+" ctrl-e    emacs-style go to [e]nd of line
+" ctrl-x    edit scratch file ~/.scratch
+" ctrl-/    (or ctrl-o) toggle c[o]mment on line or visual selection
+"
+" Note: ctrl-/ for toggle comment works on some terminals but on in gvim :(
+" If it doesn't work, just use ctrl-o instead.
+
+" Insert mode key binding reference
+" ---------------------------------
+" ctrl-c    (in visual insert) copy to system clipboard
+" ctrl-x    (in visual insert) cut into system clipboard
+" ctrl-v    paste from system clipboard
+" ctrl-z    undo
+" [tab]     if cursor follows a nonwhitespace character, do word completion
+"
+" When tab completion menu is up, use [tab] or ctrl-n to move to the next
+" suggestion, shift-tab or ctrl-p for previous suggestion, and
+" [enter] to select.
+
 set nocompatible             " vim, not vi. should be first in vimrc
 set encoding=utf-8           " set the encoding displayed by vim
 set expandtab                " spaces instead of tabs
@@ -81,11 +123,11 @@ noremap <expr> <c-o> ToggleComment()
 noremap <expr> <c-_> ToggleComment()
 " ctrl-/ triggers <c-_> in some terminals (not in gvim)
 
-" Note about clipboards: the * register is used to access the system clipboard
+" Note about clipboards: The * register is used to access the system clipboard
 " in X11 when using X's select-to-copy and middle click to paste.
 " The + register is used to access the clipboard of graphical environments like
-" gnome and kde when doing copy and paste with c-c and c-v and such.
-" The * register can also be used to access the clipboard on windows.
+" gnome and kde when doing copy and paste with ctrl-c and ctrl-v and such.
+" The * register can also be used to access the clipboard on windows os.
 " When clipboard=unnamed, vim will use the * register when yanking, deleting,
 " putting, etc. When clipboard=unnamedplus, vim uses the + register instead.
 if has('clipboard')
