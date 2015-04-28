@@ -10,7 +10,7 @@ set listchars=tab:>-,trail:_ " what to show when :set list is on
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
-set mouse=n                  " enable mouse in normal mode
+set mouse=a                  " enable mouse in all modes
 set nobackup                 " don't make example.txt~ files
 set noswapfile               " swap files are annoying
 set hidden                   " can switch buffers w/out save
@@ -33,14 +33,6 @@ set foldtext=GetFoldText()   " the text to show on folded lines
 set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
-set clipboard=unnamedplus    " use the X11 system clipboard
-" Note about clipboards: the * register is used to access the system clipboard
-" in X11 when using X's select-to-copy and middle click to paste.
-" The + register is used to access the clipboard of graphical environments like
-" gnome and kde when doing copy and paste with c-c and c-v and such.
-" When clipboard=unnamed, vim will use the * register when yanking, deleting,
-" putting, etc. When clipboard=unnamedplus, vim uses the + register instead.
-
 if &modifiable
   set list                   " show listchars
   set colorcolumn=80         " show a line at column
@@ -63,91 +55,119 @@ autocmd bufread *.md set syntax=markdown
 set updatetime=500
 autocmd cursorhold ?\+ if &modifiable | update | endif
 
-" faster way to enter commands
 noremap <cr> :
-
-" ! is faster than :! for entering shell commands (!! to repeat prev command)
 noremap ! :!
-
-" triple bang to execute current file (it must be executable)
 noremap !!! :!%:p<cr>
-
-" q is more annoying than useful
 noremap q :q
-
-" capital Y should behave like capital C and D
 noremap Y y$
-
-" make j and k able to move up and down wrapped lines
 noremap j gj
 noremap k gk
-
-" [n]ext and [p]revious buffer
 noremap <c-n> :bnext<cr>
 noremap <c-p> :bprevious<cr>
-
-" [d]elete the current buffer
 noremap <c-d> :bdelete<cr>
-
-" [q]uit all
 noremap <c-q> :qall<cr>
-
-" move to next [w]indow
 noremap <c-w> <c-w>w
-
-" toggle using [t]abs or spaces
 noremap <c-t> :set invexpandtab<cr>
-
-" toggle showing [h]ighlighted stuff
 noremap <c-h> :set invhlsearch<cr>
-
-" toggle [s]pell check
 noremap <c-s> :set invspell<cr>
-
-" [f]ix misspelled word under cursor
 noremap <c-f> ea<c-x>s
-
-" [c]onvert file to uft-8, unix line ending, tabs to spaces, trim trailing ws
 noremap <c-c> :call ConvertFile()<cr>
-
-" toggle showing line n[u]mbers
 noremap <c-u> :set invnumber<cr>
-
-" line and multiline c[o]mmenting
-" ctrl-/ triggers <c-_> in some terminals but not in gvim :(
-noremap <expr> <c-_> ToggleComment()
-noremap <expr> <c-o> ToggleComment()
-
-" toggle fo[l]d
 noremap <c-l> za
-
-" emacs-style bindings for st[a]rt and [e]nd of line
 noremap <c-a> ^
 noremap <c-e> $
+noremap <c-x> :edit $HOME/.scratch<cr>
+noremap <expr> <c-o> ToggleComment()
+noremap <expr> <c-_> ToggleComment()
+" ctrl-/ triggers <c-_> in some terminals (not in gvim)
 
-" standard copy and cut using c-c and c-x in visual mode
-vnoremap <c-c> y
-vnoremap <c-x> d
-" standard paste and undo using c-v and c-z in insert mode
-inoremap <expr> <c-v> has('clipboard') ? "\<c-r>+" : "\<c-r>\""
-inoremap <c-z> <c-o>u
-
-" tab completion
-" tab/ctrl-n to move down, shift-tab/ctrl-p to move up
+" Note about clipboards: the * register is used to access the system clipboard
+" in X11 when using X's select-to-copy and middle click to paste.
+" The + register is used to access the clipboard of graphical environments like
+" gnome and kde when doing copy and paste with c-c and c-v and such.
+" The * register can also be used to access the clipboard on windows.
+" When clipboard=unnamed, vim will use the * register when yanking, deleting,
+" putting, etc. When clipboard=unnamedplus, vim uses the + register instead.
+if has('clipboard')
+  vnoremap <c-c> "+y
+  vnoremap <c-x> "+d
+  inoremap <c-v> <c-r>+
+  inoremap <c-z> <c-o>u
+endif
 inoremap <expr> <tab> TabComplete()
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
-" pressing enter selects the highlighted completion option
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
-
-" edit a scratch file
-noremap <c-x> :edit /tmp/scratch<cr>
 
 " Don't rebind these keys:
 " c-r because that's for redo
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
 
+" can be used instead of a colorscheme
+function! ApplyCustomTheme()
+  " boilerplate for applying a theme
+  hi clear
+  set background=dark
+  if exists('syntax_on')
+    syntax reset
+  endif
+  "
+  " Main hightlight (hi) groups (from :help group-name):
+  "   comment      any comment
+  "   constant     stings, numbers, boolean
+  "   identifier   variable nams
+  "   statement    keywords like if, else, for, white, case, try, catch, ...
+  "   preproc      preprocessors like import, include, ...
+  "   type         keywords like int, long, char, ...
+  "   special      special symbols like '\n'
+  "   underlined   text that stands out, HTML links
+  "   error        synta errors
+  "   todo         mostly keywords TODO, FIXME, and XXX
+  "
+  " Some additional groups that you might want to specfically color:
+  "   function     function and method names; links to identifier by default
+  "   string       links to constant by default
+  "   number       links to constant by default
+  "   boolean      links to constant by default
+  "   conditional  if, then, else, switch, ...; links to statement by default
+  "   repeat       for, do, wle, ...; links to statement by default
+  "   operator     +, -, *, /, ...; links to statement by default
+  "   keyword      any otherkeyword; links to statement by default
+  "   search       highlighted search terms
+  "   pmenu        completion menu nonselected
+  "   pmenusel     completion menu selected
+  "   folded       colors of closed fold
+  "   colorcolumn  the 80 character mark
+  "   userN        where N is 1..9; usedin statusline (:h hl-User1..9)
+  "
+  " There are more groups; ':help group-name' for more info.
+  "
+  " Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
+  " There are others but these work in all 8 color terminals.
+  hi normal                                      guibg=black   guifg=white
+  hi comment                     ctermfg=grey                  guifg=grey
+  hi constant                    ctermfg=blue                  guifg=green
+  hi special                     ctermfg=cyan                  guifg=cyan
+  hi folded      ctermbg=black   ctermfg=white   guibg=black   guifg=white
+  hi pmenu       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
+  hi pmenusel    ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
+  hi colorcolumn ctermbg=gray    ctermfg=black   guibg=gray    guifg=black
+  hi search      ctermbg=cyan    ctermfg=black   guibg=cyan    guifg=black
+  hi user1       ctermbg=black   ctermfg=black   guibg=black   guifg=black
+  hi user2       ctermbg=black   ctermfg=red     guibg=black   guifg=red
+  hi user3       ctermbg=black   ctermfg=green   guibg=black   guifg=green
+  hi user4       ctermbg=black   ctermfg=yellow  guibg=black   guifg=yellow
+  hi user5       ctermbg=black   ctermfg=blue    guibg=black   guifg=blue
+  hi user6       ctermbg=black   ctermfg=magenta guibg=black   guifg=magenta
+  hi user7       ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
+  hi user8       ctermbg=black   ctermfg=white   guibg=black   guifg=white
+  hi user9       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
+endfunction
+call ApplyCustomTheme()
 
+"
+" Function definitions
+" --------------------
 function! TabComplete()
   let char = getline('.')[col('.')-2]  " get the char behind cursor
   if empty(char) || char =~ '\s'       " if there isn't one or it's white space
@@ -171,7 +191,6 @@ function! IsCommented(comment)
   endwhile
   return 1                       " return true
 endfunction
-
 function! ToggleComment()
   let type = &filetype
   if type =~ '\vc(pp)?$' || type =~ '\vjava(script)?$'  " c(pp) or java(script)
@@ -214,7 +233,6 @@ function! GetStl()
   let stl  = BufferList()                    " show buffer numbers
   let stl .= '%1*%='                         " divide left/right alignment
   let stl .= '%2*%M '                        " modified flag
-  "let stl .= '%7*%t '                       " file name
   let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
   let stl .= '%8*%{&ff} '                    " file format (line ending)
   let stl .= '%3*%{g:git_branch}'            " current git branch
@@ -305,96 +323,3 @@ function! GetFoldText()
   let line = substitute(line, '\v$', postfix, '')    " sub the ending
   return line
 endfunction
-
-" mostly just for debugging - if file doesn't exist it will be created
-function! AppendToFile(file, lines)
-  if filewritable(a:file)
-    call writefile(readfile(a:file)+a:lines, a:file)
-  else
-    call writefile(a:lines, a:file)
-  endif
-endfunction
-
-
-" can be used instead of a colorscheme
-function! ApplyCustomTheme()
-  " boilerplate for applying a theme
-  hi clear
-  set background=dark
-  if exists('syntax_on')
-    syntax reset
-  endif
-
-  " Main hightlight (hi) groups (from :help group-name):
-  " comment      any comment
-  " constant     stings, numbers, boolean
-  " identifier   variable nams
-  " statement    keywords like if, else, for, white, case, try, catch, ...
-  " preproc      preprocessors like import, include, ...
-  " type         keywords like int, long, char, ...
-  " special      special symbols like '\n'
-  " underlined   text that stands out, HTML links
-  " error        synta errors
-  " todo         mostly keywords TODO, FIXME, and XXX
-  "
-  " Some additional groups that you might want to specfically color:
-  " function     function and method names; links to identifier by default
-  " string       links to constant by default
-  " number       links to constant by default
-  " boolean      links to constant by default
-  " conditional  if, then, else, switch, ...; links to statement by default
-  " repeat       for, do, wle, ...; links to statement by default
-  " operator     +, -, *, /, ...; links to statement by default
-  " keyword      any otherkeyword; links to statement by default
-  " search       highlighted search terms
-  " pmenu        completion menu nonselected
-  " pmenusel     completion menu selected
-  " folded       colors of closed fold
-  " colorcolumn  the 80 character mark
-  " userN        where N is 1..9; usedin statusline (:h hl-User1..9)
-  "
-  " There are more groups; ':help group-name' for more info.
-
-  " Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
-  " There are others but these work in all 8 color terminals.
-
-  hi normal                                      guibg=black   guifg=white
-  hi comment                     ctermfg=grey                  guifg=grey
-  hi constant                    ctermfg=blue                  guifg=green
-  hi special                     ctermfg=cyan                  guifg=cyan
-  hi folded      ctermbg=black   ctermfg=white   guibg=black   guifg=white
-  hi pmenu       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
-  hi pmenusel    ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
-  hi colorcolumn ctermbg=gray    ctermfg=black   guibg=gray    guifg=black
-  hi search      ctermbg=cyan    ctermfg=black   guibg=cyan    guifg=black
-  hi user1       ctermbg=black   ctermfg=black   guibg=black   guifg=black
-  hi user2       ctermbg=black   ctermfg=red     guibg=black   guifg=red
-  hi user3       ctermbg=black   ctermfg=green   guibg=black   guifg=green
-  hi user4       ctermbg=black   ctermfg=yellow  guibg=black   guifg=yellow
-  hi user5       ctermbg=black   ctermfg=blue    guibg=black   guifg=blue
-  hi user6       ctermbg=black   ctermfg=magenta guibg=black   guifg=magenta
-  hi user7       ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
-  hi user8       ctermbg=black   ctermfg=white   guibg=black   guifg=white
-  hi user9       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
-endfunction
-
-call ApplyCustomTheme()
-
-" Colorschemes included with vim - will override custom theme
-"colorscheme default
-"colorscheme blue
-"colorscheme darkblue
-"colorscheme delek
-"colorscheme desert
-"colorscheme elflord
-"colorscheme evening
-"colorscheme koehler
-"colorscheme morning
-"colorscheme murphy
-"colorscheme pablo
-"colorscheme peachpuff
-"colorscheme ron
-"colorscheme shine
-"colorscheme slate
-"colorscheme torte
-"colorscheme zellner
