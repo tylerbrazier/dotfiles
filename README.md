@@ -32,6 +32,7 @@ entries in `.gitconfig`.
 - cut, copy, paste from system clipboard using `ctrl-x`, `ctrl-c`, `ctrl-v`
 - statusline with buffer list, file encoding+format, and current git branch
 - convert file: to utf-8, unix line ends, tabs to spaces, trim whitespace
+- keybindings for indentation fix
 - nice theme
 - lots of other useful and practical settings and keybindings
 - no plugin dependencies - all of this is defined in the file

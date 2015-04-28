@@ -20,6 +20,7 @@
 " ctrl-s    toggle [s]pell check
 " ctrl-f    [f]ix misspelled word under cursor
 " ctrl-c    [c]onvert file to uft8, unix line ending, tabs to spaces, trim ws
+" ctrl-i    fix [i]ndentation on whole file or visual selection
 " ctrl-u    toggle showing line n[u]mbers
 " ctrl-l    toggle code fo[l]d
 " ctrl-a    emacs-style go to st[a]rt of line
@@ -114,6 +115,8 @@ noremap <c-h> :set invhlsearch<cr>
 noremap <c-s> :set invspell<cr>
 noremap <c-f> ea<c-x>s
 noremap <c-c> :call ConvertFile()<cr>
+nnoremap <c-i> mxgg=G'x
+vnoremap <c-i> =
 noremap <c-u> :set invnumber<cr>
 noremap <c-l> za
 noremap <c-a> ^
@@ -332,7 +335,7 @@ endfunction
 
 " set current git branch for statusline
 function! SetGitBranch()
-  let b = system('git branch 2>/dev/null | grep ^*')
+  let b = system('git branch --no-color 2>/dev/null | grep ^*')
   let b = strpart(b, 2)                  " remove the '* ' part
   let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
   let g:git_branch = b
