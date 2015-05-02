@@ -62,7 +62,7 @@ set_prompt() {
   PS1+="${wht}${cwd} "
 
   # red current git branch
-  PS1+="${red}$(git branch 2>/dev/null | grep ^* | tr -d '* ' | sed 's/$/ /')"
+  PS1+="${red}$(git branch 2>/dev/null | grep ^* | cut -c 3- | sed 's/$/ /')"
 
   # white prompt; '$' if normal user, '#' if root
   PS1+="${wht}${pmt} "

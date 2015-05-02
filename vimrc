@@ -48,7 +48,7 @@ set expandtab                " spaces instead of tabs
 set tabstop=2                " number of spaces to use for tab
 set shiftwidth=2             " number of spaces used for indentation
 set softtabstop=2            " backspace correctly over tab distance
-set listchars=tab:>-,trail:_ " what to show when :set list is on
+set listchars=tab:__,trail:_ " what to show when :set list is on
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
@@ -153,57 +153,80 @@ function! ApplyCustomTheme()
   if exists('syntax_on')
     syntax reset
   endif
+
+  set guifont=Monospace\ 8
+
+  " Hightlight (hi) groups (from :help group-name):
+  "   comment        any comment
+  "   constant       stings, numbers, booleans, etc.
+  "     string       "example"
+  "     character    character constants like 'c'
+  "     number       123, 0xff
+  "     boolean      TRUE, false
+  "     float        2.3e10
+  "   identifier     functions, brackets, variable names
+  "     function     and methods
+  "   statement      if, else, for, while, case, try, catch, etc.
+  "     conditional  if, then, else, endif, switch, etc.
+  "     repeat       for, do, while, etc.
+  "     label        case, default, etc.
+  "     operator     +, *, sizeof, etc.
+  "     exception    try, catch, throw, etc.
+  "     keyword      any other keyword
+  "   preproc        preprocessors like import, include, #if, #define, etc.
+  "   type           keywords like int, long, char, etc.
+  "   special        special symbols like '\n'
+  "   underlined     text that stands out, HTML links
+  "   error          synta errors
+  "   todo           mostly keywords TODO, FIXME, and XXX
   "
-  " Main hightlight (hi) groups (from :help group-name):
-  "   comment      any comment
-  "   constant     stings, numbers, boolean
-  "   identifier   variable nams
-  "   statement    keywords like if, else, for, white, case, try, catch, ...
-  "   preproc      preprocessors like import, include, ...
-  "   type         keywords like int, long, char, ...
-  "   special      special symbols like '\n'
-  "   underlined   text that stands out, HTML links
-  "   error        synta errors
-  "   todo         mostly keywords TODO, FIXME, and XXX
-  "
-  " Some additional groups that you might want to specfically color:
-  "   function     function and method names; links to identifier by default
-  "   string       links to constant by default
-  "   number       links to constant by default
-  "   boolean      links to constant by default
-  "   conditional  if, then, else, switch, ...; links to statement by default
-  "   repeat       for, do, wle, ...; links to statement by default
-  "   operator     +, -, *, /, ...; links to statement by default
-  "   keyword      any otherkeyword; links to statement by default
+  " Some additional groups that you might want to specfically color for:
+  "   linenr       line numbers
   "   search       highlighted search terms
   "   pmenu        completion menu nonselected
   "   pmenusel     completion menu selected
   "   folded       colors of closed fold
   "   colorcolumn  the 80 character mark
-  "   userN        where N is 1..9; usedin statusline (:h hl-User1..9)
+  "   diffadd      vimdiff added line
+  "   diffdelete   vimdiff removed line
+  "   diffchange   vimdiff changed line
+  "   difftext     vimdiff actual text that changed
+  "   userN        where N is 1..9; used in statusline (:h hl-User1..9)
   "
   " There are more groups; ':help group-name' for more info.
   "
   " Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
   " There are others but these work in all 8 color terminals.
-  hi normal                                      guibg=black   guifg=white
-  hi comment                     ctermfg=grey                  guifg=grey
-  hi constant                    ctermfg=blue                  guifg=green
-  hi special                     ctermfg=cyan                  guifg=cyan
-  hi folded      ctermbg=black   ctermfg=white   guibg=black   guifg=white
-  hi pmenu       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
-  hi pmenusel    ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
-  hi colorcolumn ctermbg=gray    ctermfg=black   guibg=gray    guifg=black
-  hi search      ctermbg=cyan    ctermfg=black   guibg=cyan    guifg=black
-  hi user1       ctermbg=black   ctermfg=black   guibg=black   guifg=black
-  hi user2       ctermbg=black   ctermfg=red     guibg=black   guifg=red
-  hi user3       ctermbg=black   ctermfg=green   guibg=black   guifg=green
-  hi user4       ctermbg=black   ctermfg=yellow  guibg=black   guifg=yellow
-  hi user5       ctermbg=black   ctermfg=blue    guibg=black   guifg=blue
-  hi user6       ctermbg=black   ctermfg=magenta guibg=black   guifg=magenta
-  hi user7       ctermbg=black   ctermfg=cyan    guibg=black   guifg=cyan
-  hi user8       ctermbg=black   ctermfg=white   guibg=black   guifg=white
-  hi user9       ctermbg=black   ctermfg=gray    guibg=black   guifg=gray
+  hi normal                                   guibg=#242424 guifg=white
+  hi comment                   ctermfg=grey                 guifg=grey
+  hi constant                  ctermfg=green                guifg=#66ff66
+  hi identifier                ctermfg=cyan                 guifg=#00ccff
+  hi statement                 ctermfg=red                  guifg=#ff8855
+  hi preproc                   ctermfg=blue                 guifg=#0066ff
+  hi type                      ctermfg=cyan                 guifg=#00ccff
+  hi special                   ctermfg=cyan                 guifg=#00ccff
+  hi todo        ctermbg=none  ctermfg=yellow guibg=bg      guifg=yellow
+  hi todo        cterm=underline,bold         gui=underline,bold
+  hi linenr                    ctermfg=grey                 guifg=grey
+  hi search      ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
+  hi search      cterm=underline,bold         gui=underline,bold
+  hi pmenu       ctermbg=black ctermfg=gray   guibg=black   guifg=gray
+  hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
+  hi folded                    ctermfg=white  guibg=bg      guifg=white
+  hi colorcolumn ctermbg=gray  ctermfg=black  guibg=grey    guifg=black
+  hi diffadd     ctermbg=green ctermfg=white
+  hi diffdelete  ctermbg=red   ctermfg=white
+  hi diffchange  ctermbg=cyan  ctermfg=white
+  hi difftext    ctermbg=blue  ctermfg=white
+  hi user1                     ctermfg=black                guifg=black
+  hi user2                     ctermfg=red                  guifg=red
+  hi user3                     ctermfg=green                guifg=green
+  hi user4                     ctermfg=yellow               guifg=yellow
+  hi user5                     ctermfg=blue                 guifg=blue
+  hi user6                     ctermfg=magenta              guifg=magenta
+  hi user7                     ctermfg=cyan                 guifg=cyan
+  hi user8                     ctermfg=white                guifg=white
+  hi user9                     ctermfg=gray                 guifg=gray
 endfunction
 call ApplyCustomTheme()
 
@@ -277,7 +300,7 @@ function! GetStl()
   let stl .= '%2*%M '                        " modified flag
   let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
   let stl .= '%8*%{&ff} '                    " file format (line ending)
-  let stl .= '%3*%{g:git_branch}'            " current git branch
+  let stl .= '%2*%{g:git_branch}'            " current git branch
   return stl
 endfunction
 
@@ -310,8 +333,8 @@ endfunction
 " set current git branch for statusline
 function! SetGitBranch()
   let b = system('git branch 2>/dev/null | grep ^*')
-  let b = substitute(b, '* ', '(', '')
-  let b = substitute(b, "\n", ') ', '')
+  let b = strpart(b, 2)                  " remove the '* ' part
+  let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
   let g:git_branch = b
 endfunction
 
