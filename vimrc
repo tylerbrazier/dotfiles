@@ -14,7 +14,7 @@
 " ctrl-p    [p]revious buffer
 " ctrl-d    [d]elete current buffer
 " ctrl-q    [q]uit all buffers
-" ctrl-w    move to next [w]indow
+" ctrl-w    toggle [w]rap
 " ctrl-t    toggle using [t]abs or spaces for tab key
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
@@ -98,30 +98,30 @@ autocmd bufread *.md set syntax=markdown
 set updatetime=500
 autocmd cursorhold ?\+ if &modifiable | update | endif
 
-noremap <cr> :
-noremap ! :!
-noremap !!! :!%:p<cr>
-noremap q :q
-noremap Y y$
-noremap j gj
-noremap k gk
-noremap <c-n> :bnext<cr>
-noremap <c-p> :bprevious<cr>
-noremap <c-d> :bdelete<cr>
-noremap <c-q> :qall<cr>
-noremap <c-w> <c-w>w
-noremap <c-t> :set invexpandtab<cr>
-noremap <c-h> :set invhlsearch<cr>
-noremap <c-s> :set invspell<cr>
-noremap <c-f> ea<c-x>s
-noremap <c-c> :call ConvertFile()<cr>
+nnoremap <cr> :
+nnoremap ! :!
+nnoremap !!! :!%:p<cr>
+nnoremap q :q
+nnoremap Y y$
+nnoremap j gj
+nnoremap k gk
+nnoremap <c-n> :bnext<cr>
+nnoremap <c-p> :bprevious<cr>
+nnoremap <c-d> :bdelete<cr>
+nnoremap <c-q> :qall<cr>
+nnoremap <c-w> :set invwrap<cr>
+nnoremap <c-t> :set invexpandtab<cr>
+nnoremap <c-h> :set invhlsearch<cr>
+nnoremap <c-s> :set invspell<cr>
+nnoremap <c-f> ea<c-x>s
+nnoremap <c-c> :call ConvertFile()<cr>
 nnoremap <c-i> mxgg=G'x
 vnoremap <c-i> =
-noremap <c-u> :set invnumber<cr>
-noremap <c-l> za
-noremap <c-a> ^
-noremap <c-e> $
-noremap <c-x> :edit $HOME/.scratch<cr>
+nnoremap <c-u> :set invnumber<cr>
+nnoremap <c-l> za
+nnoremap <c-a> ^
+nnoremap <c-e> $
+nnoremap <c-x> :edit $HOME/.scratch<cr>
 noremap <expr> <c-o> ToggleComment()
 noremap <expr> <c-_> ToggleComment()
 " ctrl-/ triggers <c-_> in some terminals (not in gvim)
@@ -157,7 +157,7 @@ function! ApplyCustomTheme()
     syntax reset
   endif
 
-  set guifont=Monospace\ 8
+  set guifont=Monospace\ 9
 
   " Hightlight (hi) groups (from :help group-name):
   "   comment        any comment
@@ -178,7 +178,7 @@ function! ApplyCustomTheme()
   "     keyword      any other keyword
   "   preproc        preprocessors like import, include, #if, #define, etc.
   "   type           keywords like int, long, char, etc.
-  "   special        special symbols like '\n'
+  "   special        special symbols like '\n' (affects diffs and patches)
   "   underlined     text that stands out, HTML links
   "   error          synta errors
   "   todo           mostly keywords TODO, FIXME, and XXX
@@ -207,7 +207,6 @@ function! ApplyCustomTheme()
   hi statement                 ctermfg=red                  guifg=#ff8855
   hi preproc                   ctermfg=blue                 guifg=#0066ff
   hi type                      ctermfg=cyan                 guifg=#00ccff
-  hi special                   ctermfg=cyan                 guifg=#00ccff
   hi todo        ctermbg=none  ctermfg=yellow guibg=bg      guifg=yellow
   hi todo        cterm=underline,bold         gui=underline,bold
   hi linenr                    ctermfg=grey                 guifg=grey
@@ -217,10 +216,10 @@ function! ApplyCustomTheme()
   hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
   hi folded                    ctermfg=white  guibg=bg      guifg=white
   hi colorcolumn ctermbg=gray  ctermfg=black  guibg=grey    guifg=black
-  hi diffadd     ctermbg=green ctermfg=white
-  hi diffdelete  ctermbg=red   ctermfg=white
-  hi diffchange  ctermbg=cyan  ctermfg=white
-  hi difftext    ctermbg=blue  ctermfg=white
+  hi diffadd     ctermbg=green ctermfg=white  guibg=green   guifg=white
+  hi diffdelete  ctermbg=red   ctermfg=white  guibg=red     guifg=white
+  hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan    guifg=white
+  hi difftext    ctermbg=blue  ctermfg=white  guibg=blue    guifg=white
   hi user1                     ctermfg=black                guifg=black
   hi user2                     ctermfg=red                  guifg=red
   hi user3                     ctermfg=green                guifg=green
