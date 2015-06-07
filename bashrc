@@ -1,5 +1,3 @@
-# ~/.bashrc
-
 [[ $- != *i* ]] && return   # If not running interactively, don't do anything
 
 #set -o vi           # lets you ESC and use vim commands at bash prompt
@@ -26,7 +24,21 @@ alias yogurt='yaourt'
 alias pi='ssh -l pi -p 2222 localhost'
 
 # ls after cd
-cd() { [ -d "$1" ] && { builtin cd "$1" && ls; } || { builtin cd ~ && ls; } }
+cd() {
+  if [ -n "$1" ]; then
+    builtin cd "$1" && ls
+  else
+    builtin cd ~ && ls
+  fi
+}
+
+# History: no duplicate entries, always append instead of overwrite, and
+# share history with other sessions.
+# http://unix.stackexchange.com/questions/18212
+# http://ss64.com/bash/history.html
+HISTCONTROL=ignoredups:erasedups
+shopt -s histappend
+PROMPT_COMMAND="history -n; history -w; history -c; history -r;"
 
 # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
 set_prompt() {
@@ -70,6 +82,6 @@ set_prompt() {
   # reset the color
   PS1+="$rst"
 }
-PROMPT_COMMAND='set_prompt'
+PROMPT_COMMAND="$PROMPT_COMMAND set_prompt"
 
 ls

@@ -7,6 +7,7 @@ set -e
 # For each, a symlink will be created in your home directory with a name
 # that is the basename of the file with a prepended dot.
 dotfiles=(
+  profile
   bash_profile
   bashrc
   gitconfig
