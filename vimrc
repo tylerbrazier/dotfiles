@@ -184,12 +184,14 @@ function! ApplyCustomTheme()
   "   todo           mostly keywords TODO, FIXME, and XXX
   "
   " Some additional groups that you might want to specfically color for:
+  "   title        section headers, html <title>, etc
   "   linenr       line numbers
   "   search       highlighted search terms
   "   pmenu        completion menu nonselected
   "   pmenusel     completion menu selected
   "   folded       colors of closed fold
   "   colorcolumn  the 80 character mark
+  "   matchparen   matching brackets/parens
   "   diffadd      vimdiff added line
   "   diffdelete   vimdiff removed line
   "   diffchange   vimdiff changed line
@@ -209,6 +211,7 @@ function! ApplyCustomTheme()
   hi type                      ctermfg=cyan                 guifg=#00ccff
   hi todo        ctermbg=none  ctermfg=yellow guibg=bg      guifg=yellow
   hi todo        cterm=underline,bold         gui=underline,bold
+  hi title       cterm=bold    ctermfg=white  gui=bold      guifg=white
   hi linenr                    ctermfg=grey                 guifg=grey
   hi search      ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
   hi search      cterm=underline,bold         gui=underline,bold
@@ -216,6 +219,8 @@ function! ApplyCustomTheme()
   hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
   hi folded                    ctermfg=white  guibg=bg      guifg=white
   hi colorcolumn ctermbg=gray  ctermfg=black  guibg=grey    guifg=black
+  hi matchparen  ctermbg=none  ctermfg=white  guibg=bg      guifg=white
+  hi matchparen  cterm=underline,bold         gui=underline,bold
   hi diffadd     ctermbg=green ctermfg=white  guibg=green   guifg=white
   hi diffdelete  ctermbg=red   ctermfg=white  guibg=red     guifg=white
   hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan    guifg=white
