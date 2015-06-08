@@ -25,7 +25,7 @@ entries in `.gitconfig`.
 
 .vimrc
 ------
-- tab completion
+- tab completion (including complete end tag for html/xml)
 - line and multiline toggle comment
 - code folding (on indent - better than the default implementation)
 - autosave while in normal mode

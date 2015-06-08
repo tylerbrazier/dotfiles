@@ -239,40 +239,63 @@ function! TabComplete()
   let char = getline('.')[col('.')-2]  " get the char behind cursor
   if empty(char) || char =~ '\s'       " if there isn't one or it's white space
     return "\<tab>"                    " tab as usual
+  elseif (&filetype == 'html' || &filetype == 'xml') && char == '/'
+    return "\<c-x>\<c-o>"              " complete end tag; e.g. <p>...</[Tab]
   else
     return "\<c-n>"                    " otherwise do completion
   endif
 endfunction
 
-function! IsCommented(comment)
+function! ToggleComment()
+  let type = &filetype
+  if type =~ '\vc(pp)?$' || type =~ '\vjava(script)?$'  " c(pp) or java(script)
+    let pattern = '//'
+  elseif type == 'tex'
+    let pattern = '%'
+  elseif type == 'vim'
+    let pattern = '"'
+  else
+    let pattern = '#'
+  endif
+  if IsSelectionCommented(pattern)
+    return DoUncomment(pattern)
+  else
+    return DoComment(pattern)
+  endif
+endfunction
+function! IsSelectionCommented(pattern)
   let v = line("v")
   let cur = line(".")
   let i = v < cur ? v : cur
   let end = v < cur ? cur : v
   while i <= end
     let line = getline(i)
-    if line !~ '^\s*'.a:comment  " if line doesn't start with comment char
-      return 0                   " return false
+    if !IsLineCommented(line, a:pattern)
+      return 0  " false
     endif
     let i+=1
   endwhile
-  return 1                       " return true
+  return 1      " true
 endfunction
-function! ToggleComment()
-  let type = &filetype
-  if type =~ '\vc(pp)?$' || type =~ '\vjava(script)?$'  " c(pp) or java(script)
-    let comment = '//'
-  elseif type == 'tex'
-    let comment = '%'
-  elseif type == 'vim'
-    let comment = '"'
+function! IsLineCommented(line, pattern)
+  if &filetype == 'html' || &filetype == 'xml'
+    return a:line =~ '^\s*<!--.*-->\s*$' " starts with <!-- and ends with -->
   else
-    let comment = '#'
+    return a:line =~ '^\s*'.a:pattern  " starts with comment pattern
   endif
-  if IsCommented(comment)
-    return substitute(":normal ^lenx\<cr>", 'len', len(comment), '')
+endfunction
+function! DoComment(pattern)
+  if &filetype == 'html' || &filetype == 'xml'
+    return ":normal I<!--\<c-o>A-->\<cr>"
   else
-    return substitute(":normal Icom\<cr>", 'com', comment, '')
+    return substitute(":normal Ipattern\<cr>", 'pattern', a:pattern, '')
+  endif
+endfunction
+function! DoUncomment(pattern)
+  if &filetype == 'html' || &filetype == 'xml'
+    return ":normal ^4xg_d$xx\<cr>"
+  else
+    return substitute(":normal ^lenx\<cr>", 'len', len(a:pattern), '')
   endif
 endfunction
 
