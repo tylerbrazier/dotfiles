@@ -3,6 +3,8 @@ dotfiles
 
 My home configuration files for linux.
 
+Clone with `git clone --recursive` since this project includes submodules.
+
 To use these on windows, checkout the `windows` branch.
 
 Run `mklinks.sh` to create links from home to each file.
@@ -49,5 +51,5 @@ entries in `.gitconfig`.
 - include [git-back](https://github.com/tylerbrazier/git-back)
 - common command sequence aliases
   - `git up`   - add everything to the index, commit, and push
-  - `git down` - stash everything, pull, and pop the stash
+  - `git down` - stash changes, pull, pop stash, and init/update submodules
   - `git out`  - delete a branch locally and on a remote

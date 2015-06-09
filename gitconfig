@@ -14,7 +14,7 @@
   tool = vimdiff
 
 [push]
-  default = simple  # default behavior
+  default = simple  # default behavior in git 2.0; squelch warning on push
 
 [include]
   path = .git-back
@@ -24,7 +24,7 @@
   b = branch
   c = commit -v
   ch = checkout
-  d = difftool -y -t vimdiff HEAD
+  d = difftool -y -t vimdiff
   f = fetch --all --prune
   l = log --stat
   m = merge
@@ -37,13 +37,15 @@
   up = "!up() { git add -A && git commit -v && git push $@; }; up"
 
   # Usage: git down [args for pull]
-  # Stash everything (including untracked files), pull, and pop stash.
+  # Stash any changes (including untracked), pull, pop the stash (if anything
+  # was stashed), then init/update submodules to match the superproject.
   # Additional arguments given will be passed onto `git pull`.
   down = "!down() { \
-    [ -n \"$(git status --porcelain)\" ] && git stash -u; \
+    [ -n \"$(git status --porcelain --ignore-submodules)\" ] && git stash -u; \
     stashed=$?; \
     git pull $@; \
     [ $stashed -ne 0 ] || git stash pop; \
+    git submodule update --init --recursive; \
   }; down"
 
   # Usage: git out [<remote>] <branch>
