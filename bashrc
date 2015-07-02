@@ -38,10 +38,12 @@ cd() {
 # http://ss64.com/bash/history.html
 HISTCONTROL=ignoredups:erasedups
 shopt -s histappend
-PROMPT_COMMAND="history -n; history -w; history -c; history -r;"
+share_hist() {
+  history -n; history -w; history -c; history -r;
+}
 
 # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
-set_prompt() {
+custom_ps1() {
   sta=$?             # status of last command - must come first
   usr='\u'           # username
   hst='\h'           # hostname up to first '.'; capital H for full hostname
@@ -82,6 +84,6 @@ set_prompt() {
   # reset the color
   PS1+="$rst"
 }
-PROMPT_COMMAND="$PROMPT_COMMAND set_prompt"
+PROMPT_COMMAND="custom_ps1; share_hist;"
 
 ls
