@@ -1,5 +1,3 @@
-" ~/.vimrc
-
 " Normal mode key binding reference
 " ---------------------------------
 " [enter]   :     (faster way to enter vim commands)

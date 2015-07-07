@@ -32,6 +32,19 @@ cd() {
   fi
 }
 
+# colored man pages in less
+# https://wiki.archlinux.org/index.php/Man_page#Colored_man_pages
+man() {
+  env LESS_TERMCAP_mb=$'\E[01;31m' \
+    LESS_TERMCAP_md=$'\E[01;38;5;74m' \
+    LESS_TERMCAP_me=$'\E[0m' \
+    LESS_TERMCAP_se=$'\E[0m' \
+    LESS_TERMCAP_so=$'\E[38;5;246m' \
+    LESS_TERMCAP_ue=$'\E[0m' \
+    LESS_TERMCAP_us=$'\E[04;38;5;146m' \
+    man "$@"
+}
+
 # History: no duplicate entries, always append instead of overwrite, and
 # share history with other sessions.
 # http://unix.stackexchange.com/questions/18212
