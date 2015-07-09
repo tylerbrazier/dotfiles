@@ -43,11 +43,6 @@
 
 set nocompatible             " vim, not vi. should be first in vimrc
 set encoding=utf-8           " set the encoding displayed by vim
-set expandtab                " spaces instead of tabs
-set tabstop=2                " number of spaces to use for tab
-set shiftwidth=2             " number of spaces used for indentation
-set softtabstop=2            " backspace correctly over tab distance
-set listchars=tab:__,trail:_ " what to show when :set list is on
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
 set backspace=2              " backspace works over indent, eol, and start
@@ -86,15 +81,24 @@ filetype plugin indent on    " detect filetype and automatically indent
 syntax on                    " syntax highlighting
 
 " set git branch for statusline on buffer read
-let g:git_branch = ''
-autocmd bufread * call SetGitBranch()
+let g:gitBranch = ''
+autocmd bufenter * call SetGitBranch()
+
+" default to using spaces instead of tabs
+autocmd bufenter * call SetWhitespaceStyle('spaces')
+
+" go uses tabs instead of spaces
+autocmd bufenter *.go call SetWhitespaceStyle('tabs')
 
 " set syntax highlighting for *.md files
-autocmd bufread *.md set syntax=markdown
+autocmd bufenter *.md set syntax=markdown
 
 " write (if changed) every updatetime millis if editing a modifiable file
-set updatetime=500
+set updatetime=200
 autocmd cursorhold ?\+ if &modifiable | update | endif
+
+" set the colorscheme
+autocmd vimenter * call ApplyCustomTheme()
 
 nnoremap <cr> :
 nnoremap ! :!
@@ -108,7 +112,7 @@ nnoremap <c-p> :bprevious<cr>
 nnoremap <c-d> :bdelete<cr>
 nnoremap <c-q> :qall<cr>
 nnoremap <c-w> :set invwrap<cr>
-nnoremap <c-t> :set invexpandtab<cr>
+nnoremap <c-t> :call ToggleWhitespaceStyle()<cr>
 nnoremap <c-h> :set invhlsearch<cr>
 nnoremap <c-s> :set invspell<cr>
 nnoremap <c-f> ea<c-x>s
@@ -145,6 +149,11 @@ inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 " c-r because that's for redo
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
+
+
+" --------------------
+" Function definitions
+" --------------------
 
 " can be used instead of a colorscheme
 function! ApplyCustomTheme()
@@ -233,11 +242,7 @@ function! ApplyCustomTheme()
   hi user8                     ctermfg=white                guifg=white
   hi user9                     ctermfg=gray                 guifg=gray
 endfunction
-call ApplyCustomTheme()
 
-"
-" Function definitions
-" --------------------
 function! TabComplete()
   let char = getline('.')[col('.')-2]  " get the char behind cursor
   if empty(char) || char =~ '\s'       " if there isn't one or it's white space
@@ -250,12 +255,12 @@ function! TabComplete()
 endfunction
 
 function! ToggleComment()
-  let type = &filetype
-  if type =~ '\vc(pp)?$' || type =~ '\vjava(script)?$'  " c(pp) or java(script)
+  let t = &filetype
+  if t == 'c' || t == 'java' || t == 'javascript' || t == 'go'
     let pattern = '//'
-  elseif type == 'tex'
+  elseif t == 'tex'
     let pattern = '%'
-  elseif type == 'vim'
+  elseif t == 'vim'
     let pattern = '"'
   else
     let pattern = '#'
@@ -328,7 +333,7 @@ function! GetStl()
   let stl .= '%2*%M '                        " modified flag
   let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
   let stl .= '%8*%{&ff} '                    " file format (line ending)
-  let stl .= '%2*%{g:git_branch}'            " current git branch
+  let stl .= '%2*%{g:gitBranch}'            " current git branch
   return stl
 endfunction
 
@@ -341,16 +346,16 @@ function! BufferList()
   while i <= last
     let name = fnamemodify(bufname(i), ':t')  " basename of file in buffer i
     if i == cur
-      if (getbufvar(i, "&mod"))     " if current buffer is modified
-        let ret .= '%2* '.name.' '  " color it red
+      if (getbufvar(i, "&mod"))               " if current buffer is modified
+        let ret .= '%2* '.name.' '            " color it red
       else
-        let ret .= '%7* '.name.' '  " otherwise color it cyan
+        let ret .= '%7* '.name.' '            " otherwise color it cyan
       endif
     elseif buflisted(i)
-      if (getbufvar(i, "&mod"))     " if other buffer is modified
-        let ret .= '%2* '.name.' '  " color it red
+      if (getbufvar(i, "&mod"))               " if other buffer is modified
+        let ret .= '%2* '.name.' '            " color it red
       else
-        let ret .= '%9* '.name.' '  " otherwise color it gray
+        let ret .= '%9* '.name.' '            " otherwise color it gray
       endif
     endif
     let i += 1
@@ -363,7 +368,32 @@ function! SetGitBranch()
   let b = system('git branch --no-color 2>/dev/null | grep ^*')
   let b = strpart(b, 2)                  " remove the '* ' part
   let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
-  let g:git_branch = b
+  let g:gitBranch = b
+endfunction
+
+function ToggleWhitespaceStyle()
+  if &expandtab
+    call SetWhitespaceStyle('tabs')
+    echo 'Using tabs'
+  else
+    call SetWhitespaceStyle('spaces')
+    echo 'Using spaces'
+  endif
+endfunction
+
+" ws arg should be either 'tabs' or 'spaces'
+function! SetWhitespaceStyle(ws)
+  if a:ws == 'tabs'
+    set noexpandtab
+    set tabstop=8                   " number of spaces to use for tab
+    set listchars=tab:\ \ ,trail:·  " only show trailing whitespace
+  elseif a:ws == 'spaces'
+    set expandtab
+    set tabstop=2                   " number of spaces to use for tab
+    set listchars=tab:»»,trail:·    " show tabs and trailing whitespace
+  endif
+  set shiftwidth=0                  " auto indent same distance as tabstop
+  set softtabstop=-1                " backspace over shiftwidth distance
 endfunction
 
 " Vim's indent foldmethod doesn't do exactly what I'd like it to do.
