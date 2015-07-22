@@ -35,11 +35,13 @@
 " ctrl-x    (in visual insert) cut into system clipboard
 " ctrl-v    paste from system clipboard
 " ctrl-z    undo
-" [tab]     if cursor follows a nonwhitespace character, do word completion
+" [tab]     do completion if cursor follows a nonwhitespace character
 "
 " When tab completion menu is up, use [tab] or ctrl-n to move to the next
 " suggestion, shift-tab or ctrl-p for previous suggestion, and
 " [enter] to select.
+"
+" Tab can also complete HTML/XML tags; e.g. <p>[tab] or <p>...</[tab]
 
 set nocompatible             " vim, not vi. should be first in vimrc
 set encoding=utf-8           " set the encoding displayed by vim
@@ -97,9 +99,6 @@ autocmd bufenter *.md set syntax=markdown
 set updatetime=200
 autocmd cursorhold ?\+ if &modifiable | update | endif
 
-" set the colorscheme
-autocmd vimenter * call ApplyCustomTheme()
-
 nnoremap <cr> :
 nnoremap ! :!
 nnoremap !!! :!%:p<cr>
@@ -145,7 +144,23 @@ inoremap <expr> <tab> TabComplete()
 inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
 inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 
-" Don't rebind these keys:
+" complete brackets
+inoremap ( ()<left>
+inoremap { {}<left>
+inoremap [ []<left>
+
+" step over matching bracket instead of inserting a new one
+inoremap <expr> ) StepOver(')')
+inoremap <expr> } StepOver('}')
+inoremap <expr> ] StepOver(']')
+
+" if between two brackets or tags, push the closing below and open between them
+inoremap <expr> <cr> OpenBelow()
+
+" if between two brackets and you backspace, delete them both
+inoremap <expr> <bs> DeleteMatching()
+
+" NOTE: don't rebind these keys:
 " c-r because that's for redo
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
@@ -154,6 +169,267 @@ inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 " --------------------
 " Function definitions
 " --------------------
+function! CharLeft()
+  return getline('.')[col('.')-2]  " char to left of cursor
+endfunction
+function! CharRight()
+  return getline('.')[col('.')-1]  " char to right of cursor
+endfunction
+
+" if between two brackets or tags, push the closing below and open between them
+function! OpenBelow()
+  let l = CharLeft()
+  let r = CharRight()
+  let t = &filetype
+  if (l == '(' && r == ')') ||
+   \ (l == '{' && r == '}') ||
+   \ (l == '[' && r == ']') ||
+   \ ((t == 'html' || t == 'xml') && l == '>' && r == '<')  " between two tags
+    return "\<cr>\<esc>O"
+  else
+    return "\<cr>"
+  endif
+endfunction
+
+" step over matching bracket instead of inserting a new one
+function! StepOver(c)
+  if CharRight() == a:c     " if c is the char to the right of the cursor
+    return "\<right>"       " step over it
+  else
+    return a:c              " otherwise just insert the char
+  endif
+endfunction
+
+" if between two brackets and you backspace, delete them both
+function! DeleteMatching()
+  let l = CharLeft()
+  let r = CharRight()
+  if (l == '(' && r == ')') ||
+   \ (l == '{' && r == '}') ||
+   \ (l == '[' && r == ']')
+    return "\<right>\<bs>\<bs>"  " delete them both
+  else
+    return "\<bs>"
+  endif
+endfunction
+
+function! TabComplete()
+  let l = CharLeft()                   " get the char to the left of the cursor
+  if empty(l) || l =~ '\s'             " if there isn't one or it's white space
+    return "\<tab>"                    " tab as usual
+  endif
+  let t = &filetype
+  let r = CharRight()
+  if (t == 'html' || t == 'xml')
+    if l == '>' && r != '<'               " <...>[tab]
+      return "</\<c-x>\<c-o>\<esc>F<i"    " complete end tag and go between them
+    elseif l == '/'                       " <...></[tab]
+      return "\<c-x>\<c-o>\<esc>mx==`xa"  " complete end tag and fix indent
+    endif
+  endif
+  return "\<c-n>"                         " otherwise do word completion
+endfunction
+
+function! ToggleComment()
+  let t = &filetype
+  let lhs = '#'  " left hand side default
+  let rhs = ''   " right hand side default
+  if t == 'c' || t == 'java' || t == 'javascript' || t == 'go'
+    let lhs = '//'
+  elseif t == 'tex'
+    let lhs = '%'
+  elseif t == 'vim'
+    let lhs = '"'
+  elseif t == 'html' || t == 'xml'
+    let lhs = '<!--'
+    let rhs = '-->'
+  elseif t == 'css'
+    let lhs = '/*'
+    let rhs = '*/'
+  endif
+  if IsSelectionCommented(lhs, rhs)
+    return DoUncomment(lhs, rhs)
+  else
+    return DoComment(lhs, rhs)
+  endif
+endfunction
+function! IsSelectionCommented(lhs, rhs)
+  let v = line("v")
+  let cur = line(".")
+  let i = v < cur ? v : cur
+  let end = v < cur ? cur : v
+  while i <= end
+    let line = getline(i)
+    if !IsLineCommented(line, a:lhs, a:rhs)
+      return 0  " false
+    endif
+    let i+=1
+  endwhile
+  return 1      " true
+endfunction
+function! IsLineCommented(line, lhs, rhs)
+  let l = escape(a:lhs, '*')      " needed for comment chars like /* ... */
+  let r = escape(a:rhs, '*')
+  return a:line =~ '^\s*'.l.'.*'.r.'\s*$' " starts with lhs and ends with rhs
+endfunction
+function! DoComment(lhs, rhs)
+  let c = ":normal I".a:lhs
+  if len(a:rhs) > 0
+    let c = c."\<c-o>A".a:rhs
+  endif
+  return c."\<cr>"
+endfunction
+function! DoUncomment(lhs, rhs)
+  let c = ":normal ^".len(a:lhs)."x"
+  if len(a:rhs) > 0
+    let c = c.'g_d$'  " delete last non-whitespace char and all trailing space
+  endif
+  let i = 2
+  while i <= len(a:rhs)
+    let c = c.'x'
+    let i += 1
+  endwhile
+  return c."\<cr>"
+endfunction
+
+" convert file to uft-8, unix line ending, tabs to spaces, trim trailing ws
+function! ConvertFile()
+  let msg = "Convert file?\n
+        \This will set encoding to utf8, convert cr/lf to lf,
+        \ convert tabs to spaces, and trim all trailing whitespace."
+  let choices = "&yes\n&no"
+  let default = 2  " 1=yes, 2=no
+  if confirm(msg, choices, default) == 1
+    write                " save
+    edit ++ff=dos        " reload the file in dos format
+    setlocal ff=unix     " set file format
+    setlocal fenc=utf-8  " set file encoding
+    set expandtab        " make sure we're using expandtab
+    retab                " convert tabs to spaces
+    %s/\s\+$//e          " trim trailing ws (e means don't fail if not found)
+    write                " save
+  endif
+endfunction
+
+" build the status line; %N* is for UserN highlighting, %0* resets
+function! GetStl()
+  let stl  = BufferList()                    " show buffer numbers
+  let stl .= '%1*%='                         " divide left/right alignment
+  let stl .= '%8*%l,%c '                     " line,column number
+  let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
+  let stl .= '%8*%{&ff} '                    " file format (line ending)
+  let stl .= '%2*%{g:gitBranch}'             " current git branch
+  return stl
+endfunction
+
+" buffer list for the status line
+function! BufferList()
+  let cur = bufnr('%')
+  let last = bufnr('$')
+  let i = 1
+  let ret = ''
+  while i <= last
+    let name = fnamemodify(bufname(i), ':t')  " basename of file in buffer i
+    if i == cur
+      if (getbufvar(i, "&mod"))               " if current buffer is modified
+        let ret .= '%2* '.name.' '            " color it red
+      else
+        let ret .= '%7* '.name.' '            " otherwise color it cyan
+      endif
+    elseif buflisted(i)
+      if (getbufvar(i, "&mod"))               " if other buffer is modified
+        let ret .= '%2* '.name.' '            " color it red
+      else
+        let ret .= '%9* '.name.' '            " otherwise color it gray
+      endif
+    endif
+    let i += 1
+  endwhile
+  return ret
+endfunction
+
+" set current git branch for statusline
+function! SetGitBranch()
+  let b = system('git branch --no-color 2>/dev/null | grep ^*')
+  let b = strpart(b, 2)                  " remove the '* ' part
+  let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
+  let g:gitBranch = b
+endfunction
+
+function! ToggleWhitespaceStyle()
+  if &expandtab
+    call SetWhitespaceStyle('tabs')
+    echo 'Using tabs'
+  else
+    call SetWhitespaceStyle('spaces')
+    echo 'Using spaces'
+  endif
+endfunction
+
+" ws arg should be either 'tabs' or 'spaces'
+function! SetWhitespaceStyle(ws)
+    set tabstop=2                   " number of spaces to use for tab
+    set shiftwidth=2                " auto indent distance
+    set softtabstop=2               " backspace over shiftwidth distance
+  if a:ws == 'tabs'
+    set noexpandtab
+    set listchars=tab:\ \ ,trail:·  " only show trailing whitespace
+  elseif a:ws == 'spaces'
+    set expandtab
+    set listchars=tab:»»,trail:·    " show tabs and trailing whitespace
+  endif
+endfunction
+
+" Vim's indent foldmethod doesn't do exactly what I'd like it to do.
+" The next three functions are used to define a better foldmethod.
+" Toggling fold on a line will fold everthing below it with greater indent.
+" It stops folding before it reaches a line with indent equal to or less
+" than the current line or before whitespace (empty) line(s) preceding a
+" line with equal or less indent.
+" The functions were taken verbatim from this awesome site:
+" http://learnvimscriptthehardway.stevelosh.com/chapters/49.html
+function! GetFold(lnum)
+  if getline(a:lnum) =~ '\v^\s*$'
+    return '-1'
+  endif
+
+  let this_indent = IndentLevel(a:lnum)
+  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
+
+  if next_indent == this_indent
+    return this_indent
+  elseif next_indent < this_indent
+    return this_indent
+  elseif next_indent > this_indent
+    return '>' . next_indent
+  endif
+endfunction
+function! IndentLevel(lnum)
+  return indent(a:lnum) / &shiftwidth
+endfunction
+function! NextNonBlankLine(lnum)
+  let numlines = line('$')
+  let current = a:lnum + 1
+  while current <= numlines
+    if getline(current) =~ '\v\S'
+      return current
+    endif
+    let current += 1
+  endwhile
+  return -2
+endfunction
+
+" custom text to be shown for folded lines
+function! GetFoldText()
+  let line = getline(v:foldstart)
+  "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
+  let prefix = '+'.repeat('-', indent(v:foldstart)-2).' '  " +----
+  let postfix = ' '
+
+  let line = substitute(line, '\v^\s+', prefix, '')  " sub leading whitespace
+  let line = substitute(line, '\v$', postfix, '')    " sub the ending
+  return line
+endfunction
 
 " can be used instead of a colorscheme
 function! ApplyCustomTheme()
@@ -210,6 +486,8 @@ function! ApplyCustomTheme()
   " Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
   " There are others but these work in all 8 color terminals.
   hi normal                                   guibg=#242424 guifg=white
+  hi visual   ctermbg=darkblue ctermfg=white  cterm=bold
+  hi visual      gui=bold                     guibg=#0066ff guifg=white
   hi comment                   ctermfg=grey                 guifg=grey
   hi constant                  ctermfg=green                guifg=#66ff66
   hi identifier                ctermfg=cyan                 guifg=#00ccff
@@ -226,7 +504,7 @@ function! ApplyCustomTheme()
   hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
   hi folded                    ctermfg=white  guibg=bg      guifg=white
   hi colorcolumn ctermbg=gray  ctermfg=black  guibg=grey    guifg=black
-  hi matchparen  ctermbg=none  ctermfg=white  guibg=bg      guifg=white
+  hi matchparen  ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
   hi matchparen  cterm=underline,bold         gui=underline,bold
   hi diffadd     ctermbg=green ctermfg=white  guibg=green   guifg=white
   hi diffdelete  ctermbg=red   ctermfg=white  guibg=red     guifg=white
@@ -243,206 +521,4 @@ function! ApplyCustomTheme()
   hi user9                     ctermfg=gray                 guifg=gray
 endfunction
 
-function! TabComplete()
-  let char = getline('.')[col('.')-2]  " get the char behind cursor
-  if empty(char) || char =~ '\s'       " if there isn't one or it's white space
-    return "\<tab>"                    " tab as usual
-  elseif (&filetype == 'html' || &filetype == 'xml') && char == '/'
-    return "\<c-x>\<c-o>"              " complete end tag; e.g. <p>...</[Tab]
-  else
-    return "\<c-n>"                    " otherwise do completion
-  endif
-endfunction
-
-function! ToggleComment()
-  let t = &filetype
-  if t == 'c' || t == 'java' || t == 'javascript' || t == 'go'
-    let pattern = '//'
-  elseif t == 'tex'
-    let pattern = '%'
-  elseif t == 'vim'
-    let pattern = '"'
-  else
-    let pattern = '#'
-  endif
-  if IsSelectionCommented(pattern)
-    return DoUncomment(pattern)
-  else
-    return DoComment(pattern)
-  endif
-endfunction
-function! IsSelectionCommented(pattern)
-  let v = line("v")
-  let cur = line(".")
-  let i = v < cur ? v : cur
-  let end = v < cur ? cur : v
-  while i <= end
-    let line = getline(i)
-    if !IsLineCommented(line, a:pattern)
-      return 0  " false
-    endif
-    let i+=1
-  endwhile
-  return 1      " true
-endfunction
-function! IsLineCommented(line, pattern)
-  if &filetype == 'html' || &filetype == 'xml'
-    return a:line =~ '^\s*<!--.*-->\s*$' " starts with <!-- and ends with -->
-  else
-    return a:line =~ '^\s*'.a:pattern  " starts with comment pattern
-  endif
-endfunction
-function! DoComment(pattern)
-  if &filetype == 'html' || &filetype == 'xml'
-    return ":normal I<!--\<c-o>A-->\<cr>"
-  else
-    return substitute(":normal Ipattern\<cr>", 'pattern', a:pattern, '')
-  endif
-endfunction
-function! DoUncomment(pattern)
-  if &filetype == 'html' || &filetype == 'xml'
-    return ":normal ^4xg_d$xx\<cr>"
-  else
-    return substitute(":normal ^lenx\<cr>", 'len', len(a:pattern), '')
-  endif
-endfunction
-
-" convert file to uft-8, unix line ending, tabs to spaces, trim trailing ws
-function! ConvertFile()
-  let msg = "Convert file?\n
-        \This will set encoding to utf8, convert cr/lf to lf,
-        \ convert tabs to spaces, and trim all trailing whitespace."
-  let choices = "&yes\n&no"
-  let default = 2  " 1=yes, 2=no
-  if confirm(msg, choices, default) == 1
-    write                " save
-    edit ++ff=dos        " reload the file in dos format
-    setlocal ff=unix     " set file format
-    setlocal fenc=utf-8  " set file encoding
-    set expandtab        " make sure we're using expandtab
-    retab                " convert tabs to spaces
-    %s/\s\+$//e          " trim trailing ws (e means don't fail if not found)
-    write                " save
-  endif
-endfunction
-
-" build the status line; %N* is for UserN highlighting, %0* resets
-function! GetStl()
-  let stl  = BufferList()                    " show buffer numbers
-  let stl .= '%1*%='                         " divide left/right alignment
-  let stl .= '%2*%M '                        " modified flag
-  let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
-  let stl .= '%8*%{&ff} '                    " file format (line ending)
-  let stl .= '%2*%{g:gitBranch}'            " current git branch
-  return stl
-endfunction
-
-" buffer list for the status line
-function! BufferList()
-  let cur = bufnr('%')
-  let last = bufnr('$')
-  let i = 1
-  let ret = ''
-  while i <= last
-    let name = fnamemodify(bufname(i), ':t')  " basename of file in buffer i
-    if i == cur
-      if (getbufvar(i, "&mod"))               " if current buffer is modified
-        let ret .= '%2* '.name.' '            " color it red
-      else
-        let ret .= '%7* '.name.' '            " otherwise color it cyan
-      endif
-    elseif buflisted(i)
-      if (getbufvar(i, "&mod"))               " if other buffer is modified
-        let ret .= '%2* '.name.' '            " color it red
-      else
-        let ret .= '%9* '.name.' '            " otherwise color it gray
-      endif
-    endif
-    let i += 1
-  endwhile
-  return ret
-endfunction
-
-" set current git branch for statusline
-function! SetGitBranch()
-  let b = system('git branch --no-color 2>/dev/null | grep ^*')
-  let b = strpart(b, 2)                  " remove the '* ' part
-  let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
-  let g:gitBranch = b
-endfunction
-
-function ToggleWhitespaceStyle()
-  if &expandtab
-    call SetWhitespaceStyle('tabs')
-    echo 'Using tabs'
-  else
-    call SetWhitespaceStyle('spaces')
-    echo 'Using spaces'
-  endif
-endfunction
-
-" ws arg should be either 'tabs' or 'spaces'
-function! SetWhitespaceStyle(ws)
-  if a:ws == 'tabs'
-    set noexpandtab
-    set tabstop=8                   " number of spaces to use for tab
-    set listchars=tab:\ \ ,trail:·  " only show trailing whitespace
-  elseif a:ws == 'spaces'
-    set expandtab
-    set tabstop=2                   " number of spaces to use for tab
-    set listchars=tab:»»,trail:·    " show tabs and trailing whitespace
-  endif
-  set shiftwidth=0                  " auto indent same distance as tabstop
-  set softtabstop=-1                " backspace over shiftwidth distance
-endfunction
-
-" Vim's indent foldmethod doesn't do exactly what I'd like it to do.
-" The next three functions are used to define a better foldmethod.
-" Toggling fold on a line will fold everthing below it with greater indent.
-" It stops folding before it reaches a line with indent equal to or less
-" than the current line or before whitespace (empty) line(s) preceding a
-" line with equal or less indent.
-" The functions were taken verbatim from this awesome site:
-" http://learnvimscriptthehardway.stevelosh.com/chapters/49.html
-function! GetFold(lnum)
-  if getline(a:lnum) =~ '\v^\s*$'
-    return '-1'
-  endif
-
-  let this_indent = IndentLevel(a:lnum)
-  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
-
-  if next_indent == this_indent
-    return this_indent
-  elseif next_indent < this_indent
-    return this_indent
-  elseif next_indent > this_indent
-    return '>' . next_indent
-  endif
-endfunction
-function! IndentLevel(lnum)
-  return indent(a:lnum) / &shiftwidth
-endfunction
-function! NextNonBlankLine(lnum)
-  let numlines = line('$')
-  let current = a:lnum + 1
-  while current <= numlines
-    if getline(current) =~ '\v\S'
-      return current
-    endif
-    let current += 1
-  endwhile
-  return -2
-endfunction
-
-" custom text to be shown for folded lines
-function! GetFoldText()
-  let line = getline(v:foldstart)
-  "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
-  let prefix = '+'.repeat('-', indent(v:foldstart)-2).' '  " +----
-  let postfix = ' '
-
-  let line = substitute(line, '\v^\s+', prefix, '')  " sub leading whitespace
-  let line = substitute(line, '\v$', postfix, '')    " sub the ending
-  return line
-endfunction
+call ApplyCustomTheme()
