@@ -23,11 +23,13 @@ entries in `.gitconfig`.
 - case insensitive tab completion
 - disabled flow control (`ctrl-s` doesn't freeze the terminal)
 - colorful prompt with git branch and [un]smiley for previous command status
+- colored man pages (in less)
 - and aliases, of course
 
 .vimrc
 ------
 - tab completion (including complete end tag for html/xml)
+- auto complete brackets and open + indent on enter like an IDE
 - line and multiline toggle comment
 - code folding (on indent - better than the default implementation)
 - autosave while in normal mode
@@ -35,7 +37,6 @@ entries in `.gitconfig`.
 - statusline with buffer list, file encoding+format, and current git branch
 - convert file: to utf-8, unix line ends, tabs to spaces, trim whitespace
 - keybindings for indentation fix
-- auto complete brackets and open + indent on enter like an IDE
 - nice theme
 - lots of other useful and practical settings and keybindings
 - no plugin dependencies - all of this is defined in the file

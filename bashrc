@@ -21,7 +21,6 @@ alias curls='curl -OL'  # always output to file and follow redirects
 alias pingg='ping google.com'
 alias ping8='ping 8.8.8.8'
 alias yogurt='yaourt'
-alias pi='ssh -l pi -p 2222 localhost'
 
 # ls after cd
 cd() {
@@ -43,16 +42,6 @@ man() {
     LESS_TERMCAP_ue=$'\E[0m' \
     LESS_TERMCAP_us=$'\E[04;38;5;146m' \
     man "$@"
-}
-
-# History: no duplicate entries, always append instead of overwrite, and
-# share history with other sessions.
-# http://unix.stackexchange.com/questions/18212
-# http://ss64.com/bash/history.html
-HISTCONTROL=ignoredups:erasedups
-shopt -s histappend
-share_hist() {
-  history -n; history -w; history -c; history -r;
 }
 
 # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
@@ -97,6 +86,6 @@ custom_ps1() {
   # reset the color
   PS1+="$rst"
 }
-PROMPT_COMMAND="custom_ps1; share_hist;"
+PROMPT_COMMAND="custom_ps1"
 
 ls
