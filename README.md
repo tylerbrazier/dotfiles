@@ -28,15 +28,13 @@ entries in `.gitconfig`.
 
 .vimrc
 ------
-- tab completion (including complete end tag for html/xml)
-- auto complete brackets and open + indent on enter like an IDE
+- tab complete words
+- auto complete brackets, html/xml tags, and other IDE-like features
 - line and multiline toggle comment
 - code folding (on indent - better than the default implementation)
 - autosave while in normal mode
 - cut, copy, paste from system clipboard using `ctrl-x`, `ctrl-c`, `ctrl-v`
 - statusline with buffer list, file encoding+format, and current git branch
-- convert file: to utf-8, unix line ends, tabs to spaces, trim whitespace
-- keybindings for indentation fix
 - nice theme
 - lots of other useful and practical settings and keybindings
 - no plugin dependencies - all of this is defined in the file

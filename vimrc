@@ -17,7 +17,7 @@
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
 " ctrl-f    [f]ix misspelled word under cursor
-" ctrl-c    [c]onvert file to uft8, unix line ending, tabs to spaces, trim ws
+" ctrl-c    toggle tab & auto [c]ompletion (see Completion note below)
 " ctrl-i    fix [i]ndentation on whole file or visual selection
 " ctrl-u    toggle showing line n[u]mbers
 " ctrl-l    toggle code fo[l]d
@@ -29,19 +29,33 @@
 " Note: ctrl-/ for toggle comment works on some terminals but on in gvim :(
 " If it doesn't work, just use ctrl-o instead.
 
-" Insert mode key binding reference
+" Insert/visual mode key binding reference
 " ---------------------------------
-" ctrl-c    (in visual insert) copy to system clipboard
-" ctrl-x    (in visual insert) cut into system clipboard
-" ctrl-v    paste from system clipboard
-" ctrl-z    undo
-" [tab]     do completion if cursor follows a nonwhitespace character
+" ctrl-c    (visual) copy to system clipboard
+" ctrl-x    (visual) cut into system clipboard
+" ctrl-v    (insert) paste from system clipboard
+" ctrl-z    (insert) undo
+
+" Completion
+" ----------
+" If completion is enabled (toggle with ctrl-c), pressing some keys in insert
+" mode can auto complete common sequences.
+" >           if editing xml/html, complete end tag and move between them
+" (,{,[       complete closing bracket and move the cursor between them
+" ),},]       step over closing bracket if it's to the right of the cursor
+" [backspace] if between two matching brackets, delete them both
+" [enter]     if between two matching brackets or tags, open them below
+" [tab]       do word completion if cursor follows a nonwhitespace character
 "
-" When tab completion menu is up, use [tab] or ctrl-n to move to the next
-" suggestion, shift-tab or ctrl-p for previous suggestion, and
-" [enter] to select.
+" When word completion menu is up, use [tab] or ctrl-n to move to the next
+" suggestion, shift-tab or ctrl-p for previous suggestion, [enter] to select.
 "
-" Tab can also complete HTML/XML tags; e.g. <p>[tab] or <p>...</[tab]
+" NOTE: most of these completion mappings will interrupt the undo/redo/repeat
+" sequence since they move the cursor in insert mode or include an [esc] in
+" the mapping.
+" See http://vim.wikia.com/wiki/Automatically_append_closing_characters
+" If you need to repeat a sequence (using .) that includes typing an auto
+" complete character, just disable completion beforehand.
 
 set nocompatible             " vim, not vi. should be first in vimrc
 set encoding=utf-8           " set the encoding displayed by vim
@@ -71,10 +85,14 @@ set foldtext=GetFoldText()   " the text to show on folded lines
 set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
+set updatetime=200           " millis until cursorhold; used for autosave
 if &modifiable
   set list                   " show listchars
   set colorcolumn=80         " show a line at column
 endif
+
+let g:gitBranch = ''         " current git branch; changed by SetGitBranch()
+let g:enableComplete = 1     " [true] auto complete brackets and html/xml tags
 
 " reset autocmds so that sourcing vimrc again doesn't run autocmds twice
 autocmd!
@@ -83,7 +101,6 @@ filetype plugin indent on    " detect filetype and automatically indent
 syntax on                    " syntax highlighting
 
 " set git branch for statusline on buffer read
-let g:gitBranch = ''
 autocmd bufenter * call SetGitBranch()
 
 " default to using spaces instead of tabs
@@ -95,8 +112,10 @@ autocmd bufenter *.go call SetWhitespaceStyle('tabs')
 " set syntax highlighting for *.md files
 autocmd bufenter *.md set syntax=markdown
 
-" write (if changed) every updatetime millis if editing a modifiable file
-set updatetime=200
+" don't split the window when looking at help pages
+autocmd bufenter *.txt if &filetype == 'help' | only | endif
+
+" autosave; write (if changed) every updatetime millis if editing a file
 autocmd cursorhold ?\+ if &modifiable | update | endif
 
 nnoremap <cr> :
@@ -115,7 +134,7 @@ nnoremap <c-t> :call ToggleWhitespaceStyle()<cr>
 nnoremap <c-h> :set invhlsearch<cr>
 nnoremap <c-s> :set invspell<cr>
 nnoremap <c-f> ea<c-x>s
-nnoremap <c-c> :call ConvertFile()<cr>
+nnoremap <c-c> :call ToggleComplete()<cr>
 nnoremap <c-i> mxgg=G'x
 vnoremap <c-i> =
 nnoremap <c-u> :set invnumber<cr>
@@ -140,94 +159,120 @@ if has('clipboard')
   inoremap <c-v> <c-r>+
   inoremap <c-z> <c-o>u
 endif
-inoremap <expr> <tab> TabComplete()
-inoremap <expr> <s-tab> pumvisible() ? "\<c-p>" : "\<tab>"
-inoremap <expr> <cr> pumvisible() ? "\<c-y>" : "\<cr>"
 
-" complete brackets
-inoremap ( ()<left>
-inoremap { {}<left>
-inoremap [ []<left>
-
-" step over matching bracket instead of inserting a new one
-inoremap <expr> ) StepOver(')')
-inoremap <expr> } StepOver('}')
-inoremap <expr> ] StepOver(']')
-
-" if between two brackets or tags, push the closing below and open between them
-inoremap <expr> <cr> OpenBelow()
-
-" if between two brackets and you backspace, delete them both
-inoremap <expr> <bs> DeleteMatching()
+inoremap <expr> <tab> Complete("\<tab>")
+inoremap <expr> <s-tab> Complete("\<s-tab>")
+inoremap <expr> <cr> Complete("\<cr>")
+inoremap <expr> <bs> Complete("\<bs>")
+inoremap <expr> ( Complete('(')
+inoremap <expr> { Complete('{')
+inoremap <expr> [ Complete('[')
+inoremap <expr> ) Complete(')')
+inoremap <expr> } Complete('}')
+inoremap <expr> ] Complete(']')
+inoremap <expr> > Complete('>')
 
 " NOTE: don't rebind these keys:
 " c-r because that's for redo
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
 
-
 " --------------------
 " Function definitions
 " --------------------
-function! CharLeft()
-  return getline('.')[col('.')-2]  " char to left of cursor
-endfunction
-function! CharRight()
-  return getline('.')[col('.')-1]  " char to right of cursor
-endfunction
 
-" if between two brackets or tags, push the closing below and open between them
-function! OpenBelow()
-  let l = CharLeft()
-  let r = CharRight()
-  let t = &filetype
-  if (l == '(' && r == ')') ||
-   \ (l == '{' && r == '}') ||
-   \ (l == '[' && r == ']') ||
-   \ ((t == 'html' || t == 'xml') && l == '>' && r == '<')  " between two tags
-    return "\<cr>\<esc>O"
+function! ToggleComplete()
+  if g:enableComplete
+    let g:enableComplete = 0
+    echo 'Completion is off'
   else
-    return "\<cr>"
+    let g:enableComplete = 1
+    echo 'Completion is on'
   endif
 endfunction
 
-" step over matching bracket instead of inserting a new one
-function! StepOver(c)
-  if CharRight() == a:c     " if c is the char to the right of the cursor
-    return "\<right>"       " step over it
-  else
-    return a:c              " otherwise just insert the char
+" auto complete things like brackets and html/xml tags
+function! Complete(c)
+  if !g:enableComplete
+    return a:c
   endif
-endfunction
 
-" if between two brackets and you backspace, delete them both
-function! DeleteMatching()
-  let l = CharLeft()
-  let r = CharRight()
-  if (l == '(' && r == ')') ||
-   \ (l == '{' && r == '}') ||
-   \ (l == '[' && r == ']')
-    return "\<right>\<bs>\<bs>"  " delete them both
-  else
-    return "\<bs>"
-  endif
-endfunction
+  let l = getline('.')[col('.')-2]  " char to left of the cursor
+  let r = getline('.')[col('.')-1]  " char to right of the cursor
+  let isMarkup = (&filetype == 'html' || &filetype == 'xml') ? 1 : 0
 
-function! TabComplete()
-  let l = CharLeft()                   " get the char to the left of the cursor
-  if empty(l) || l =~ '\s'             " if there isn't one or it's white space
-    return "\<tab>"                    " tab as usual
-  endif
-  let t = &filetype
-  let r = CharRight()
-  if (t == 'html' || t == 'xml')
-    if l == '>' && r != '<'               " <...>[tab]
-      return "</\<c-x>\<c-o>\<esc>F<i"    " complete end tag and go between them
-    elseif l == '/'                       " <...></[tab]
-      return "\<c-x>\<c-o>\<esc>mx==`xa"  " complete end tag and fix indent
+  " enter can open below if between brackets or tags
+  if a:c == "\<cr>"
+    if (l=='(' && r==')') || (l=='{' && r=='}') || (l=='[' && r==']')
+          \ || (isMarkup && l == '>' && r == '<')
+      " open below tags or brackets
+      return "\<cr>\<esc>O"
+    elseif pumvisible()
+      " select current entry in tab completion menu
+      return "\<c-y>"
+    else
+      return a:c
     endif
   endif
-  return "\<c-n>"                         " otherwise do word completion
+
+  " backspace can delete matching brackets if you're between them
+  if a:c == "\<bs>"
+    if (l=='(' && r==')') || (l=='{' && r=='}') || (l=='[' && r==']')
+      return "\<right>\<bs>\<bs>"  " delete them both
+    else
+      return "\<bs>"
+    endif
+  endif
+
+  " tab to do word completion
+  if a:c == "\<tab>"
+    if empty(l) || l =~ '\s' " if char to the left is empty or it's white space
+      return "\<tab>"        " tab as usual
+    else
+      return "\<c-n>"        " otherwise do word completion
+    endif
+  endif
+
+  " shift-tab can move up on the completion menu
+  if a:c == "\<s-tab>"
+    return pumvisible() ? "\<c-p>" : "\<tab>"
+  endif
+
+  " complete matching brackets
+  if a:c == '('
+    return "()\<left>"
+  elseif a:c == '{'
+    return "{}\<left>"
+  elseif a:c == '['
+    return "[]\<left>"
+  endif
+
+  " step over closing brackets
+  if a:c == ')' || a:c == '}' || a:c == ']'
+    return r == a:c ? "\<right>" : a:c
+  endif
+
+  " complete html tag
+  if a:c == '>' && isMarkup
+    if getline('.')[col('.')-3] == '-'  " if char to left of > is -
+      return a:c                        " don't complete on comment -->
+    endif
+    " void elements; these should not have an end tag
+    " http://www.w3.org/TR/html5/syntax.html#void-elements
+    let ve = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
+          \ 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr']
+    " GetLastOpenTag is conveniently defined in xmlcomplete.vim
+    let b:empty = ""
+    let e = xmlcomplete#GetLastOpenTag("b:empty")
+    if index(ve, e) != -1  " if last open tag is a void element
+      return a:c           " don't complete end tag
+    else
+      return "></\<c-x>\<c-o>\<esc>F<i"  " complete end tag and go between them
+    endif
+  endif
+
+  " otherwise just return the typed char
+  return a:c
 endfunction
 
 function! ToggleComment()
@@ -243,7 +288,7 @@ function! ToggleComment()
   elseif t == 'html' || t == 'xml'
     let lhs = '<!--'
     let rhs = '-->'
-  elseif t == 'css'
+  elseif t == 'css' || t == 'less'
     let lhs = '/*'
     let rhs = '*/'
   endif
@@ -253,6 +298,7 @@ function! ToggleComment()
     return DoComment(lhs, rhs)
   endif
 endfunction
+
 function! IsSelectionCommented(lhs, rhs)
   let v = line("v")
   let cur = line(".")
@@ -267,20 +313,23 @@ function! IsSelectionCommented(lhs, rhs)
   endwhile
   return 1      " true
 endfunction
+
 function! IsLineCommented(line, lhs, rhs)
   let l = escape(a:lhs, '*')      " needed for comment chars like /* ... */
   let r = escape(a:rhs, '*')
   return a:line =~ '^\s*'.l.'.*'.r.'\s*$' " starts with lhs and ends with rhs
 endfunction
+
 function! DoComment(lhs, rhs)
-  let c = ":normal I".a:lhs
+  let c = ":normal! I".a:lhs
   if len(a:rhs) > 0
     let c = c."\<c-o>A".a:rhs
   endif
   return c."\<cr>"
 endfunction
+
 function! DoUncomment(lhs, rhs)
-  let c = ":normal ^".len(a:lhs)."x"
+  let c = ":normal! ^".len(a:lhs)."x"
   if len(a:rhs) > 0
     let c = c.'g_d$'  " delete last non-whitespace char and all trailing space
   endif
@@ -290,25 +339,6 @@ function! DoUncomment(lhs, rhs)
     let i += 1
   endwhile
   return c."\<cr>"
-endfunction
-
-" convert file to uft-8, unix line ending, tabs to spaces, trim trailing ws
-function! ConvertFile()
-  let msg = "Convert file?\n
-        \This will set encoding to utf8, convert cr/lf to lf,
-        \ convert tabs to spaces, and trim all trailing whitespace."
-  let choices = "&yes\n&no"
-  let default = 2  " 1=yes, 2=no
-  if confirm(msg, choices, default) == 1
-    write                " save
-    edit ++ff=dos        " reload the file in dos format
-    setlocal ff=unix     " set file format
-    setlocal fenc=utf-8  " set file encoding
-    set expandtab        " make sure we're using expandtab
-    retab                " convert tabs to spaces
-    %s/\s\+$//e          " trim trailing ws (e means don't fail if not found)
-    write                " save
-  endif
 endfunction
 
 " build the status line; %N* is for UserN highlighting, %0* resets
@@ -350,6 +380,10 @@ endfunction
 
 " set current git branch for statusline
 function! SetGitBranch()
+  " lcd to ensure we're in the right dir when running git branch.
+  " autochdir doesn't seem to kick in on bufread when this function is called.
+  " See http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
+  lcd %:p:h  " cd to directory of current file
   let b = system('git branch --no-color 2>/dev/null | grep ^*')
   let b = strpart(b, 2)                  " remove the '* ' part
   let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
@@ -368,9 +402,9 @@ endfunction
 
 " ws arg should be either 'tabs' or 'spaces'
 function! SetWhitespaceStyle(ws)
-    set tabstop=2                   " number of spaces to use for tab
-    set shiftwidth=2                " auto indent distance
-    set softtabstop=2               " backspace over shiftwidth distance
+  set tabstop=2                     " number of spaces to use for tab
+  set shiftwidth=2                  " auto indent distance
+  set softtabstop=2                 " backspace over shiftwidth distance
   if a:ws == 'tabs'
     set noexpandtab
     set listchars=tab:\ \ ,trail:·  " only show trailing whitespace
@@ -431,94 +465,94 @@ function! GetFoldText()
   return line
 endfunction
 
-" can be used instead of a colorscheme
-function! ApplyCustomTheme()
-  " boilerplate for applying a theme
-  hi clear
-  set background=dark
-  if exists('syntax_on')
-    syntax reset
-  endif
+" ---------------------------------------
+" Custom theme (instead of a colorscheme)
+" ---------------------------------------
 
-  set guifont=Monospace\ 9
+" boilerplate for applying a theme
+hi clear
+set background=dark
+if exists('syntax_on')
+  syntax reset
+endif
 
-  " Hightlight (hi) groups (from :help group-name):
-  "   comment        any comment
-  "   constant       stings, numbers, booleans, etc.
-  "     string       "example"
-  "     character    character constants like 'c'
-  "     number       123, 0xff
-  "     boolean      TRUE, false
-  "     float        2.3e10
-  "   identifier     functions, brackets, variable names
-  "     function     and methods
-  "   statement      if, else, for, while, case, try, catch, etc.
-  "     conditional  if, then, else, endif, switch, etc.
-  "     repeat       for, do, while, etc.
-  "     label        case, default, etc.
-  "     operator     +, *, sizeof, etc.
-  "     exception    try, catch, throw, etc.
-  "     keyword      any other keyword
-  "   preproc        preprocessors like import, include, #if, #define, etc.
-  "   type           keywords like int, long, char, etc.
-  "   special        special symbols like '\n' (affects diffs and patches)
-  "   underlined     text that stands out, HTML links
-  "   error          synta errors
-  "   todo           mostly keywords TODO, FIXME, and XXX
-  "
-  " Some additional groups that you might want to specfically color for:
-  "   title        section headers, html <title>, etc
-  "   linenr       line numbers
-  "   search       highlighted search terms
-  "   pmenu        completion menu nonselected
-  "   pmenusel     completion menu selected
-  "   folded       colors of closed fold
-  "   colorcolumn  the 80 character mark
-  "   matchparen   matching brackets/parens
-  "   diffadd      vimdiff added line
-  "   diffdelete   vimdiff removed line
-  "   diffchange   vimdiff changed line
-  "   difftext     vimdiff actual text that changed
-  "   userN        where N is 1..9; used in statusline (:h hl-User1..9)
-  "
-  " There are more groups; ':help group-name' for more info.
-  "
-  " Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
-  " There are others but these work in all 8 color terminals.
-  hi normal                                   guibg=#242424 guifg=white
-  hi visual   ctermbg=darkblue ctermfg=white  cterm=bold
-  hi visual      gui=bold                     guibg=#0066ff guifg=white
-  hi comment                   ctermfg=grey                 guifg=grey
-  hi constant                  ctermfg=green                guifg=#66ff66
-  hi identifier                ctermfg=cyan                 guifg=#00ccff
-  hi statement                 ctermfg=red                  guifg=#ff8855
-  hi preproc                   ctermfg=blue                 guifg=#0066ff
-  hi type                      ctermfg=cyan                 guifg=#00ccff
-  hi todo        ctermbg=none  ctermfg=yellow guibg=bg      guifg=yellow
-  hi todo        cterm=underline,bold         gui=underline,bold
-  hi title       cterm=bold    ctermfg=white  gui=bold      guifg=white
-  hi linenr                    ctermfg=grey                 guifg=grey
-  hi search      ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
-  hi search      cterm=underline,bold         gui=underline,bold
-  hi pmenu       ctermbg=black ctermfg=gray   guibg=black   guifg=gray
-  hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
-  hi folded                    ctermfg=white  guibg=bg      guifg=white
-  hi colorcolumn ctermbg=gray  ctermfg=black  guibg=grey    guifg=black
-  hi matchparen  ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
-  hi matchparen  cterm=underline,bold         gui=underline,bold
-  hi diffadd     ctermbg=green ctermfg=white  guibg=green   guifg=white
-  hi diffdelete  ctermbg=red   ctermfg=white  guibg=red     guifg=white
-  hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan    guifg=white
-  hi difftext    ctermbg=blue  ctermfg=white  guibg=blue    guifg=white
-  hi user1                     ctermfg=black                guifg=black
-  hi user2                     ctermfg=red                  guifg=red
-  hi user3                     ctermfg=green                guifg=green
-  hi user4                     ctermfg=yellow               guifg=yellow
-  hi user5                     ctermfg=blue                 guifg=blue
-  hi user6                     ctermfg=magenta              guifg=magenta
-  hi user7                     ctermfg=cyan                 guifg=cyan
-  hi user8                     ctermfg=white                guifg=white
-  hi user9                     ctermfg=gray                 guifg=gray
-endfunction
+set guifont=Monospace\ 9
 
-call ApplyCustomTheme()
+" Hightlight (hi) groups (from :help group-name):
+"   comment        any comment
+"   constant       stings, numbers, booleans, etc.
+"     string       "example"
+"     character    character constants like 'c'
+"     number       123, 0xff
+"     boolean      TRUE, false
+"     float        2.3e10
+"   identifier     functions, brackets, variable names
+"     function     and methods
+"   statement      if, else, for, while, case, try, catch, etc.
+"     conditional  if, then, else, endif, switch, etc.
+"     repeat       for, do, while, etc.
+"     label        case, default, etc.
+"     operator     +, *, sizeof, etc.
+"     exception    try, catch, throw, etc.
+"     keyword      any other keyword
+"   preproc        preprocessors like import, include, #if, #define, etc.
+"   type           keywords like int, long, char, etc.
+"   special        special symbols like '\n' (affects diffs and patches)
+"   underlined     text that stands out, HTML links
+"   error          synta errors
+"   todo           mostly keywords TODO, FIXME, and XXX
+"
+" Some additional groups that you might want to specfically color for:
+"   title        section headers, html <title>, etc
+"   linenr       line numbers
+"   search       highlighted search terms
+"   pmenu        completion menu nonselected
+"   pmenusel     completion menu selected
+"   folded       colors of closed fold
+"   colorcolumn  the 80 character mark
+"   matchparen   matching brackets/parens
+"   diffadd      vimdiff added line
+"   diffdelete   vimdiff removed line
+"   diffchange   vimdiff changed line
+"   difftext     vimdiff actual text that changed
+"   userN        where N is 1..9; used in statusline (:h hl-User1..9)
+"
+" There are more groups; ':help group-name' for more info.
+"
+" Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
+" There are others but these work in all 8 color terminals.
+hi normal                                   guibg=#242424 guifg=white
+hi visual   ctermbg=darkblue ctermfg=white  cterm=bold
+hi visual      gui=bold                     guibg=#0066ff guifg=white
+hi comment                   ctermfg=grey                 guifg=grey
+hi constant                  ctermfg=green                guifg=#66ff66
+hi identifier                ctermfg=cyan                 guifg=#00ccff
+hi statement                 ctermfg=red                  guifg=#ff8855
+hi preproc                   ctermfg=blue                 guifg=#0066ff
+hi type                      ctermfg=cyan                 guifg=#00ccff
+hi todo        ctermbg=none  ctermfg=yellow guibg=bg      guifg=yellow
+hi todo        cterm=underline,bold         gui=underline,bold
+hi title       cterm=bold    ctermfg=white  gui=bold      guifg=white
+hi linenr                    ctermfg=grey                 guifg=grey
+hi search      ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
+hi search      cterm=underline,bold         gui=underline,bold
+hi pmenu       ctermbg=black ctermfg=gray   guibg=black   guifg=gray
+hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
+hi folded      ctermbg=none  ctermfg=white  guibg=bg      guifg=white
+hi colorcolumn ctermbg=grey  ctermfg=none   guibg=grey    guifg=NONE
+hi matchparen  ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
+hi matchparen  cterm=underline,bold         gui=underline,bold
+hi diffadd     ctermbg=green ctermfg=white  guibg=green   guifg=white
+hi diffdelete  ctermbg=red   ctermfg=white  guibg=red     guifg=white
+hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan    guifg=white
+hi difftext    ctermbg=blue  ctermfg=white  guibg=blue    guifg=white
+hi user1                     ctermfg=black                guifg=black
+hi user2                     ctermfg=red                  guifg=red
+hi user3                     ctermfg=green                guifg=green
+hi user4                     ctermfg=yellow               guifg=yellow
+hi user5                     ctermfg=blue                 guifg=blue
+hi user6                     ctermfg=magenta              guifg=magenta
+hi user7                     ctermfg=cyan                 guifg=cyan
+hi user8                     ctermfg=white                guifg=white
+hi user9                     ctermfg=gray                 guifg=gray
+
