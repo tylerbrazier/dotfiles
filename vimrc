@@ -86,10 +86,11 @@ set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set statusline=%!GetStl()    " set the statusline as defined below
 set updatetime=200           " millis until cursorhold; used for autosave
-if &modifiable
-  set list                   " show listchars
-  set colorcolumn=80         " show a line at column
-endif
+set list                     " show listchars
+set listchars=tab:»·,trail:· " what to show when :set list is on
+set colorcolumn=80           " show a line at column
+set expandtab                " spaces instead of tabs
+set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
 
 let g:gitBranch = ''         " current git branch; changed by SetGitBranch()
 let g:enableComplete = 1     " [true] auto complete brackets and html/xml tags
@@ -100,23 +101,23 @@ autocmd!
 filetype plugin indent on    " detect filetype and automatically indent
 syntax on                    " syntax highlighting
 
-" set git branch for statusline on buffer read
+" autosave; write (if changed) every updatetime millis if editing a file
+autocmd cursorhold ?\+ if &modifiable | update | endif
+
+" set git branch for statusline
 autocmd bufenter * call SetGitBranch()
-
-" default to using spaces instead of tabs
-autocmd bufenter * call SetWhitespaceStyle('spaces')
-
-" go uses tabs instead of spaces
-autocmd bufenter *.go call SetWhitespaceStyle('tabs')
-
-" set syntax highlighting for *.md files
-autocmd bufenter *.md set syntax=markdown
 
 " don't split the window when looking at help pages
 autocmd bufenter *.txt if &filetype == 'help' | only | endif
 
-" autosave; write (if changed) every updatetime millis if editing a file
-autocmd cursorhold ?\+ if &modifiable | update | endif
+" go uses tabs and vim already highlights bad whitespace for go files
+autocmd bufread *.go set noexpandtab nolist
+
+" *.md are markdown files
+autocmd bufenter *.md set filetype=markdown syntax=markdown
+
+" git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
+autocmd bufread COMMIT_EDITMSG set colorcolumn=72
 
 nnoremap <cr> :
 nnoremap ! :!
@@ -130,7 +131,7 @@ nnoremap <c-p> :bprevious<cr>
 nnoremap <c-d> :bdelete<cr>
 nnoremap <c-q> :qall<cr>
 nnoremap <c-w> :set invwrap<cr>
-nnoremap <c-t> :call ToggleWhitespaceStyle()<cr>
+nnoremap <c-t> :set invexpandtab<cr>
 nnoremap <c-h> :set invhlsearch<cr>
 nnoremap <c-s> :set invspell<cr>
 nnoremap <c-f> ea<c-x>s
@@ -191,7 +192,6 @@ function! ToggleComplete()
   endif
 endfunction
 
-" auto complete things like brackets and html/xml tags
 function! Complete(c)
   if !g:enableComplete
     return a:c
@@ -288,7 +288,7 @@ function! ToggleComment()
   elseif t == 'html' || t == 'xml'
     let lhs = '<!--'
     let rhs = '-->'
-  elseif t == 'css' || t == 'less'
+  elseif t == 'css' || t == 'less' || t == 'scss'
     let lhs = '/*'
     let rhs = '*/'
   endif
@@ -341,8 +341,8 @@ function! DoUncomment(lhs, rhs)
   return c."\<cr>"
 endfunction
 
-" build the status line; %N* is for UserN highlighting, %0* resets
 function! GetStl()
+  " %N* is for UserN highlighting, %0* resets
   let stl  = BufferList()                    " show buffer numbers
   let stl .= '%1*%='                         " divide left/right alignment
   let stl .= '%8*%l,%c '                     " line,column number
@@ -352,7 +352,6 @@ function! GetStl()
   return stl
 endfunction
 
-" buffer list for the status line
 function! BufferList()
   let cur = bufnr('%')
   let last = bufnr('$')
@@ -378,7 +377,6 @@ function! BufferList()
   return ret
 endfunction
 
-" set current git branch for statusline
 function! SetGitBranch()
   " lcd to ensure we're in the right dir when running git branch.
   " autochdir doesn't seem to kick in on bufread when this function is called.
@@ -390,28 +388,15 @@ function! SetGitBranch()
   let g:gitBranch = b
 endfunction
 
-function! ToggleWhitespaceStyle()
-  if &expandtab
-    call SetWhitespaceStyle('tabs')
-    echo 'Using tabs'
-  else
-    call SetWhitespaceStyle('spaces')
-    echo 'Using spaces'
-  endif
-endfunction
+function! GetFoldText()
+  let line = getline(v:foldstart)
+  "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
+  let prefix = '+'.repeat('-', indent(v:foldstart)-2).' '  " +----
+  let postfix = ' '
 
-" ws arg should be either 'tabs' or 'spaces'
-function! SetWhitespaceStyle(ws)
-  set tabstop=2                     " number of spaces to use for tab
-  set shiftwidth=2                  " auto indent distance
-  set softtabstop=2                 " backspace over shiftwidth distance
-  if a:ws == 'tabs'
-    set noexpandtab
-    set listchars=tab:\ \ ,trail:·  " only show trailing whitespace
-  elseif a:ws == 'spaces'
-    set expandtab
-    set listchars=tab:»»,trail:·    " show tabs and trailing whitespace
-  endif
+  let line = substitute(line, '\v^\s+', prefix, '')  " sub leading whitespace
+  let line = substitute(line, '\v$', postfix, '')    " sub the ending
+  return line
 endfunction
 
 " Vim's indent foldmethod doesn't do exactly what I'd like it to do.
@@ -453,18 +438,6 @@ function! NextNonBlankLine(lnum)
   return -2
 endfunction
 
-" custom text to be shown for folded lines
-function! GetFoldText()
-  let line = getline(v:foldstart)
-  "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
-  let prefix = '+'.repeat('-', indent(v:foldstart)-2).' '  " +----
-  let postfix = ' '
-
-  let line = substitute(line, '\v^\s+', prefix, '')  " sub leading whitespace
-  let line = substitute(line, '\v$', postfix, '')    " sub the ending
-  return line
-endfunction
-
 " ---------------------------------------
 " Custom theme (instead of a colorscheme)
 " ---------------------------------------
@@ -478,81 +451,77 @@ endif
 
 set guifont=Monospace\ 9
 
-" Hightlight (hi) groups (from :help group-name):
-"   comment        any comment
-"   constant       stings, numbers, booleans, etc.
-"     string       "example"
-"     character    character constants like 'c'
-"     number       123, 0xff
-"     boolean      TRUE, false
-"     float        2.3e10
-"   identifier     functions, brackets, variable names
-"     function     and methods
-"   statement      if, else, for, while, case, try, catch, etc.
-"     conditional  if, then, else, endif, switch, etc.
-"     repeat       for, do, while, etc.
-"     label        case, default, etc.
-"     operator     +, *, sizeof, etc.
-"     exception    try, catch, throw, etc.
-"     keyword      any other keyword
-"   preproc        preprocessors like import, include, #if, #define, etc.
-"   type           keywords like int, long, char, etc.
-"   special        special symbols like '\n' (affects diffs and patches)
-"   underlined     text that stands out, HTML links
-"   error          synta errors
-"   todo           mostly keywords TODO, FIXME, and XXX
-"
-" Some additional groups that you might want to specfically color for:
-"   title        section headers, html <title>, etc
-"   linenr       line numbers
-"   search       highlighted search terms
-"   pmenu        completion menu nonselected
-"   pmenusel     completion menu selected
-"   folded       colors of closed fold
-"   colorcolumn  the 80 character mark
-"   matchparen   matching brackets/parens
-"   diffadd      vimdiff added line
-"   diffdelete   vimdiff removed line
-"   diffchange   vimdiff changed line
-"   difftext     vimdiff actual text that changed
-"   userN        where N is 1..9; used in statusline (:h hl-User1..9)
-"
-" There are more groups; ':help group-name' for more info.
-"
+" Hightlight (hi) groups; there are more (:help group-name).
 " Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
 " There are others but these work in all 8 color terminals.
-hi normal                                   guibg=#242424 guifg=white
-hi visual   ctermbg=darkblue ctermfg=white  cterm=bold
-hi visual      gui=bold                     guibg=#0066ff guifg=white
-hi comment                   ctermfg=grey                 guifg=grey
-hi constant                  ctermfg=green                guifg=#66ff66
-hi identifier                ctermfg=cyan                 guifg=#00ccff
-hi statement                 ctermfg=red                  guifg=#ff8855
-hi preproc                   ctermfg=blue                 guifg=#0066ff
-hi type                      ctermfg=cyan                 guifg=#00ccff
-hi todo        ctermbg=none  ctermfg=yellow guibg=bg      guifg=yellow
-hi todo        cterm=underline,bold         gui=underline,bold
-hi title       cterm=bold    ctermfg=white  gui=bold      guifg=white
-hi linenr                    ctermfg=grey                 guifg=grey
-hi search      ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
-hi search      cterm=underline,bold         gui=underline,bold
-hi pmenu       ctermbg=black ctermfg=gray   guibg=black   guifg=gray
-hi pmenusel    ctermbg=black ctermfg=cyan   guibg=black   guifg=#00ccff
-hi folded      ctermbg=none  ctermfg=white  guibg=bg      guifg=white
-hi colorcolumn ctermbg=grey  ctermfg=none   guibg=grey    guifg=NONE
-hi matchparen  ctermbg=none  ctermfg=none   guibg=bg      guifg=NONE
-hi matchparen  cterm=underline,bold         gui=underline,bold
-hi diffadd     ctermbg=green ctermfg=white  guibg=green   guifg=white
-hi diffdelete  ctermbg=red   ctermfg=white  guibg=red     guifg=white
-hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan    guifg=white
-hi difftext    ctermbg=blue  ctermfg=white  guibg=blue    guifg=white
-hi user1                     ctermfg=black                guifg=black
-hi user2                     ctermfg=red                  guifg=red
-hi user3                     ctermfg=green                guifg=green
-hi user4                     ctermfg=yellow               guifg=yellow
-hi user5                     ctermfg=blue                 guifg=blue
-hi user6                     ctermfg=magenta              guifg=magenta
-hi user7                     ctermfg=cyan                 guifg=cyan
-hi user8                     ctermfg=white                guifg=white
-hi user9                     ctermfg=gray                 guifg=gray
+
+hi normal guibg=#242424 guifg=white
+
+hi visual cterm=bold ctermbg=darkblue ctermfg=white
+hi visual   gui=bold   guibg=#0066ff    guifg=white
+
+hi comment ctermfg=grey guifg=grey
+
+" stings, numbers, booleans, etc.
+hi constant ctermfg=green guifg=#66ff66
+
+"functions, brackets, variable names
+hi identifier ctermfg=cyan guifg=#00ccff
+
+" if, else, for, while, case, try, catch, etc.
+hi statement ctermfg=red guifg=#ff8855
+
+" preprocessors like import, include, #if, #define, etc.
+hi preproc ctermfg=blue guifg=#0066ff
+
+" int, long, char, etc.
+hi type ctermfg=cyan guifg=#00ccff
+
+" mostly keywords TODO, FIXME, and XXX
+hi todo cterm=underline,bold ctermbg=none ctermfg=yellow
+hi todo   gui=underline,bold   guibg=bg     guifg=yellow
+
+" section headers, html <title>, etc
+hi title cterm=bold ctermfg=white gui=bold guifg=white
+
+" line numbers
+hi linenr ctermfg=grey guifg=grey
+
+hi search cterm=underline,bold ctermbg=NONE ctermfg=NONE
+hi search   gui=underline,bold   guibg=bg     guifg=NONE
+
+" tab complete menu unselected entries
+hi pmenu ctermbg=black ctermfg=gray guibg=black guifg=gray
+
+" tab complete menu selected entry
+hi pmenusel ctermbg=black ctermfg=cyan guibg=black guifg=#00ccff
+
+hi folded ctermbg=NONE ctermfg=white guibg=bg guifg=white
+
+hi colorcolumn ctermbg=grey ctermfg=black guibg=grey guifg=black
+
+hi matchparen cterm=underline,bold ctermbg=NONE ctermfg=NONE
+hi matchparen   gui=underline,bold   guibg=NONE   guifg=NONE
+
+hi diffadd     ctermbg=green ctermfg=white  guibg=green guifg=white
+hi diffdelete  ctermbg=red   ctermfg=white  guibg=red   guifg=white
+hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan  guifg=white
+hi difftext    ctermbg=blue  ctermfg=white  guibg=blue  guifg=white
+
+" listchars and other 'invisible' characters
+hi specialkey cterm=NONE ctermfg=darkgrey guifg=#0066ff
+
+" make xml attributes a different color than the tag names
+hi link xmlattrib statement
+
+" userN, where N is 1..9; used in statusline (:h hl-User1..9)
+hi user1 ctermfg=black   guifg=black
+hi user2 ctermfg=red     guifg=red
+hi user3 ctermfg=green   guifg=green
+hi user4 ctermfg=yellow  guifg=yellow
+hi user5 ctermfg=blue    guifg=blue
+hi user6 ctermfg=magenta guifg=magenta
+hi user7 ctermfg=cyan    guifg=cyan
+hi user8 ctermfg=white   guifg=white
+hi user9 ctermfg=gray    guifg=gray
 
