@@ -28,3 +28,12 @@ for file in ${dotfiles[@]}; do
     ln -sfn "$target" "$name"
   fi
 done
+
+
+mkdir -p ~/.vim/bundle/
+name="$HOME/.vim/bundle/Vundle.vim"
+target="$(readlink -f Vundle.vim)"
+echo "Linking $name -> $target"
+ln -sfn "$target" "$name"
+echo "Installing vim plugins"
+vim -c "PluginInstall"

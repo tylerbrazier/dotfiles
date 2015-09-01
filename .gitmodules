@@ -1,3 +1,6 @@
 [submodule "git-back"]
 	path = git-back
 	url = git@github.com:tylerbrazier/git-back.git
+[submodule "Vundle.vim"]
+	path = Vundle.vim
+	url = https://github.com/VundleVim/Vundle.vim.git

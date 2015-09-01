@@ -34,10 +34,9 @@ entries in `.gitconfig`.
 - code folding (on indent - better than the default implementation)
 - autosave while in normal mode
 - cut, copy, paste from system clipboard using `ctrl-x`, `ctrl-c`, `ctrl-v`
-- statusline with buffer list, file encoding+format, and current git branch
+- airline with buffer list
 - nice theme
 - lots of other useful and practical settings and keybindings
-- no plugin dependencies - all of this is defined in the file
 
 .tmux.conf
 ----------

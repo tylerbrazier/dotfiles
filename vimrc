@@ -57,7 +57,38 @@
 " If you need to repeat a sequence (using .) that includes typing an auto
 " complete character, just disable completion beforehand.
 
-set nocompatible             " vim, not vi. should be first in vimrc
+
+" Plugin stuff
+" ============
+set nocompatible  " vim, not vi. should be first in vimrc
+filetype off      " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+" statusline
+Plugin 'bling/vim-airline'
+
+" git integration (needed for showing branch on airline)
+Plugin 'tpope/vim-fugitive'
+
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
+
+" Brief help
+" :PluginList       - lists configured plugins
+" :PluginInstall    - append `!` to update or just :PluginUpdate
+" :PluginSearch foo - append `!` to refresh local cache
+" :PluginClean      - remove unused plugins; append `!` to auto-approve removal
+"
+" see :h vundle for more details or wiki for FAQ
+
+
 set encoding=utf-8           " set the encoding displayed by vim
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
@@ -84,7 +115,6 @@ set foldlevelstart=99        " initially open all folds
 set foldtext=GetFoldText()   " the text to show on folded lines
 set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
-set statusline=%!GetStl()    " set the statusline as defined below
 set updatetime=200           " millis until cursorhold; used for autosave
 set list                     " show listchars
 set listchars=tab:»·,trail:· " what to show when :set list is on
@@ -92,20 +122,16 @@ set colorcolumn=80           " show a line at column
 set expandtab                " spaces instead of tabs
 set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
 
-let g:gitBranch = ''         " current git branch; changed by SetGitBranch()
 let g:enableComplete = 1     " [true] auto complete brackets and html/xml tags
 
 " reset autocmds so that sourcing vimrc again doesn't run autocmds twice
 autocmd!
 
-filetype plugin indent on    " detect filetype and automatically indent
-syntax on                    " syntax highlighting
+" syntax highlighting
+syntax on
 
 " autosave; write (if changed) every updatetime millis if editing a file
 autocmd cursorhold ?\+ if &modifiable | update | endif
-
-" set git branch for statusline
-autocmd bufenter * call SetGitBranch()
 
 " don't split the window when looking at help pages
 autocmd bufenter *.txt if &filetype == 'help' | only | endif
@@ -178,9 +204,6 @@ inoremap <expr> > Complete('>')
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
 
-" --------------------
-" Function definitions
-" --------------------
 
 function! ToggleComplete()
   if g:enableComplete
@@ -341,53 +364,6 @@ function! DoUncomment(lhs, rhs)
   return c."\<cr>"
 endfunction
 
-function! GetStl()
-  " %N* is for UserN highlighting, %0* resets
-  let stl  = BufferList()                    " show buffer numbers
-  let stl .= '%1*%='                         " divide left/right alignment
-  let stl .= '%8*%l,%c '                     " line,column number
-  let stl .= '%8*%{&fenc!=""?&fenc." ":""}'  " the file's encoding
-  let stl .= '%8*%{&ff} '                    " file format (line ending)
-  let stl .= '%2*%{g:gitBranch}'             " current git branch
-  return stl
-endfunction
-
-function! BufferList()
-  let cur = bufnr('%')
-  let last = bufnr('$')
-  let i = 1
-  let ret = ''
-  while i <= last
-    let name = fnamemodify(bufname(i), ':t')  " basename of file in buffer i
-    if i == cur
-      if (getbufvar(i, "&mod"))               " if current buffer is modified
-        let ret .= '%2* '.name.' '            " color it red
-      else
-        let ret .= '%7* '.name.' '            " otherwise color it cyan
-      endif
-    elseif buflisted(i)
-      if (getbufvar(i, "&mod"))               " if other buffer is modified
-        let ret .= '%2* '.name.' '            " color it red
-      else
-        let ret .= '%9* '.name.' '            " otherwise color it gray
-      endif
-    endif
-    let i += 1
-  endwhile
-  return ret
-endfunction
-
-function! SetGitBranch()
-  " lcd to ensure we're in the right dir when running git branch.
-  " autochdir doesn't seem to kick in on bufread when this function is called.
-  " See http://vim.wikia.com/wiki/Set_working_directory_to_the_current_file
-  lcd %:p:h  " cd to directory of current file
-  let b = system('git branch --no-color 2>/dev/null | grep ^*')
-  let b = strpart(b, 2)                  " remove the '* ' part
-  let b = substitute(b, "\n", ' ', '')   " tailing space instead of newline
-  let g:gitBranch = b
-endfunction
-
 function! GetFoldText()
   let line = getline(v:foldstart)
   "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
@@ -438,10 +414,31 @@ function! NextNonBlankLine(lnum)
   return -2
 endfunction
 
-" ---------------------------------------
-" Custom theme (instead of a colorscheme)
-" ---------------------------------------
 
+" Airline conf
+" ============
+" t_Co is needed for colors to show up right; it should come before colorscheme
+set t_Co=256
+let g:airline_theme = 'murmur'
+" no unicode chars since they're hard to make look right in all terminals
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+
+" tabline at the top
+let g:airline#extensions#tabline#enabled = 1
+" don't show 'buffer' at right since we only use buffers, not tabs
+let g:airline#extensions#tabline#show_tab_type = 0
+" just show the the file name unless two of them differ
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+" no unicode chars since they're hard to make look right in all terminals
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+
+
+" Custom theme (instead of a colorscheme)
+" =======================================
 " boilerplate for applying a theme
 hi clear
 set background=dark
@@ -510,6 +507,9 @@ hi difftext    ctermbg=blue  ctermfg=white  guibg=blue  guifg=white
 
 " listchars and other 'invisible' characters
 hi specialkey cterm=NONE ctermfg=darkgrey guifg=#0066ff
+
+" symbols, sometimes function parens
+hi special ctermfg=red guifg=#ff8855
 
 " make xml attributes a different color than the tag names
 hi link xmlattrib statement

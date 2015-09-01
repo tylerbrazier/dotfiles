@@ -16,6 +16,7 @@ alias la='ls -alh'
 alias df='df -h'
 alias du='du -h --summarize'
 alias htop='htop --delay=5'
+alias tmux='tmux -2' # 256 color term; needed for vim airline in some terminals
 alias tma='tmux attach-session'
 alias curls='curl -OL'  # always output to file and follow redirects
 alias pingg='ping google.com'
