@@ -76,6 +76,12 @@ Plugin 'bling/vim-airline'
 " git integration (needed for showing branch on airline)
 Plugin 'tpope/vim-fugitive'
 
+" shows git modifications on each line at the left
+Plugin 'airblade/vim-gitgutter'
+
+" colorscheme
+Plugin 'tomasir/molokai'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -121,6 +127,7 @@ set listchars=tab:»·,trail:· " what to show when :set list is on
 set colorcolumn=80           " show a line at column
 set expandtab                " spaces instead of tabs
 set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
+set guifont=Monospace\ 10
 
 let g:enableComplete = 1     " [true] auto complete brackets and html/xml tags
 
@@ -437,91 +444,36 @@ let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
 
 
-" Custom theme (instead of a colorscheme)
-" =======================================
-" boilerplate for applying a theme
-hi clear
-set background=dark
-if exists('syntax_on')
-  syntax reset
-endif
+" Colorscheme
+" ===========
+colorscheme molokai
 
-set guifont=Monospace\ 9
+" :help group-name for other highlight groups
+" See 256 colors at https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
 
-" Hightlight (hi) groups; there are more (:help group-name).
-" Colors: black, red, green, yellow, blue, magenta, cyan, white, gray
-" There are others but these work in all 8 color terminals.
+" background NONE so we can see thru the transparent term window
+hi Normal ctermbg=NONE ctermfg=255
+" make comments not so hard to see (due to transparent bg)
+hi Comment ctermfg=244
+" same with delimiter
+hi Delimiter ctermfg=172
+" and visual selection
+hi Visual ctermbg=236
 
-hi normal guibg=#242424 guifg=white
+" by default, strings look the color of chewed gum
+hi String ctermfg=33 guifg=#0087ff
+" same with label (json key)
+hi Label ctermfg=220 guifg=#ffdf00
 
-hi visual cterm=bold ctermbg=darkblue ctermfg=white
-hi visual   gui=bold   guibg=#0066ff    guifg=white
+" better looking links
+hi Underlined ctermfg=48 guifg=#00ff87
 
-hi comment ctermfg=grey guifg=grey
-
-" stings, numbers, booleans, etc.
-hi constant ctermfg=green guifg=#66ff66
-
-"functions, brackets, variable names
-hi identifier ctermfg=cyan guifg=#00ccff
-
-" if, else, for, while, case, try, catch, etc.
-hi statement ctermfg=red guifg=#ff8855
-
-" preprocessors like import, include, #if, #define, etc.
-hi preproc ctermfg=blue guifg=#0066ff
-
-" int, long, char, etc.
-hi type ctermfg=cyan guifg=#00ccff
-
-" mostly keywords TODO, FIXME, and XXX
-hi todo cterm=underline,bold ctermbg=none ctermfg=yellow
-hi todo   gui=underline,bold   guibg=bg     guifg=yellow
-
-" section headers, html <title>, etc
-hi title cterm=bold ctermfg=white gui=bold guifg=white
-
-" line numbers
-hi linenr ctermfg=grey guifg=grey
-
-hi search cterm=underline,bold ctermbg=NONE ctermfg=NONE
-hi search   gui=underline,bold   guibg=bg     guifg=NONE
-
-" tab complete menu unselected entries
-hi pmenu ctermbg=black ctermfg=gray guibg=black guifg=gray
-
-" tab complete menu selected entry
-hi pmenusel ctermbg=black ctermfg=cyan guibg=black guifg=#00ccff
-
-hi folded ctermbg=NONE ctermfg=white guibg=bg guifg=white
-
-hi colorcolumn ctermbg=grey ctermfg=black guibg=grey guifg=black
-
-hi matchparen cterm=underline,bold ctermbg=NONE ctermfg=NONE
-hi matchparen   gui=underline,bold   guibg=NONE   guifg=NONE
-
-hi diffadd     ctermbg=green ctermfg=white  guibg=green guifg=white
-hi diffdelete  ctermbg=red   ctermfg=white  guibg=red   guifg=white
-hi diffchange  ctermbg=cyan  ctermfg=white  guibg=cyan  guifg=white
-hi difftext    ctermbg=blue  ctermfg=white  guibg=blue  guifg=white
-
-" listchars and other 'invisible' characters
-hi specialkey cterm=NONE ctermfg=darkgrey guifg=#0066ff
-
-" symbols, sometimes function parens
-hi special ctermfg=red guifg=#ff8855
-
-" make xml attributes a different color than the tag names
-hi link xmlattrib statement
-
-" userN, where N is 1..9; used in statusline (:h hl-User1..9)
-hi user1 ctermfg=black   guifg=black
-hi user2 ctermfg=red     guifg=red
-hi user3 ctermfg=green   guifg=green
-hi user4 ctermfg=yellow  guifg=yellow
-hi user5 ctermfg=blue    guifg=blue
-hi user6 ctermfg=magenta guifg=magenta
-hi user7 ctermfg=cyan    guifg=cyan
-hi user8 ctermfg=white   guifg=white
-hi user9 ctermfg=gray    guifg=gray
-
+" easier to read git diff
+hi DiffAdd    ctermbg=236 ctermfg=10   guibg=#303030 guifg=#00ff00
+hi DiffDelete ctermbg=236 ctermfg=172  guibg=#303030 guifg=#d78700
+hi DiffChange ctermbg=236 ctermfg=63   guibg=#303030 guifg=#5f5fff
+hi DiffText   ctermbg=236 ctermfg=39   guibg=#303030 guifg=#00afff
+" and *.diff files
+hi link diffAdded DiffAdd
+hi link diffRemoved DiffDelete
+hi link diffChanged DiffChange
