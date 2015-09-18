@@ -24,6 +24,8 @@
 " ctrl-a    emacs-style go to st[a]rt of line
 " ctrl-e    emacs-style go to [e]nd of line
 " ctrl-x    edit scratch file ~/.scratch
+" ctrl-g d  [g]it [d]iff of hunk at cursor
+" ctrl-g r  [g]it [r]evert hunk at cursor
 " ctrl-/    (or ctrl-o) toggle c[o]mment on line or visual selection
 "
 " Note: ctrl-/ for toggle comment works on some terminals but on in gvim :(
@@ -176,6 +178,8 @@ nnoremap <c-l> za
 nnoremap <c-a> ^
 nnoremap <c-e> $
 nnoremap <c-x> :edit $HOME/.scratch<cr>
+nmap <c-g>d <Plug>GitGutterPreviewHunk
+nmap <c-g>r <Plug>GitGutterRevertHunk
 noremap <expr> <c-o> ToggleComment()
 noremap <expr> <c-_> ToggleComment()
 " ctrl-/ triggers <c-_> in some terminals (not in gvim)
