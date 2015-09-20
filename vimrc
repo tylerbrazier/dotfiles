@@ -84,6 +84,9 @@ Plugin 'airblade/vim-gitgutter'
 " colorscheme
 Plugin 'tomasir/molokai'
 
+" for commenting lines of code
+Plugin 'scrooloose/nerdcommenter'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -180,8 +183,8 @@ nnoremap <c-e> $
 nnoremap <c-x> :edit $HOME/.scratch<cr>
 nmap <c-g>d <Plug>GitGutterPreviewHunk
 nmap <c-g>r <Plug>GitGutterRevertHunk
-noremap <expr> <c-o> ToggleComment()
-noremap <expr> <c-_> ToggleComment()
+map <c-o> <Plug>NERDCommenterToggle
+map <c-_> <Plug>NERDCommenterToggle
 " ctrl-/ triggers <c-_> in some terminals (not in gvim)
 
 " Note about clipboards: The * register is used to access the system clipboard
@@ -307,72 +310,6 @@ function! Complete(c)
 
   " otherwise just return the typed char
   return a:c
-endfunction
-
-function! ToggleComment()
-  let t = &filetype
-  let lhs = '#'  " left hand side default
-  let rhs = ''   " right hand side default
-  if t == 'c' || t == 'java' || t == 'javascript' || t == 'go'
-    let lhs = '//'
-  elseif t == 'tex'
-    let lhs = '%'
-  elseif t == 'vim'
-    let lhs = '"'
-  elseif t == 'html' || t == 'xml'
-    let lhs = '<!--'
-    let rhs = '-->'
-  elseif t == 'css' || t == 'less' || t == 'scss'
-    let lhs = '/*'
-    let rhs = '*/'
-  endif
-  if IsSelectionCommented(lhs, rhs)
-    return DoUncomment(lhs, rhs)
-  else
-    return DoComment(lhs, rhs)
-  endif
-endfunction
-
-function! IsSelectionCommented(lhs, rhs)
-  let v = line("v")
-  let cur = line(".")
-  let i = v < cur ? v : cur
-  let end = v < cur ? cur : v
-  while i <= end
-    let line = getline(i)
-    if !IsLineCommented(line, a:lhs, a:rhs)
-      return 0  " false
-    endif
-    let i+=1
-  endwhile
-  return 1      " true
-endfunction
-
-function! IsLineCommented(line, lhs, rhs)
-  let l = escape(a:lhs, '*')      " needed for comment chars like /* ... */
-  let r = escape(a:rhs, '*')
-  return a:line =~ '^\s*'.l.'.*'.r.'\s*$' " starts with lhs and ends with rhs
-endfunction
-
-function! DoComment(lhs, rhs)
-  let c = ":normal! I".a:lhs
-  if len(a:rhs) > 0
-    let c = c."\<c-o>A".a:rhs
-  endif
-  return c."\<cr>"
-endfunction
-
-function! DoUncomment(lhs, rhs)
-  let c = ":normal! ^".len(a:lhs)."x"
-  if len(a:rhs) > 0
-    let c = c.'g_d$'  " delete last non-whitespace char and all trailing space
-  endif
-  let i = 2
-  while i <= len(a:rhs)
-    let c = c.'x'
-    let i += 1
-  endwhile
-  return c."\<cr>"
 endfunction
 
 function! GetFoldText()
