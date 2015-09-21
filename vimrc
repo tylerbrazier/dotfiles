@@ -120,11 +120,8 @@ set autowrite                " write when doing some commands, including :!
 set autochdir                " auto cd to dir of file in current buffer
 set showcmd                  " show incomplete commands
 set showmode                 " show current mode
-set foldmethod=expr          " use a custom foldmethod
-set foldexpr=GetFold(v:lnum) " defined below
+set foldmethod=indent        " fold indented text
 set foldlevelstart=99        " initially open all folds
-set foldtext=GetFoldText()   " the text to show on folded lines
-set fillchars=fold:-         " trailing chars to be used on folded lines
 set laststatus=2             " always show the statusline
 set updatetime=200           " millis until cursorhold; used for autosave
 set list                     " show listchars
@@ -310,56 +307,6 @@ function! Complete(c)
 
   " otherwise just return the typed char
   return a:c
-endfunction
-
-function! GetFoldText()
-  let line = getline(v:foldstart)
-  "let prefix = repeat('-', indent(v:foldstart)-1).' '     " -----
-  let prefix = '+'.repeat('-', indent(v:foldstart)-2).' '  " +----
-  let postfix = ' '
-
-  let line = substitute(line, '\v^\s+', prefix, '')  " sub leading whitespace
-  let line = substitute(line, '\v$', postfix, '')    " sub the ending
-  return line
-endfunction
-
-" Vim's indent foldmethod doesn't do exactly what I'd like it to do.
-" The next three functions are used to define a better foldmethod.
-" Toggling fold on a line will fold everthing below it with greater indent.
-" It stops folding before it reaches a line with indent equal to or less
-" than the current line or before whitespace (empty) line(s) preceding a
-" line with equal or less indent.
-" The functions were taken verbatim from this awesome site:
-" http://learnvimscriptthehardway.stevelosh.com/chapters/49.html
-function! GetFold(lnum)
-  if getline(a:lnum) =~ '\v^\s*$'
-    return '-1'
-  endif
-
-  let this_indent = IndentLevel(a:lnum)
-  let next_indent = IndentLevel(NextNonBlankLine(a:lnum))
-
-  if next_indent == this_indent
-    return this_indent
-  elseif next_indent < this_indent
-    return this_indent
-  elseif next_indent > this_indent
-    return '>' . next_indent
-  endif
-endfunction
-function! IndentLevel(lnum)
-  return indent(a:lnum) / &shiftwidth
-endfunction
-function! NextNonBlankLine(lnum)
-  let numlines = line('$')
-  let current = a:lnum + 1
-  while current <= numlines
-    if getline(current) =~ '\v\S'
-      return current
-    endif
-    let current += 1
-  endwhile
-  return -2
 endfunction
 
 
