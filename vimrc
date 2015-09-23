@@ -146,13 +146,13 @@ autocmd cursorhold ?\+ if &modifiable | update | endif
 autocmd bufenter *.txt if &filetype == 'help' | only | endif
 
 " go uses tabs and vim already highlights bad whitespace for go files
-autocmd bufread *.go set noexpandtab nolist
+autocmd bufread *.go setlocal noexpandtab nolist
 
 " *.md are markdown files
-autocmd bufenter *.md set filetype=markdown syntax=markdown
+autocmd bufenter *.md setlocal filetype=markdown syntax=markdown
 
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
-autocmd bufread COMMIT_EDITMSG set colorcolumn=72
+autocmd bufread COMMIT_EDITMSG setlocal colorcolumn=72
 
 nnoremap <cr> :
 nnoremap ! :!
