@@ -87,6 +87,9 @@ Plugin 'tomasir/molokai'
 " for commenting lines of code
 Plugin 'scrooloose/nerdcommenter'
 
+" better indent, folding, etc for js
+Plugin 'pangloss/vim-javascript'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -120,8 +123,6 @@ set autowrite                " write when doing some commands, including :!
 set autochdir                " auto cd to dir of file in current buffer
 set showcmd                  " show incomplete commands
 set showmode                 " show current mode
-set foldmethod=indent        " fold indented text
-set foldlevelstart=99        " initially open all folds
 set laststatus=2             " always show the statusline
 set updatetime=200           " millis until cursorhold; used for autosave
 set list                     " show listchars
@@ -129,6 +130,9 @@ set listchars=tab:»·,trail:· " what to show when :set list is on
 set colorcolumn=80           " show a line at column
 set expandtab                " spaces instead of tabs
 set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
+set foldmethod=indent        " fold on indent by default
+set foldlevelstart=99        " initially open all folds
+set foldtext=getline(v:foldstart)  " don't show 'X lines: ' in the fold
 set guifont=Monospace\ 10
 
 let g:enableComplete = 1     " [true] auto complete brackets and html/xml tags
@@ -140,19 +144,22 @@ autocmd!
 syntax on
 
 " autosave; write (if changed) every updatetime millis if editing a file
-autocmd cursorhold ?\+ if &modifiable | update | endif
+autocmd CursorHold ?\+ if &modifiable | update | endif
 
 " don't split the window when looking at help pages
-autocmd bufenter *.txt if &filetype == 'help' | only | endif
+autocmd BufEnter *.txt if &filetype == 'help' | only | endif
 
 " go uses tabs and vim already highlights bad whitespace for go files
-autocmd bufread *.go setlocal noexpandtab nolist
+autocmd BufRead *.go setlocal noexpandtab nolist
 
 " *.md are markdown files
-autocmd bufenter *.md setlocal filetype=markdown syntax=markdown
+autocmd BufEnter *.md setlocal filetype=markdown syntax=markdown
 
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
-autocmd bufread COMMIT_EDITMSG setlocal colorcolumn=72
+autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
+
+" better folding for js and go files
+autocmd FileType javascript,go setlocal foldmethod=syntax
 
 nnoremap <cr> :
 nnoremap ! :!
