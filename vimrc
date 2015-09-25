@@ -1,108 +1,4 @@
-" Normal mode key binding reference
-" ---------------------------------
-" [enter]   :     (faster way to enter vim commands)
-" !         :!    (faster way to enter shell commands)
-" !!        :!!   (repeat previous shell command)
-" !!!       :!%:p (execute current file (if executable); useful for scripts)
-" q         :q    (recording is more annoying than useful)
-" j         gj    (able to move down over wrapped lines)
-" k         gk    (able to move up over wrapped lines)
-" Y         y$    (capital Y behaves like capital C and D)
-" ctrl-n    [n]ext buffer
-" ctrl-p    [p]revious buffer
-" ctrl-d    [d]elete current buffer
-" ctrl-q    [q]uit all buffers
-" ctrl-w    toggle [w]rap
-" ctrl-t    toggle using [t]abs or spaces for tab key
-" ctrl-h    toggle showing [h]ighlighted stuff
-" ctrl-s    toggle [s]pell check
-" ctrl-f    [f]ix misspelled word under cursor
-" ctrl-c    toggle tab & auto [c]ompletion (see Completion note below)
-" ctrl-i    fix [i]ndentation on whole file or visual selection
-" ctrl-u    toggle showing line n[u]mbers
-" ctrl-l    toggle code fo[l]d
-" ctrl-a    emacs-style go to st[a]rt of line
-" ctrl-e    emacs-style go to [e]nd of line
-" ctrl-x    edit scratch file ~/.scratch
-" ctrl-g d  [g]it [d]iff of hunk at cursor
-" ctrl-g r  [g]it [r]evert hunk at cursor
-" ctrl-/    (or ctrl-o) toggle c[o]mment on line or visual selection
-"
-" Note: ctrl-/ for toggle comment works on some terminals but on in gvim :(
-" If it doesn't work, just use ctrl-o instead.
-
-" Insert/visual mode key binding reference
-" ---------------------------------
-" ctrl-c    (visual) copy to system clipboard
-" ctrl-x    (visual) cut into system clipboard
-" ctrl-v    (insert) paste from system clipboard
-" ctrl-z    (insert) undo
-
-" Completion
-" ----------
-" If completion is enabled (toggle with ctrl-c), pressing some keys in insert
-" mode can auto complete common sequences.
-" >           if editing xml/html, complete end tag and move between them
-" (,{,[       complete closing bracket and move the cursor between them
-" ),},]       step over closing bracket if it's to the right of the cursor
-" [backspace] if between two matching brackets, delete them both
-" [enter]     if between two matching brackets or tags, open them below
-" [tab]       do word completion if cursor follows a nonwhitespace character
-"
-" When word completion menu is up, use [tab] or ctrl-n to move to the next
-" suggestion, shift-tab or ctrl-p for previous suggestion, [enter] to select.
-"
-" NOTE: most of these completion mappings will interrupt the undo/redo/repeat
-" sequence since they move the cursor in insert mode or include an [esc] in
-" the mapping.
-" See http://vim.wikia.com/wiki/Automatically_append_closing_characters
-" If you need to repeat a sequence (using .) that includes typing an auto
-" complete character, just disable completion beforehand.
-
-
-" Plugin stuff
-" ============
-set nocompatible  " vim, not vi. should be first in vimrc
-filetype off      " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" statusline
-Plugin 'bling/vim-airline'
-
-" git integration (needed for showing branch on airline)
-Plugin 'tpope/vim-fugitive'
-
-" shows git modifications on each line at the left
-Plugin 'airblade/vim-gitgutter'
-
-" colorscheme
-Plugin 'tomasir/molokai'
-
-" for commenting lines of code
-Plugin 'scrooloose/nerdcommenter'
-
-" better indent, folding, etc for js
-Plugin 'pangloss/vim-javascript'
-
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - append `!` to update or just :PluginUpdate
-" :PluginSearch foo - append `!` to refresh local cache
-" :PluginClean      - remove unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-
-
+set nocompatible             " vim, not vi. should be first in vimrc
 set encoding=utf-8           " set the encoding displayed by vim
 set wildmode=longest,list    " bash-like command completion
 set numberwidth=3            " number of spaces occupied by line numbers
@@ -124,43 +20,95 @@ set autochdir                " auto cd to dir of file in current buffer
 set showcmd                  " show incomplete commands
 set showmode                 " show current mode
 set laststatus=2             " always show the statusline
-set updatetime=200           " millis until cursorhold; used for autosave
+set updatetime=200           " millis until CursorHold; used for autosave
 set list                     " show listchars
 set listchars=tab:»·,trail:· " what to show when :set list is on
 set colorcolumn=80           " show a line at column
 set expandtab                " spaces instead of tabs
 set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
+set guifont=Monospace\ 10    " gvim font
 set foldmethod=indent        " fold on indent by default
 set foldlevelstart=99        " initially open all folds
-set foldtext=getline(v:foldstart)  " don't show 'X lines: ' in the fold
-set guifont=Monospace\ 10
+set foldtext=getline(v:foldstart)  " don't show 'X lines: ...'
 
-let g:enableComplete = 1     " [true] auto complete brackets and html/xml tags
 
-" reset autocmds so that sourcing vimrc again doesn't run autocmds twice
+" Vundle plugin stuff
+" -------------------
+" :PluginList       - lists configured plugins
+" :PluginInstall    - append `!` to update or just :PluginUpdate
+" :PluginSearch foo - append `!` to refresh local cache
+" :PluginClean      - remove unused plugins; append `!` to auto-approve removal
+" :help vundle      - or check the wiki
+set runtimepath+=~/.vim/bundle/Vundle.vim
+filetype off                      " required by vundle
+call vundle#begin()               " define all plugins after this
+Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
+Plugin 'bling/vim-airline'        " statusline
+Plugin 'tomasir/molokai'          " colorscheme
+Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
+Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
+Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
+Plugin 'pangloss/vim-javascript'  " better indent, folding, etc for js
+call vundle#end()                 " define all plugins before this
+filetype plugin indent on         " required by vundle
+
+
+" Autocommands
+" ------------
+" reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
-
-" syntax highlighting
+" syntax highlighting; should come after autocmd!
 syntax on
-
 " autosave; write (if changed) every updatetime millis if editing a file
 autocmd CursorHold ?\+ if &modifiable | update | endif
-
 " don't split the window when looking at help pages
 autocmd BufEnter *.txt if &filetype == 'help' | only | endif
-
 " go uses tabs and vim already highlights bad whitespace for go files
 autocmd BufRead *.go setlocal noexpandtab nolist
-
 " *.md are markdown files
 autocmd BufEnter *.md setlocal filetype=markdown syntax=markdown
-
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
 autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
-
 " better folding for js and go files
 autocmd FileType javascript,go setlocal foldmethod=syntax
 
+
+" Normal mode key bindings
+" ------------------------
+" [enter]   :     (faster way to enter vim commands)
+" !         :!    (faster way to enter shell commands)
+" !!        :!!   (repeat previous shell command)
+" !!!       :!%:p (execute current file (if executable); useful for scripts)
+" q         :q    (recording is more annoying than useful)
+" Y         y$    (capital Y behaves like capital C and D)
+" j         gj    (able to move down over wrapped lines)
+" k         gk    (able to move up over wrapped lines)
+" ctrl-n    [n]ext buffer
+" ctrl-p    [p]revious buffer
+" ctrl-d    [d]elete current buffer
+" ctrl-q    [q]uit all buffers
+" ctrl-w    toggle [w]rap
+" ctrl-t    toggle using [t]abs or spaces for tab key
+" ctrl-h    toggle showing [h]ighlighted stuff
+" ctrl-s    toggle [s]pell check
+" ctrl-f    [f]ix misspelled word under cursor
+" ctrl-c    toggle tab & auto [c]ompletion (see Completion note below)
+" ctrl-i    fix [i]ndentation on whole file or visual selection
+" ctrl-u    toggle showing line n[u]mbers
+" ctrl-l    toggle code fo[l]d
+" ctrl-a    emacs-style go to st[a]rt of line
+" ctrl-e    emacs-style go to [e]nd of line
+" ctrl-x    edit scratch file ~/.scratch
+" ctrl-g d  [g]it [d]iff of hunk at cursor
+" ctrl-g r  [g]it [r]evert hunk at cursor
+" ctrl-/    (or ctrl-o) toggle c[o]mment on line or visual selection
+" Note: ctrl-/ works on some terminals but on in gvim :(
+" If it doesn't work, just use ctrl-o instead.
+"
+" Don't rebind these keys:
+" c-r because that's for redo
+" c-v because that's for visual block selection
+" c-m because pressing enter will trigger this (:help key-notation)
 nnoremap <cr> :
 nnoremap ! :!
 nnoremap !!! :!%:p<cr>
@@ -189,10 +137,17 @@ nmap <c-g>d <Plug>GitGutterPreviewHunk
 nmap <c-g>r <Plug>GitGutterRevertHunk
 map <c-o> <Plug>NERDCommenterToggle
 map <c-_> <Plug>NERDCommenterToggle
-" ctrl-/ triggers <c-_> in some terminals (not in gvim)
 
-" Note about clipboards: The * register is used to access the system clipboard
-" in X11 when using X's select-to-copy and middle click to paste.
+
+" Insert/visual mode key bindings
+" -------------------------------
+" ctrl-c    (visual) copy to system clipboard
+" ctrl-x    (visual) cut into system clipboard
+" ctrl-v    (insert) paste from system clipboard
+" ctrl-z    (insert) undo
+"
+" Note: The * register is used to access the system clipboard in X11 when using
+" X's select-to-copy and middle click to paste.
 " The + register is used to access the clipboard of graphical environments like
 " gnome and kde when doing copy and paste with ctrl-c and ctrl-v and such.
 " The * register can also be used to access the clipboard on windows os.
@@ -205,23 +160,38 @@ if has('clipboard')
   inoremap <c-z> <c-o>u
 endif
 
-inoremap <expr> <tab> Complete("\<tab>")
+
+" Completion
+" ----------
+" If completion is enabled (toggle with ctrl-c), pressing some keys in insert
+" mode can auto complete common sequences.
+" >             if editing xml/html, complete end tag and move between them
+" (,{,[         complete closing bracket and move the cursor between them
+" ),},]         step over closing bracket if it's to the right of the cursor
+" [backspace]   if between two matching brackets, delete them both
+" [enter]       if between two matching brackets or tags, open them below
+" [tab]         do word completion if cursor follows a nonwhitespace character
+" When word completion menu is up, use [tab] or ctrl-n to move to the next
+" suggestion, shift-tab or ctrl-p for previous suggestion, [enter] to select.
+"
+" Note: most of these completion mappings will interrupt the undo/redo/repeat
+" sequence since they move the cursor in insert mode or include an [esc] in
+" the mapping.
+" See http://vim.wikia.com/wiki/Automatically_append_closing_characters
+" If you need to repeat a sequence (using .) that includes typing an auto
+" complete character, just disable completion beforehand.
+let g:enableComplete = 1   " initially on, toggle with ctrl-c
+inoremap <expr> <tab>   Complete("\<tab>")
 inoremap <expr> <s-tab> Complete("\<s-tab>")
-inoremap <expr> <cr> Complete("\<cr>")
-inoremap <expr> <bs> Complete("\<bs>")
-inoremap <expr> ( Complete('(')
-inoremap <expr> { Complete('{')
-inoremap <expr> [ Complete('[')
-inoremap <expr> ) Complete(')')
-inoremap <expr> } Complete('}')
-inoremap <expr> ] Complete(']')
-inoremap <expr> > Complete('>')
-
-" NOTE: don't rebind these keys:
-" c-r because that's for redo
-" c-v because that's for visual block selection
-" c-m because pressing enter will trigger this (:help key-notation)
-
+inoremap <expr> <cr>    Complete("\<cr>")
+inoremap <expr> <bs>    Complete("\<bs>")
+inoremap <expr> (       Complete('(')
+inoremap <expr> {       Complete('{')
+inoremap <expr> [       Complete('[')
+inoremap <expr> )       Complete(')')
+inoremap <expr> }       Complete('}')
+inoremap <expr> ]       Complete(']')
+inoremap <expr> >       Complete('>')
 
 function! ToggleComplete()
   if g:enableComplete
@@ -317,15 +287,14 @@ function! Complete(c)
 endfunction
 
 
-" Airline conf
-" ============
+" Airline
+" -------
 " t_Co is needed for colors to show up right; it should come before colorscheme
 set t_Co=256
 let g:airline_theme = 'murmur'
 " no unicode chars since they're hard to make look right in all terminals
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-
 " tabline at the top
 let g:airline#extensions#tabline#enabled = 1
 " don't show 'buffer' at right since we only use buffers, not tabs
@@ -340,12 +309,10 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 
 
 " Colorscheme
-" ===========
+" -----------
 colorscheme molokai
-
 " :help group-name for other highlight groups
 " See 256 colors at https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
-
 " background NONE so we can see thru the transparent term window
 hi Normal ctermbg=NONE ctermfg=255
 " make comments not so hard to see (due to transparent bg)
@@ -354,15 +321,12 @@ hi Comment ctermfg=244
 hi Delimiter ctermfg=172
 " and visual selection
 hi Visual ctermbg=236
-
-" by default, strings look the color of chewed gum
+" by default, strings look bad
 hi String ctermfg=33 guifg=#0087ff
 " same with label (json key)
 hi Label ctermfg=220 guifg=#ffdf00
-
 " better looking links
 hi Underlined ctermfg=48 guifg=#00ff87
-
 " easier to read git diff
 hi DiffAdd    ctermbg=236 ctermfg=10   guibg=#303030 guifg=#00ff00
 hi DiffDelete ctermbg=236 ctermfg=172  guibg=#303030 guifg=#d78700
