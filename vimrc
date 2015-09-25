@@ -21,15 +21,28 @@ set showcmd                  " show incomplete commands
 set showmode                 " show current mode
 set laststatus=2             " always show the statusline
 set updatetime=200           " millis until CursorHold; used for autosave
-set list                     " show listchars
 set listchars=tab:»·,trail:· " what to show when :set list is on
+set nolist                   " list off by default (airline warns of bad spaces)
 set colorcolumn=80           " show a line at column
 set expandtab                " spaces instead of tabs
 set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
 set guifont=Monospace\ 10    " gvim font
-set foldmethod=indent        " fold on indent by default
+set foldmethod=indent        " fold indented lines
 set foldlevelstart=99        " initially open all folds
-set foldtext=getline(v:foldstart)  " don't show 'X lines: ...'
+
+
+" Autocommands
+" ------------
+" reset autocmds so sourcing vimrc again doesn't run them twice
+autocmd!
+" syntax highlighting; should come after autocmd!
+syntax on
+" autosave; write (if changed) every updatetime millis if editing a file
+autocmd CursorHold ?\+ if &modifiable | update | endif
+" don't split the window when looking at help pages
+autocmd FileType help only
+" git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
+autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
 
 
 " Vundle plugin stuff
@@ -48,29 +61,9 @@ Plugin 'tomasir/molokai'          " colorscheme
 Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
 Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
 Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
-Plugin 'pangloss/vim-javascript'  " better indent, folding, etc for js
+Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
 call vundle#end()                 " define all plugins before this
 filetype plugin indent on         " required by vundle
-
-
-" Autocommands
-" ------------
-" reset autocmds so sourcing vimrc again doesn't run them twice
-autocmd!
-" syntax highlighting; should come after autocmd!
-syntax on
-" autosave; write (if changed) every updatetime millis if editing a file
-autocmd CursorHold ?\+ if &modifiable | update | endif
-" don't split the window when looking at help pages
-autocmd BufEnter *.txt if &filetype == 'help' | only | endif
-" go uses tabs and vim already highlights bad whitespace for go files
-autocmd BufRead *.go setlocal noexpandtab nolist
-" *.md are markdown files
-autocmd BufEnter *.md setlocal filetype=markdown syntax=markdown
-" git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
-autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
-" better folding for js and go files
-autocmd FileType javascript,go setlocal foldmethod=syntax
 
 
 " Normal mode key bindings
