@@ -7,9 +7,9 @@ Clone with `git clone --recursive` since this project includes submodules.
 
 To use these on windows, checkout the `windows` branch.
 
-Run `mklinks.sh` to create links from home to each file.
+Run `setup.sh` to create links from home to each file.
 When files are added/removed to/from the repo, remember to update the array
-in `mklinks.sh`.
+in `setup.sh`.
 
 Secret files/dirs like `.ssh` should *not* be in this repo since it's public on
 github. There should be a separate private repo for those.
@@ -31,7 +31,6 @@ entries in `.gitconfig`.
 - tab complete words
 - auto complete brackets, html/xml tags, and other IDE-like features
 - line and multiline toggle comment
-- code folding (on indent - better than the default implementation)
 - autosave while in normal mode
 - cut, copy, paste from system clipboard using `ctrl-x`, `ctrl-c`, `ctrl-v`
 - airline with buffer list
