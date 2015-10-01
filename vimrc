@@ -58,6 +58,7 @@ Plugin 'bling/vim-airline'        " statusline
 Plugin 'tomasir/molokai'          " colorscheme
 Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
 Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
+Plugin 'scrooloose/nerdtree'      " project file explorer
 Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
 Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
 Plugin 'Raimondi/delimitMate'     " auto complete quotes, parens, brackets, etc
@@ -82,8 +83,8 @@ syntax on                         " syntax highlighting
 " ctrl-p    [p]revious buffer
 " ctrl-d    [d]elete current buffer
 " ctrl-q    [q]uit all buffers
-" ctrl-w    toggle [w]rap
-" ctrl-t    toggle using [t]abs or spaces for tab key
+" ctrl-w    focus next [w]indow
+" ctrl-t    toggle NERD[T]ree
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
 " ctrl-f    [f]ix misspelled word under cursor
@@ -114,8 +115,8 @@ nnoremap <c-n> :bnext<cr>
 nnoremap <c-p> :bprevious<cr>
 nnoremap <c-d> :bdelete<cr>
 nnoremap <c-q> :qall<cr>
-nnoremap <c-w> :set invwrap<cr>
-nnoremap <c-t> :set invexpandtab<cr>
+nnoremap <c-w> <c-w>w
+nnoremap <c-t> :NERDTreeToggle<cr>
 nnoremap <c-h> :set invhlsearch<cr>
 nnoremap <c-s> :set invspell<cr>
 nnoremap <c-f> ea<c-x>s
