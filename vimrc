@@ -35,8 +35,6 @@ set foldlevelstart=99        " initially open all folds
 " ------------
 " reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
-" syntax highlighting; should come after autocmd!
-syntax on
 " autosave; write (if changed) every updatetime millis if editing a file
 autocmd CursorHold ?\+ if &modifiable | update | endif
 " don't split the window when looking at help pages
@@ -62,8 +60,12 @@ Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
 Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
 Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
 Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
+Plugin 'Raimondi/delimitMate'     " auto complete quotes, parens, brackets, etc
+Plugin 'ervandew/supertab'        " tab to complete words
+Plugin 'tylerbrazier/HTML-AutoCloseTag'
 call vundle#end()                 " define all plugins before this
 filetype plugin indent on         " required by vundle
+syntax on                         " syntax highlighting
 
 
 " Normal mode key bindings
@@ -85,7 +87,6 @@ filetype plugin indent on         " required by vundle
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
 " ctrl-f    [f]ix misspelled word under cursor
-" ctrl-c    toggle tab & auto [c]ompletion (see Completion note below)
 " ctrl-i    fix [i]ndentation on whole file or visual selection
 " ctrl-u    toggle showing line n[u]mbers
 " ctrl-l    toggle code fo[l]d
@@ -118,7 +119,6 @@ nnoremap <c-t> :set invexpandtab<cr>
 nnoremap <c-h> :set invhlsearch<cr>
 nnoremap <c-s> :set invspell<cr>
 nnoremap <c-f> ea<c-x>s
-nnoremap <c-c> :call ToggleComplete()<cr>
 nnoremap <c-i> mxgg=G'x
 vnoremap <c-i> =
 nnoremap <c-u> :set invnumber<cr>
@@ -138,6 +138,7 @@ map <c-_> <Plug>NERDCommenterToggle
 " ctrl-x    (visual) cut into system clipboard
 " ctrl-v    (insert) paste from system clipboard
 " ctrl-z    (insert) undo
+" [enter]   (insert) expand parens, brackets, and html tags if between them
 "
 " Note: The * register is used to access the system clipboard in X11 when using
 " X's select-to-copy and middle click to paste.
@@ -152,132 +153,9 @@ if has('clipboard')
   inoremap <c-v> <c-r>+
   inoremap <c-z> <c-o>u
 endif
-
-
-" Completion
-" ----------
-" If completion is enabled (toggle with ctrl-c), pressing some keys in insert
-" mode can auto complete common sequences.
-" >             if editing xml/html, complete end tag and move between them
-" (,{,[         complete closing bracket and move the cursor between them
-" ),},]         step over closing bracket if it's to the right of the cursor
-" [backspace]   if between two matching brackets, delete them both
-" [enter]       if between two matching brackets or tags, open them below
-" [tab]         do word completion if cursor follows a nonwhitespace character
-" When word completion menu is up, use [tab] or ctrl-n to move to the next
-" suggestion, shift-tab or ctrl-p for previous suggestion, [enter] to select.
-"
-" Note: most of these completion mappings will interrupt the undo/redo/repeat
-" sequence since they move the cursor in insert mode or include an [esc] in
-" the mapping.
-" See http://vim.wikia.com/wiki/Automatically_append_closing_characters
-" If you need to repeat a sequence (using .) that includes typing an auto
-" complete character, just disable completion beforehand.
-let g:enableComplete = 1   " initially on, toggle with ctrl-c
-inoremap <expr> <tab>   Complete("\<tab>")
-inoremap <expr> <s-tab> Complete("\<s-tab>")
-inoremap <expr> <cr>    Complete("\<cr>")
-inoremap <expr> <bs>    Complete("\<bs>")
-inoremap <expr> (       Complete('(')
-inoremap <expr> {       Complete('{')
-inoremap <expr> [       Complete('[')
-inoremap <expr> )       Complete(')')
-inoremap <expr> }       Complete('}')
-inoremap <expr> ]       Complete(']')
-inoremap <expr> >       Complete('>')
-
-function! ToggleComplete()
-  if g:enableComplete
-    let g:enableComplete = 0
-    echo 'Completion is off'
-  else
-    let g:enableComplete = 1
-    echo 'Completion is on'
-  endif
-endfunction
-
-function! Complete(c)
-  if !g:enableComplete
-    return a:c
-  endif
-
-  let l = getline('.')[col('.')-2]  " char to left of the cursor
-  let r = getline('.')[col('.')-1]  " char to right of the cursor
-  let isMarkup = (&filetype == 'html' || &filetype == 'xml') ? 1 : 0
-
-  " enter can open below if between brackets or tags
-  if a:c == "\<cr>"
-    if (l=='(' && r==')') || (l=='{' && r=='}') || (l=='[' && r==']')
-          \ || (isMarkup && l == '>' && r == '<')
-      " open below tags or brackets
-      return "\<cr>\<esc>O"
-    elseif pumvisible()
-      " select current entry in tab completion menu
-      return "\<c-y>"
-    else
-      return a:c
-    endif
-  endif
-
-  " backspace can delete matching brackets if you're between them
-  if a:c == "\<bs>"
-    if (l=='(' && r==')') || (l=='{' && r=='}') || (l=='[' && r==']')
-      return "\<right>\<bs>\<bs>"  " delete them both
-    else
-      return "\<bs>"
-    endif
-  endif
-
-  " tab to do word completion
-  if a:c == "\<tab>"
-    if empty(l) || l =~ '\s' " if char to the left is empty or it's white space
-      return "\<tab>"        " tab as usual
-    else
-      return "\<c-n>"        " otherwise do word completion
-    endif
-  endif
-
-  " shift-tab can move up on the completion menu
-  if a:c == "\<s-tab>"
-    return pumvisible() ? "\<c-p>" : "\<tab>"
-  endif
-
-  " complete matching brackets
-  if a:c == '('
-    return "()\<left>"
-  elseif a:c == '{'
-    return "{}\<left>"
-  elseif a:c == '['
-    return "[]\<left>"
-  endif
-
-  " step over closing brackets
-  if a:c == ')' || a:c == '}' || a:c == ']'
-    return r == a:c ? "\<right>" : a:c
-  endif
-
-  " complete html tag
-  if a:c == '>' && isMarkup
-    if getline('.')[col('.')-3] == '-'  " if char to left of > is -
-      return a:c                        " don't complete on comment -->
-    endif
-    " void elements; these should not have an end tag
-    " http://www.w3.org/TR/html5/syntax.html#void-elements
-    let ve = ['area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input',
-          \ 'keygen', 'link', 'meta', 'param', 'source', 'track', 'wbr']
-    " GetLastOpenTag is conveniently defined in xmlcomplete.vim
-    let b:empty = ""
-    let e = xmlcomplete#GetLastOpenTag("b:empty")
-    if index(ve, e) != -1  " if last open tag is a void element
-      return a:c           " don't complete end tag
-    else
-      return "></\<c-x>\<c-o>\<esc>F<i"  " complete end tag and go between them
-    endif
-  endif
-
-  " otherwise just return the typed char
-  return a:c
-endfunction
+imap <expr> <cr> pumvisible() ? "\<c-y>" :
+      \ exists('b:loaded_autoclosetag') ? "<Plug>HtmlExpandCR" :
+      \ "<Plug>delimitMateCR"
 
 
 " Airline
