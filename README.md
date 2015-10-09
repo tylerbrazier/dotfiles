@@ -34,7 +34,7 @@ entries in `.gitconfig`.
 - autosave while in normal mode
 - cut, copy, paste from system clipboard using `ctrl-x`, `ctrl-c`, `ctrl-v`
 - airline with buffer list
-- nice theme
+- slightly modified molokai theme
 - lots of other useful and practical settings and keybindings
 
 .tmux.conf

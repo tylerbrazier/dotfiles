@@ -22,6 +22,8 @@ alias curls='curl -OL'  # always output to file and follow redirects
 alias pingg='ping google.com'
 alias ping8='ping 8.8.8.8'
 alias yogurt='yaourt'
+untar() { tar -xzf $1; }
+mktar() { tar -czf $(basename $1).tar.gz $1; }
 
 # ls after cd
 cd() {

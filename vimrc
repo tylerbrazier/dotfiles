@@ -94,6 +94,7 @@ syntax on                         " syntax highlighting
 " ctrl-a    emacs-style go to st[a]rt of line
 " ctrl-e    emacs-style go to [e]nd of line
 " ctrl-x    edit scratch file ~/.scratch
+" ctrl-g b  [g]it [b]lame
 " ctrl-g d  [g]it [d]iff of hunk at cursor
 " ctrl-g r  [g]it [r]evert hunk at cursor
 " ctrl-/    (or ctrl-o) toggle c[o]mment on line or visual selection
@@ -127,6 +128,7 @@ nnoremap <c-l> za
 nnoremap <c-a> ^
 nnoremap <c-e> $
 nnoremap <c-x> :edit $HOME/.scratch<cr>
+nnoremap <c-g>b :Gblame<cr>
 nmap <c-g>d <Plug>GitGutterPreviewHunk
 nmap <c-g>r <Plug>GitGutterRevertHunk
 map <c-o> <Plug>NERDCommenterToggle

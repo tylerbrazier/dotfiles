@@ -25,6 +25,7 @@
   m = merge
   r = remote
   s = status
+  st = stash
 
   # Usage: git up [args for push]
   # Add everything to the index, commit, and push.
