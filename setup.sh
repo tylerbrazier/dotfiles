@@ -11,7 +11,6 @@ dotfiles=(
   bash_profile
   bashrc
   gitconfig
-  git-back/git-back
   tmux.conf
   vimrc
 )

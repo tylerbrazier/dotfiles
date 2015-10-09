@@ -46,8 +46,7 @@ entries in `.gitconfig`.
 .gitconfig
 ----------
 - lots of shortcut aliases (`a = add -A`, `s = status`, etc.)
-- include [git-back](https://github.com/tylerbrazier/git-back)
-- common command sequence aliases
+- common command sequence aliases:
   - `git up`   - add everything to the index, commit, and push
   - `git down` - stash changes, pull, pop stash, and init/update submodules
   - `git out`  - delete a branch locally and on a remote
