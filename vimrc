@@ -55,7 +55,7 @@ filetype off                      " required by vundle
 call vundle#begin()               " define all plugins after this
 Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
 Plugin 'bling/vim-airline'        " statusline
-Plugin 'tomasir/molokai'          " colorscheme
+Plugin 'tomasr/molokai'           " colorscheme
 Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
 Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
 Plugin 'scrooloose/nerdtree'      " project file explorer
@@ -182,7 +182,8 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 
 " Colorscheme
 " -----------
-colorscheme molokai
+" silent! so no err in case :PluginInstall hasn't been run yet
+silent! colorscheme molokai
 " :help group-name for other highlight groups
 " See 256 colors at https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
 " background NONE so we can see thru the transparent term window
