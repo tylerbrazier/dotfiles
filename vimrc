@@ -59,10 +59,12 @@ Plugin 'tomasr/molokai'           " colorscheme
 Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
 Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
 Plugin 'scrooloose/nerdtree'      " project file explorer
+Plugin 'majutsushi/tagbar'        " for file structure overview
 Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
-Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
 Plugin 'Raimondi/delimitMate'     " auto complete quotes, parens, brackets, etc
 Plugin 'ervandew/supertab'        " tab to complete words
+Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
+Plugin 'fatih/vim-go'             " excellent go support
 Plugin 'tylerbrazier/HTML-AutoCloseTag'
 call vundle#end()                 " define all plugins before this
 filetype plugin indent on         " required by vundle
@@ -71,20 +73,22 @@ syntax on                         " syntax highlighting
 
 " Normal mode key bindings
 " ------------------------
-" [enter]   :     (faster way to enter vim commands)
-" !         :!    (faster way to enter shell commands)
-" !!        :!!   (repeat previous shell command)
-" !!!       :!%:p (execute current file (if executable); useful for scripts)
-" q         :q    (recording is more annoying than useful)
-" Y         y$    (capital Y behaves like capital C and D)
-" j         gj    (able to move down over wrapped lines)
-" k         gk    (able to move up over wrapped lines)
+" [enter]   :       (faster way to enter vim commands)
+" !         :!      (faster way to enter shell commands)
+" !!        :!!     (repeat previous shell command)
+" !!!       :!%:p   (execute current file (if executable); useful for scripts)
+" q         :q      (recording is more annoying than useful)
+" Y         y$      (capital Y behaves like capital C and D)
+" j         gj      (able to move down over wrapped lines)
+" k         gk      (able to move up over wrapped lines)
+" gb        ctrl-o  ([g]o [b]ack after gd, gD, etc)
 " ctrl-n    [n]ext buffer
 " ctrl-p    [p]revious buffer
 " ctrl-d    [d]elete current buffer
 " ctrl-q    [q]uit all buffers
 " ctrl-w    focus next [w]indow
-" ctrl-t    toggle NERD[T]ree
+" ctrl-t    toggle nerd[t]ree
+" ctrl-b    toggle tag[b]ar
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
 " ctrl-f    [f]ix misspelled word under cursor
@@ -112,16 +116,18 @@ nnoremap q :q
 nnoremap Y y$
 nnoremap j gj
 nnoremap k gk
+nnoremap gb <c-o>
 nnoremap <c-n> :bnext<cr>
 nnoremap <c-p> :bprevious<cr>
 nnoremap <c-d> :bdelete<cr>
 nnoremap <c-q> :qall<cr>
 nnoremap <c-w> <c-w>w
 nnoremap <c-t> :NERDTreeToggle<cr>
+nnoremap <c-b> :TagbarToggle<cr>
 nnoremap <c-h> :set invhlsearch<cr>
 nnoremap <c-s> :set invspell<cr>
 nnoremap <c-f> ea<c-x>s
-nnoremap <c-i> mxgg=G'x
+nnoremap <c-i> mxgg=G`x
 vnoremap <c-i> =
 nnoremap <c-u> :set invnumber<cr>
 nnoremap <c-l> za
@@ -159,6 +165,14 @@ endif
 imap <expr> <cr> pumvisible() ? "\<c-y>" :
       \ exists('b:loaded_autoclosetag') ? "<Plug>HtmlExpandCR" :
       \ "<Plug>delimitMateCR"
+
+
+" Supertab
+" --------
+" try to use smarter completion after '.', '::', and '->'
+let g:SuperTabDefaultCompletionType = "context"
+" preview creates a useless window and causes the screen to blink
+set completeopt-=preview
 
 
 " Airline
