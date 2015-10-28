@@ -30,7 +30,6 @@ set guifont=Monospace\ 10    " gvim font
 set foldmethod=indent        " fold indented lines
 set foldlevelstart=99        " initially open all folds
 
-
 " Autocommands
 " ------------
 " reset autocmds so sourcing vimrc again doesn't run them twice
@@ -41,7 +40,6 @@ autocmd CursorHold ?\+ if &modifiable | update | endif
 autocmd FileType help only
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
 autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
-
 
 " Vundle plugin stuff
 " -------------------
@@ -61,6 +59,9 @@ Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
 Plugin 'scrooloose/nerdtree'      " project file explorer
 Plugin 'majutsushi/tagbar'        " for file structure overview
 Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
+Plugin 'mhinz/vim-sayonara'       " close vim when last buffer is killed
+Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
+Plugin 'dkprice/vim-easygrep'     " grep for text in project
 Plugin 'Raimondi/delimitMate'     " auto complete quotes, parens, brackets, etc
 Plugin 'ervandew/supertab'        " tab to complete words
 Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
@@ -70,76 +71,77 @@ call vundle#end()                 " define all plugins before this
 filetype plugin indent on         " required by vundle
 syntax on                         " syntax highlighting
 
-
 " Normal mode key bindings
 " ------------------------
-" [enter]   :       (faster way to enter vim commands)
-" !         :!      (faster way to enter shell commands)
-" !!        :!!     (repeat previous shell command)
-" !!!       :!%:p   (execute current file (if executable); useful for scripts)
-" q         :q      (recording is more annoying than useful)
-" Y         y$      (capital Y behaves like capital C and D)
-" j         gj      (able to move down over wrapped lines)
-" k         gk      (able to move up over wrapped lines)
-" gb        ctrl-o  ([g]o [b]ack after gd, gD, etc)
-" ctrl-n    [n]ext buffer
-" ctrl-p    [p]revious buffer
+" [enter]   mapped to : for quickly entering commands
+" [tab]     next buffer
+" [s-tab]   previous buffer
+" !         execute shell command
+" !!        repeat previous shell command
+" !!!       execute current file (if executable); useful for scripts
+" q         mapped to :q because recording is more annoying than useful
+" Y         capital Y behaves like capital C and D (same as y$)
+" j         able to move down over wrapped lines (same as gj)
+" k         able to move up over wrapped lines (same as gk)
+" gb        [g]o [b]ack after gd, gD, etc (same as default ctrl-o)
+" ctrl-p    search for [p]roject file
+" ctrl-f    [f]ind/grep for text in project
 " ctrl-d    [d]elete current buffer
-" ctrl-q    [q]uit all buffers
+" ctrl-q    [q]uit vim
 " ctrl-w    focus next [w]indow
 " ctrl-t    toggle nerd[t]ree
 " ctrl-b    toggle tag[b]ar
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
-" ctrl-f    [f]ix misspelled word under cursor
-" ctrl-i    fix [i]ndentation on whole file or visual selection
+" ctrl-c    [c]orrect misspelled word under cursor
+" ctrl-n    fix i[n]dentation on whole file or visual selection
 " ctrl-u    toggle showing line n[u]mbers
 " ctrl-l    toggle code fo[l]d
 " ctrl-a    emacs-style go to st[a]rt of line
 " ctrl-e    emacs-style go to [e]nd of line
-" ctrl-x    edit scratch file ~/.scratch
 " ctrl-g b  [g]it [b]lame
 " ctrl-g d  [g]it [d]iff of hunk at cursor
 " ctrl-g r  [g]it [r]evert hunk at cursor
-" ctrl-/    (or ctrl-o) toggle c[o]mment on line or visual selection
-" Note: ctrl-/ works on some terminals but on in gvim :(
-" If it doesn't work, just use ctrl-o instead.
+" ctrl-o    toggle c[o]mment on line or visual selection
+" ctrl-/    toggle comment; works in some terminals but not gvim :(
+" ctrl-x    edit scratch file ~/.scratch
 "
 " Don't rebind these keys:
 " c-r because that's for redo
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
-nnoremap <cr> :
-nnoremap ! :!
-nnoremap !!! :!%:p<cr>
-nnoremap q :q
-nnoremap Y y$
-nnoremap j gj
-nnoremap k gk
-nnoremap gb <c-o>
-nnoremap <c-n> :bnext<cr>
-nnoremap <c-p> :bprevious<cr>
-nnoremap <c-d> :bdelete<cr>
-nnoremap <c-q> :qall<cr>
-nnoremap <c-w> <c-w>w
-nnoremap <c-t> :NERDTreeToggle<cr>
-nnoremap <c-b> :TagbarToggle<cr>
-nnoremap <c-h> :set invhlsearch<cr>
-nnoremap <c-s> :set invspell<cr>
-nnoremap <c-f> ea<c-x>s
-nnoremap <c-i> mxgg=G`x
-vnoremap <c-i> =
-nnoremap <c-u> :set invnumber<cr>
-nnoremap <c-l> za
-nnoremap <c-a> ^
-nnoremap <c-e> $
-nnoremap <c-x> :edit $HOME/.scratch<cr>
-nnoremap <c-g>b :Gblame<cr>
-nmap <c-g>d <Plug>GitGutterPreviewHunk
-nmap <c-g>r <Plug>GitGutterRevertHunk
-map <c-o> <Plug>NERDCommenterToggle
-map <c-_> <Plug>NERDCommenterToggle
-
+" c-i because it's the same as tab
+nnoremap <expr> <cr> &buftype == "quickfix" ? "\<cr>" : ":"
+nnoremap <tab>       :bnext<cr>
+nnoremap <s-tab>     :bprevious<cr>
+nnoremap !           :!
+nnoremap !!!         :!%:p<cr>
+nnoremap q           :q
+nnoremap Y           y$
+nnoremap j           gj
+nnoremap k           gk
+nnoremap gb          <c-o>
+nnoremap <c-f>       :Grep -r -i -F<space>
+nnoremap <c-d>       :Sayonara<cr>
+nnoremap <c-q>       :qall<cr>
+nnoremap <c-w>       <c-w>w
+nnoremap <c-t>       :NERDTreeToggle<cr>
+nnoremap <c-b>       :TagbarToggle<cr>
+nnoremap <c-h>       :set invhlsearch<cr>
+nnoremap <c-s>       :set invspell<cr>
+nnoremap <c-c>       ea<c-x>s
+nnoremap <c-n>       mxgg=G`x
+vnoremap <c-n>       =
+nnoremap <c-u>       :set invnumber<cr>
+nnoremap <c-l>       za
+nnoremap <c-a>       ^
+nnoremap <c-e>       $
+nnoremap <c-g>b      :Gblame<cr>
+nmap     <c-g>d      <Plug>GitGutterPreviewHunk
+nmap     <c-g>r      <Plug>GitGutterRevertHunk
+map      <c-o>       <Plug>NERDCommenterToggle
+map      <c-_>       <Plug>NERDCommenterToggle
+nnoremap <c-x>       :edit $HOME/.scratch<cr>
 
 " Insert/visual mode key bindings
 " -------------------------------
@@ -166,7 +168,6 @@ imap <expr> <cr> pumvisible() ? "\<c-y>" :
       \ exists('b:loaded_autoclosetag') ? "<Plug>HtmlExpandCR" :
       \ "<Plug>delimitMateCR"
 
-
 " Supertab
 " --------
 " try to use smarter completion after '.', '::', and '->'
@@ -174,6 +175,14 @@ let g:SuperTabDefaultCompletionType = "context"
 " preview creates a useless window and causes the screen to blink
 set completeopt-=preview
 
+" EasyGrep
+" --------
+" use external grep command instead of vimgrep (needed for FilesToExclude)
+let g:EasyGrepCommand = 1
+" grep from project root
+let g:EasyGrepRoot = "search:.git"
+" don't grep in these files and dirs
+let g:EasyGrepFilesToExclude = ".git,node_modules"
 
 " Airline
 " -------
@@ -194,7 +203,6 @@ let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
-
 
 " Colorscheme
 " -----------
