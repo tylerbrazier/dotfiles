@@ -1,38 +1,30 @@
 #!/usr/bin/env bash
-set -e
 
-# Creates symlinks from home to each dotfile.
-
-# Each of these should exist within the directory of this script.
-# For each, a symlink will be created in your home directory with a name
-# that is the basename of the file with a prepended dot.
-dotfiles=(
-  profile
-  bash_profile
-  bashrc
-  gitconfig
-  tmux.conf
-  vimrc
-)
-
+# make sure we're in the project root dir
 cd $(dirname $0)
 
-for file in ${dotfiles[@]}; do
-  name="$HOME/.$(basename $file)"
-  if [ -e "$name" ] && [ ! -h "$name" ]; then
-    echo "$name already exists; skipping"
-  else
-    target=$(readlink -f "$file")
-    echo "Linking $name -> $target"
-    ln -sfn "$target" "$name"
-  fi
-done
-
+# in case you forgot to clone --recursive
+git submodule update --init
 
 mkdir -p ~/.vim/bundle/
-name="$HOME/.vim/bundle/Vundle.vim"
-target="$(readlink -f Vundle.vim)"
-echo "Linking $name -> $target"
-ln -sfn "$target" "$name"
-echo "Installing vim plugins"
-vim -c "PluginInstall"
+
+echo "making symlinks from home to dotfiles"
+ln -sn "$(pwd)/profile" ~/.profile && echo "linked profile"
+ln -sn "$(pwd)/bash_profile" ~/.bash_profile && echo "linked bash_profile"
+ln -sn "$(pwd)/bashrc" ~/.bashrc && echo "linked gitconfig"
+ln -sn "$(pwd)/gitconfig" ~/.gitconfig && echo "linked gitconfig"
+ln -sn "$(pwd)/tmux.conf" ~/.tmux.conf && echo "linked tmux.comf"
+ln -sn "$(pwd)/vimrc" ~/.vimrc && echo "linked vimrc"
+ln -sn "$(pwd)/Vundle.vim" ~/.vim/bundle/Vundle.vim && echo "linked Vundle.vim"
+
+echo "installing vim plugins"
+vim +PluginInstall +qall
+
+# GOPATH should be defined in bash_profile
+[ -z $GOPATH ] && source bash_profile
+echo "creating GOPATH workspace at $GOPATH"
+mkdir -p "$GOPATH/src"
+mkdir -p "$GOPATH/bin"
+mkdir -p "$GOPATH/pkg"
+echo "installing go binaries"
+vim +GoInstallBinaries +qall
