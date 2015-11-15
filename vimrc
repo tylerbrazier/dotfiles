@@ -224,6 +224,10 @@ hi String ctermfg=33 guifg=#0087ff
 hi Label ctermfg=220 guifg=#ffdf00
 " better looking links
 hi Underlined ctermfg=48 guifg=#00ff87
+" and errors
+hi Error ctermbg=88 ctermfg=255 guibg=#780000 guifg=#eeeeee
+" and highlighting
+hi Search ctermbg=51 guibg=#00ffff
 " easier to read git diff
 hi DiffAdd    ctermbg=236 ctermfg=10   guibg=#303030 guifg=#00ff00
 hi DiffDelete ctermbg=236 ctermfg=172  guibg=#303030 guifg=#d78700
