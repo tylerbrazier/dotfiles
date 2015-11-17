@@ -85,7 +85,7 @@ syntax on                         " syntax highlighting
 " k         able to move up over wrapped lines (same as gk)
 " gb        [g]o [b]ack after gd, gD, etc (same as default ctrl-o)
 " ctrl-p    search for [p]roject file
-" ctrl-f    [f]ind/grep for text in project
+" ctrl-f    [f]ind/grep for text in project; also works on visual selection
 " ctrl-d    [d]elete current buffer
 " ctrl-q    [q]uit vim
 " ctrl-w    focus next [w]indow
@@ -122,6 +122,7 @@ nnoremap j           gj
 nnoremap k           gk
 nnoremap gb          <c-o>
 nnoremap <c-f>       :Grep -r -i -F<space>
+vnoremap <c-f>       y:Grep -r -i -F<space><c-r>"
 nnoremap <c-d>       :Sayonara<cr>
 nnoremap <c-q>       :qall<cr>
 nnoremap <c-w>       <c-w>w
@@ -183,6 +184,8 @@ let g:EasyGrepCommand = 1
 let g:EasyGrepRoot = "search:.git"
 " don't grep in these files and dirs
 let g:EasyGrepFilesToExclude = ".git,node_modules"
+" don't jump to first match right away
+let g:EasyGrepJumpToMatch = 0
 
 " Airline
 " -------
