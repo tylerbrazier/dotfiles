@@ -86,7 +86,7 @@ syntax on                         " syntax highlighting
 " gb        [g]o [b]ack after gd, gD, etc (same as default ctrl-o)
 " ctrl-p    search for [p]roject file
 " ctrl-f    [f]ind/grep for text in project; also works on visual selection
-" ctrl-d    [d]elete current buffer
+" ctrl-d    [d]elete current buffer; deleting the last will quit vim
 " ctrl-q    [q]uit vim
 " ctrl-w    focus next [w]indow
 " ctrl-t    toggle nerd[t]ree
@@ -111,7 +111,7 @@ syntax on                         " syntax highlighting
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
 " c-i because it's the same as tab
-nnoremap <expr> <cr> &buftype == "quickfix" ? "\<cr>" : ":"
+nnoremap <expr> <cr> &buftype == "quickfix" ? "\<cr>:cclose\<cr>" : ":"
 nnoremap <tab>       :bnext<cr>
 nnoremap <s-tab>     :bprevious<cr>
 nnoremap !           :!
@@ -123,7 +123,8 @@ nnoremap k           gk
 nnoremap gb          <c-o>
 nnoremap <c-f>       :Grep -r -i -F<space>
 vnoremap <c-f>       y:Grep -r -i -F<space><c-r>"
-nnoremap <c-d>       :Sayonara<cr>
+nnoremap <expr><c-d> len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1
+                     \ ? ":Sayonara!\<cr>" : ":qall\<cr>"
 nnoremap <c-q>       :qall<cr>
 nnoremap <c-w>       <c-w>w
 nnoremap <c-t>       :NERDTreeToggle<cr>
