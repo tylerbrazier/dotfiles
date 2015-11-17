@@ -111,39 +111,39 @@ syntax on                         " syntax highlighting
 " c-v because that's for visual block selection
 " c-m because pressing enter will trigger this (:help key-notation)
 " c-i because it's the same as tab
-nnoremap <expr> <cr> &buftype == "quickfix" ? "\<cr>:cclose\<cr>" : ":"
-nnoremap <tab>       :bnext<cr>
-nnoremap <s-tab>     :bprevious<cr>
-nnoremap !           :!
-nnoremap !!!         :!%:p<cr>
-nnoremap q           :q
-nnoremap Y           y$
-nnoremap j           gj
-nnoremap k           gk
-nnoremap gb          <c-o>
-nnoremap <c-f>       :Grep -r -i -F<space>
-vnoremap <c-f>       y:Grep -r -i -F<space><c-r>"
-nnoremap <expr><c-d> len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1
-                     \ ? ":Sayonara!\<cr>" : ":qall\<cr>"
-nnoremap <c-q>       :qall<cr>
-nnoremap <c-w>       <c-w>w
-nnoremap <c-t>       :NERDTreeToggle<cr>
-nnoremap <c-b>       :TagbarToggle<cr>
-nnoremap <c-h>       :set invhlsearch<cr>
-nnoremap <c-s>       :set invspell<cr>
-nnoremap <c-c>       ea<c-x>s
-nnoremap <c-n>       mxgg=G`x
-vnoremap <c-n>       =
-nnoremap <c-u>       :set invnumber<cr>
-nnoremap <c-l>       za
-nnoremap <c-a>       ^
-nnoremap <c-e>       $
-nnoremap <c-g>b      :Gblame<cr>
-nmap     <c-g>d      <Plug>GitGutterPreviewHunk
-nmap     <c-g>r      <Plug>GitGutterRevertHunk
-map      <c-o>       <Plug>NERDCommenterToggle
-map      <c-_>       <Plug>NERDCommenterToggle
-nnoremap <c-x>       :edit $HOME/.scratch<cr>
+nnoremap <expr> <cr>  &buftype == "quickfix" ? "\<cr>:cclose\<cr>" : ":"
+nnoremap <tab>        :bnext<cr>
+nnoremap <s-tab>      :bprevious<cr>
+nnoremap !            :!
+nnoremap !!!          :!%:p<cr>
+nnoremap q            :q
+nnoremap Y            y$
+nnoremap j            gj
+nnoremap k            gk
+nnoremap gb           <c-o>
+nnoremap <c-f>        :Grep -r -i -F<space>
+vnoremap <c-f>        y:Grep -r -i -F<space><c-r>"
+nnoremap <expr> <c-d> len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1
+                      \ ? ":Sayonara!\<cr>" : ":qall\<cr>"
+nnoremap <c-q>        :qall<cr>
+nnoremap <c-w>        <c-w>w
+nnoremap <c-t>        :NERDTreeToggle<cr>
+nnoremap <c-b>        :TagbarToggle<cr>
+nnoremap <c-h>        :set invhlsearch<cr>
+nnoremap <c-s>        :set invspell<cr>
+nnoremap <c-c>        ea<c-x>s
+nnoremap <c-n>        mxgg=G`x
+vnoremap <c-n>        =
+nnoremap <c-u>        :set invnumber<cr>
+nnoremap <c-l>        za
+nnoremap <c-a>        ^
+nnoremap <c-e>        $
+nnoremap <c-g>b       :Gblame<cr>
+nmap     <c-g>d       <Plug>GitGutterPreviewHunk
+nmap     <c-g>r       <Plug>GitGutterRevertHunk
+map      <c-o>        <Plug>NERDCommenterToggle
+map      <c-_>        <Plug>NERDCommenterToggle
+nnoremap <c-x>        :edit $HOME/.scratch<cr>
 
 " Insert/visual mode key bindings
 " -------------------------------
