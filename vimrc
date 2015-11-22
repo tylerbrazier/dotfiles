@@ -48,28 +48,30 @@ autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
 " :PluginSearch foo - append `!` to refresh local cache
 " :PluginClean      - remove unused plugins; append `!` to auto-approve removal
 " :help vundle      - or check the wiki
+if isdirectory(expand("~/.vim/bundle/Vundle.vim"))
 set runtimepath+=~/.vim/bundle/Vundle.vim
-filetype off                      " required by vundle
-call vundle#begin()               " define all plugins after this
-Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
-Plugin 'bling/vim-airline'        " statusline
-Plugin 'tomasr/molokai'           " colorscheme
-Plugin 'tpope/vim-fugitive'       " git integration; need for branch on airline
-Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
-Plugin 'scrooloose/nerdtree'      " project file explorer
-Plugin 'majutsushi/tagbar'        " for file structure overview
-Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
-Plugin 'mhinz/vim-sayonara'       " close vim when last buffer is killed
-Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
-Plugin 'dkprice/vim-easygrep'     " grep for text in project
-Plugin 'Raimondi/delimitMate'     " auto complete quotes, parens, brackets, etc
-Plugin 'ervandew/supertab'        " tab to complete words
-Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
-Plugin 'fatih/vim-go'             " excellent go support
-Plugin 'tylerbrazier/HTML-AutoCloseTag'
-call vundle#end()                 " define all plugins before this
-filetype plugin indent on         " required by vundle
-syntax on                         " syntax highlighting
+  filetype off                      " required by vundle
+  call vundle#begin()               " define all plugins after this
+  Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
+  Plugin 'bling/vim-airline'        " statusline
+  Plugin 'tomasr/molokai'           " colorscheme
+  Plugin 'tpope/vim-fugitive'       " git integration need for branch on airline
+  Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
+  Plugin 'scrooloose/nerdtree'      " project file explorer
+  Plugin 'majutsushi/tagbar'        " for file structure overview
+  Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
+  Plugin 'mhinz/vim-sayonara'       " close vim when last buffer is killed
+  Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
+  Plugin 'dkprice/vim-easygrep'     " grep for text in project
+  Plugin 'Raimondi/delimitMate'     " auto close quotes, parens, brackets, etc
+  Plugin 'ervandew/supertab'        " tab to complete words
+  Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
+  Plugin 'fatih/vim-go'             " excellent go support
+  Plugin 'tylerbrazier/HTML-AutoCloseTag'
+  call vundle#end()                 " define all plugins before this
+endif
+filetype plugin indent on
+syntax on
 
 " Normal mode key bindings
 " ------------------------
@@ -167,8 +169,9 @@ if has('clipboard')
   inoremap <c-z> <c-o>u
 endif
 imap <expr> <cr> pumvisible() ? "\<c-y>" :
-      \ exists('b:loaded_autoclosetag') ? "<Plug>HtmlExpandCR" :
-      \ "<Plug>delimitMateCR"
+      \ exists("b:loaded_autoclosetag") ? "<Plug>HtmlExpandCR" :
+      \ exists("b:delimitMate_enabled") ? "<Plug>delimitMateCR" :
+      \ "\<cr>"
 
 " Supertab
 " --------
@@ -210,7 +213,7 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 
 " Colorscheme
 " -----------
-" silent! so no err in case :PluginInstall hasn't been run yet
+" silent to suppress errors in case plugins aren't loaded
 silent! colorscheme molokai
 " :help group-name for other highlight groups
 " See 256 colors at https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
