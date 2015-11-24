@@ -30,6 +30,7 @@ set guifont=Monospace\ 10    " gvim font
 set foldmethod=indent        " fold indented lines
 set foldlevelstart=99        " initially open all folds
 
+
 " Autocommands
 " ------------
 " reset autocmds so sourcing vimrc again doesn't run them twice
@@ -41,6 +42,7 @@ autocmd FileType help only
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
 autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
 
+
 " Vundle plugin stuff
 " -------------------
 " :PluginList       - lists configured plugins
@@ -48,7 +50,7 @@ autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
 " :PluginSearch foo - append `!` to refresh local cache
 " :PluginClean      - remove unused plugins; append `!` to auto-approve removal
 " :help vundle      - or check the wiki
-if isdirectory(expand("~/.vim/bundle/Vundle.vim"))
+if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
 set runtimepath+=~/.vim/bundle/Vundle.vim
   filetype off                      " required by vundle
   call vundle#begin()               " define all plugins after this
@@ -72,6 +74,7 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
 endif
 filetype plugin indent on
 syntax on
+
 
 " Normal mode key bindings
 " ------------------------
@@ -101,19 +104,19 @@ syntax on
 " ctrl-l    toggle code fo[l]d
 " ctrl-a    emacs-style go to st[a]rt of line
 " ctrl-e    emacs-style go to [e]nd of line
+" ctrl-x    edit scratch file ~/.scratch
 " ctrl-g b  [g]it [b]lame
 " ctrl-g d  [g]it [d]iff of hunk at cursor
 " ctrl-g r  [g]it [r]evert hunk at cursor
 " ctrl-o    toggle c[o]mment on line or visual selection
 " ctrl-/    toggle comment; works in some terminals but not gvim :(
-" ctrl-x    edit scratch file ~/.scratch
 "
-" Don't rebind these keys:
-" c-r because that's for redo
-" c-v because that's for visual block selection
-" c-m because pressing enter will trigger this (:help key-notation)
-" c-i because it's the same as tab
-nnoremap <expr> <cr>  &buftype == "quickfix" ? "\<cr>:cclose\<cr>" : ":"
+" These keys are not rebound:
+" ctrl-r because that's for redo
+" ctrl-v because that's for visual block selection
+" ctrl-m because pressing enter will trigger this (:help key-notation)
+" ctrl-i because it's the same as tab
+nnoremap <expr> <cr>  &buftype == 'quickfix' ? "\<cr>:cclose\<cr>" : ':'
 nnoremap <tab>        :bnext<cr>
 nnoremap <s-tab>      :bprevious<cr>
 nnoremap !            :!
@@ -140,26 +143,22 @@ nnoremap <c-u>        :set invnumber<cr>
 nnoremap <c-l>        za
 nnoremap <c-a>        ^
 nnoremap <c-e>        $
+nnoremap <c-x>        :edit $HOME/.scratch<cr>
 nnoremap <c-g>b       :Gblame<cr>
 nmap     <c-g>d       <Plug>GitGutterPreviewHunk
 nmap     <c-g>r       <Plug>GitGutterRevertHunk
 map      <c-o>        <Plug>NERDCommenterToggle
 map      <c-_>        <Plug>NERDCommenterToggle
-nnoremap <c-x>        :edit $HOME/.scratch<cr>
-
-" Insert/visual mode key bindings
-" -------------------------------
-" ctrl-c    (visual) copy to system clipboard
-" ctrl-x    (visual) cut into system clipboard
-" ctrl-v    (insert) paste from system clipboard
-" ctrl-z    (insert) undo
-" [enter]   (insert) expand parens, brackets, and html tags if between them
-"
+imap     <expr> <cr>  pumvisible() ? "\<c-y>" :
+                    \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
+                    \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
+                    \ "\<cr>"
+" If the clipboard is available, ctrl-c/ctrl-x can be used to copy/cut in visual
+" mode and ctrl-v/ctrl-z can be used to paste/undo in insert mode.
 " Note: The * register is used to access the system clipboard in X11 when using
 " X's select-to-copy and middle click to paste.
 " The + register is used to access the clipboard of graphical environments like
 " gnome and kde when doing copy and paste with ctrl-c and ctrl-v and such.
-" The * register can also be used to access the clipboard on windows os.
 " When clipboard=unnamed, vim will use the * register when yanking, deleting,
 " putting, etc. When clipboard=unnamedplus, vim uses the + register instead.
 if has('clipboard')
@@ -168,28 +167,27 @@ if has('clipboard')
   inoremap <c-v> <c-r>+
   inoremap <c-z> <c-o>u
 endif
-imap <expr> <cr> pumvisible() ? "\<c-y>" :
-      \ exists("b:loaded_autoclosetag") ? "<Plug>HtmlExpandCR" :
-      \ exists("b:delimitMate_enabled") ? "<Plug>delimitMateCR" :
-      \ "\<cr>"
+
 
 " Supertab
 " --------
 " try to use smarter completion after '.', '::', and '->'
-let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabDefaultCompletionType = 'context'
 " preview creates a useless window and causes the screen to blink
 set completeopt-=preview
+
 
 " EasyGrep
 " --------
 " use external grep command instead of vimgrep (needed for FilesToExclude)
 let g:EasyGrepCommand = 1
 " grep from project root
-let g:EasyGrepRoot = "search:.git"
+let g:EasyGrepRoot = 'search:.git'
 " don't grep in these files and dirs
-let g:EasyGrepFilesToExclude = ".git,node_modules"
+let g:EasyGrepFilesToExclude = '.git,node_modules'
 " don't jump to first match right away
 let g:EasyGrepJumpToMatch = 0
+
 
 " Airline
 " -------
@@ -210,6 +208,7 @@ let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
+
 
 " Colorscheme
 " -----------
