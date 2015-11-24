@@ -57,20 +57,19 @@ set runtimepath+=~/.vim/bundle/Vundle.vim
   Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
   Plugin 'bling/vim-airline'        " statusline
   Plugin 'tomasr/molokai'           " colorscheme
-  Plugin 'tpope/vim-fugitive'       " git integration need for branch on airline
+  Plugin 'tpope/vim-fugitive'       " git integration
   Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
   Plugin 'scrooloose/nerdtree'      " project file explorer
-  Plugin 'majutsushi/tagbar'        " for file structure overview
   Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
-  Plugin 'mhinz/vim-sayonara'       " close vim when last buffer is killed
+  Plugin 'mhinz/vim-sayonara'       " better buffer closing
   Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
   Plugin 'dkprice/vim-easygrep'     " grep for text in project
   Plugin 'Raimondi/delimitMate'     " auto close quotes, parens, brackets, etc
-  Plugin 'ervandew/supertab'        " tab to complete words
+  Plugin 'ervandew/supertab'        " tab completion
   Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
   Plugin 'fatih/vim-go'             " excellent go support
   Plugin 'tylerbrazier/HTML-AutoCloseTag'
-  call vundle#end()                 " define all plugins before this
+  call vundle#end()
 endif
 filetype plugin indent on
 syntax on
@@ -95,7 +94,6 @@ syntax on
 " ctrl-q    [q]uit vim
 " ctrl-w    focus next [w]indow
 " ctrl-t    toggle nerd[t]ree
-" ctrl-b    toggle tag[b]ar
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
 " ctrl-c    [c]orrect misspelled word under cursor
@@ -133,7 +131,6 @@ nnoremap <expr> <c-d> len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) > 1
 nnoremap <c-q>        :qall<cr>
 nnoremap <c-w>        <c-w>w
 nnoremap <c-t>        :NERDTreeToggle<cr>
-nnoremap <c-b>        :TagbarToggle<cr>
 nnoremap <c-h>        :set invhlsearch<cr>
 nnoremap <c-s>        :set invspell<cr>
 nnoremap <c-c>        ea<c-x>s
