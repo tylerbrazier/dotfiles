@@ -208,6 +208,8 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 
 " Colorscheme
 " -----------
+" fallback colorscheme
+colorscheme slate
 " silent to suppress errors in case plugins aren't loaded
 silent! colorscheme molokai
 " :help group-name for other highlight groups
