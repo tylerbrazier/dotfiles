@@ -5,8 +5,8 @@ My home configuration files for linux.
 
 To use these on windows, checkout the `windows` branch.
 
-Run `./setup.sh` to make symlinks from home to each dotfile.
-**Warning:** any existing home dotfiles will be overwritten.
+Run `./setup.sh -f -p` to make symlinks in home to dotfiles.
+`-f` to overwrite existing files in home. `-p` to also install vim plugins.
 
 Secret files/dirs like `.ssh` are not in this repo since it's public on github.
 

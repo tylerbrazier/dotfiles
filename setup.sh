@@ -1,23 +1,27 @@
 #!/usr/bin/env bash
 
-# WARNING: this will overwrite any of the existing dotfiles!
-
+# Make symlinks in home to dotfiles.
+# Pass -f to overwrite existing dotfiles.
+# Pass -p to also install vim plugins.
 
 # in case the script was called from another dir
 cd $(dirname $0)
 
 
+[[ "$@" == -*f* ]] && cmd="ln -snf" || cmd="ln -sn"
+
+
 echo "Making symlinks from home to dotfiles"
-ln -snf "$(pwd)/profile" ~/.profile
-ln -snf "$(pwd)/bash_profile" ~/.bash_profile
-ln -snf "$(pwd)/bashrc" ~/.bashrc
-ln -snf "$(pwd)/gitconfig" ~/.gitconfig
-ln -snf "$(pwd)/tmux.conf" ~/.tmux.conf
-ln -snf "$(pwd)/vimrc" ~/.vimrc
+$cmd "$(pwd)/profile" ~/.profile
+$cmd "$(pwd)/bash_profile" ~/.bash_profile
+$cmd "$(pwd)/bashrc" ~/.bashrc
+$cmd "$(pwd)/gitconfig" ~/.gitconfig
+$cmd "$(pwd)/tmux.conf" ~/.tmux.conf
+$cmd "$(pwd)/vimrc" ~/.vimrc
 
 
-read -p "Download vim plugins? (y/n) " plugs
-if [ "$plugs" = "y" ]; then
+if [[ "$@" == -*p* ]]; then
+  echo 'Downloading vim plugins'
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi
