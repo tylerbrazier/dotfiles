@@ -51,7 +51,7 @@ autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
 " :PluginClean      - remove unused plugins; append `!` to auto-approve removal
 " :help vundle      - or check the wiki
 if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
-set runtimepath+=~/.vim/bundle/Vundle.vim
+  set runtimepath+=~/.vim/bundle/Vundle.vim
   filetype off                      " required by vundle
   call vundle#begin()               " define all plugins after this
   Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
@@ -132,7 +132,7 @@ nnoremap <c-w>        <c-w>w
 nnoremap <c-t>        :NERDTreeToggle<cr>
 nnoremap <c-h>        :set invhlsearch<cr>
 nnoremap <c-s>        :set invspell<cr>
-nnoremap <c-c>        ea<c-x>s
+nnoremap <c-c>        a<c-x>s
 nnoremap <c-n>        mxgg=G`x
 vnoremap <c-n>        =
 nnoremap <c-u>        :set invnumber<cr>

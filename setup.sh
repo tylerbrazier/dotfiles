@@ -5,13 +5,12 @@
 # Pass -p to also install vim plugins.
 
 # in case the script was called from another dir
-cd $(dirname $0)
+cd "$(dirname "$0")"
 
 
-[[ "$@" == -*f* ]] && cmd="ln -snf" || cmd="ln -sn"
+[[ "$@" == -*f* ]] && cmd="ln -vsf" || cmd="ln -vs"
 
 
-echo "Making symlinks from home to dotfiles"
 $cmd "$(pwd)/profile" ~/.profile
 $cmd "$(pwd)/bash_profile" ~/.bash_profile
 $cmd "$(pwd)/bashrc" ~/.bashrc
@@ -21,7 +20,6 @@ $cmd "$(pwd)/vimrc" ~/.vimrc
 
 
 if [[ "$@" == -*p* ]]; then
-  echo 'Downloading vim plugins'
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi
