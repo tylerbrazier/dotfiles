@@ -64,7 +64,7 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
   Plugin 'mhinz/vim-sayonara'       " better buffer closing
   Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
   Plugin 'dkprice/vim-easygrep'     " grep for text in project
-  Plugin 'Raimondi/delimitMate'     " auto close quotes, parens, brackets, etc
+  Plugin 'Raimondi/delimitMate'     " auto close parens, brackets, etc
   Plugin 'ervandew/supertab'        " tab completion
   Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
   Plugin 'fatih/vim-go'             " excellent go support
@@ -183,6 +183,14 @@ let g:EasyGrepRoot = 'search:.git'
 let g:EasyGrepFilesToExclude = '.git,node_modules'
 " don't jump to first match right away
 let g:EasyGrepJumpToMatch = 0
+
+
+" DelimitMate
+" -----------
+" don't complete quotes
+let g:delimitMate_quotes = ''
+" pressing space in a situation like (|) causes ( | )
+let g:delimitMate_expand_space = 1
 
 
 " Airline
