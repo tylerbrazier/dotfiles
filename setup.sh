@@ -8,7 +8,7 @@
 cd "$(dirname "$0")"
 
 
-[[ "$@" == -*f* ]] && cmd="ln -vsf" || cmd="ln -vs"
+[[ " $@ " == *" -f "* ]] && cmd="ln -svf" || cmd="ln -sv"
 
 
 $cmd "$(pwd)/profile" ~/.profile
@@ -19,7 +19,7 @@ $cmd "$(pwd)/tmux.conf" ~/.tmux.conf
 $cmd "$(pwd)/vimrc" ~/.vimrc
 
 
-if [[ "$@" == -*p* ]]; then
+if [[ " $@ " == *" -p "* ]]; then
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
   vim +PluginInstall +qall
 fi
