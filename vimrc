@@ -40,7 +40,9 @@ autocmd CursorHold ?\+ if &modifiable && !&readonly | update | endif
 " don't split the window when looking at help pages
 autocmd FileType help only
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
-autocmd BufRead COMMIT_EDITMSG setlocal colorcolumn=72
+autocmd FileType gitcommit setlocal colorcolumn=72 spell
+" auto wrap words when writing markdown docs
+autocmd FileType markdown setlocal textwidth=80 spell
 
 
 " Vundle plugin stuff
