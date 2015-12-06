@@ -20,7 +20,7 @@ set autochdir                " auto cd to dir of file in current buffer
 set showcmd                  " show incomplete commands
 set showmode                 " show current mode
 set laststatus=2             " always show the statusline
-set updatetime=200           " millis until CursorHold; used for autosave
+set updatetime=1000          " millis until CursorHold autocmd
 set listchars=tab:»·,trail:· " what to show when :set list is on
 set nolist                   " list off by default (airline warns of bad spaces)
 set colorcolumn=80           " show a line at column
@@ -35,8 +35,8 @@ set foldlevelstart=99        " initially open all folds
 " ------------
 " reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
-" autosave; write (if changed) every updatetime millis if editing a file
-autocmd CursorHold ?\+ if &modifiable | update | endif
+" autosave in normal mode every updatetime (1s) if able
+autocmd CursorHold ?\+ if &modifiable && !&readonly | update | endif
 " don't split the window when looking at help pages
 autocmd FileType help only
 " git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
