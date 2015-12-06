@@ -75,8 +75,9 @@ filetype plugin indent on
 syntax on
 
 
-" Normal mode key bindings
-" ------------------------
+" Key bindings
+" ------------
+" All are normal mode mappings unless specified.
 " [enter]   mapped to : for quickly entering commands
 " [tab]     next buffer
 " [s-tab]   previous buffer
@@ -109,10 +110,13 @@ syntax on
 " ctrl-o    toggle c[o]mment on line or visual selection
 " ctrl-/    toggle comment; works in some terminals but not gvim :(
 "
+" If the clipboard is available, ctrl-c/ctrl-x can be used to copy/cut in
+" visual mode and ctrl-v/ctrl-z can be used to paste/undo in insert mode.
+"
 " These keys are not rebound:
 " ctrl-r because that's for redo
 " ctrl-v because that's for visual block selection
-" ctrl-m because pressing enter will trigger this (:help key-notation)
+" ctrl-m because pressing [enter] will trigger this (:help key-notation)
 " ctrl-i because it's the same as tab
 nnoremap <expr> <cr>  &buftype == 'quickfix' ? "\<cr>:cclose\<cr>" : ':'
 nnoremap <tab>        :bnext<cr>
@@ -149,14 +153,6 @@ imap     <expr> <cr>  pumvisible() ? "\<c-y>" :
                     \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
                     \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
                     \ "\<cr>"
-" If the clipboard is available, ctrl-c/ctrl-x can be used to copy/cut in visual
-" mode and ctrl-v/ctrl-z can be used to paste/undo in insert mode.
-" Note: The * register is used to access the system clipboard in X11 when using
-" X's select-to-copy and middle click to paste.
-" The + register is used to access the clipboard of graphical environments like
-" gnome and kde when doing copy and paste with ctrl-c and ctrl-v and such.
-" When clipboard=unnamed, vim will use the * register when yanking, deleting,
-" putting, etc. When clipboard=unnamedplus, vim uses the + register instead.
 if has('clipboard')
   vnoremap <c-c> "+y
   vnoremap <c-x> "+d
