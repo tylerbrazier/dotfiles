@@ -100,8 +100,7 @@ syntax on
 " ctrl-h    toggle showing [h]ighlighted stuff
 " ctrl-s    toggle [s]pell check
 " ctrl-c    [c]orrect misspelled word under cursor
-" ctrl-n    fix i[n]dentation on whole file or visual selection
-" ctrl-u    toggle showing line n[u]mbers
+" ctrl-n    toggle line [n]umbers
 " ctrl-l    toggle code fo[l]d
 " ctrl-a    emacs-style go to st[a]rt of line
 " ctrl-e    emacs-style go to [e]nd of line
@@ -139,9 +138,7 @@ nnoremap <c-t>        :NERDTreeToggle<cr>
 nnoremap <c-h>        :set invhlsearch<cr>
 nnoremap <c-s>        :set invspell<cr>
 nnoremap <c-c>        a<c-x>s
-nnoremap <c-n>        mxgg=G`x
-vnoremap <c-n>        =
-nnoremap <c-u>        :set invnumber<cr>
+nnoremap <c-n>        :set invnumber<cr>
 nnoremap <c-l>        za
 nnoremap <c-a>        ^
 nnoremap <c-e>        $
