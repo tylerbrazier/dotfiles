@@ -65,7 +65,6 @@ if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
   Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
   Plugin 'mhinz/vim-sayonara'       " better buffer closing
   Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
-  Plugin 'dkprice/vim-easygrep'     " grep for text in project
   Plugin 'Raimondi/delimitMate'     " auto close parens, brackets, etc
   Plugin 'ervandew/supertab'        " tab completion
   Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
@@ -92,7 +91,6 @@ syntax on
 " k         able to move up over wrapped lines (same as gk)
 " gb        [g]o [b]ack after gd, gD, etc (same as default ctrl-o)
 " ctrl-p    search for [p]roject file
-" ctrl-f    [f]ind/grep for text in project; also works on visual selection
 " ctrl-d    [d]elete current buffer; deleting the last will quit vim
 " ctrl-q    [q]uit vim
 " ctrl-w    focus next [w]indow
@@ -119,7 +117,7 @@ syntax on
 " ctrl-v because that's for visual block selection
 " ctrl-m because pressing [enter] will trigger this (:help key-notation)
 " ctrl-i because it's the same as tab
-nnoremap <expr> <cr>  &buftype == 'quickfix' ? "\<cr>:cclose\<cr>" : ':'
+nnoremap <cr>         :
 nnoremap <tab>        :bnext<cr>
 nnoremap <s-tab>      :bprevious<cr>
 nnoremap !            :!
@@ -129,8 +127,6 @@ nnoremap Y            y$
 nnoremap j            gj
 nnoremap k            gk
 nnoremap gb           <c-o>
-nnoremap <c-f>        :Grep -r -i -F<space>
-vnoremap <c-f>        y:Grep -r -i -F<space><c-r>"
 nnoremap <expr> <c-d> ':Sayonara'.(&buftype != 'nofile' ? '!' : '')."\<cr>"
 nnoremap <c-q>        :qall<cr>
 nnoremap <c-w>        <c-w>w
@@ -166,18 +162,6 @@ endif
 let g:SuperTabDefaultCompletionType = 'context'
 " preview creates a useless window and causes the screen to blink
 set completeopt-=preview
-
-
-" EasyGrep
-" --------
-" use external grep command instead of vimgrep (needed for FilesToExclude)
-let g:EasyGrepCommand = 1
-" grep from project root
-let g:EasyGrepRoot = 'search:.git'
-" don't grep in these files and dirs
-let g:EasyGrepFilesToExclude = '.git,node_modules'
-" don't jump to first match right away
-let g:EasyGrepJumpToMatch = 0
 
 
 " DelimitMate
