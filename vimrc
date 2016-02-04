@@ -7,8 +7,7 @@ set mouse=a                  " enable mouse in all modes
 set nobackup                 " don't make example.txt~ files
 set noswapfile               " swap files are annoying
 set hidden                   " can switch buffers w/out save
-set notimeout                " combine with ttimeout to disable map timeouts
-set ttimeout                 " combine with notimeout to disable map timeouts
+set ttimeout ttimeoutlen=50  " distinguish escape sequences like esc x and alt-x
 set incsearch                " start highlighting when searching
 set hlsearch                 " highlight previously searched words
 set ignorecase               " searches are case insensitive
@@ -29,6 +28,7 @@ set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
 set guifont=Monospace\ 10    " gvim font
 set foldmethod=indent        " fold indented lines
 set foldlevelstart=99        " initially open all folds
+set clipboard=unnamedplus    " yank, delete, put, etc use system clipboard
 
 
 " Autocommands
@@ -76,84 +76,78 @@ filetype plugin indent on
 syntax on
 
 
-" Key bindings
-" ------------
-" All are normal mode mappings unless specified.
-" [enter]   mapped to : for quickly entering commands
-" [tab]     next buffer
-" [s-tab]   previous buffer
-" !         execute shell command
-" !!        repeat previous shell command
-" !!!       execute current file (if executable); useful for scripts
-" q         mapped to :q because recording is more annoying than useful
-" Y         capital Y behaves like capital C and D (same as y$)
-" j         able to move down over wrapped lines (same as gj)
-" k         able to move up over wrapped lines (same as gk)
-" gb        [g]o [b]ack after gd, gD, etc (same as default ctrl-o)
-" ctrl-p    search for [p]roject file
-" ctrl-d    [d]elete current buffer; deleting the last will quit vim
-" ctrl-q    [q]uit vim
-" ctrl-w    focus next [w]indow
-" ctrl-t    toggle nerd[t]ree
-" ctrl-h    toggle showing [h]ighlighted stuff
-" ctrl-s    toggle [s]pell check
-" ctrl-c    [c]orrect misspelled word under cursor
-" ctrl-n    toggle line [n]umbers
-" ctrl-l    toggle code fo[l]d
-" ctrl-a    emacs-style go to st[a]rt of line
-" ctrl-e    emacs-style go to [e]nd of line
-" ctrl-x    edit scratch file ~/.scratch
-" ctrl-g b  [g]it [b]lame
-" ctrl-g d  [g]it [d]iff of hunk at cursor
-" ctrl-g r  [g]it [r]evert hunk at cursor
-" ctrl-o    toggle c[o]mment on line or visual selection
-" ctrl-/    toggle comment; works in some terminals but not gvim :(
-"
-" If the clipboard is available, ctrl-c/ctrl-x can be used to copy/cut in
-" visual mode and ctrl-v/ctrl-z can be used to paste/undo in insert mode.
-"
-" These keys are not rebound:
-" ctrl-r because that's for redo
-" ctrl-v because that's for visual block selection
-" ctrl-m because pressing [enter] will trigger this (:help key-notation)
-" ctrl-i because it's the same as tab
-nnoremap <cr>         :
-nnoremap <tab>        :bnext<cr>
-nnoremap <s-tab>      :bprevious<cr>
-nnoremap !            :!
-nnoremap !!!          :!%:p<cr>
-nnoremap q            :q
-nnoremap Y            y$
-nnoremap j            gj
-nnoremap k            gk
-nnoremap gb           <c-o>
-nnoremap <expr> <c-d> ':Sayonara'.(&buftype != 'nofile' ? '!' : '')."\<cr>"
-nnoremap <c-q>        :qall<cr>
-nnoremap <c-w>        <c-w>w
-nnoremap <c-t>        :NERDTreeToggle<cr>
-nnoremap <c-h>        :set invhlsearch<cr>
-nnoremap <c-s>        :set invspell<cr>
-nnoremap <c-c>        a<c-x>s
-nnoremap <c-n>        :set invnumber<cr>
-nnoremap <c-l>        za
-nnoremap <c-a>        ^
-nnoremap <c-e>        $
-nnoremap <c-x>        :edit $HOME/.scratch<cr>
-nnoremap <c-g>b       :Gblame<cr>
-nmap     <c-g>d       <Plug>GitGutterPreviewHunk<c-w>p
-nmap     <c-g>r       <Plug>GitGutterRevertHunk
-map      <c-o>        <Plug>NERDCommenterToggle
-map      <c-_>        <Plug>NERDCommenterToggle
-imap     <expr> <cr>  pumvisible() ? "\<c-y>" :
-                    \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
-                    \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
-                    \ "\<cr>"
-if has('clipboard')
-  vnoremap <c-c> "+y
-  vnoremap <c-x> "+d
-  inoremap <c-v> <c-r>+
-  inoremap <c-z> <c-o>u
-endif
+" Sensible overrides
+" q            :quit because I always accidentally start recording
+" Y            behaves like capital C and D; plus it's redundant with yy
+" j/k          move up and down thru wrapped lines
+" gb           [g]o [b]ack (ctrl-o) after gd, gf, etc
+" backspace    start shell command (quicker to type than :!)
+" 2xbackspace  execute previous shell command
+" enter        enter vim command (quicker to type than :)
+nnoremap q :q
+nnoremap Y y$
+nnoremap j gj
+nnoremap k gk
+nnoremap gb <c-o>
+nnoremap <bs>     :!
+nnoremap <bs><bs> :!!<cr>
+nnoremap <cr> :
+imap <expr> <cr> pumvisible() ? "\<c-y>" :
+               \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
+               \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
+               \ "\<cr>"
+
+" Buffer and window shortcuts; precede each with alt (meta)
+" d        delete buffer
+" n/p      next/previous buffer
+" h/j/k/l  move to window left/down/up/right
+nnoremap <expr> <m-d> ':Sayonara'.(&bt != 'nofile' ? '!' : '')."\<cr>"
+inoremap <expr> <m-d> "\<esc>:Sayonara".(&bt != 'nofile' ? '!' : '')."\<cr>"
+nnoremap <m-n> :bnext<cr>
+inoremap <m-n> <esc>:bnext<cr>
+nnoremap <m-p> :bprevious<cr>
+inoremap <m-p> <esc>:bprevious<cr>
+nnoremap <m-h> <c-w>h
+inoremap <m-h> <esc><c-w>h
+nnoremap <m-j> <c-w>j
+inoremap <m-j> <esc><c-w>j
+nnoremap <m-k> <c-w>k
+inoremap <m-k> <esc><c-w>k
+nnoremap <m-l> <c-w>l
+inoremap <m-l> <esc><c-w>l
+" Allow terminal to recognize escape sequences with alt:
+" http://stackoverflow.com/a/10216459
+" http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
+for i in range(char2nr('a'), char2nr('z'))
+  execute 'set <m-'.nr2char(i).">=\e".nr2char(i)
+endfor
+
+" Shortcuts for common stuff; precede each with <space>
+" h   toggle [h]ighlighting
+" n   toggle line [n]umbers
+" f   toggle [f]old
+" c   toggle [c]omment (or <leader>-/ or ctrl-/ in some terminals)
+" t   toggle nerd[t]ree file explorer
+" s   toggle [s]pell check
+" w   fix misspelled [w]ord
+" e   [e]dit ~/.scratch file
+" gb  [g]it [b]lame
+" gd  [g]it [d]iff on chunk
+" gr  [g]it [r]evert chunk
+let mapleader = ' '
+nnoremap <leader>h :set invhlsearch<cr>
+nnoremap <leader>n :set invnumber<cr>
+nnoremap <leader>f za
+map <leader>c <Plug>NERDCommenterToggle
+map <leader>/ <Plug>NERDCommenterToggle
+map <c-_>     <Plug>NERDCommenterToggle
+nnoremap <leader>t :NERDTreeToggle<cr>
+nnoremap <leader>s :set invspell<cr>
+nnoremap <leader>w a<c-x>s
+nnoremap <leader>e :edit $HOME/.scratch<cr>
+nnoremap <leader>gb :Gblame<cr>
+nmap     <leader>gd <Plug>GitGutterPreviewHunk<c-w>p
+nmap     <leader>gr <Plug>GitGutterRevertHunk
 
 
 " Supertab
@@ -162,6 +156,12 @@ endif
 let g:SuperTabDefaultCompletionType = 'context'
 " preview creates a useless window and causes the screen to blink
 set completeopt-=preview
+
+
+" Gitgutter
+" ---------
+" we're using custom gitgutter mappings so prevent conflicts with the defaults
+let g:gitgutter_map_keys = 0
 
 
 " DelimitMate
