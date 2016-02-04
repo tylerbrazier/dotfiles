@@ -3,8 +3,6 @@ dotfiles
 
 My home configuration files for linux.
 
-To use these on windows, checkout the `windows` branch.
-
 Run `./setup.sh -f -p` to make symlinks in home to dotfiles.
 `-f` to overwrite existing files in home. `-p` to also install vim plugins.
 
