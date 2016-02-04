@@ -46,6 +46,7 @@ autocmd FileType markdown setlocal textwidth=80 spell
 filetype plugin indent on
 syntax on
 colorscheme slate
+highlight Comment ctermfg=244 guifg=#808080
 
 " Sensible overrides
 " q            :quit because I always accidentally start recording
@@ -168,32 +169,22 @@ let g:airline#extensions#tabline#left_alt_sep = ''
 
 " silent in case plugins haven't been installed yet
 silent! colorscheme molokai
-" :help group-name for other highlight groups
-" See 256 colors at https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
-" background NONE so we can see thru the transparent term window
-hi Normal ctermbg=NONE ctermfg=255
-" make comments not so hard to see (due to transparent bg)
-hi Comment ctermfg=244
-" same with delimiter
-hi Delimiter ctermfg=172
-" and visual selection
-hi Visual ctermbg=236
-" by default, strings look bad
-hi String ctermfg=33 guifg=#0087ff
-" same with label (json key)
-hi Label ctermfg=220 guifg=#ffdf00
-" better looking links
-hi Underlined ctermfg=48 guifg=#00ff87
-" and errors
-hi Error ctermbg=88 ctermfg=255 guibg=#780000 guifg=#eeeeee
-" and highlighting
-hi Search ctermbg=51 guibg=#00ffff
-" easier to read git diff
-hi DiffAdd    ctermbg=236 ctermfg=10   guibg=#303030 guifg=#00ff00
-hi DiffDelete ctermbg=236 ctermfg=172  guibg=#303030 guifg=#d78700
-hi DiffChange ctermbg=236 ctermfg=63   guibg=#303030 guifg=#5f5fff
-hi DiffText   ctermbg=236 ctermfg=39   guibg=#303030 guifg=#00afff
-" and *.diff files
-hi link diffAdded DiffAdd
-hi link diffRemoved DiffDelete
-hi link diffChanged DiffChange
+" minor highlighting changes to make things easier to read (:help group-name)
+" https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
+highlight Normal ctermbg=NONE
+highlight String ctermfg=33 guifg=#0087ff
+highlight Underlined ctermfg=33 guifg=#0087ff
+highlight MatchParen ctermfg=NONE ctermbg=NONE cterm=underline
+                   \ guifg=NONE guibg=NONE gui=underline
+highlight! link Character String
+highlight! link Error SpellBad
+highlight! link Delimiter Special
+" for vimdiff
+highlight DiffAdd    ctermbg=236 ctermfg=10   guibg=#303030 guifg=#00ff00
+highlight DiffDelete ctermbg=236 ctermfg=172  guibg=#303030 guifg=#d78700
+highlight DiffChange ctermbg=236 ctermfg=63   guibg=#303030 guifg=#5f5fff
+highlight DiffText   ctermbg=236 ctermfg=39   guibg=#303030 guifg=#00afff
+" for patch files
+highlight! link diffAdded DiffAdd
+highlight! link diffRemoved DiffDelete
+highlight! link diffChanged DiffChange
