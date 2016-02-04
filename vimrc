@@ -29,10 +29,9 @@ set guifont=Monospace\ 10    " gvim font
 set foldmethod=indent        " fold indented lines
 set foldlevelstart=99        " initially open all folds
 set clipboard=unnamedplus    " yank, delete, put, etc use system clipboard
+set completeopt-=preview     " preview window is more annoying than useful
+set t_Co=256                 " enable 256 colors
 
-
-" Autocommands
-" ------------
 " reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
 " autosave in normal mode every updatetime (1s) if able
@@ -44,37 +43,9 @@ autocmd FileType gitcommit setlocal colorcolumn=72 spell
 " auto wrap words when writing markdown docs
 autocmd FileType markdown setlocal textwidth=80 spell
 
-
-" Vundle plugin stuff
-" -------------------
-" :PluginList       - lists configured plugins
-" :PluginInstall    - append `!` to update or just :PluginUpdate
-" :PluginSearch foo - append `!` to refresh local cache
-" :PluginClean      - remove unused plugins; append `!` to auto-approve removal
-" :help vundle      - or check the wiki
-if isdirectory(expand('~/.vim/bundle/Vundle.vim'))
-  set runtimepath+=~/.vim/bundle/Vundle.vim
-  filetype off                      " required by vundle
-  call vundle#begin()               " define all plugins after this
-  Plugin 'VundleVim/Vundle.vim'     " let Vundle manage Vundle, required
-  Plugin 'bling/vim-airline'        " statusline
-  Plugin 'tomasr/molokai'           " colorscheme
-  Plugin 'tpope/vim-fugitive'       " git integration
-  Plugin 'airblade/vim-gitgutter'   " show git modifications at the left
-  Plugin 'scrooloose/nerdtree'      " project file explorer
-  Plugin 'scrooloose/nerdcommenter' " for commenting lines of code
-  Plugin 'mhinz/vim-sayonara'       " better buffer closing
-  Plugin 'ctrlpvim/ctrlp.vim'       " fuzzy search for files, buffers, etc
-  Plugin 'Raimondi/delimitMate'     " auto close parens, brackets, etc
-  Plugin 'ervandew/supertab'        " tab completion
-  Plugin 'pangloss/vim-javascript'  " better indent, syntax, etc for js
-  Plugin 'fatih/vim-go'             " excellent go support
-  Plugin 'tylerbrazier/HTML-AutoCloseTag'
-  call vundle#end()
-endif
 filetype plugin indent on
 syntax on
-
+colorscheme slate
 
 " Sensible overrides
 " q            :quit because I always accidentally start recording
@@ -150,32 +121,35 @@ nmap     <leader>gd <Plug>GitGutterPreviewHunk<c-w>p
 nmap     <leader>gr <Plug>GitGutterRevertHunk
 
 
-" Supertab
-" --------
+" https://github.com/junegunn/vim-plug
+try | execute plug#begin() | catch | finish | endtry
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'tomasr/molokai'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'scrooloose/nerdcommenter'
+Plug 'mhinz/vim-sayonara'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'Raimondi/delimitMate'
+Plug 'ervandew/supertab'
+Plug 'pangloss/vim-javascript'
+Plug 'fatih/vim-go'
+Plug 'tylerbrazier/HTML-AutoCloseTag'
+call plug#end()
+
 " try to use smarter completion after '.', '::', and '->'
 let g:SuperTabDefaultCompletionType = 'context'
-" preview creates a useless window and causes the screen to blink
-set completeopt-=preview
 
-
-" Gitgutter
-" ---------
 " we're using custom gitgutter mappings so prevent conflicts with the defaults
 let g:gitgutter_map_keys = 0
 
-
-" DelimitMate
-" -----------
 " don't complete quotes
 let g:delimitMate_quotes = ''
 " pressing space in a situation like (|) causes ( | )
 let g:delimitMate_expand_space = 1
 
-
-" Airline
-" -------
-" t_Co is needed for colors to show up right; it should come before colorscheme
-set t_Co=256
 let g:airline_theme = 'murmur'
 " no unicode chars since they're hard to make look right in all terminals
 let g:airline_left_sep = ''
@@ -192,12 +166,7 @@ let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
 
-
-" Colorscheme
-" -----------
-" fallback colorscheme
-colorscheme slate
-" silent to suppress errors in case plugins aren't loaded
+" silent in case plugins haven't been installed yet
 silent! colorscheme molokai
 " :help group-name for other highlight groups
 " See 256 colors at https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
