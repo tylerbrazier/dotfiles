@@ -2,63 +2,23 @@
   name = Tyler Brazier
   email = tyler@tylerbrazier.com
 
-[color]
-  ui = true
-
 [core]
   editor = vim
 
 [diff]
   tool = vimdiff
 
-[push]
-  default = simple  # default behavior in git 2.0; squelch warning on push
-
 [alias]
   a = add -A
   b = branch
   c = commit -v
   ch = checkout
-  d = difftool -y -t vimdiff
+  d = difftool -y
   f = fetch --all --prune
   l = log --stat
   m = merge
+  p = push
   r = remote
   s = status
   st = stash
-
-  # Usage: git up [args for push]
-  # Add everything to the index, commit, and push.
-  # Additional arguments given will be passed onto `git push`.
-  up = "!up() { git add -A && git commit -v && git push $@; }; up"
-
-  # Usage: git down [args for pull]
-  # Stash any changes (including untracked), pull, pop the stash (if anything
-  # was stashed), then init/update submodules to match the superproject.
-  # Additional arguments given will be passed onto `git pull`.
-  down = "!down() { \
-    [ -n \"$(git status --porcelain --ignore-submodules)\" ] && git stash -u; \
-    stashed=$?; \
-    git pull $@; \
-    [ $stashed -ne 0 ] || git stash pop; \
-    git submodule update --init --recursive; \
-  }; down"
-
-  # Usage: git out [<remote>] <branch>
-  # If <remote> isn't given, it defaults to origin.
-  # Delete <branch> locally and on <remote>.
-  out = "!out() { \
-    if [ $# -eq 1 ]; then \
-      remote=origin; \
-      branch=$1; \
-    elif [ $# -eq 2 ]; then \
-      remote=$1; \
-      branch=$2; \
-    else \
-      echo 'Usage: git out [<remote>] <branch>' >&2; \
-      exit 1; \
-    fi; \
-    git branch -D $branch; \
-    git push $remote --delete $branch; \
-  }; out"
-
+  out = "!f() { git push --delete $1 $2; git branch -D $2; }; f"
