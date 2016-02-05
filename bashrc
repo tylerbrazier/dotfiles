@@ -10,29 +10,17 @@ alias scp='scp -r'
 alias chown='chown -R'
 alias chmod='chmod -R'
 alias grep='grep --color=auto'
-alias ls='ls -b -F --color=auto' # -b is show escape chars. -F is indicators
-alias ll='ls -lh'
-alias la='ls -alh'
 alias df='df -h'
 alias du='du -h --summarize'
 alias htop='htop --delay=5'
-alias tmux='tmux -2' # 256 color term; needed for vim airline in some terminals
+alias curl='curl -L'
+alias ls='ls --color=auto'
+alias ll='ls -lh'
+alias la='ls -alh'
 alias tma='tmux attach-session'
-alias curls='curl -OL'  # always output to file and follow redirects
-alias pingg='ping google.com'
-alias ping8='ping 8.8.8.8'
-alias yogurt='yaourt'
+cd() { builtin cd "$@" && ls; }
 untar() { tar -xzf $1; }
 mktar() { tar -czf $(basename $1).tar.gz $1; }
-
-# ls after cd
-cd() {
-  if [ -n "$1" ]; then
-    builtin cd "$1" && ls
-  else
-    builtin cd ~ && ls
-  fi
-}
 
 # colored man pages in less
 # https://wiki.archlinux.org/index.php/Man_page#Colored_man_pages
@@ -48,7 +36,7 @@ man() {
 }
 
 # https://wiki.archlinux.org/index.php/Color_Bash_Prompt
-custom_ps1() {
+customPS1() {
   sta=$?             # status of last command - must come first
   usr='\u'           # username
   hst='\h'           # hostname up to first '.'; capital H for full hostname
@@ -89,6 +77,6 @@ custom_ps1() {
   # reset the color
   PS1+="$rst"
 }
-PROMPT_COMMAND="custom_ps1"
+PROMPT_COMMAND="customPS1"
 
 ls
