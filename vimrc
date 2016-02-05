@@ -30,6 +30,7 @@ set foldmethod=indent        " fold indented lines
 set foldlevelstart=99        " initially open all folds
 set clipboard=unnamedplus    " yank, delete, put, etc use system clipboard
 set completeopt-=preview     " preview window is more annoying than useful
+set formatoptions+=j         " remove comment chars when joining commented lines
 set t_Co=256                 " enable 256 colors
 
 " reset autocmds so sourcing vimrc again doesn't run them twice
@@ -131,14 +132,19 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
+Plug 'tylerbrazier/vim-collapse'
 Plug 'mhinz/vim-sayonara'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
 Plug 'pangloss/vim-javascript'
+Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'fatih/vim-go'
 Plug 'tylerbrazier/HTML-AutoCloseTag'
 call plug#end()
+
+" no 'X lines:' as part of folded text
+set foldtext=collapse#foldtext()
 
 " try to use smarter completion after '.', '::', and '->'
 let g:SuperTabDefaultCompletionType = 'context'
