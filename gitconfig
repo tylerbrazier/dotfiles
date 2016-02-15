@@ -12,7 +12,7 @@
   a = add -A
   b = branch
   c = commit -v
-  ch = checkout
+  co = checkout
   d = difftool -y
   f = fetch --all --prune
   l = log --stat
@@ -20,5 +20,8 @@
   p = push
   r = remote
   s = status
-  st = stash
-  out = "!f() { git push --delete $1 $2; git branch -D $2; }; f"
+  sd = stash drop
+  sl = stash list
+  ss = stash save
+  out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
+  up = "!f() { git push origin $(git symbolic-ref -q --short HEAD); }; f"
