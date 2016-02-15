@@ -31,7 +31,6 @@ set foldlevelstart=99        " initially open all folds
 set clipboard=unnamedplus    " yank, delete, put, etc use system clipboard
 set completeopt-=preview     " preview window is more annoying than useful
 set formatoptions+=j         " remove comment chars when joining commented lines
-set t_Co=256                 " enable 256 colors
 
 " reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
@@ -46,8 +45,7 @@ autocmd FileType markdown setlocal textwidth=80 spell
 
 filetype plugin indent on
 syntax on
-colorscheme slate
-highlight Comment ctermfg=244 guifg=#808080
+colorscheme pablo
 
 " Sensible overrides
 " q            :quit because I always accidentally start recording
@@ -127,7 +125,7 @@ nmap     <leader>gr <Plug>GitGutterRevertHunk
 try | execute plug#begin() | catch | finish | endtry
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'tomasr/molokai'
+Plug 'tylerbrazier/molokai'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
@@ -142,6 +140,9 @@ Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'fatih/vim-go'
 Plug 'tylerbrazier/HTML-AutoCloseTag'
 call plug#end()
+
+" silent in case plugins haven't been installed yet
+silent! colorscheme molokai
 
 " no 'X lines:' as part of folded text
 set foldtext=collapse#foldtext()
@@ -172,25 +173,3 @@ let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
-
-" silent in case plugins haven't been installed yet
-silent! colorscheme molokai
-" minor highlighting changes to make things easier to read (:help group-name)
-" https://en.wikipedia.org/wiki/File:Xterm_256color_chart.svg
-highlight Normal ctermbg=NONE
-highlight String ctermfg=33 guifg=#0087ff
-highlight Underlined ctermfg=33 guifg=#0087ff
-highlight MatchParen ctermfg=NONE ctermbg=NONE cterm=underline
-                   \ guifg=NONE guibg=NONE gui=underline
-highlight! link Character String
-highlight! link Error SpellBad
-highlight! link Delimiter Special
-" for vimdiff
-highlight DiffAdd    ctermbg=236 ctermfg=10   guibg=#303030 guifg=#00ff00
-highlight DiffDelete ctermbg=236 ctermfg=172  guibg=#303030 guifg=#d78700
-highlight DiffChange ctermbg=236 ctermfg=63   guibg=#303030 guifg=#5f5fff
-highlight DiffText   ctermbg=236 ctermfg=39   guibg=#303030 guifg=#00afff
-" for patch files
-highlight! link diffAdded DiffAdd
-highlight! link diffRemoved DiffDelete
-highlight! link diffChanged DiffChange
