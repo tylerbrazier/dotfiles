@@ -47,11 +47,10 @@ filetype plugin indent on
 syntax on
 colorscheme pablo
 
-" Sensible overrides
+" Normal mode overrides
 " q            :quit because I always accidentally start recording
 " Y            behaves like capital C and D; plus it's redundant with yy
 " j/k          move up and down thru wrapped lines
-" gb           [g]o [b]ack (ctrl-o) after gd, gf, etc
 " backspace    start shell command (quicker to type than :!)
 " 2xbackspace  execute previous shell command
 " enter        enter vim command (quicker to type than :)
@@ -59,33 +58,30 @@ nnoremap q :q
 nnoremap Y y$
 nnoremap j gj
 nnoremap k gk
-nnoremap gb <c-o>
-nnoremap <bs>     :!
+nnoremap <bs> :!
 nnoremap <bs><bs> :!!<cr>
 nnoremap <cr> :
-imap <expr> <cr> pumvisible() ? "\<c-y>" :
-               \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
-               \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
-               \ "\<cr>"
+imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
+      \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
+      \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
+      \ "\<cr>"
 
 " Buffer and window shortcuts; precede each with alt (meta)
-" d        delete buffer
 " n/p      next/previous buffer
+" s/v      split window horizontally/vertically
 " h/j/k/l  move to window left/down/up/right
-nnoremap <expr> <m-d> ':Sayonara'.(&bt != 'nofile' ? '!' : '')."\<cr>"
-inoremap <expr> <m-d> "\<esc>:Sayonara".(&bt != 'nofile' ? '!' : '')."\<cr>"
+" d        delete buffer
+" q        :quit
 nnoremap <m-n> :bnext<cr>
-inoremap <m-n> <esc>:bnext<cr>
 nnoremap <m-p> :bprevious<cr>
-inoremap <m-p> <esc>:bprevious<cr>
+nnoremap <m-s> :split<cr>
+nnoremap <m-v> :vsplit<cr>
 nnoremap <m-h> <c-w>h
-inoremap <m-h> <esc><c-w>h
 nnoremap <m-j> <c-w>j
-inoremap <m-j> <esc><c-w>j
 nnoremap <m-k> <c-w>k
-inoremap <m-k> <esc><c-w>k
 nnoremap <m-l> <c-w>l
-inoremap <m-l> <esc><c-w>l
+nnoremap <expr> <m-d> ':Sayonara'.(&bt != 'nofile' ? '!' : '')."\<cr>"
+nnoremap <m-q> :quit<cr>
 " Allow terminal to recognize escape sequences with alt:
 " http://stackoverflow.com/a/10216459
 " http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
@@ -96,9 +92,8 @@ endfor
 " Shortcuts for common stuff; precede each with <space>
 " h   toggle [h]ighlighting
 " n   toggle line [n]umbers
-" f   toggle [f]old
 " c   toggle [c]omment (or <leader>-/ or ctrl-/ in some terminals)
-" t   toggle nerd[t]ree file explorer
+" f   toggle nerdtree [f]ile explorer
 " s   toggle [s]pell check
 " w   fix misspelled [w]ord
 " e   [e]dit ~/.scratch file
@@ -108,11 +103,10 @@ endfor
 let mapleader = ' '
 nnoremap <leader>h :set invhlsearch<cr>
 nnoremap <leader>n :set invnumber<cr>
-nnoremap <leader>f za
 map <leader>c <Plug>NERDCommenterToggle
 map <leader>/ <Plug>NERDCommenterToggle
 map <c-_>     <Plug>NERDCommenterToggle
-nnoremap <leader>t :NERDTreeToggle<cr>
+nnoremap <leader>f :NERDTreeToggle<cr>
 nnoremap <leader>s :set invspell<cr>
 nnoremap <leader>w a<c-x>s
 nnoremap <leader>e :edit $HOME/.scratch<cr>
