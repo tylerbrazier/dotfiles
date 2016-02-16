@@ -34,14 +34,8 @@ set formatoptions+=j         " remove comment chars when joining commented lines
 
 " reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
-" autosave in normal mode every updatetime (1s) if able
-autocmd CursorHold ?\+ if &modifiable && !&readonly | update | endif
-" don't split the window when looking at help pages
-autocmd FileType help only
-" git commits should be <= 72 chars wide; http://git-scm.com/book/ch5-2.html
-autocmd FileType gitcommit setlocal colorcolumn=72 spell
-" auto wrap words when writing markdown docs
-autocmd FileType markdown setlocal textwidth=80 spell
+" autosave in normal mode every 'updatetime' millis if able
+autocmd CursorHold * silent! update
 
 filetype plugin indent on
 syntax on
@@ -95,7 +89,8 @@ endfor
 " c   toggle [c]omment (or <leader>-/ or ctrl-/ in some terminals)
 " f   toggle nerdtree [f]ile explorer
 " s   toggle [s]pell check
-" w   fix misspelled [w]ord
+" m   fix [m]isspelled word
+" w   [w]rap words at 80 chars
 " e   [e]dit ~/.scratch file
 " gb  [g]it [b]lame
 " gd  [g]it [d]iff on chunk
@@ -107,8 +102,9 @@ map <leader>c <Plug>NERDCommenterToggle
 map <leader>/ <Plug>NERDCommenterToggle
 map <c-_>     <Plug>NERDCommenterToggle
 nnoremap <leader>f :NERDTreeToggle<cr>
-nnoremap <leader>s :set invspell<cr>
-nnoremap <leader>w a<c-x>s
+nnoremap <leader>s :setlocal invspell<cr>
+nnoremap <leader>m a<c-x>s
+nnoremap <leader>w :setlocal textwidth=80<cr>
 nnoremap <leader>e :edit $HOME/.scratch<cr>
 nnoremap <leader>gb :Gblame<cr>
 nmap     <leader>gd <Plug>GitGutterPreviewHunk<c-w>p
@@ -143,7 +139,7 @@ set foldtext=collapse#foldtext()
 " try to use smarter completion after '.', '::', and '->'
 let g:SuperTabDefaultCompletionType = 'context'
 
-" we're using custom gitgutter mappings so prevent conflicts with the defaults
+" prevent gitgutter default keybindings from conflicting with custom ones
 let g:gitgutter_map_keys = 0
 
 " don't complete quotes
@@ -152,17 +148,15 @@ let g:delimitMate_quotes = ''
 let g:delimitMate_expand_space = 1
 
 let g:airline_theme = 'murmur'
-" no unicode chars since they're hard to make look right in all terminals
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-" tabline at the top
+" show only buffers on the tabline
 let g:airline#extensions#tabline#enabled = 1
-" don't show 'buffer' at right since we only use buffers, not tabs
 let g:airline#extensions#tabline#show_tab_type = 0
-" just show the the file name unless two of them differ
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#show_tabs = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail'
-" no unicode chars since they're hard to make look right in all terminals
 let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
 let g:airline#extensions#tabline#left_alt_sep = ''
