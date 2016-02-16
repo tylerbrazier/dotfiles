@@ -1,36 +1,36 @@
-set nocompatible             " vim, not vi. should be first in vimrc
-set encoding=utf-8           " set the encoding displayed by vim
-set wildmode=longest,list    " bash-like command completion
-set numberwidth=3            " number of spaces occupied by line numbers
-set backspace=2              " backspace works over indent, eol, and start
-set mouse=a                  " enable mouse in all modes
-set nobackup                 " don't make example.txt~ files
-set noswapfile               " swap files are annoying
-set hidden                   " can switch buffers w/out save
-set ttimeout ttimeoutlen=50  " distinguish escape sequences like esc x and alt-x
-set incsearch                " start highlighting when searching
-set hlsearch                 " highlight previously searched words
-set ignorecase               " searches are case insensitive
-set smartcase                " unless the search contains a capital letter
-set wildignorecase           " case insensitive file name completion
-set autoread                 " reload file when external changes are made
-set autowrite                " write when doing some commands, including :!
-set autochdir                " auto cd to dir of file in current buffer
-set showcmd                  " show incomplete commands
-set showmode                 " show current mode
-set laststatus=2             " always show the statusline
-set updatetime=1000          " millis until CursorHold autocmd
-set listchars=tab:»·,trail:· " what to show when :set list is on
-set nolist                   " list off by default (airline warns of bad spaces)
-set colorcolumn=80           " show a line at column
-set expandtab                " spaces instead of tabs
-set ts=2 sts=2 sw=2          " number of spaces to use for tab/indent
-set guifont=Monospace\ 10    " gvim font
-set foldmethod=indent        " fold indented lines
-set foldlevelstart=99        " initially open all folds
-set clipboard=unnamedplus    " yank, delete, put, etc use system clipboard
-set completeopt-=preview     " preview window is more annoying than useful
-set formatoptions+=j         " remove comment chars when joining commented lines
+set autochdir
+set autoindent
+set autoread
+set autowriteall
+set backspace=indent,eol,start
+set clipboard=unnamedplus
+set colorcolumn=80
+set complete-=i
+set completeopt-=preview
+set display=lastline
+set encoding=utf-8
+set expandtab
+set foldlevelstart=99
+set foldmethod=indent
+set formatoptions+=j
+set hlsearch
+set ignorecase
+set incsearch
+set laststatus=2
+set listchars=tab:>\ ,trail:-,nbsp:+
+set mouse=a
+set nobackup
+set noswapfile
+set nrformats-=octal
+set sessionoptions-=options
+set shiftwidth=2
+set showcmd
+set smartcase
+set smarttab
+set tabstop=2
+set updatetime=1000
+set wildignorecase
+set wildmode=longest,list
 
 " reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
@@ -79,6 +79,7 @@ nnoremap <m-q> :quit<cr>
 " Allow terminal to recognize escape sequences with alt:
 " http://stackoverflow.com/a/10216459
 " http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
+set ttimeout ttimeoutlen=50
 for i in range(char2nr('a'), char2nr('z'))
   execute 'set <m-'.nr2char(i).">=\e".nr2char(i)
 endfor
