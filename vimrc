@@ -80,7 +80,7 @@ nnoremap <m-h> <c-w>h
 nnoremap <m-j> <c-w>j
 nnoremap <m-k> <c-w>k
 nnoremap <m-l> <c-w>l
-nnoremap <expr> <m-d> ':Sayonara'.(&bt != 'nofile' ? '!' : '')."\<cr>"
+nnoremap <m-d> :bprevious<cr>:bdelete #<cr>
 nnoremap <m-q> :quit<cr>
 " Allow terminal to recognize escape sequences with alt:
 " http://stackoverflow.com/a/10216459
@@ -125,7 +125,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
 Plug 'tylerbrazier/vim-collapse'
-Plug 'mhinz/vim-sayonara'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
