@@ -36,6 +36,8 @@ set wildmode=longest,list
 autocmd!
 " autosave in normal mode every 'updatetime' millis if able
 autocmd CursorHold * silent! update
+autocmd BufWinEnter,WinEnter term://* startinsert
+autocmd BufLeave term://* stopinsert
 
 filetype plugin indent on
 syntax on
@@ -76,13 +78,27 @@ nnoremap <m-k> <c-w>k
 nnoremap <m-l> <c-w>l
 nnoremap <m-d> :bprevious<cr>:bdelete #<cr>
 nnoremap <m-q> :quit<cr>
-" Allow terminal to recognize escape sequences with alt:
-" http://stackoverflow.com/a/10216459
-" http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
-set ttimeout ttimeoutlen=50
-for i in range(char2nr('a'), char2nr('z'))
-  execute 'set <m-'.nr2char(i).">=\e".nr2char(i)
-endfor
+if has('nvim')
+  tnoremap <m-n> <c-\><c-n>:bnext<cr>
+  tnoremap <m-p> <c-\><c-n>:bprevious<cr>
+  tnoremap <m-s> <c-\><c-n>:split<cr>
+  tnoremap <m-v> <c-\><c-n>:vsplit<cr>
+  tnoremap <m-h> <c-\><c-n><c-w>h
+  tnoremap <m-j> <c-\><c-n><c-w>j
+  tnoremap <m-k> <c-\><c-n><c-w>k
+  tnoremap <m-l> <c-\><c-n><c-w>l
+  tnoremap <m-d> <c-\><c-n>:bprevious<cr>:bdelete #<cr>
+  tnoremap <m-q> <c-\><c-n>:quit<cr>
+  tnoremap <m-[> <c-\><c-n>
+else
+  " Allow terminal to recognize escape sequences with alt:
+  " http://stackoverflow.com/a/10216459
+  " http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
+  set ttimeout ttimeoutlen=50
+  for i in range(char2nr('a'), char2nr('z'))
+    execute 'set <m-'.nr2char(i).">=\e".nr2char(i)
+  endfor
+endif
 
 " Shortcuts for common stuff; precede each with <space>
 " h   toggle [h]ighlighting
@@ -91,6 +107,7 @@ endfor
 " f   toggle nerdtree [f]ile explorer
 " s   toggle [s]pell check
 " m   fix [m]isspelled word
+" t   open neovim [t]erminal
 " w   [w]rap words at 80 chars
 " e   [e]dit ~/.scratch file
 " gb  [g]it [b]lame
@@ -105,6 +122,7 @@ map <c-_>     <Plug>NERDCommenterToggle
 nnoremap <leader>f :NERDTreeToggle<cr>
 nnoremap <leader>s :setlocal invspell<cr>
 nnoremap <leader>m a<c-x>s
+nnoremap <leader>t :terminal<cr>
 nnoremap <leader>w :setlocal textwidth=80<cr>
 nnoremap <leader>e :edit $HOME/.scratch<cr>
 nnoremap <leader>gb :Gblame<cr>
