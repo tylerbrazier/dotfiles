@@ -4,7 +4,7 @@
 stty -ixon           # disable flow control (ctrl-s doesn't stop the term)
 bind 'set completion-ignore-case on'
 
-alias rm='rm -r'
+alias rm='rm -rf'
 alias cp='cp -r'
 alias scp='scp -r'
 alias chown='chown -R'
