@@ -1,12 +1,10 @@
 dotfiles
 ========
 
-My home configuration files for linux.
-
 Run `./setup.sh -f -p` to make symlinks in home to dotfiles.
-`-f` to overwrite existing files in home. `-p` to also install vim plugins.
+`-f` to overwrite existing files in home.
+`-p` to also install vim plugins.
 
-Secret files/dirs like `.ssh` are not in this repo since it's public on github.
+If you fork this repo, you'll probably want to change `name` and `email` in `gitconfig`.
 
-If you fork this repo, you'll probably want to change the `name` and `email`
-entries in `gitconfig`.
+Remember not to put secret stuff like `.ssh` in here since it's public on github.
