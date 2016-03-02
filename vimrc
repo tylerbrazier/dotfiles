@@ -44,12 +44,14 @@ syntax on
 colorscheme pablo
 
 " Normal mode overrides
+" '            ` because ' is easier to type but ` behaves better
 " q            :quit because I always accidentally start recording
 " Y            behaves like capital C and D; plus it's redundant with yy
 " j/k          move up and down thru wrapped lines
 " backspace    start shell command (quicker to type than :!)
 " 2xbackspace  execute previous shell command
 " enter        enter vim command (quicker to type than :)
+nnoremap ' `
 nnoremap q :q
 nnoremap Y y$
 nnoremap j gj
