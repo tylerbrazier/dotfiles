@@ -18,7 +18,7 @@
   l = log --stat
   m = merge
   p = push
-  r = remote
+  r = rebase
   s = status
   sa = stash apply
   sd = stash drop
