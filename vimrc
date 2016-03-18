@@ -147,7 +147,6 @@ Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
 Plug 'pangloss/vim-javascript'
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
-Plug 'fatih/vim-go'
 Plug 'tylerbrazier/HTML-AutoCloseTag'
 call plug#end()
 
