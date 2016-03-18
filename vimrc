@@ -146,7 +146,6 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'Raimondi/delimitMate'
 Plug 'ervandew/supertab'
 Plug 'pangloss/vim-javascript'
-Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 Plug 'tylerbrazier/HTML-AutoCloseTag'
 call plug#end()
 
@@ -155,9 +154,6 @@ silent! colorscheme molokai
 
 " no 'X lines:' as part of folded text
 set foldtext=collapse#foldtext()
-
-" try to use smarter completion after '.', '::', and '->'
-let g:SuperTabDefaultCompletionType = 'context'
 
 " prevent gitgutter default keybindings from conflicting with custom ones
 let g:gitgutter_map_keys = 0
