@@ -47,6 +47,7 @@ colorscheme pablo
 " '            ` because ' is easier to type but ` behaves better
 " q            :quit because I always accidentally start recording
 " Y            behaves like capital C and D; plus it's redundant with yy
+" P/p          http://vim.wikia.com/wiki/Format_pasted_text_automatically
 " j/k          move up and down thru wrapped lines
 " backspace    start shell command (quicker to type than :!)
 " 2xbackspace  execute previous shell command
@@ -54,6 +55,8 @@ colorscheme pablo
 nnoremap ' `
 nnoremap q :q
 nnoremap Y y$
+nnoremap p p=`]
+nnoremap P P=`]
 nnoremap j gj
 nnoremap k gk
 nnoremap <bs> :!
