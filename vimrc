@@ -36,6 +36,7 @@ set wildmode=longest,list
 autocmd!
 " autosave in normal mode every 'updatetime' millis if able
 autocmd CursorHold * silent! update
+" ready to use the shell when entering a terminal buffer
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
@@ -73,6 +74,7 @@ imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
 " h/j/k/l  move to window left/down/up/right
 " d        delete buffer
 " q        :quit
+" [        enter normal mode from neovim terminal
 nnoremap <m-n> :bnext<cr>
 nnoremap <m-p> :bprevious<cr>
 nnoremap <m-s> :split<cr>
@@ -81,18 +83,18 @@ nnoremap <m-h> <c-w>h
 nnoremap <m-j> <c-w>j
 nnoremap <m-k> <c-w>k
 nnoremap <m-l> <c-w>l
-nnoremap <m-d> :bprevious<cr>:bdelete #<cr>
+nnoremap <m-d> :bprevious\|bdelete #<cr>
 nnoremap <m-q> :quit<cr>
 if has('nvim')
   tnoremap <m-n> <c-\><c-n>:bnext<cr>
   tnoremap <m-p> <c-\><c-n>:bprevious<cr>
-  tnoremap <m-s> <c-\><c-n>:split<cr>
-  tnoremap <m-v> <c-\><c-n>:vsplit<cr>
+  tnoremap <m-s> <c-\><c-n>:split +terminal<cr>
+  tnoremap <m-v> <c-\><c-n>:vsplit +terminal<cr>
   tnoremap <m-h> <c-\><c-n><c-w>h
   tnoremap <m-j> <c-\><c-n><c-w>j
   tnoremap <m-k> <c-\><c-n><c-w>k
   tnoremap <m-l> <c-\><c-n><c-w>l
-  tnoremap <m-d> <c-\><c-n>:bprevious<cr>:bdelete #<cr>
+  tnoremap <m-d> <c-\><c-n>:bprevious\|bdelete #<cr>
   tnoremap <m-q> <c-\><c-n>:quit<cr>
   tnoremap <m-[> <c-\><c-n>
 else
@@ -171,12 +173,11 @@ let g:delimitMate_expand_space = 1
 let g:airline_theme = 'murmur'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-" show only buffers on the tabline
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tab_type = 0
 let g:airline#extensions#tabline#show_buffers = 1
 let g:airline#extensions#tabline#show_tabs = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
 let g:airline#extensions#tabline#right_alt_sep = ''
