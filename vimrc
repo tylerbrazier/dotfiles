@@ -16,12 +16,14 @@ set formatoptions+=j
 set hlsearch
 set ignorecase
 set incsearch
+set infercase
 set laststatus=2
 set listchars=tab:>\ ,trail:-,nbsp:+
 set mouse=a
 set nobackup
 set noswapfile
 set nrformats-=octal
+set scrolloff=1
 set sessionoptions-=options
 set shiftwidth=2
 set showcmd
@@ -56,8 +58,8 @@ colorscheme pablo
 nnoremap ' `
 nnoremap q :q
 nnoremap Y y$
-nnoremap p p=`]
-nnoremap P P=`]
+nnoremap p pmx=`]`x
+nnoremap P Pmx=`]`x
 nnoremap j gj
 nnoremap k gk
 nnoremap <bs> :!
@@ -121,8 +123,8 @@ endif
 " gd  [g]it [d]iff on chunk
 " gr  [g]it [r]evert chunk
 let mapleader = ' '
-nnoremap <leader>h :set invhlsearch<cr>
-nnoremap <leader>n :set invnumber<cr>
+nnoremap <leader>h :setlocal invhlsearch<cr>
+nnoremap <leader>n :setlocal invnumber<cr>
 map <leader>c <Plug>NERDCommenterToggle
 map <leader>/ <Plug>NERDCommenterToggle
 map <c-_>     <Plug>NERDCommenterToggle
