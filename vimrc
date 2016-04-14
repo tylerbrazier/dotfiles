@@ -23,6 +23,7 @@ set mouse=a
 set nobackup
 set noswapfile
 set nrformats-=octal
+set numberwidth=3
 set scrolloff=1
 set sessionoptions-=options
 set shiftwidth=2
@@ -43,7 +44,6 @@ autocmd BufLeave term://* stopinsert
 
 filetype plugin indent on
 syntax on
-colorscheme pablo
 
 nnoremap ' `
 nnoremap q :q
