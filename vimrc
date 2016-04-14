@@ -38,7 +38,6 @@ set wildmode=longest,list
 autocmd!
 " autosave in normal mode every 'updatetime' millis if able
 autocmd CursorHold * silent! update
-" ready to use the shell when entering a terminal buffer
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
@@ -46,18 +45,11 @@ filetype plugin indent on
 syntax on
 colorscheme pablo
 
-" Normal mode overrides
-" '            ` because ' is easier to type but ` behaves better
-" q            :quit because I always accidentally start recording
-" Y            behaves like capital C and D; plus it's redundant with yy
-" P/p          http://vim.wikia.com/wiki/Format_pasted_text_automatically
-" j/k          move up and down thru wrapped lines
-" backspace    start shell command (quicker to type than :!)
-" 2xbackspace  execute previous shell command
-" enter        enter vim command (quicker to type than :)
 nnoremap ' `
 nnoremap q :q
+" capital Y should behave like capital C and D
 nnoremap Y y$
+" auto format pasted text:
 nnoremap p pmx=`]`x
 nnoremap P Pmx=`]`x
 nnoremap j gj
@@ -65,18 +57,12 @@ nnoremap k gk
 nnoremap <bs> :!
 nnoremap <bs><bs> :!!<cr>
 nnoremap <cr> :
+" enter in insert mode selects completion options and expands braces, html tags
 imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
       \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
       \ "\<cr>"
 
-" Buffer and window shortcuts; precede each with alt (meta)
-" n/p      next/previous buffer
-" s/v      split window horizontally/vertically
-" h/j/k/l  move to window left/down/up/right
-" d        delete buffer
-" q        :quit
-" [        enter normal mode from neovim terminal
 nnoremap <m-n> :bnext<cr>
 nnoremap <m-p> :bprevious<cr>
 nnoremap <m-s> :split<cr>
@@ -109,27 +95,16 @@ else
   endfor
 endif
 
-" Shortcuts for common stuff; precede each with <space>
-" h   toggle [h]ighlighting
-" n   toggle line [n]umbers
-" c   toggle [c]omment (or <leader>-/ or ctrl-/ in some terminals)
-" f   toggle nerdtree [f]ile explorer
-" s   toggle [s]pell check
-" m   fix [m]isspelled word
-" t   open neovim [t]erminal
-" w   [w]rap words at 80 chars
-" e   [e]dit ~/.scratch file
-" gb  [g]it [b]lame
-" gd  [g]it [d]iff on chunk
-" gr  [g]it [r]evert chunk
 let mapleader = ' '
 nnoremap <leader>h :setlocal invhlsearch<cr>
 nnoremap <leader>n :setlocal invnumber<cr>
 map <leader>c <Plug>NERDCommenterToggle
 map <leader>/ <Plug>NERDCommenterToggle
+" <c-/> triggers <c-_> in the terminal
 map <c-_>     <Plug>NERDCommenterToggle
 nnoremap <leader>f :NERDTreeToggle<cr>
 nnoremap <leader>s :setlocal invspell<cr>
+" fix misspelled word:
 nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
 nnoremap <leader>w :setlocal textwidth=80<cr>
@@ -140,6 +115,7 @@ nmap     <leader>gr <Plug>GitGutterRevertHunk
 
 
 " https://github.com/junegunn/vim-plug
+" finish executing vimrc if vim-plug isn't installed
 try | execute plug#begin() | catch | finish | endtry
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -164,7 +140,7 @@ silent! colorscheme molokai
 " no 'X lines:' as part of folded text
 set foldtext=collapse#foldtext()
 
-" prevent gitgutter default keybindings from conflicting with custom ones
+" don't conflict with custom <leader>h mapping
 let g:gitgutter_map_keys = 0
 
 " don't complete quotes
