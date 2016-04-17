@@ -60,7 +60,7 @@ nnoremap <cr> :
 " enter in insert mode selects completion options and expands braces, html tags
 imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
-      \ exists('b:delimitMate_enabled') ? '<Plug>delimitMateCR' :
+      \ exists('g:loaded_bracepair') ? '<Plug>bracepairExpandCR' :
       \ "\<cr>"
 
 nnoremap <m-n> :bnext<cr>
@@ -109,6 +109,7 @@ nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
 nnoremap <leader>w :setlocal textwidth=80<cr>
 nnoremap <leader>e :edit $HOME/.scratch<cr>
+nnoremap <leader>gf :GitFiles<cr>
 nnoremap <leader>gb :Gblame<cr>
 nmap     <leader>gd <Plug>GitGutterPreviewHunk<c-w>p
 nmap     <leader>gr <Plug>GitGutterRevertHunk
@@ -116,37 +117,29 @@ nmap     <leader>gr <Plug>GitGutterRevertHunk
 
 " https://github.com/junegunn/vim-plug
 " finish executing vimrc if vim-plug isn't installed
-try | execute plug#begin() | catch | finish | endtry
+try | call plug#begin() | catch | finish | endtry
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'tylerbrazier/molokai'
+Plug 'tylerbrazier/vim-bracepair'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/nerdcommenter'
-Plug 'tylerbrazier/vim-collapse'
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'Raimondi/delimitMate'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
+Plug 'junegunn/fzf.vim'
 Plug 'ervandew/supertab'
-Plug 'pangloss/vim-javascript'
-Plug 'tylerbrazier/HTML-AutoCloseTag'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'tylerbrazier/HTML-AutoCloseTag', { 'for': 'html' }
 call plug#end()
 
 " silent in case plugins haven't been installed yet
 silent! colorscheme molokai
 
-" no 'X lines:' as part of folded text
-set foldtext=collapse#foldtext()
-
 " don't conflict with custom <leader>h mapping
 let g:gitgutter_map_keys = 0
-
-" don't complete quotes
-let g:delimitMate_quotes = ''
-" pressing space in a situation like (|) causes ( | )
-let g:delimitMate_expand_space = 1
 
 let g:airline_theme = 'murmur'
 let g:airline_left_sep = ''
