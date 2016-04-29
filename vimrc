@@ -63,8 +63,9 @@ imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ exists('g:loaded_bracepair') ? '<Plug>bracepairExpandCR' :
       \ "\<cr>"
 
-nnoremap <m-n> :bnext<cr>
-nnoremap <m-p> :bprevious<cr>
+nnoremap <m-t> :tabnew<cr>
+nnoremap <m-n> :tabnext<cr>
+nnoremap <m-p> :tabprevious<cr>
 nnoremap <m-s> :split<cr>
 nnoremap <m-v> :vsplit<cr>
 nnoremap <m-h> <c-w>h
@@ -74,8 +75,10 @@ nnoremap <m-l> <c-w>l
 nnoremap <m-d> :bprevious\|bdelete #<cr>
 nnoremap <m-q> :quit<cr>
 if has('nvim')
-  tnoremap <m-n> <c-\><c-n>:bnext<cr>
-  tnoremap <m-p> <c-\><c-n>:bprevious<cr>
+  tnoremap <m-[> <c-\><c-n>
+  tnoremap <m-t> <c-\><c-n>:tabnew<cr>
+  tnoremap <m-n> <c-\><c-n>:tabnext<cr>
+  tnoremap <m-p> <c-\><c-n>:tabprevious<cr>
   tnoremap <m-s> <c-\><c-n>:split +terminal<cr>
   tnoremap <m-v> <c-\><c-n>:vsplit +terminal<cr>
   tnoremap <m-h> <c-\><c-n><c-w>h
@@ -84,12 +87,11 @@ if has('nvim')
   tnoremap <m-l> <c-\><c-n><c-w>l
   tnoremap <m-d> <c-\><c-n>:bprevious\|bdelete #<cr>
   tnoremap <m-q> <c-\><c-n>:quit<cr>
-  tnoremap <m-[> <c-\><c-n>
 else
   " Allow terminal to recognize escape sequences with alt:
   " http://stackoverflow.com/a/10216459
   " http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
-  set ttimeout ttimeoutlen=50
+  set ttimeout ttimeoutlen=0
   for i in range(char2nr('a'), char2nr('z'))
     execute 'set <m-'.nr2char(i).">=\e".nr2char(i)
   endfor
@@ -145,9 +147,10 @@ let g:airline_theme = 'murmur'
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_splits = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#show_tab_nr = 0
 let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#show_buffers = 1
-let g:airline#extensions#tabline#show_tabs = 0
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tabline#right_sep = ''
 let g:airline#extensions#tabline#left_sep = ''
