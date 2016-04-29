@@ -45,77 +45,81 @@ autocmd BufLeave term://* stopinsert
 filetype plugin indent on
 syntax on
 
-nnoremap ' `
-nnoremap q :q
-" capital Y should behave like capital C and D
-nnoremap Y y$
-" auto format pasted text:
-nnoremap p pmx=`]`x
-nnoremap P Pmx=`]`x
 nnoremap j gj
 nnoremap k gk
-nnoremap <bs> :!
-nnoremap <bs><bs> :!!<cr>
+nnoremap ' `
+nnoremap q :q<cr>
 nnoremap <cr> :
-" enter in insert mode selects completion options and expands braces, html tags
+nnoremap <bs> :<up><cr>
+nnoremap <c-l> :nohlsearch<cr><c-l>
+nnoremap <c-n> :GFiles<cr>
+nnoremap <c-p> :Buffers<cr>
+" capital Y should behave like capital C and D
+nnoremap Y y$
+" auto format pasted text
+nnoremap p pmx=`]`x
+nnoremap P Pmx=`]`x
+" for searching multiple words:  (use * to search for single word under cursor)
+vnoremap / "xy/<c-r>=escape(getreg('x'), '/~.*^$[]\')<cr>
+" let `-` work like `cd -` and `git checkout -` but for buffers
+nnoremap - :buffer #<cr>
+" enter selects completion options and expands braces and html tags
 imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
       \ exists('g:loaded_bracepair') ? '<Plug>bracepairExpandCR' :
       \ "\<cr>"
 
-nnoremap <m-t> :tabnew<cr>
-nnoremap <m-n> :tabnext<cr>
-nnoremap <m-p> :tabprevious<cr>
-nnoremap <m-s> :split<cr>
-nnoremap <m-v> :vsplit<cr>
-nnoremap <m-h> <c-w>h
-nnoremap <m-j> <c-w>j
-nnoremap <m-k> <c-w>k
-nnoremap <m-l> <c-w>l
-nnoremap <m-d> :bprevious\|bdelete #<cr>
-nnoremap <m-q> :quit<cr>
+let mapleader = ' '
+nnoremap <leader>n :setlocal invnumber<cr>
+nnoremap <leader>w :setlocal textwidth=80<cr>
+nnoremap <leader>s :setlocal invspell<cr>
+" fix misspelled word:
+nnoremap <leader>m a<c-x>s
+nnoremap <leader>t :terminal<cr>
+nnoremap <leader>x :edit $HOME/.scratch<cr>
+nnoremap <leader>e :NERDTreeToggle<cr>
+map      <leader>/ <Plug>NERDCommenterToggle
+" <c-/> triggers <c-_> in the terminal
+map      <c-_>     <Plug>NERDCommenterToggle
+
+nnoremap <a-t> :tabnew<cr>
+nnoremap <a-n> :tabnext<cr>
+nnoremap <a-p> :tabprevious<cr>
+nnoremap <a-s> :split<cr>
+nnoremap <a-v> :vsplit<cr>
+nnoremap <a-h> <c-w>h
+nnoremap <a-j> <c-w>j
+nnoremap <a-k> <c-w>k
+nnoremap <a-l> <c-w>l
+inoremap <a-t> <esc>:tabnew<cr>
+inoremap <a-n> <esc>:tabnext<cr>
+inoremap <a-p> <esc>:tabprevious<cr>
+inoremap <a-s> <esc>:split<cr>
+inoremap <a-v> <esc>:vsplit<cr>
+inoremap <a-h> <esc><c-w>h
+inoremap <a-j> <esc><c-w>j
+inoremap <a-k> <esc><c-w>k
+inoremap <a-l> <esc><c-w>l
 if has('nvim')
-  tnoremap <m-[> <c-\><c-n>
-  tnoremap <m-t> <c-\><c-n>:tabnew<cr>
-  tnoremap <m-n> <c-\><c-n>:tabnext<cr>
-  tnoremap <m-p> <c-\><c-n>:tabprevious<cr>
-  tnoremap <m-s> <c-\><c-n>:split +terminal<cr>
-  tnoremap <m-v> <c-\><c-n>:vsplit +terminal<cr>
-  tnoremap <m-h> <c-\><c-n><c-w>h
-  tnoremap <m-j> <c-\><c-n><c-w>j
-  tnoremap <m-k> <c-\><c-n><c-w>k
-  tnoremap <m-l> <c-\><c-n><c-w>l
-  tnoremap <m-d> <c-\><c-n>:bprevious\|bdelete #<cr>
-  tnoremap <m-q> <c-\><c-n>:quit<cr>
+  tnoremap <a-[> <c-\><c-n>
+  tnoremap <a-t> <c-\><c-n>:tabnew<cr>
+  tnoremap <a-n> <c-\><c-n>:tabnext<cr>
+  tnoremap <a-p> <c-\><c-n>:tabprevious<cr>
+  tnoremap <a-s> <c-\><c-n>:split +terminal<cr>
+  tnoremap <a-v> <c-\><c-n>:vsplit +terminal<cr>
+  tnoremap <a-h> <c-\><c-n><c-w>h
+  tnoremap <a-j> <c-\><c-n><c-w>j
+  tnoremap <a-k> <c-\><c-n><c-w>k
+  tnoremap <a-l> <c-\><c-n><c-w>l
 else
   " Allow terminal to recognize escape sequences with alt:
   " http://stackoverflow.com/a/10216459
   " http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
   set ttimeout ttimeoutlen=0
   for i in range(char2nr('a'), char2nr('z'))
-    execute 'set <m-'.nr2char(i).">=\e".nr2char(i)
+    execute 'set <a-'.nr2char(i).">=\e".nr2char(i)
   endfor
 endif
-
-let mapleader = ' '
-nnoremap <leader>h :setlocal invhlsearch<cr>
-nnoremap <leader>n :setlocal invnumber<cr>
-map <leader>c <Plug>NERDCommenterToggle
-map <leader>/ <Plug>NERDCommenterToggle
-" <c-/> triggers <c-_> in the terminal
-map <c-_>     <Plug>NERDCommenterToggle
-nnoremap <leader>f :NERDTreeToggle<cr>
-nnoremap <leader>s :setlocal invspell<cr>
-" fix misspelled word:
-nnoremap <leader>m a<c-x>s
-nnoremap <leader>t :terminal<cr>
-nnoremap <leader>w :setlocal textwidth=80<cr>
-nnoremap <leader>e :edit $HOME/.scratch<cr>
-nnoremap <leader>gf :GitFiles<cr>
-nnoremap <leader>gb :Gblame<cr>
-nmap     <leader>gd <Plug>GitGutterPreviewHunk<c-w>p
-nmap     <leader>gr <Plug>GitGutterRevertHunk
-
 
 " https://github.com/junegunn/vim-plug
 " finish executing vimrc if vim-plug isn't installed
@@ -139,9 +143,6 @@ call plug#end()
 
 " silent in case plugins haven't been installed yet
 silent! colorscheme molokai
-
-" don't conflict with custom <leader>h mapping
-let g:gitgutter_map_keys = 0
 
 let g:airline_theme = 'murmur'
 let g:airline_left_sep = ''
