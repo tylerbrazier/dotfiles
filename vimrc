@@ -63,6 +63,9 @@ nnoremap P Pmx=`]`x
 vnoremap / "xy/<c-r>=escape(getreg('x'), '/~.*^$[]\')<cr>
 " let `-` work like `cd -` and `git checkout -` but for buffers
 nnoremap - :buffer #<cr>
+" tab after non-whitespace char does completion
+inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
+inoremap <expr> <s-tab> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
 " enter selects completion options and expands braces and html tags
 imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
@@ -121,39 +124,35 @@ else
   endfor
 endif
 
-" https://github.com/junegunn/vim-plug
-" finish executing vimrc if vim-plug isn't installed
-try | call plug#begin() | catch | finish | endtry
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'tylerbrazier/molokai'
-Plug 'tylerbrazier/vim-bracepair'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-update-rc' }
-Plug 'junegunn/fzf.vim'
-Plug 'ervandew/supertab'
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'tylerbrazier/HTML-AutoCloseTag', { 'for': 'html' }
-call plug#end()
+try
+  call plug#begin() " https://github.com/junegunn/vim-plug
+  Plug 'tylerbrazier/molokai'
+  Plug 'vim-airline/vim-airline'
+  Plug 'vim-airline/vim-airline-themes'
+  Plug 'tpope/vim-fugitive'
+  Plug 'airblade/vim-gitgutter'
+  Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
+  Plug 'scrooloose/nerdcommenter'
+  Plug 'tylerbrazier/vim-bracepair'
+  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all --no-update-rc'}
+  Plug 'junegunn/fzf.vim'
+  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+  Plug 'tylerbrazier/HTML-AutoCloseTag', {'for': 'html'}
+  call plug#end()
 
-" silent in case plugins haven't been installed yet
-silent! colorscheme molokai
-
-let g:airline_theme = 'murmur'
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#show_tab_nr = 0
-let g:airline#extensions#tabline#show_tab_type = 0
-let g:airline#extensions#tabline#fnamemod = ':t'
-let g:airline#extensions#tabline#right_sep = ''
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#right_alt_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
+  colorscheme molokai
+  let g:airline_theme = 'murmur'
+  let g:airline_left_sep = ''
+  let g:airline_right_sep = ''
+  let g:airline#extensions#tabline#enabled = 1
+  let g:airline#extensions#tabline#show_splits = 0
+  let g:airline#extensions#tabline#show_buffers = 0
+  let g:airline#extensions#tabline#show_tab_nr = 0
+  let g:airline#extensions#tabline#show_tab_type = 0
+  let g:airline#extensions#tabline#fnamemod = ':t'
+  let g:airline#extensions#tabline#right_sep = ''
+  let g:airline#extensions#tabline#left_sep = ''
+  let g:airline#extensions#tabline#right_alt_sep = ''
+  let g:airline#extensions#tabline#left_alt_sep = ''
+catch
+endtry
