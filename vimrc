@@ -35,10 +35,8 @@ set updatetime=1000
 set wildignorecase
 set wildmode=longest,list
 
-" reset autocmds so sourcing vimrc again doesn't run them twice
 autocmd!
-" autosave in normal mode every 'updatetime' millis if able
-autocmd CursorHold * silent! update
+autocmd BufLeave * silent! update
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
