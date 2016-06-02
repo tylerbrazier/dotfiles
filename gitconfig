@@ -26,4 +26,4 @@
   sp = stash pop
   ss = stash save
   out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
-  up = "!f() { git push origin $(git symbolic-ref -q --short HEAD); }; f"
+  up = "!f() { git push -f origin $(git symbolic-ref -q --short HEAD); }; f"
