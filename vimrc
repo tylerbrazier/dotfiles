@@ -47,7 +47,6 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ' `
 nnoremap q :q<cr>
-nnoremap <cr> :
 nnoremap <bs> :<up><cr>
 nnoremap <c-l> :nohlsearch<cr><c-l>
 nnoremap <c-n> :GFiles<cr>
@@ -64,7 +63,9 @@ nnoremap - :buffer #<cr>
 " tab after non-whitespace char does completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 inoremap <expr> <s-tab> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
-" enter selects completion options and expands braces and html tags
+" enter to start a command
+nnoremap <expr> <cr> &buftype != 'quickfix' ? ':' : "\<cr>"
+" insert mode enter selects completion options and expands braces and html tags
 imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
       \ exists('g:loaded_bracepair') ? '<Plug>bracepairExpandCR' :
@@ -78,6 +79,10 @@ nnoremap <leader>s :setlocal invspell<cr>
 nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
 nnoremap <leader>x :edit $HOME/.scratch<cr>
+" git grep:
+nnoremap <leader>g :copen\|silent Ggrep! -i<space>
+" git grep for visual selection:
+vnoremap <leader>g "xy:copen\|silent Ggrep! -i '<c-r>=getreg('x')<cr>'
 nnoremap <leader>e :NERDTreeToggle<cr>
 map      <leader>/ <Plug>NERDCommenterToggle
 " <c-/> triggers <c-_> in the terminal
