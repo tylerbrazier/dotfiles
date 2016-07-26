@@ -1,7 +1,7 @@
 set autochdir
 set autoindent
 set autoread
-set autowriteall
+set autowrite
 set backspace=indent,eol,start
 set clipboard=unnamedplus
 set colorcolumn=80
@@ -36,7 +36,6 @@ set wildignorecase
 set wildmode=longest,list
 
 autocmd!
-autocmd BufLeave * silent! update
 autocmd BufWinEnter,WinEnter term://* startinsert
 autocmd BufLeave term://* stopinsert
 
@@ -47,7 +46,6 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ' `
 nnoremap q :q<cr>
-nnoremap <bs> :<up><cr>
 nnoremap <c-l> :nohlsearch<cr><c-l>
 nnoremap <c-n> :GFiles<cr>
 nnoremap <c-p> :Buffers<cr>
