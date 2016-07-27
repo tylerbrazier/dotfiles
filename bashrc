@@ -1,7 +1,7 @@
-[[ $- != *i* ]] && return   # If not running interactively, don't do anything
+[[ $- != *i* ]] && return  # If not running interactively, don't do anything
 
-#set -o vi           # lets you ESC and use vim commands at bash prompt
-stty -ixon           # disable flow control (ctrl-s doesn't stop the term)
+#set -o vi  # lets you ESC and use vim commands at bash prompt
+stty -ixon  # disable flow control (so ctrl-s doesn't stop the term)
 bind 'set completion-ignore-case on'
 
 alias rm='rm -rf'
@@ -9,39 +9,26 @@ alias cp='cp -r'
 alias scp='scp -r'
 alias chown='chown -R'
 alias chmod='chmod -R'
-alias grep='grep --color=auto'
 alias df='df -h'
 alias du='du -h --summarize'
 alias htop='htop --delay=5'
-alias curl='curl -L'
+alias curl='curl -L'  # follow redirects
+alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ls -alh'
 alias tma='tmux attach-session'
 cd() { builtin cd "$@" && ls; }
-untar() { tar -xzf $1; }
-mktar() { tar -czf $(basename $1).tar.gz $1; }
+untar() { tar -xzf "$1"; }
+mktar() { tar -czf "$(basename "$1")".tar.gz "$1"; }
 
-# colored man pages in less
-# https://wiki.archlinux.org/index.php/Man_page#Colored_man_pages
-man() {
-  env LESS_TERMCAP_mb=$'\E[01;31m' \
-    LESS_TERMCAP_md=$'\E[01;38;5;74m' \
-    LESS_TERMCAP_me=$'\E[0m' \
-    LESS_TERMCAP_se=$'\E[0m' \
-    LESS_TERMCAP_so=$'\E[38;5;246m' \
-    LESS_TERMCAP_ue=$'\E[0m' \
-    LESS_TERMCAP_us=$'\E[04;38;5;146m' \
-    man "$@"
-}
-
-# https://wiki.archlinux.org/index.php/Color_Bash_Prompt
+# https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 customPS1() {
-  sta=$?             # status of last command - must come first
-  usr='\u'           # username
-  hst='\h'           # hostname up to first '.'; capital H for full hostname
-  cwd='\w'           # current working dir; capital W for just base name
-  pmt='\\$'          # prompt - will be '$' if normal user, '#' if root
+  sta=$?     # status of last command - must come first
+  usr='\u'   # username
+  hst='\H'   # hostname
+  cwd='\w'   # cwd
+  pmt='\\$'  # prompt ('$' for normal user, '#' for root)
   # Colors definitions; ([0 is normal, [1 is bold, [4 is underlined)
   blk='\[\e[1;30m\]' # black
   red='\[\e[1;31m\]' # red
