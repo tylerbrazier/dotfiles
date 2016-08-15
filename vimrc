@@ -49,6 +49,10 @@ nnoremap q :q<cr>
 nnoremap <c-l> :nohlsearch<cr><c-l>
 nnoremap <c-n> :GFiles<cr>
 nnoremap <c-p> :Buffers<cr>
+" git grep:
+nnoremap <c-g> :copen\|silent Ggrep! -i<space>
+" git grep for visual selection:
+vnoremap <c-g> "xy:copen\|silent Ggrep! -i '<c-r>=getreg('x')<cr>'
 " capital Y should behave like capital C and D
 nnoremap Y y$
 " auto format pasted text
@@ -77,10 +81,6 @@ nnoremap <leader>s :setlocal invspell<cr>
 nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
 nnoremap <leader>x :edit $HOME/.scratch<cr>
-" git grep:
-nnoremap <leader>g :copen\|silent Ggrep! -i<space>
-" git grep for visual selection:
-vnoremap <leader>g "xy:copen\|silent Ggrep! -i '<c-r>=getreg('x')<cr>'
 nnoremap <leader>e :NERDTreeToggle<cr>
 map      <leader>/ <Plug>NERDCommenterToggle
 " <c-/> triggers <c-_> in the terminal
