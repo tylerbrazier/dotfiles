@@ -81,7 +81,7 @@ nnoremap <leader>s :setlocal invspell<cr>
 nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
 nnoremap <leader>x :edit $HOME/.scratch<cr>
-nnoremap <leader>e :NERDTreeToggle<cr>
+nnoremap <leader>e :Explore<cr>
 map      <leader>/ <Plug>NERDCommenterToggle
 " <c-/> triggers <c-_> in the terminal
 map      <c-_>     <Plug>NERDCommenterToggle
@@ -133,7 +133,6 @@ try
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
   Plug 'jamessan/vim-gnupg'
-  Plug 'scrooloose/nerdtree', {'on': 'NERDTreeToggle'}
   Plug 'scrooloose/nerdcommenter'
   Plug 'tylerbrazier/vim-bracepair'
   Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all --no-update-rc'}
