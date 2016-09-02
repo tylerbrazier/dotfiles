@@ -79,9 +79,8 @@ nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
 nnoremap <leader>x :edit $HOME/.scratch<cr>
 nnoremap <leader>e :Explore<cr>
-map      <leader>/ <Plug>NERDCommenterToggle
 " <c-/> triggers <c-_> in the terminal
-map      <c-_>     <Plug>NERDCommenterToggle
+map <c-_> <Plug>NERDCommenterToggle
 
 nnoremap <a-t> :tabnew<cr>
 nnoremap <a-n> :tabnext<cr>
