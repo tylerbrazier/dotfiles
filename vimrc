@@ -10,8 +10,6 @@ set completeopt-=preview
 set display=lastline
 set encoding=utf-8
 set expandtab
-set foldlevelstart=99
-set foldmethod=indent
 set formatoptions+=j
 set hlsearch
 set ignorecase
