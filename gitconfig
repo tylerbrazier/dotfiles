@@ -8,6 +8,9 @@
 [diff]
   tool = vimdiff
 
+[fetch]
+  prune = true
+
 [alias]
   a = add -A
   b = branch
@@ -15,9 +18,10 @@
   co = checkout
   d = diff
   dt = difftool
-  f = fetch --all --prune
+  f = fetch --all
   l = log --stat
   m = merge
+  p = pull --ff-only
   r = remote
   rb = rebase
   rs = reset
@@ -28,4 +32,4 @@
   sp = stash pop
   ss = stash save
   out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
-  up = "!f() { git push -f origin $(git symbolic-ref -q --short HEAD); }; f"
+  up = "!f() { git push -f -u origin $(git symbolic-ref -q --short HEAD); }; f"
