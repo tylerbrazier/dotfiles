@@ -43,6 +43,7 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ' `
 nnoremap q :q<cr>
+nnoremap <bs> :!<up>
 nnoremap <c-l> :nohlsearch<cr><c-l>
 nnoremap <c-n> :GFiles<cr>
 nnoremap <c-p> :Buffers<cr>
@@ -77,6 +78,7 @@ nnoremap <leader>s :setlocal invspell<cr>
 " fix misspelled word:
 nnoremap <leader>m a<c-x>s
 nnoremap <leader>t :terminal<cr>
+nnoremap <leader>b :ls<cr>:buffer<space>
 nnoremap <leader>x :edit $HOME/.scratch<cr>
 nnoremap <leader>e :Explore<cr>
 " <c-/> triggers <c-_> in the terminal
