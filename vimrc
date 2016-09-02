@@ -25,7 +25,6 @@ set noswapfile
 set nrformats-=octal
 set numberwidth=3
 set scrolloff=1
-set sessionoptions-=options
 set shiftwidth=2
 set showcmd
 set smartcase
