@@ -52,7 +52,6 @@ nnoremap j gj
 nnoremap k gk
 nnoremap ' `
 nnoremap q :q<cr>
-nnoremap <c-l> :nohlsearch<cr><c-l>
 
 " capital Y behaves like capital C and D
 nnoremap Y y$
@@ -97,60 +96,29 @@ nnoremap <leader>e :Explore<cr>
 nnoremap <leader>b :ls<cr>:buffer<space>
 nnoremap <leader>x :edit $HOME/.scratch<cr>
 
+nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
 
-" window and tab navigation shortcuts work in normal, insert, and terminal
 
-nnoremap <a-s> :split<cr>
-nnoremap <a-v> :vsplit<cr>
+" <c--> also triggers <c-_> in the terminal
+nnoremap <c-_> :split<cr>
+nnoremap <c-\> :vsplit<cr>
 
-nnoremap <a-h> <c-w>h
-nnoremap <a-j> <c-w>j
-nnoremap <a-k> <c-w>k
-nnoremap <a-l> <c-w>l
+nnoremap <c-h> <c-w>h
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-l> <c-w>l
 
-nnoremap <a-t> :tabnew<cr>
-nnoremap <a-n> :tabnext<cr>
-nnoremap <a-p> :tabprevious<cr>
-
-inoremap <a-s> <esc>:split<cr>
-inoremap <a-v> <esc>:vsplit<cr>
-
-inoremap <a-h> <esc><c-w>h
-inoremap <a-j> <esc><c-w>j
-inoremap <a-k> <esc><c-w>k
-inoremap <a-l> <esc><c-w>l
-
-inoremap <a-t> <esc>:tabnew<cr>
-inoremap <a-n> <esc>:tabnext<cr>
-inoremap <a-p> <esc>:tabprevious<cr>
+nnoremap <c-t> :tabnew<cr>
+nnoremap <c-n> gt
+nnoremap <c-p> gT
 
 if has('nvim')
   nnoremap <leader>t :terminal<cr>
 
+  tnoremap <esc> <c-\><c-n>
+
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
-
-  tnoremap <a-[> <c-\><c-n>
-
-  tnoremap <a-s> <c-\><c-n>:split +terminal<cr>
-  tnoremap <a-v> <c-\><c-n>:vsplit +terminal<cr>
-
-  tnoremap <a-h> <c-\><c-n><c-w>h
-  tnoremap <a-j> <c-\><c-n><c-w>j
-  tnoremap <a-k> <c-\><c-n><c-w>k
-  tnoremap <a-l> <c-\><c-n><c-w>l
-
-  tnoremap <a-t> <c-\><c-n>:tabnew<cr>
-  tnoremap <a-n> <c-\><c-n>:tabnext<cr>
-  tnoremap <a-p> <c-\><c-n>:tabprevious<cr>
-else
-  " Allow terminal to recognize escape sequences with alt
-  " http://stackoverflow.com/a/10216459
-  " http://vim.wikia.com/wiki/Get_Alt_key_to_work_in_terminal
-  set ttimeout ttimeoutlen=0
-  for i in range(char2nr('a'), char2nr('z'))
-    execute 'set <a-'.nr2char(i).">=\e".nr2char(i)
-  endfor
 endif
 
 
@@ -180,15 +148,14 @@ try
   " idle delay before triggering CursorHold, updating gitgutter
   set updatetime=1000
 
-  " <c-/> triggers <c-_> in the terminal
-  map <c-_> <Plug>NERDCommenterToggle
+  map <leader>/ <Plug>NERDCommenterToggle
 
-  nnoremap <c-n> :GFiles<cr>
-  nnoremap <c-p> :Buffers<cr>
+  nnoremap <leader>f :GFiles<cr>
+  nnoremap <leader>b :Buffers<cr>
 
   " git grep (works on visual selection)
-  nnoremap <c-g> :copen\|silent Ggrep! -i<space>
-  vnoremap <c-g> "xy:copen\|silent Ggrep! -i '<c-r>=getreg('x')<cr>'
+  nnoremap <leader>g :copen\|silent Ggrep! -i<space>
+  vnoremap <leader>g "xy:copen\|silent Ggrep! -i '<c-r>=getreg('x')<cr>'
 
   colorscheme molokai
 
