@@ -17,7 +17,6 @@ alias grep='grep --color=auto'
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ls -alh'
-alias tma='tmux attach-session'
 cd() { builtin cd "$@" && ls; }
 untar() { tar -xzf "$1"; }
 mktar() { tar -czf "$(basename "$1")".tar.gz "$1"; }
