@@ -47,6 +47,10 @@ autocmd!
 filetype plugin indent on
 syntax on
 
+" disable auto comment on next line when hitting enter or using o/O.
+" still works with textwidth. autocmd because setting filetype resets these opts
+autocmd FileType * setlocal formatoptions-=r formatoptions-=o
+
 
 nnoremap j gj
 nnoremap k gk
