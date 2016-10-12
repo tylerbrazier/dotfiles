@@ -70,7 +70,8 @@ vnoremap / "xy/<c-r>=escape(getreg('x'), '/~.*^$[]\')<cr>
 " - works like cd - and git checkout - but for buffers
 nnoremap - :buffer #<cr>
 
-" tab after non-whitespace character does completion
+" tab after non-whitespace character does word completion
+" shift-tab does "smart" completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 inoremap <expr> <s-tab> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
 
@@ -87,21 +88,9 @@ imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
       \ "\<cr>"
 
 
-let mapleader = ' '
-
-nnoremap <leader>n :setlocal invnumber<cr>
-nnoremap <leader>w :setlocal textwidth=80<cr>
-nnoremap <leader>s :setlocal invspell<cr>
-
-" fix misspelled word under cursor
-nnoremap <leader>m a<c-x>s
-
-nnoremap <leader>e :Explore<cr>
-nnoremap <leader>b :ls<cr>:buffer<space>
-nnoremap <leader>x :edit $HOME/.scratch<cr>
-
-nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
-
+nnoremap <c-t> :tabnew<cr>
+nnoremap <c-n> gt
+nnoremap <c-p> gT
 
 " <c--> also triggers <c-_> in the terminal
 nnoremap <c-_> :split<cr>
@@ -112,9 +101,27 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
-nnoremap <c-t> :tabnew<cr>
-nnoremap <c-n> gt
-nnoremap <c-p> gT
+
+let mapleader = ' '
+
+nnoremap <leader>n :setlocal invnumber<cr>
+nnoremap <leader>w :setlocal textwidth=80<cr>
+nnoremap <leader>s :setlocal invspell<cr>
+
+" fix misspelled word under cursor
+nnoremap <leader>m a<c-x>s
+
+" clear search highlighting and refresh the screen
+nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
+
+" show recent buffers and prompt to edit one
+nnoremap <leader>b :ls<cr>:b<space>
+
+" file explorer
+nnoremap <leader>e :Explore<cr>
+
+nnoremap <leader>x :e $HOME/.scratch<cr>
+
 
 if has('nvim')
   nnoremap <leader>t :terminal<cr>
