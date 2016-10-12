@@ -8,7 +8,6 @@ set shiftwidth=2
 
 set autoread
 set autowrite
-set autochdir
 
 set noswapfile
 set nobackup
@@ -118,7 +117,16 @@ nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
 " show recent buffers and prompt to edit one
 nnoremap <leader>b :ls<cr>:b<space>
 
-" file explorer
+" search for files in git project (relative to vim's cwd)
+nnoremap <leader>f :copen\|:cgetexpr system('git ls-files **')<left><left><left>
+set errorformat+=%f  " allow selecting lines with just filenames in quickfix
+
+" git grep; works on visual selection (relative to vim's cwd)
+nnoremap <leader>g :copen\|:cgetexpr system('git grep -n -I -i ')<left><left>
+vnoremap <leader>g "xy:copen\|:cgetexpr
+      \ system('git grep -n -I -F -- '.shellescape(getreg('x')))<cr>
+
+" file explorer (starts in the current file's directory)
 nnoremap <leader>e :Explore<cr>
 
 nnoremap <leader>x :e $HOME/.scratch<cr>
@@ -144,9 +152,6 @@ try
   Plug 'scrooloose/nerdcommenter'
   Plug 'tylerbrazier/vim-bracepair'
 
-  Plug 'junegunn/fzf', {'dir': '~/.fzf', 'do': './install --all --no-update-rc'}
-  Plug 'junegunn/fzf.vim'
-
   Plug 'tylerbrazier/molokai'
   Plug 'vim-airline/vim-airline'
   Plug 'vim-airline/vim-airline-themes'
@@ -161,13 +166,6 @@ try
   set updatetime=1000
 
   map <leader>/ <Plug>NERDCommenterToggle
-
-  nnoremap <leader>f :GFiles<cr>
-  nnoremap <leader>b :Buffers<cr>
-
-  " git grep (works on visual selection)
-  nnoremap <leader>g :copen\|silent Ggrep! -i<space>
-  vnoremap <leader>g "xy:copen\|silent Ggrep! -i '<c-r>=getreg('x')<cr>'
 
   colorscheme molokai
 
