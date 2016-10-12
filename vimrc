@@ -21,6 +21,7 @@ set smartcase
 set mouse=a
 set clipboard=unnamedplus
 set backspace=indent,eol,start
+set sessionoptions-=options
 
 set showcmd
 set colorcolumn=80
