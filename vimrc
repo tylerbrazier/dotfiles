@@ -154,7 +154,6 @@ try
 
   Plug 'tylerbrazier/molokai'
 
-  Plug 'jamessan/vim-gnupg'
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
   Plug 'tylerbrazier/HTML-AutoCloseTag', {'for': 'html'}
 

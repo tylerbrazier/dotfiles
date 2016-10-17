@@ -20,8 +20,6 @@ alias la='ls -alh'
 cd() { builtin cd "$@" && ls; }
 untar() { tar -xzf "$1"; }
 mktar() { tar -czf "$(basename "$1")".tar.gz "$1"; }
-crypt() { gpg --symmetric --armor --cipher-algo AES256 "$1"; }
-decrypt() { gpg --decrypt "$1"; }  # prints to stdout
 
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 customPS1() {
