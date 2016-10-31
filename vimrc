@@ -14,6 +14,7 @@ set nobackup
 
 set hlsearch
 set incsearch
+set nowrapscan
 set ignorecase
 set smartcase
 
@@ -23,6 +24,7 @@ set backspace=indent,eol,start
 set sessionoptions-=options
 
 set showcmd
+set nowrap
 set colorcolumn=80
 set numberwidth=3
 set laststatus=2
