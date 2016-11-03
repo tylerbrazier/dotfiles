@@ -23,42 +23,25 @@ mktar() { tar -czf "$(basename "$1")".tar.gz "$1"; }
 
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 customPS1() {
-  sta=$?     # status of last command - must come first
-  usr='\u'   # username
-  hst='\H'   # hostname
-  cwd='\w'   # cwd
-  pmt='\\$'  # prompt ('$' for normal user, '#' for root)
-  # Colors definitions; ([0 is normal, [1 is bold, [4 is underlined)
-  blk='\[\e[1;30m\]' # black
+  status=$?  # status of last command; must come first
   red='\[\e[1;31m\]' # red
   grn='\[\e[1;32m\]' # green
-  ylw='\[\e[1;33m\]' # yellow
   blu='\[\e[1;34m\]' # blue
-  pur='\[\e[1;35m\]' # magenta
-  cyn='\[\e[1;36m\]' # cyan
+  blk='\[\e[1;30m\]' # black
   wht='\[\e[1;37m\]' # white
   rst='\[\e[00m\]'   # color reset
 
-  # green smiley for status 0 and red unsmiley otherwise
-  [ $sta -eq 0 ] && PS1="${grn}:) " || PS1="${red}:( "
-
-  # red username if root and green otherwise
-  [ $(id -u) -eq 0 ] && PS1+="${red}${usr}" || PS1+="${grn}${usr}"
-
-  # white @
-  PS1+="${wht}@"
-
-  # cyan hostname if over ssh and white otherwise
-  [ "$SSH_CLIENT" == "" ] && PS1+="${wht}${hst} " || PS1+="${cyn}${hst} "
+  # smiley or unsmiley for status of last command
+  [ $status -eq 0 ] && PS1="${grn}:) " || PS1="${red}:( "
 
   # white current working dir
-  PS1+="${wht}${cwd} "
+  PS1+="${wht}\\w "
 
   # red current git branch
   PS1+="${red}$(git branch 2>/dev/null | grep ^* | cut -c 3- | sed 's/$/ /')"
 
-  # white prompt; '$' if normal user, '#' if root
-  PS1+="${wht}${pmt} "
+  # blue prompt if over ssh and white otherwise; '#' for root, '$' for others
+  [ "$SSH_CLIENT" == "" ] && PS1+="${wht}\\\$ " || PS1+="${blu}\\\$ "
 
   # reset the color
   PS1+="$rst"
