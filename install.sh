@@ -16,9 +16,9 @@ $cmd "$(pwd)/gitconfig" ~/.gitconfig
 $cmd "$(pwd)/tmux.conf" ~/.tmux.conf
 $cmd "$(pwd)/vimrc" ~/.vimrc
 
-mkdir -p ${XDG_CONFIG_HOME:=$HOME/.config}
-$cmd ~/.vim $XDG_CONFIG_HOME/nvim
-$cmd ~/.vimrc $XDG_CONFIG_HOME/nvim/init.vim
+mkdir -p ~/.config ~/.vim
+$cmd ~/.vim ~/.config/nvim
+$cmd ~/.vimrc ~/.config/nvim/init.vim
 
 if [[ " $@ " == *" -p "* ]]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
