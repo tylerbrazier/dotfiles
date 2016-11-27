@@ -8,6 +8,7 @@ set shiftwidth=2
 
 set autoread
 set autowrite
+set autochdir
 
 set noswapfile
 set nobackup
@@ -52,6 +53,7 @@ syntax on
 " disable auto comment on next line when hitting enter or using o/O.
 " still works with textwidth. autocmd because setting filetype resets these opts
 autocmd FileType * setlocal formatoptions-=r formatoptions-=o
+autocmd FileType gitcommit setlocal spell
 
 
 nnoremap j gj
@@ -113,24 +115,9 @@ nnoremap <leader>s :setlocal invspell<cr>
 " fix misspelled word under cursor
 nnoremap <leader>m a<c-x>s
 
-" clear search highlighting and refresh the screen
 nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
-
-" show recent buffers and prompt to edit one
 nnoremap <leader>b :ls<cr>:b<space>
-
-" search for files in git project (relative to vim's cwd)
-nnoremap <leader>f :copen\|:cgetexpr system('git ls-files **')<left><left><left>
-set errorformat+=%f  " allow selecting lines with just filenames in quickfix
-
-" git grep; works on visual selection (relative to vim's cwd)
-nnoremap <leader>g :copen\|:cgetexpr system('git grep -n -I -i ')<left><left>
-vnoremap <leader>g "xy:copen\|:cgetexpr
-      \ system('git grep -n -I -F -- '.shellescape(getreg('x')))<cr>
-
-" file explorer (starts in the current file's directory)
 nnoremap <leader>e :Explore<cr>
-
 nnoremap <leader>x :e $HOME/.scratch<cr>
 
 
@@ -163,6 +150,17 @@ try
 
   " idle delay before triggering CursorHold, updating gitgutter
   set updatetime=1000
+
+  " gitgutter diffs against HEAD instead of the index
+  let g:gitgutter_diff_base = 'HEAD'
+
+  " hacky git ls-files search until fugitive has this functionality
+  " https://github.com/tpope/vim-fugitive/issues/132
+  set errorformat+=%f  " allow selecting lines with just filenames in quickfix
+  nnoremap <leader>f :Gcd\|:copen\|:cgetexpr
+        \ system('git ls-files \\| grep -i ')<left><left>
+
+  nnoremap <leader>g :Gcd\|:copen\|silent Ggrep! -i<space>
 
   map <leader>/ <Plug>NERDCommenterToggle
 
