@@ -109,7 +109,7 @@ nnoremap <c-l> <c-w>l
 let mapleader = ' '
 
 nnoremap <leader>n :setlocal invnumber<cr>
-nnoremap <leader>w :setlocal textwidth=80<cr>
+nnoremap <leader>w :setlocal textwidth=79<cr>
 nnoremap <leader>s :setlocal invspell<cr>
 
 " fix misspelled word under cursor
