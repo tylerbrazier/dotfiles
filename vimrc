@@ -117,7 +117,6 @@ nnoremap <leader>m a<c-x>s
 
 nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
 nnoremap <leader>b :ls<cr>:b<space>
-nnoremap <leader>e :Explore<cr>
 nnoremap <leader>x :e $HOME/.scratch<cr>
 
 
@@ -137,6 +136,9 @@ try
 
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
+
+  Plug 'scrooloose/nerdtree'
+  Plug 'tylerbrazier/vim-treestump'
 
   Plug 'scrooloose/nerdcommenter'
   Plug 'tylerbrazier/vim-bracepair'
@@ -161,6 +163,8 @@ try
         \ system('git ls-files \\| grep -i ')<left><left>
 
   nnoremap <leader>g :Gcd\|:copen\|silent Ggrep! -i<space>
+
+  nnoremap <leader>e :NERDTreeToggle<cr>
 
   map <leader>/ <Plug>NERDCommenterToggle
 
