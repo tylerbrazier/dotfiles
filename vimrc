@@ -50,10 +50,16 @@ autocmd!
 filetype plugin indent on
 syntax on
 
+" automatically turn on spell check when writing commit messages
+autocmd FileType gitcommit setlocal spell
+
+" highlight trailing whitespace in normal mode
+autocmd InsertLeave * match Error /\s\+$/
+autocmd InsertEnter * match none
+
 " disable auto comment on next line when hitting enter or using o/O.
 " still works with textwidth. autocmd because setting filetype resets these opts
 autocmd FileType * setlocal formatoptions-=r formatoptions-=o
-autocmd FileType gitcommit setlocal spell
 
 
 nnoremap j gj
