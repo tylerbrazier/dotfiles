@@ -34,8 +34,7 @@ set display=lastline
 set listchars=tab:>\ ,trail:-,nbsp:+
 
 set infercase
-set complete-=i           " don't scan includes
-set completeopt-=preview  " no annoying preview window
+set complete-=i  " don't scan includes
 
 set formatoptions+=j  " J (join lines) removes unnecessary comment characters
 set nrformats-=octal  " ctrl-a/x doesn't treat a number with leading 0 as octal
