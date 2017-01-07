@@ -123,8 +123,8 @@ try
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
 
+  Plug 'ctrlpvim/ctrlp.vim'
   Plug 'scrooloose/nerdtree'
-  Plug 'tylerbrazier/vim-treestump'
 
   Plug 'scrooloose/nerdcommenter'
   Plug 'tylerbrazier/vim-bracepair'
@@ -151,11 +151,10 @@ try
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
   nnoremap <space>gi :Git<space>
 
-  " hacky git ls-files search until fugitive has this functionality
-  " https://github.com/tpope/vim-fugitive/issues/132
-  set errorformat+=%f  " allow selecting lines with just filenames in quickfix
-  nnoremap <space>f :Gcd\|:copen\|:cgetexpr
-        \ system('git ls-files \\| grep -i ')<left><left>
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+  let g:ctrlp_cmd = 'CtrlPMRU'
+  nnoremap <space>f :CtrlP<cr>
+  nnoremap <space>b :CtrlPBuffer<cr>
 
   nnoremap <space>e :NERDTreeToggle<cr>
 
