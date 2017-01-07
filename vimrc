@@ -1,4 +1,19 @@
+" :help 'option' for documentation about any option
 set encoding=utf-8
+set backspace=indent,eol,start
+set sessionoptions-=options
+set formatoptions+=j  " delete extra comment chars when joining lines
+set nrformats-=octal
+
+set mouse=a
+set clipboard=unnamedplus
+
+set noswapfile
+set nobackup
+
+set autoread
+set autowrite
+set autochdir
 
 set expandtab
 set smarttab
@@ -6,40 +21,29 @@ set autoindent
 set tabstop=2
 set shiftwidth=2
 
-set autoread
-set autowrite
-set autochdir
-
-set noswapfile
-set nobackup
-
 set hlsearch
 set incsearch
 set nowrapscan
 set ignorecase
 set smartcase
 
-set mouse=a
-set clipboard=unnamedplus
-set backspace=indent,eol,start
-set sessionoptions-=options
-
 set showcmd
-set nowrap
 set colorcolumn=80
 set numberwidth=3
-set laststatus=2
 set scrolloff=1
 set display=lastline
+set laststatus=2  " always show statusline
+set statusline=%f\ %y%r%m%=buf=%n\ spell=%{&spell}\ tw=%{&tw}\ %l,%c%V\ %P
 set listchars=tab:>\ ,trail:-,nbsp:+
+set showbreak=>
 
+set foldmethod=indent
+set foldlevelstart=99  " initially open all folds
+
+set complete-=i
 set infercase
-set complete-=i  " don't scan includes
 
-set formatoptions+=j  " J (join lines) removes unnecessary comment characters
-set nrformats-=octal  " ctrl-a/x doesn't treat a number with leading 0 as octal
-
-set wildmode=longest,list  " bash-like command completion
+set wildmode=longest,list  " bash-like command completion using <tab>
 set wildignorecase
 
 
@@ -155,11 +159,11 @@ try
 
   call plug#end()
 
-  " idle delay before triggering CursorHold, updating gitgutter
-  set updatetime=1000
+  " show current git branch on status line
+  set statusline+=\ %{fugitive#head(7)}
 
-  " gitgutter diffs against HEAD instead of the index
-  let g:gitgutter_diff_base = 'HEAD'
+  set updatetime=1000 " idle delay before firing CursorHold, updating gitgutter
+  let g:gitgutter_diff_base = 'HEAD' " diff against HEAD instead of the index
 
   " hacky git ls-files search until fugitive has this functionality
   " https://github.com/tpope/vim-fugitive/issues/132
