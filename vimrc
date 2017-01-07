@@ -47,68 +47,50 @@ set wildmode=longest,list  " bash-like command completion using <tab>
 set wildignorecase
 
 
+" j and k work over wrapped lines
 nnoremap j gj
 nnoremap k gk
+
+" ' will jump to marked line and column
 nnoremap ' `
-nnoremap q :q<cr>
 
 " capital Y behaves like capital C and D
 nnoremap Y y$
 
-" auto format pasted text
+" auto indent on put
 nnoremap p pmx=`]`x
 nnoremap P Pmx=`]`x
 
-" / works on visual selection (use * or # to search for word under cursor)
-vnoremap / "xy/<c-r>=escape(getreg('x'), '/~.*^$[]\')<cr>
-
-" - works like cd - and git checkout - but for buffers
-nnoremap - :buffer #<cr>
+" / in visual mode to search for whole selection (:help \V, :help c_ctrl-r)
+" * and # are still faster to search for single word under cursor
+vnoremap / "xy/\V<c-r>x
 
 " tab after non-whitespace character does word completion
-" shift-tab does "smart" completion
+" shift-tab does 'smart' completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 inoremap <expr> <s-tab> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
 
-" backspace for previous shell command
-nnoremap <bs> :!<up>
-
-" enter to start a vim command (not in quickfix window)
-nnoremap <expr> <cr> &buftype == 'quickfix' ? "\<cr>" : ':'
-
-" insert-mode enter selects completion options and expands braces and html tags
-imap <expr> <cr> pumvisible() ? "\<c-y>\<esc>" :
-      \ exists('b:loaded_autoclosetag') ? '<Plug>HtmlExpandCR' :
-      \ exists('g:loaded_bracepair') ? '<Plug>bracepairExpandCR' :
-      \ "\<cr>"
+" c-l also clears search highlighting
+nnoremap <c-l> :nohlsearch<cr><c-l>
 
 
-nnoremap <c-t> :tabnew<cr>
-nnoremap <c-n> gt
-nnoremap <c-p> gT
-
-" <c--> also triggers <c-_> in the terminal
-nnoremap <c-_> :split<cr>
-nnoremap <c-\> :vsplit<cr>
-
-nnoremap <c-h> <c-w>h
-nnoremap <c-j> <c-w>j
-nnoremap <c-k> <c-w>k
-nnoremap <c-l> <c-w>l
-
-
-let mapleader = ' '
-
-nnoremap <leader>n :setlocal invnumber<cr>
-nnoremap <leader>w :setlocal textwidth=79<cr>
-nnoremap <leader>s :setlocal invspell<cr>
-
-" fix misspelled word under cursor
-nnoremap <leader>m a<c-x>s
-
-nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
-nnoremap <leader>b :ls<cr>:b<space>
-nnoremap <leader>x :e $HOME/.scratch<cr>
+" use <space> instead of <leader> to avoid conflicts with plugin mappings
+nnoremap <space>w :w<cr>
+nnoremap <space>q :q<cr>
+nnoremap <space>o :only<cr>
+nnoremap <space>b :ls<cr>:b<space>
+nnoremap <space>d :ls<cr>:bd<space>
+nnoremap <space>a :e #<cr>
+nnoremap <space>x :e $HOME/.scratch<cr>
+nnoremap <space>n :setlocal invnumber<cr>
+nnoremap <space>s :setlocal invspell<cr>
+nnoremap <space>h <c-w>h
+nnoremap <space>j <c-w>j
+nnoremap <space>k <c-w>k
+nnoremap <space>l <c-w>l
+nnoremap <space>- :split<cr>
+nnoremap <space>\ :vsplit<cr>
+nnoremap <space><tab> :tabnew<cr>
 
 
 " reset all autocommands in case vimrc is sourced twice
@@ -126,9 +108,8 @@ autocmd InsertEnter * match none
 
 
 if has('nvim')
-  nnoremap <leader>t :terminal<cr>
-
   tnoremap <esc> <c-\><c-n>
+  nnoremap <space>t :terminal<cr>
 
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
@@ -161,17 +142,24 @@ try
   set updatetime=1000 " idle delay before firing CursorHold, updating gitgutter
   let g:gitgutter_diff_base = 'HEAD' " diff against HEAD instead of the index
 
+  nnoremap <space>gl :copen\|silent Glog<space>
+  vnoremap <space>gl :silent Glog\|copen<cr>
+  nnoremap <space>gb :Gblame<cr>
+  nnoremap <space>gs :Gstatus<cr>
+  nnoremap <space>gc :Gcommit -v<space>
+  nnoremap <space>gg :copen\|silent Ggrep! -i<space>
+  vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
+  nnoremap <space>gi :Git<space>
+
   " hacky git ls-files search until fugitive has this functionality
   " https://github.com/tpope/vim-fugitive/issues/132
   set errorformat+=%f  " allow selecting lines with just filenames in quickfix
-  nnoremap <leader>f :Gcd\|:copen\|:cgetexpr
+  nnoremap <space>f :Gcd\|:copen\|:cgetexpr
         \ system('git ls-files \\| grep -i ')<left><left>
 
-  nnoremap <leader>g :Gcd\|:copen\|silent Ggrep! -i<space>
+  nnoremap <space>e :NERDTreeToggle<cr>
 
-  nnoremap <leader>e :NERDTreeToggle<cr>
-
-  map <leader>/ <Plug>NERDCommenterToggle
+  map <space>/ <Plug>NERDCommenterToggle
 
   colorscheme molokai
 catch
