@@ -47,24 +47,6 @@ set wildmode=longest,list  " bash-like command completion using <tab>
 set wildignorecase
 
 
-" reset all autocommands in case vimrc is sourced twice
-autocmd!
-
-filetype plugin indent on
-syntax on
-
-" automatically turn on spell check when writing commit messages
-autocmd FileType gitcommit setlocal spell
-
-" highlight trailing whitespace in normal mode
-autocmd InsertLeave * match Error /\s\+$/
-autocmd InsertEnter * match none
-
-" disable auto comment on next line when hitting enter or using o/O.
-" still works with textwidth. autocmd because setting filetype resets these opts
-autocmd FileType * setlocal formatoptions-=r formatoptions-=o
-
-
 nnoremap j gj
 nnoremap k gk
 nnoremap ' `
@@ -127,6 +109,20 @@ nnoremap <leader>m a<c-x>s
 nnoremap <leader>l :nohlsearch<cr>:redraw!<cr>
 nnoremap <leader>b :ls<cr>:b<space>
 nnoremap <leader>x :e $HOME/.scratch<cr>
+
+
+" reset all autocommands in case vimrc is sourced twice
+autocmd!
+
+syntax on
+filetype plugin indent on
+
+autocmd FileType gitcommit setlocal spell tw=72
+autocmd FileType markdown setlocal spell tw=79
+
+" highlight trailing whitespace in normal mode
+autocmd InsertLeave * match Error /\s\+$/
+autocmd InsertEnter * match none
 
 
 if has('nvim')
