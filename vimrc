@@ -84,13 +84,14 @@ nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 nnoremap <space>n :setlocal invnumber<cr>
 nnoremap <space>s :setlocal invspell<cr>
+nnoremap <space>t :tabnew<cr>
+nnoremap <space>- :split<cr>
+nnoremap <space>\ :vsplit<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
-nnoremap <space>- :split<cr>
-nnoremap <space>\ :vsplit<cr>
-nnoremap <space><tab> :tabnew<cr>
+nnoremap <space><cr> :!
 
 
 " reset all autocommands in case vimrc is sourced twice
@@ -109,7 +110,7 @@ autocmd InsertEnter * match none
 
 if has('nvim')
   tnoremap <esc> <c-\><c-n>
-  nnoremap <space>t :terminal<cr>
+  nnoremap <space><cr> :terminal<cr>
 
   autocmd BufWinEnter,WinEnter term://* startinsert
   autocmd BufLeave term://* stopinsert
