@@ -11,6 +11,9 @@
 [fetch]
   prune = true
 
+[push]
+  default = simple
+
 [alias]
   a = add -A
   b = branch
