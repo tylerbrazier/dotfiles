@@ -1,12 +1,5 @@
 " :help 'option' for documentation about any option
 set encoding=utf-8
-set backspace=indent,eol,start
-set sessionoptions-=options
-set formatoptions+=j  " delete extra comment chars when joining lines
-set nrformats-=octal
-
-set mouse=a
-set clipboard=unnamedplus
 
 set noswapfile
 set nobackup
@@ -27,6 +20,12 @@ set nowrapscan
 set ignorecase
 set smartcase
 
+set mouse=a
+set clipboard=unnamedplus
+set backspace=indent,eol,start
+set nrformats=bin,hex
+set notimeout
+
 set showcmd
 set colorcolumn=80
 set numberwidth=3
@@ -46,6 +45,9 @@ set infercase
 
 set wildmode=longest,list  " bash-like command completion using <tab>
 set wildignorecase
+
+set sessionoptions=buffers,curdir,folds,tabpages,winsize
+set formatoptions=tcqj
 
 
 " j and k work over wrapped lines
