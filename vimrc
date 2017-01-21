@@ -152,14 +152,20 @@ try
   let g:ctrlp_cmd = 'CtrlPMRU'
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-  nnoremap <space>gl :copen\|silent Glog<space>
-  vnoremap <space>gl :silent Glog\|copen<cr>
-  nnoremap <space>gb :Gblame<cr>
-  nnoremap <space>gs :Gstatus<cr>
+  " :help fugitive
+  nmap     <space>gs :Gstatus<cr><c-n>
+  nnoremap <space>gw :Gwrite<cr>
+  nnoremap <space>ga :wa\|Git add -A<space>
   nnoremap <space>gc :Gcommit -v<space>
+  vnoremap <space>gd :Gvdiff<space>
+  nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
+  nnoremap <space>gp :Git pull --ff-only<space>
+  nnoremap <space>gl :copen\|silent Glog -- <c-r>%
+  vnoremap <space>gl :silent Glog\|copen<cr>
   nnoremap <space>gg :copen\|silent Ggrep! -i<space>
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
-  nnoremap <space>gi :Git<space>
+  nnoremap <space>gb :Gblame<cr>
+  nnoremap <space>g<cr> :Git<space>
 
   nnoremap <space>e :NERDTreeFind<cr>
   map      <space>/ <Plug>NERDCommenterToggle
