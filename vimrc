@@ -87,13 +87,15 @@ nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 nnoremap <space>n :setlocal invnumber<cr>
 nnoremap <space>s :setlocal invspell<cr>
-nnoremap <space>t :tabnew<cr>
 nnoremap <space>- :split<cr>
 nnoremap <space>\ :vsplit<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
+nnoremap <space>t :tabnew<cr>
+nnoremap <space><tab> gt
+nnoremap <space><s-tab> gT
 nnoremap <space><cr> :!
 
 
