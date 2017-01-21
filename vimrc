@@ -148,6 +148,10 @@ try
   set updatetime=1000 " idle delay before firing CursorHold, updating gitgutter
   let g:gitgutter_diff_base = 'HEAD' " diff against HEAD instead of the index
 
+  " <c-p> for recent files, then <c-f> to find anything else tracked by git
+  let g:ctrlp_cmd = 'CtrlPMRU'
+  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
   nnoremap <space>gl :copen\|silent Glog<space>
   vnoremap <space>gl :silent Glog\|copen<cr>
   nnoremap <space>gb :Gblame<cr>
@@ -156,11 +160,6 @@ try
   nnoremap <space>gg :copen\|silent Ggrep! -i<space>
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
   nnoremap <space>gi :Git<space>
-
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-  let g:ctrlp_cmd = 'CtrlPMRU'
-  nnoremap <space>f :CtrlP<cr>
-  nnoremap <space>b :CtrlPBuffer<cr>
 
   nnoremap <space>e :NERDTreeToggle<cr>
 
