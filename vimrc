@@ -161,9 +161,8 @@ try
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
   nnoremap <space>gi :Git<space>
 
-  nnoremap <space>e :NERDTreeToggle<cr>
-
-  map <space>/ <Plug>NERDCommenterToggle
+  nnoremap <space>e :NERDTreeFind<cr>
+  map      <space>/ <Plug>NERDCommenterToggle
 
   colorscheme molokai
 catch
