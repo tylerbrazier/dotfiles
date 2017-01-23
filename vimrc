@@ -88,8 +88,8 @@ nnoremap <space>x :e $HOME/.scratch<cr>
 nnoremap <space>s :wa\|mksession! <c-r>=v:this_session<cr>
 nnoremap <space>n :setlocal invnumber<cr>
 nnoremap <space>z :setlocal invspell<cr>
-nnoremap <space>- :split<cr>
-nnoremap <space>\ :vsplit<cr>
+nnoremap <space>- :new<cr>
+nnoremap <space>\ :vnew<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
