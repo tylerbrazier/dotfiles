@@ -1,7 +1,6 @@
-[[ $- != *i* ]] && return  # If not running interactively, don't do anything
+[[ $- != *i* ]] && return  # if not running interactively, don't do anything
 
-#set -o vi  # lets you ESC and use vim commands at bash prompt
-stty -ixon  # disable flow control (so ctrl-s doesn't stop the term)
+stty -ixon  # disable flow control (ctrl-s won't stop the term)
 bind 'set completion-ignore-case on'
 
 alias rm='rm -rf'
