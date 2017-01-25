@@ -126,7 +126,6 @@ endif
 try
   " https://github.com/junegunn/vim-plug
   call plug#begin()
-
   Plug 'tpope/vim-fugitive'
   Plug 'airblade/vim-gitgutter'
 
@@ -135,12 +134,10 @@ try
 
   Plug 'scrooloose/nerdcommenter'
   Plug 'tylerbrazier/vim-bracepair'
-
-  Plug 'tylerbrazier/molokai'
+  Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
 
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-  Plug 'tylerbrazier/HTML-AutoCloseTag', {'for': 'html'}
-
+  Plug 'tylerbrazier/molokai'
   call plug#end()
 
   " show current git branch on status line
