@@ -137,7 +137,7 @@ try
   Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
 
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-  Plug 'tylerbrazier/molokai'
+  Plug 'tylerbrazier/vim-flintstone'
   call plug#end()
 
   " show current git branch on status line
@@ -168,6 +168,6 @@ try
   nnoremap <space>e :NERDTreeFind<cr>
   map      <space>/ <Plug>NERDCommenterToggle
 
-  colorscheme molokai
+  colorscheme flintstone
 catch
 endtry
