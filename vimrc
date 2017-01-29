@@ -155,7 +155,7 @@ try
   nnoremap <space>gw :Gwrite<cr>
   nnoremap <space>ga :wa\|Git add -A<space>
   nnoremap <space>gc :Gcommit -v<space>
-  vnoremap <space>gd :Gvdiff<space>
+  nnoremap <space>gd :Gvdiff<space>
   nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
   nnoremap <space>gp :Git pull --ff-only<space>
   nnoremap <space>gl :copen\|silent Glog -- <c-r>%
