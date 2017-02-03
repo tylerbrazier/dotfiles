@@ -23,8 +23,7 @@ set smartcase
 set mouse=a
 set clipboard=unnamedplus
 set backspace=indent,eol,start
-set nrformats=bin,hex
-set timeoutlen=4000
+set nrformats-=octal
 
 set showcmd
 set colorcolumn=80
