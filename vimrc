@@ -148,6 +148,7 @@ try
   " <c-p> for recent files, then <c-f> to find anything else tracked by git
   let g:ctrlp_cmd = 'CtrlPMRU'
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+  let g:ctrlp_regexp = 1 "regex instead of fuzzy; <c-r> to toggle
 
   " :help fugitive
   nmap     <space>gs :Gstatus<cr><c-n>
