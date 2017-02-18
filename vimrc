@@ -21,7 +21,7 @@ set ignorecase
 set smartcase
 
 set mouse=a
-set clipboard=unnamedplus
+set clipboard=unnamed,unnamedplus
 set backspace=indent,eol,start
 set nrformats-=octal
 
