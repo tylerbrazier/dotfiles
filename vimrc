@@ -152,8 +152,7 @@ try
   nnoremap <space>gd :Gvdiff<space>
   nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
   nnoremap <space>gp :Git pull --ff-only<space>
-  nnoremap <space>gl :copen<cr><c-w>p:silent Glog --
-  vnoremap <space>gl :Glog<cr>:copen<cr>
+  nnoremap <space>gl :Glog --follow -- %<cr>:copen<cr>
   nnoremap <space>gg :copen\|silent Ggrep! -i<space>
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
   nnoremap <space>gb :Gblame<cr>
