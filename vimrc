@@ -96,6 +96,7 @@ nnoremap <space>t :tabnew<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
 nnoremap <space><cr> :!
+nnoremap <space><bs> :!<up>
 
 
 " reset all autocommands in case vimrc is sourced twice
