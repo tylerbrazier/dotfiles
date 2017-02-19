@@ -81,7 +81,6 @@ nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
 nnoremap <space>o :only<cr>
 nnoremap <space>b :ls<cr>:b<space>
-nnoremap <space>d :ls<cr>:bd<space>
 nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 nnoremap <space>s :wa\|mksession! <c-r>=v:this_session<cr>
@@ -149,8 +148,6 @@ try
 
   " :help fugitive
   nmap     <space>gs :Gstatus<cr><c-n>
-  nnoremap <space>gw :Gwrite<cr>
-  nnoremap <space>ga :wa\|Git add -A<space>
   nnoremap <space>gc :Gcommit -v<space>
   nnoremap <space>gd :Gvdiff<space>
   nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
@@ -160,7 +157,6 @@ try
   nnoremap <space>gg :copen\|silent Ggrep! -i<space>
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
   nnoremap <space>gb :Gblame<cr>
-  nnoremap <space>g<cr> :Git<space>
 
   nnoremap <space>e :NERDTreeFind<cr>
   map      <space>/ <Plug>NERDCommenterToggle
