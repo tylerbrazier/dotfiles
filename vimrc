@@ -116,9 +116,6 @@ autocmd InsertEnter * match none
 if has('nvim')
   tnoremap <esc> <c-\><c-n>
   nnoremap <space><cr> :terminal<cr>
-
-  autocmd BufWinEnter,WinEnter term://* startinsert
-  autocmd BufLeave term://* stopinsert
 endif
 
 
