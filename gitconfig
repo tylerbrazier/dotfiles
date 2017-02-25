@@ -23,6 +23,7 @@
   dt = difftool
   f = fetch --all
   l = log --stat
+  ll = log --stat --patch
   m = merge
   p = pull --ff-only
   r = remote
@@ -32,6 +33,7 @@
   sa = stash apply
   sd = stash drop
   sl = stash list --stat
+  sll = stash list --stat --patch
   sp = stash pop
   ss = stash save
   out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
