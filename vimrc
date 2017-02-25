@@ -31,7 +31,7 @@ set numberwidth=3
 set scrolloff=1
 set display=lastline
 set laststatus=2  " always show statusline
-set statusline=%f\ %y%r%m%=spell=%{&spell}\ tw=%{&tw}\ %l,%c%V\ %P
+set statusline=%F\ %r%m\ %=spell=%{&spell}\ tw=%{&tw}\ %l,%c%V\ %P
 set listchars=tab:>\ ,trail:-,nbsp:+
 set linebreak
 set showbreak=>
