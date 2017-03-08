@@ -63,6 +63,9 @@ nnoremap Y y$
 nnoremap p pmx=`]`x
 nnoremap P Pmx=`]`x
 
+" put over visual selection won't overwrite register with the replaced text
+vnoremap p pgvy
+
 " / in visual mode to search for whole selection (:help \V, :help c_ctrl-r)
 " * and # are still faster to search for single word under cursor
 vnoremap / "xy/\V<c-r>x
