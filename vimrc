@@ -143,8 +143,8 @@ try
   " show current git branch on status line
   set statusline+=\ %{fugitive#head(7)}
 
-  set updatetime=1000 " idle delay before firing CursorHold, updating gitgutter
-  let g:gitgutter_diff_base = 'HEAD' " diff against HEAD instead of the index
+  " idle delay before firing CursorHold, updating gitgutter
+  set updatetime=1000
 
   " taboo styled tabs in gvim
   set guioptions-=e
