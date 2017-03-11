@@ -159,16 +159,23 @@ try
   nmap     <space>gs :Gstatus<cr><c-n>
   nnoremap <space>gc :Gcommit -v<space>
   nnoremap <space>gd :Gvdiff<space>
+  nnoremap <space>gb :Gblame<cr>
   nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
   nnoremap <space>gp :Git pull --ff-only<space>
-  nnoremap <space>gl :Glog --follow -- %<cr>:copen<cr>
-  nnoremap <space>gg :copen\|silent Ggrep! -i<space>
-  vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
-  nnoremap <space>gb :Gblame<cr>
+  nnoremap <space>gl :silent Glog! --follow -- %<cr>
+  nnoremap <space>gg :silent Ggrep! -I -i<space>
+  vnoremap <space>gg "xy:silent Ggrep! -I -F <c-r>=shellescape(getreg('x'))<cr>
 
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>e :NERDTreeFind<cr>
   map      <space>/ <Plug>NERDCommenterToggle
+
+  " automatically open quickfix window on commands like Ggrep, Glog
+  autocmd QuickFixCmdPost * botright cwindow
+
+  " fugitive-like mappings to open quickfix results in new split, tab
+  autocmd FileType qf nnoremap <buffer> o <c-w><cr>
+  autocmd FileType qf nnoremap <buffer> O <c-w><cr><c-w>T
 
   colorscheme flintstone
 catch
