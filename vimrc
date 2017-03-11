@@ -137,6 +137,7 @@ try
 
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
   Plug 'tylerbrazier/vim-flintstone'
+  Plug 'gcmt/taboo.vim'
   call plug#end()
 
   " show current git branch on status line
@@ -144,6 +145,10 @@ try
 
   set updatetime=1000 " idle delay before firing CursorHold, updating gitgutter
   let g:gitgutter_diff_base = 'HEAD' " diff against HEAD instead of the index
+
+  " taboo styled tabs in gvim
+  set guioptions-=e
+  let g:taboo_modified_tab_flag = ' [+]'
 
   " <c-p> for recent files, then <c-f> to find anything else tracked by git
   let g:ctrlp_cmd = 'CtrlPMRU'
@@ -161,6 +166,7 @@ try
   vnoremap <space>gg "xy:copen\|sil Ggrep! -F <c-r>=shellescape(getreg('x'))<cr>
   nnoremap <space>gb :Gblame<cr>
 
+  nnoremap <space>r :TabooRename<space>
   nnoremap <space>e :NERDTreeFind<cr>
   map      <space>/ <Plug>NERDCommenterToggle
 
