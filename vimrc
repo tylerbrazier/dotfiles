@@ -116,12 +116,6 @@ autocmd InsertLeave * match Error /\s\+$/
 autocmd InsertEnter * match none
 
 
-if has('nvim')
-  tnoremap <esc> <c-\><c-n>
-  nnoremap <space><cr> :terminal<cr>
-endif
-
-
 try
   " https://github.com/junegunn/vim-plug
   call plug#begin()

@@ -18,7 +18,7 @@ $cmd "$(pwd)/vimrc" ~/.vimrc
 
 mkdir -p ~/.config ~/.vim
 $cmd ~/.vim ~/.config/nvim
-$cmd ~/.vimrc ~/.config/nvim/init.vim
+$cmd "$(pwd)/init.vim" ~/.config/nvim/init.vim
 
 if [[ " $@ " == *" -p "* ]]; then
   curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
