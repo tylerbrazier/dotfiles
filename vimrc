@@ -140,6 +140,8 @@ try
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'scrooloose/nerdtree'
 
+  Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-repeat'
   Plug 'scrooloose/nerdcommenter'
   Plug 'tylerbrazier/vim-bracepair'
   Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
