@@ -26,7 +26,8 @@ set backspace=indent,eol,start
 set nrformats-=octal
 
 set showcmd
-set colorcolumn=80
+set cursorline
+set colorcolumn=+1
 set numberwidth=3
 set scrolloff=1
 set display=lastline
