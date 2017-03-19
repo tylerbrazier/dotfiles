@@ -87,8 +87,12 @@ nnoremap <space>b :ls<cr>:b<space>
 nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 nnoremap <space>s :wa\|mksession! <c-r>=v:this_session<cr>
-nnoremap <space>n :setlocal invnumber<cr>
+nnoremap <space>u :setlocal invnumber<cr>
 nnoremap <space>z :setlocal invspell<cr>
+nnoremap <space>m :make<up>
+nnoremap <space>n :cnext<cr>
+nnoremap <space>p :cprevious<cr>
+
 nnoremap <space>- :rightbelow new<cr>
 nnoremap <space>\ :rightbelow vnew<cr>
 nnoremap <space>h <c-w>h
@@ -98,6 +102,7 @@ nnoremap <space>l <c-w>l
 nnoremap <space>t :tabnew<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
+
 nnoremap <space><cr> :!
 nnoremap <space><bs> :!<up>
 
@@ -108,12 +113,21 @@ autocmd!
 syntax on
 filetype plugin indent on
 
-autocmd FileType gitcommit setlocal spell tw=72
-autocmd FileType markdown setlocal spell tw=79
-
 " highlight trailing whitespace in normal mode
 autocmd InsertLeave * match Error /\s\+$/
 autocmd InsertEnter * match none
+
+autocmd FileType gitcommit setlocal spell tw=72
+autocmd FileType markdown setlocal spell tw=79
+autocmd FileType qf setlocal colorcolumn=0 nowrap
+autocmd FileType javascript setlocal makeprg=$(npm\ bin)/eslint\ -f\ unix
+
+" on quickfix commands (:make, :grep, ...) open full-width quickfix window
+autocmd QuickFixCmdPost * botright cwindow
+
+" fugitive-like mappings to open quickfix results in new split, tab
+autocmd FileType qf nnoremap <buffer> o <c-w><cr>
+autocmd FileType qf nnoremap <buffer> O <c-w><cr><c-w>T
 
 
 try
@@ -163,13 +177,6 @@ try
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>e :NERDTreeFind<cr>
   map      <space>/ <Plug>NERDCommenterToggle
-
-  " automatically open quickfix window on commands like Ggrep, Glog
-  autocmd QuickFixCmdPost * botright cwindow
-
-  " fugitive-like mappings to open quickfix results in new split, tab
-  autocmd FileType qf nnoremap <buffer> o <c-w><cr>
-  autocmd FileType qf nnoremap <buffer> O <c-w><cr><c-w>T
 
   colorscheme flintstone
 catch
