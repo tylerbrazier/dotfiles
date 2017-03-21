@@ -120,7 +120,7 @@ autocmd InsertEnter * match none
 
 autocmd FileType gitcommit setlocal spell tw=72
 autocmd FileType markdown setlocal spell tw=79
-autocmd FileType qf setlocal colorcolumn=0 nowrap
+autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
 autocmd FileType javascript setlocal makeprg=$(npm\ bin)/eslint\ -f\ unix
 
 " on quickfix commands (:make, :grep, ...) open full-width quickfix window
@@ -176,9 +176,9 @@ try
   nnoremap <space>gb :Gblame<cr>
   nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
   nnoremap <space>gp :Git pull --ff-only<space>
-  nnoremap <space>gl :silent Glog! --follow -- %<cr>
-  nnoremap <space>gg :silent Ggrep! -I -i<space>
-  vnoremap <space>gg "xy:silent Ggrep! -I -F <c-r>=shellescape(getreg('x'))<cr>
+  nnoremap <space>gl :Glog! --follow -- %<cr>
+  nnoremap <space>gg :Ggrep! -I -i<space>
+  vnoremap <space>gg "xy:Ggrep! -I -F <c-r>=shellescape(getreg('x'))<cr>
 
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>e :NERDTreeFind<cr>
