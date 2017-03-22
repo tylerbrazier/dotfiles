@@ -41,5 +41,5 @@
   ss = stash save
   up = "!f(){ git push -u origin $(git symbolic-ref -q --short HEAD); };f"
   shove = "!f(){ git push -uf origin $(git symbolic-ref -q --short HEAD); };f"
-  down = "!f(){ git stash && git pull --ff-only && git stash pop; };f"
+  down = "!f(){ git stash save down && git pull --ff-only && git stash pop; };f"
   out = "!f(){ git branch -D $1; git push --delete origin $1; };f"
