@@ -133,9 +133,6 @@ autocmd QuickFixCmdPost * botright cwindow
 autocmd FileType qf nnoremap <buffer> o <c-w><cr>
 autocmd FileType qf nnoremap <buffer> O <c-w><cr><c-w>T
 
-" better behavior for short-lived tabs
-autocmd TabClosed * tabprevious
-
 
 try
   " https://github.com/junegunn/vim-plug
