@@ -94,13 +94,14 @@ nnoremap <space>m :make<up>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
 
-nnoremap <space>- :rightbelow new<cr>
-nnoremap <space>\ :rightbelow vnew<cr>
+nnoremap <space>- :rightbelow split<cr>
+nnoremap <space>\ :rightbelow vsplit<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
-nnoremap <space>t :tabnew<cr>
+
+nnoremap <space>t :tab split<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
 
