@@ -17,8 +17,6 @@ alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ls -alh'
 cd() { builtin cd "$@" && ls; }
-untar() { tar -xzf "$1"; }
-mktar() { tar -czf "$(basename "$1")".tar.gz "$1"; }
 
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 customPS1() {
