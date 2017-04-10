@@ -105,10 +105,8 @@ nnoremap <space>t :tab split<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
 
-nnoremap <space><cr> :!
-nnoremap <space><bs> :!<up>
-vnoremap <space><cr> :w !
-vnoremap <space><bs> :w !<up>
+nnoremap <space><cr> :!<up>
+vnoremap <space><cr> :w !<up>
 
 
 " reset all autocommands in case vimrc is sourced twice
