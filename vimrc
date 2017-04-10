@@ -174,8 +174,6 @@ try
   nnoremap <space>gc :Gcommit -v<space>
   nnoremap <space>gd :Gvdiff<space>
   nnoremap <space>gb :Gblame<cr>
-  nnoremap <space>gu :Git push -u origin <c-r>=fugitive#head()<cr><space>
-  nnoremap <space>gp :Git pull --ff-only<space>
   nnoremap <space>gl :Glog! --follow -- %<cr>
   nnoremap <space>gg :Ggrep! -I -i<space>
   vnoremap <space>gg "xy:Ggrep! -I -F <c-r>=shellescape(getreg('x'))<cr>
