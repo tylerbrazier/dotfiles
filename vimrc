@@ -121,15 +121,11 @@ autocmd InsertEnter * match none
 
 autocmd FileType gitcommit setlocal spell tw=72
 autocmd FileType markdown setlocal spell tw=79
-autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
 autocmd FileType javascript setlocal makeprg=$(npm\ bin)/eslint\ -f\ unix
+autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
 
-" on quickfix commands (:make, :grep, ...) open full-width quickfix window
+" open full-width quickfix window on quickfix commands (:make, :grep, ...)
 autocmd QuickFixCmdPost * botright cwindow
-
-" fugitive-like mappings to open quickfix results in new split, tab
-autocmd FileType qf nnoremap <buffer> o <c-w><cr>
-autocmd FileType qf nnoremap <buffer> O <c-w><cr><c-w>T
 
 
 try
@@ -169,12 +165,12 @@ try
 
   " :help fugitive
   nmap     <space>gs :Gstatus<cr><c-n>
-  nnoremap <space>gc :Gcommit -v<space>
-  nnoremap <space>gd :Gvdiff<space>
+  nnoremap <space>gw :Gwrite<cr>
+  nnoremap <space>gc :Gcommit -v <up>
   nnoremap <space>gb :Gblame<cr>
-  nnoremap <space>gl :Glog! --follow -- %<cr>
-  nnoremap <space>gg :Ggrep! -I -i<space>
-  vnoremap <space>gg "xy:Ggrep! -I -F <c-r>=shellescape(getreg('x'))<cr>
+  nnoremap <space>gl :Glog --follow -- %<cr>
+  nnoremap <space>gg :Ggrep -I<space>
+  vnoremap <space>gg "xy:Ggrep -I -F <c-r>=shellescape(getreg('x'))<cr>
 
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>e :NERDTreeFind<cr>
