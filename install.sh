@@ -15,6 +15,7 @@ $cmd "$(pwd)/bashrc" ~/.bashrc
 $cmd "$(pwd)/gitconfig" ~/.gitconfig
 $cmd "$(pwd)/tmux.conf" ~/.tmux.conf
 $cmd "$(pwd)/vimrc" ~/.vimrc
+$cmd "$(pwd)/gvimrc" ~/.gvimrc
 
 mkdir -p ~/.config ~/.vim
 $cmd ~/.vim ~/.config/nvim
