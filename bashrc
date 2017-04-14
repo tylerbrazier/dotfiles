@@ -12,7 +12,7 @@ alias df='df -h'
 alias du='du -h --summarize'
 alias htop='htop --delay=5'
 alias curl='curl -L'  # follow redirects
-alias grep='grep --color=auto'
+alias grep='grep --color=auto -I'  # ignore binaries
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ls -alh'
