@@ -16,8 +16,7 @@
 
 [alias]
   s = status
-  a = add         # -p to add changes interactively
-  A = add -A      # stage all changes
+  a = add --all   # -p to add changes interactively
   c = commit -v
   co = checkout   # -b <new-branch> to create and checkout a new branch
   l = log --stat  # -p to see diff
@@ -26,13 +25,13 @@
   b = branch      # -avv to see all branches
   f = fetch --all
   m = merge
-  rb = rebase
+  rb = rebase     # -i <commit> to interactively rebuild commits since <commit>
   rs = reset
   ss = stash save
   sl = stash list --stat  # -p to see diff
   sp = stash pop
   sa = stash apply
   sd = stash drop
+  down = "!git fetch && git rebase --autostash FETCH_HEAD"
   up = "!f(){ git push -u $@ origin $(git symbolic-ref -q --short HEAD); };f"
-  down = "!f(){ git ss 'down' && git pull --ff-only $@; git sp; };f"
   out = "!f(){ git branch -D $1; git push --delete origin $1; };f"
