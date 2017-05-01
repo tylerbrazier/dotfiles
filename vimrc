@@ -125,6 +125,9 @@ autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
 " open full-width quickfix window on quickfix commands (:make, :grep, ...)
 autocmd QuickFixCmdPost * botright cwindow
 
+" auto close the quickfix window if it is the last one open
+autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | end
+
 
 try
   " https://github.com/junegunn/vim-plug
