@@ -30,6 +30,7 @@
   m = merge
   rb = rebase     # -i <commit> to interactively rebuild commits since <commit>
   rs = reset
+  rsh = reset --hard
   ss = stash save
   sl = stash list --stat  # -p to see diff
   sp = stash pop
