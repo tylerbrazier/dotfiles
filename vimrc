@@ -155,8 +155,6 @@ try
   " idle delay before firing CursorHold, updating gitgutter
   set updatetime=1000
 
-  "regex instead of fuzzy matching; <c-r> to toggle
-  let g:ctrlp_regexp = 1
   let g:ctrlp_match_window = 'max:20'
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
