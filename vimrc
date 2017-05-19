@@ -12,7 +12,7 @@ set expandtab
 set smarttab
 set autoindent
 set tabstop=2
-set shiftwidth=2
+set shiftwidth=0 "match tabstop
 
 set hlsearch
 set incsearch
