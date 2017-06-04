@@ -95,14 +95,14 @@ nnoremap <space>m :make<up>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
 
-nnoremap <space>- :rightbelow split<cr>
-nnoremap <space>\ :rightbelow vsplit<cr>
+nnoremap <space>- :rightbelow new<cr>
+nnoremap <space>\ :rightbelow vnew<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
 
-nnoremap <space>t :tab split<cr>
+nnoremap <space>t :tabnew<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
 
@@ -135,7 +135,7 @@ autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | end
 try
   " https://github.com/junegunn/vim-plug
   call plug#begin()
-  Plug 'tpope/vim-fugitive'
+  Plug 'tylerbrazier/vim-outlaw'
   Plug 'airblade/vim-gitgutter'
 
   Plug 'ctrlpvim/ctrlp.vim'
@@ -152,9 +152,6 @@ try
   Plug 'gcmt/taboo.vim'
   call plug#end()
 
-  " show current git branch on status line
-  set statusline+=\ %{fugitive#head(7)}
-
   " idle delay before firing CursorHold, updating gitgutter
   set updatetime=1000
 
@@ -163,17 +160,11 @@ try
 
   let g:taboo_modified_tab_flag = '[+]'
 
-  " :help fugitive
-  nmap     <space>gs :Gstatus<cr><c-n>
-  nnoremap <space>gw :Gwrite<cr>
-  nnoremap <space>gc :Gcommit -v <up>
-  nnoremap <space>gb :Gblame<cr>
-  nnoremap <space>gl :Glog --follow -- %<cr>
-  nnoremap <space>gg :Ggrep -I<space>
-  vnoremap <space>gg "xy:Ggrep -I -F <c-r>=shellescape(getreg('x'))<cr>
-
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>e :NERDTreeFind<cr>
+  nnoremap <space>gd :Odiff<cr>
+  noremap  <space>gl :Olog<cr>
+  noremap  <space>gg :Ogrep<space>
   map      <space>/ <Plug>NERDCommenterToggle
 
   colorscheme flintstone
