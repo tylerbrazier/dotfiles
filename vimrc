@@ -103,6 +103,8 @@ nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
 
 nnoremap <space>t :tabnew<cr>
+nnoremap <space>< :tabmove -<cr>
+nnoremap <space>> :tabmove +<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
 
