@@ -92,6 +92,7 @@ nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 nnoremap <space>s :setlocal invspell<cr>
 nnoremap <space>m :make<up>
+nnoremap <space>c :cwindow<cr>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
 
@@ -126,9 +127,6 @@ autocmd FileType gitcommit setlocal spell tw=72
 autocmd FileType markdown setlocal spell tw=79
 autocmd FileType javascript setlocal makeprg=$(npm\ bin)/eslint\ -f\ unix
 autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
-
-" open full-width quickfix window on quickfix commands (:make, :grep, ...)
-autocmd QuickFixCmdPost * botright cwindow
 
 " auto close the quickfix window if it is the last one open
 autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | end
