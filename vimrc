@@ -119,6 +119,9 @@ autocmd!
 syntax on
 filetype plugin indent on
 
+" autoread seems to only kick in on :! and c-z so this fires it on buf change
+autocmd BufEnter * checktime
+
 " highlight trailing whitespace in normal mode
 autocmd InsertLeave * match Error /\s\+$/
 autocmd InsertEnter * match none
