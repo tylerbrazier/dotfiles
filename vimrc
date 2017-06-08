@@ -146,7 +146,7 @@ try
 
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-repeat'
-  Plug 'scrooloose/nerdcommenter'
+  Plug 'tpope/vim-commentary'
   Plug 'tylerbrazier/vim-bracepair'
   Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
 
@@ -168,7 +168,6 @@ try
   nnoremap <space>gd :Odiff<cr>
   noremap  <space>gl :Olog<cr>
   noremap  <space>gg :Ogrep<space>
-  map      <space>/ <Plug>NERDCommenterToggle
 
   colorscheme flintstone
 catch
