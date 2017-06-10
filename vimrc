@@ -49,7 +49,6 @@ set infercase
 set wildmode=longest,list  " bash-like command completion using <tab>
 set wildignorecase
 
-set sessionoptions=buffers,curdir,folds,tabpages,winsize
 set formatoptions=tcqj
 
 
@@ -87,11 +86,8 @@ nnoremap <c-l> :nohlsearch<cr><c-l>
 nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
 nnoremap <space>o :only<cr>
-nnoremap <space>b :ls<cr>:b<space>
 nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
-nnoremap <space>s :setlocal invspell<cr>
-nnoremap <space>m :make<up>
 nnoremap <space>c :cwindow<cr>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
@@ -128,7 +124,6 @@ autocmd InsertEnter * match none
 
 autocmd FileType gitcommit setlocal spell tw=72
 autocmd FileType markdown setlocal spell tw=79
-autocmd FileType javascript setlocal makeprg=$(npm\ bin)/eslint\ -f\ unix
 autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
 
 " auto close the quickfix window if it is the last one open
@@ -161,10 +156,8 @@ try
   let g:ctrlp_match_window = 'max:20'
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-  let g:taboo_modified_tab_flag = '[+]'
-
   nnoremap <space>r :TabooRename<space>
-  nnoremap <space>e :NERDTreeFind<cr>
+  nnoremap <space>f :NERDTreeFind<cr>
   nnoremap <space>gd :Odiff<cr>
   noremap  <space>gl :Olog<cr>
   noremap  <space>gg :Ogrep<space>
