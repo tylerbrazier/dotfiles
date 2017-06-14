@@ -8,9 +8,6 @@
 [fetch]
   prune = true
 
-[rebase]
-  autostash = true
-
 [push]
   default = simple
 
@@ -36,6 +33,6 @@
   sp = stash pop
   sa = stash apply
   sd = stash drop
-  down = "!git fetch && git rebase --autostash FETCH_HEAD"
+  down = pull --rebase --autostash
   up = "!f(){ git push -u $@ origin $(git symbolic-ref -q --short HEAD); };f"
   out = "!f(){ git branch -D $1; git push --delete origin $1; };f"
