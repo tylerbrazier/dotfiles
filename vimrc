@@ -158,7 +158,7 @@ try
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>f :NERDTreeFind<cr>
   nnoremap <space>gd :Odiff<cr>
-  noremap  <space>gl :Olog<cr>
+  noremap  <space>gl :Olog -3
   noremap  <space>gg :Ogrep<space>
 
   colorscheme flintstone
