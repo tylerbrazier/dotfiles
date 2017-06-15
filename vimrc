@@ -159,7 +159,7 @@ try
   nnoremap <space>f :NERDTreeFind<cr>
   nnoremap <space>gd :Odiff<cr>
   noremap  <space>gl :Olog -3
-  noremap  <space>gg :Ogrep<space>
+  noremap  <space>gg :Ogrep -i<space>
 
   colorscheme flintstone
 catch
