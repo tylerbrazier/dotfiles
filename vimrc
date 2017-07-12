@@ -41,6 +41,9 @@ set statusline=%F\ %r%m\ %= "full filename, readonly, modified, separator
 set statusline+=spell=%{&spell}\ tw=%{&tw}\ ts=%{&ts}\ et=%{&et} "options
 set statusline+=\ L:%l\ C:%c%V\ %P "line & col number, percentage thru file
 
+set notimeout "combine with ttimeout to disable timing out on mappings
+set ttimeout
+
 set foldmethod=indent
 set foldlevelstart=99 "initially open all folds
 
