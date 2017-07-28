@@ -10,6 +10,7 @@
 
 [push]
   default = simple
+  followTags = true
 
 [blame]
   date = short
@@ -33,6 +34,6 @@
   sp = stash pop
   sa = stash apply
   sd = stash drop
+  up = push --set-upstream
   down = pull --rebase --autostash
-  up = "!f(){ git push -u $@ origin $(git symbolic-ref -q --short HEAD); };f"
   out = "!f(){ git branch -D $1; git push --delete origin $1; };f"
