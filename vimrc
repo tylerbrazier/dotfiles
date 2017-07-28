@@ -87,6 +87,7 @@ nnoremap <c-l> :nohlsearch<cr><c-l>
 " use <space> instead of <leader> to avoid conflicts with plugin mappings
 nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
+nnoremap <space>e :e<cr>
 nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 
@@ -96,11 +97,11 @@ nnoremap <space>p :cprevious<cr>
 
 nnoremap <space>- :rightbelow new<cr>
 nnoremap <space>\ :rightbelow vnew<cr>
+nnoremap <space>o :only<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
-nnoremap <space>o :only<cr>
 
 nnoremap <space>t :tabnew<cr>
 nnoremap <space>< :tabmove -<cr>
