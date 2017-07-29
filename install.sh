@@ -18,7 +18,7 @@ $cmd "$(pwd)/vimrc" ~/.vimrc
 $cmd "$(pwd)/gvimrc" ~/.gvimrc
 
 mkdir -p ~/.config ~/.vim
-$cmd ~/.vim ~/.config/nvim
+[ ! -d ~/.config/nvim ] && $cmd ~/.vim ~/.config/nvim
 $cmd "$(pwd)/init.vim" ~/.config/nvim/init.vim
 
 if [[ " $@ " == *" -p "* ]]; then
