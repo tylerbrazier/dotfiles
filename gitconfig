@@ -20,6 +20,7 @@
   a = add --all   # -p to add changes interactively
   c = commit -v
   co = checkout   # -b <new-branch> to create and checkout a new branch
+  cl = clean -f -d
   l = log --stat  # -p to see diff
   d = diff
   r = remote
