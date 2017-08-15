@@ -22,11 +22,11 @@
   co = checkout   # -b <new-branch> to create and checkout a new branch
   cl = clean -f -d
   l = log --stat  # -p to see diff
-  d = diff
-  r = remote
   b = branch      # -avv to see all branches
+  d = diff
   f = fetch --all
   m = merge
+  r = remote -v
   rb = rebase     # -i <commit> to interactively rebuild commits since <commit>
   rs = reset
   rsh = reset --hard
