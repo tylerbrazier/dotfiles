@@ -17,17 +17,17 @@
 
 [alias]
   s = status
-  a = add --all   # -p to add changes interactively
-  c = commit -v
-  co = checkout   # -b <new-branch> to create and checkout a new branch
-  cl = clean -f -d
-  l = log --stat  # -p to see diff
-  b = branch      # -avv to see all branches
+  a = add --all     # -p to add changes interactively
+  c = commit -v     # --amend to fix last commit
+  co = checkout     # -b <new-branch> to create and checkout a new branch
+  cl = clean -f -d  # -x to also remove gitignored stuff
+  l = log --stat    # -p to see diff
+  b = branch        # -avv to see all branches
   d = diff
   f = fetch --all
   m = merge
   r = remote -v
-  rb = rebase     # -i <commit> to interactively rebuild commits since <commit>
+  rb = rebase       # -i <commit> to rebase interactively on top of <commit>
   rs = reset
   rsh = reset --hard
   ss = stash save
