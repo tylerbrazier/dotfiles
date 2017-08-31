@@ -71,10 +71,6 @@ nnoremap P Pmx=`]`x
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
-" / in visual mode to search for whole selection
-" (* and # are still better used to search for a single word under cursor)
-vnoremap / "xy/\V<c-r>x
-
 " tab after non-whitespace character does word completion
 " shift-tab does 'smart' completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
