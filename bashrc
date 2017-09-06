@@ -8,6 +8,7 @@ alias cp='cp -r'
 alias scp='scp -r'
 alias chown='chown -R'
 alias chmod='chmod -R'
+alias mkdir='mkdir -p'
 alias df='df -h'
 alias du='du -h --summarize'
 alias curl='curl -L'  # follow redirects
