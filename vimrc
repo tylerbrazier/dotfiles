@@ -6,7 +6,6 @@ set nobackup
 
 set autoread
 set autowrite
-set autochdir
 
 set expandtab
 set smarttab
@@ -40,6 +39,9 @@ set laststatus=2  "always show statusline
 set statusline=%F\ %r%m\ %= "full filename, readonly, modified, separator
 set statusline+=spell=%{&spell}\ tw=%{&tw}\ ts=%{&ts}\ et=%{&et} "options
 set statusline+=\ L:%l\ C:%c%V\ %P "line & col number, percentage thru file
+
+set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
+set errorformat=%f:%l:%m,%m\ %f  "for git grep,status
 
 set notimeout "combine with ttimeout to disable timing out on mappings
 set ttimeout
@@ -87,6 +89,8 @@ nnoremap <space>e :e<cr>
 nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 
+nnoremap <space>g :grep<space>
+nnoremap <space>s :cexpr system('git status --porcelain')<cr>
 nnoremap <space>c :cwindow<cr>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
@@ -140,7 +144,7 @@ try
   Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
   Plug 'airblade/vim-gitgutter'
-  Plug 'tylerbrazier/vim-outlaw'
+  Plug 'tylerbrazier/vim-chronolog'
   Plug 'tylerbrazier/vim-bracepair'
   Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
 
@@ -157,9 +161,9 @@ try
 
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>f :NERDTreeFind<cr>
-  nnoremap <space>gd :Odiff<cr>
-  noremap  <space>gl :Olog -3
-  noremap  <space>gg :Ogrep -i<space>
+  nnoremap <space>b :below ChronoBlame<cr>
+  nnoremap <space>y :tab ChronoLog -p -10<space>
+  nnoremap <space>z :tab ChronoShow <c-r>=expand('<cword>')<cr><cr>
 
   colorscheme flintstone
 catch
