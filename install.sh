@@ -17,8 +17,7 @@ $cmd "$(pwd)/tmux.conf" ~/.tmux.conf
 $cmd "$(pwd)/vimrc" ~/.vimrc
 $cmd "$(pwd)/gvimrc" ~/.gvimrc
 
-mkdir -p ~/.config ~/.vim
-[ ! -d ~/.config/nvim ] && $cmd ~/.vim ~/.config/nvim
+mkdir -p ~/.config/nvim/
 $cmd "$(pwd)/init.vim" ~/.config/nvim/init.vim
 
 if [[ " $@ " == *" -p "* ]]; then
