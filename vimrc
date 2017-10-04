@@ -8,10 +8,10 @@ set autoread
 set autowrite
 
 set expandtab
-set smarttab
-set autoindent
 set tabstop=2
 set shiftwidth=0 "match tabstop
+set smarttab
+set autoindent
 
 set hlsearch
 set incsearch
@@ -43,8 +43,7 @@ set statusline+=\ L:%l\ C:%c%V\ %P "line & col number, percentage thru file
 set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
 set errorformat=%f:%l:%m,%m\ %f  "for git grep,status
 
-set notimeout "combine with ttimeout to disable timing out on mappings
-set ttimeout
+set notimeout ttimeout "disable timing out on mappings
 
 set foldmethod=indent
 set foldlevelstart=99 "initially open all folds
@@ -139,17 +138,15 @@ try
   call plug#begin()
   Plug 'ctrlpvim/ctrlp.vim'
   Plug 'scrooloose/nerdtree'
-
   Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-repeat'
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-repeat'
   Plug 'airblade/vim-gitgutter'
+  Plug 'tylerbrazier/vim-flintstone'
   Plug 'tylerbrazier/vim-chronolog'
   Plug 'tylerbrazier/vim-bracepair'
   Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
-
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-  Plug 'tylerbrazier/vim-flintstone'
   Plug 'gcmt/taboo.vim'
   call plug#end()
 
