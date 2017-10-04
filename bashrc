@@ -43,6 +43,11 @@ customPS1() {
   # reset the color
   PS1+="$rst"
 }
-PROMPT_COMMAND="customPS1"
 
-ls
+PROMPT_COMMAND="customPS1"
+HISTCONTROL=ignoredups
+EDITOR=vim
+export EDITOR
+
+# put machine-local stuff in ~/.bashrc.local
+[ ! -f ~/.bashrc.local ] || source ~/.bashrc.local
