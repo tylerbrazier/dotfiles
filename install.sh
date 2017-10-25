@@ -9,7 +9,6 @@ cd "$(dirname "$0")"
 
 [[ " $@ " == *" -f "* ]] && cmd="ln -svf" || cmd="ln -sv"
 
-$cmd "$(pwd)/profile" ~/.profile
 $cmd "$(pwd)/bash_profile" ~/.bash_profile
 $cmd "$(pwd)/bashrc" ~/.bashrc
 $cmd "$(pwd)/gitconfig" ~/.gitconfig
