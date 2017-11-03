@@ -10,7 +10,6 @@
 
 [push]
   default = simple
-  followTags = true
 
 [blame]
   date = short
