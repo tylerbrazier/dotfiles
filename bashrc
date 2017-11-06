@@ -16,6 +16,7 @@ alias grep='grep --color=auto -I'  # ignore binaries
 alias ls='ls --color=auto'
 alias ll='ls -lh'
 alias la='ls -alh'
+alias s='sudo'
 cd() { builtin cd "$@" && ls; }
 
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
