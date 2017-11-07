@@ -85,7 +85,6 @@ nnoremap <c-l> :nohlsearch<cr><c-l>
 nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
 nnoremap <space>e :e<cr>
-nnoremap <space>a :e #<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 
 nnoremap <space>g :grep<space>
