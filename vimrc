@@ -157,9 +157,9 @@ try
 
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>f :NERDTreeFind<cr>
-  nnoremap <space>b :below ChronoBlame<cr>
-  nnoremap <space>y :tab ChronoLog -p -10<space>
-  nnoremap <space>z :tab ChronoShow <c-r>=expand('<cword>')<cr><cr>
+  nnoremap <space>b :tab ChronoBlame %<cr>
+  nnoremap <space>y :tab ChronoLog -p -10 %
+  nnoremap <space>z :tab ChronoShow <c-r>=expand('<cword>')<cr>
 
   colorscheme flintstone
 catch
