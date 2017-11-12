@@ -70,7 +70,7 @@ passwd $user
 sudo -H -u $user bash -c "
 $(dirname "$0")/keygen.sh
 git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
-~/dotfiles/scripts/install.sh -f -p -g
+~/dotfiles/scripts/dotfiles.sh -f -p -g
 "
 
 echo "finished $0"
