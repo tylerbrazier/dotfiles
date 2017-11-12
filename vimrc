@@ -157,6 +157,9 @@ try
 
   nnoremap <space>r :TabooRename<space>
   nnoremap <space>f :NERDTreeFind<cr>
+  nnoremap <space>d :GitGutterPreviewHunk<cr>
+  nnoremap <space>a :GitGutterStageHunk<cr>
+  nnoremap <space>u :GitGutterUndoHunk<cr>
   nnoremap <space>b :tab ChronoBlame %<cr>
   nnoremap <space>y :tab ChronoLog -p -10 %
   nnoremap <space>z :tab ChronoShow <c-r>=expand('<cword>')<cr>
