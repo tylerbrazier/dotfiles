@@ -54,6 +54,7 @@ echo 'LANG=en_US.UTF-8' > /etc/locale.conf
 
 read -p 'hostname: ' hostname
 echo $hostname > /etc/hostname
+hostname $hostname  # keygen.sh won't read /etc/hostname until reboot
 
 echo 'Root password'
 passwd root
