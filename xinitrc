@@ -18,4 +18,7 @@ for f in /etc/X11/xinit/xinitrc.d/?*.sh; do [ -x "$f" ] && source "$f"; done
 # run any machine-local stuff (e.g. screen settings with xrandr)
 [ -f ~/.xinitrc.local ] && source ~/.xinitrc.local
 
+# turn numlock on
+numlockx &
+
 exec i3

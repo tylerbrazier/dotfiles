@@ -29,6 +29,7 @@ xorg-server
 xorg-xinit
 xorg-xset
 xorg-xrandr  # for screen configuration
+numlockx
 alsa-utils
 gvim  # includes clipboard support
 neovim
