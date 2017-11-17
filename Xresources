@@ -1,4 +1,5 @@
 ! https://wiki.archlinux.org/index.php/X_resources
+! https://wiki.archlinux.org/index.php/rxvt-unicode
 
 ! Run `fc-list` to see installed fonts.
 ! https://keithp.com/~keithp/render/Xft.tutorial
