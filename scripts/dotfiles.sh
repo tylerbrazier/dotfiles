@@ -26,6 +26,17 @@ if [[ " $@ " == *" -g "* ]]; then
 
   mkdir -p ~/.config/i3/
   eval $cmd "$(realpath config/i3/config)" ~/.config/i3/config
+
+  # https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
+  if ! grep -q startx ~/.bashrc.local 2>/dev/null; then
+    # chain || instead of && so shell doesn't start in error if we don't startx
+    echo \
+      '[ ! -f ~/.xinitrc ] ||'\
+      '[ -n "$DISPLAY" ] ||'  \
+      '[ -z $XDG_VTNR ] ||'   \
+      '[ $XDG_VTNR -ne 1 ] ||'\
+      'exec startx' >> ~/.bashrc.local
+  fi
 fi
 
 if [[ " $@ " == *" -p "* ]]; then
