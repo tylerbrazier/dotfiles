@@ -36,6 +36,11 @@ gvim  # includes clipboard support
 neovim
 xsel  # clipboard support for neovim
 firefox
+
+# retro game stuff
+retroarch
+retroarch-assets-xmb
+retroarch-autoconfig-udev
 )
 services=(
 systemd-timesyncd.service  # ntp (can be enabled but not started in chroot)
