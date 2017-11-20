@@ -2,8 +2,8 @@
 
 # Make symlinks in home to dotfiles.
 # Pass -f to overwrite existing dotfiles.
-# Pass -g to include config files for gui
 # Pass -p to also install vim plugins.
+# Pass -g to include config files for gui
 
 # make sure we're in the root of the project
 cd "$(dirname "$0")/.."
@@ -18,6 +18,12 @@ eval $cmd "$(realpath vimrc)" ~/.vimrc
 
 mkdir -p ~/.config/nvim/
 eval $cmd "$(realpath config/nvim/init.vim)" ~/.config/nvim/init.vim
+
+if [[ " $@ " == *" -p "* ]]; then
+  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  vim +PlugInstall
+fi
 
 if [[ " $@ " == *" -g "* ]]; then
   eval $cmd "$(realpath xinitrc)" ~/.xinitrc
@@ -37,10 +43,4 @@ if [[ " $@ " == *" -g "* ]]; then
       '[ $XDG_VTNR -ne 1 ] ||'\
       'exec startx' >> ~/.bashrc.local
   fi
-fi
-
-if [[ " $@ " == *" -p "* ]]; then
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  vim +PlugInstall
 fi
