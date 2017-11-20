@@ -49,4 +49,7 @@ fi
 if [[ " $@ " == *" -r "* ]]; then
   mkdir -p ~/.config/retroarch/
   eval $cmd "$(realpath config/retroarch/retroarch.cfg)" ~/.config/retroarch/retroarch.cfg
+
+  mkdir -p ~/retro
+  git clone https://github.com/earlharrier/nes ~/retro/nes
 fi

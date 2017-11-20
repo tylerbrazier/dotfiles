@@ -41,6 +41,7 @@ firefox
 retroarch
 retroarch-assets-xmb
 retroarch-autoconfig-udev
+libretro-nestopia  # nes core
 )
 services=(
 systemd-timesyncd.service  # ntp (can be enabled but not started in chroot)
