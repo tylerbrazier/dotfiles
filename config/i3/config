@@ -101,9 +101,12 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-# make brightness keys work
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10
+# make brightness and volume keys work
+bindsym XF86MonBrightnessUp   exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+bindsym XF86AudioRaiseVolume  exec amixer set Master 5%+
+bindsym XF86AudioLowerVolume  exec amixer set Master 5%-
+bindsym XF86AudioMute         exec amixer set Master toggle
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
