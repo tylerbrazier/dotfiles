@@ -4,7 +4,7 @@
 # Pass -f to overwrite existing dotfiles.
 # Pass -p to also install vim plugins.
 # Pass -g to include config files for gui
-# Pass -r to install retroarch stuff and download roms
+# Pass -r to include retroarch stuff and download roms
 
 # make sure we're in the root of the project
 cd "$(dirname "$0")/.."
@@ -50,7 +50,6 @@ if [[ " $@ " == *" -r "* ]]; then
   mkdir -p ~/.config/retroarch/
   eval $cmd "$(realpath config/retroarch/retroarch.cfg)" ~/.config/retroarch/retroarch.cfg
 
-  mkdir -p ~/retro
   mkdir -p ~/retro/saves
   mkdir -p ~/retro/cache
   git clone https://github.com/earlharrier/nes ~/retro/nes
