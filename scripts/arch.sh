@@ -1,9 +1,21 @@
 #!/bin/bash
 set -e
 
-# Custom configuration script to be run after a fresh Arch linux installation
-# (follow the steps in the installation guide first:
-# https://wiki.archlinux.org/index.php/Installation_guide)
+# Custom configuration script to be run after a fresh Arch linux installation.
+# Follow the steps in the installation guide first:
+# https://wiki.archlinux.org/index.php/Installation_guide
+#
+# I used to maintain scripts for automating the installation process but:
+# - some steps are machine-specific (partitioning MBR vs GPT, raspberry pi)
+# - installing manually gives me a chance to re-familiarize myself with tools I
+#   don't use as often (e.g. fdisk)
+# - arch is a rolling release and the installation process changes more often
+#   than I reinstall my OS; keeping the script up to date requires going back to
+#   the guide anyway
+#
+# Some of the steps here are already covered by the installation guide but I've
+# decided to include them so the script can be run on "preinstalled" systems
+# such as raspberry pi or a VPS.
 
 timezone=America/Chicago
 packages=(
