@@ -89,7 +89,6 @@ nnoremap <space>x :e $HOME/.scratch<cr>
 
 nnoremap <space>g :grep<space>
 nnoremap <space>s :cexpr system('git status --porcelain')<cr>
-nnoremap <space>c :cwindow<cr>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
 
@@ -120,6 +119,9 @@ filetype plugin indent on
 autocmd FileType gitcommit setlocal spell tw=72
 autocmd FileType markdown setlocal spell tw=79
 autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
+
+" auto open the quickfix window for commands that use it
+autocmd QuickFixCmdPost * cwindow
 
 " auto close the quickfix window if it is the last one open
 autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | endif
