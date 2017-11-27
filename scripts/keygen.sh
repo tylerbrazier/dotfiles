@@ -2,6 +2,14 @@
 
 # Generate a ssh keypair for this host and offer to upload the
 # public key to github, digital ocean, and other servers.
+#
+# It's better to generate a key pair per machine rather than
+# keeping your keys in version control because:
+# - this dotfiles repo is public on github and
+#   your private key should ALWAYS be kept secret!
+# - having one set of keys per machine means they can be
+#   revoked individually (what if your laptop gets stolen?)
+# https://wiki.archlinux.org/index.php/Secure_Shell
 
 # make sure ssh is installed
 command -v ssh >/dev/null 2>&1 || { echo 'install openssh first' >&1; exit 1; }
