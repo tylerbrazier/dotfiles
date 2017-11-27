@@ -146,3 +146,13 @@ bindsym $mod+r mode "resize"
 bar {
         status_command i3blocks
 }
+
+# $mod+BackSpace for power options
+bindsym $mod+BackSpace mode "$mode_power"
+set $mode_power Bye! [p]oweroff [r]eboot [s]uspend [Esc]
+mode "$mode_power" {
+        bindsym p exec --no-startup-id systemctl poweroff; mode "default"
+        bindsym r exec --no-startup-id systemctl reboot; mode "default"
+        bindsym s exec --no-startup-id systemctl suspend; mode "default"
+        bindsym Escape mode "default"
+}

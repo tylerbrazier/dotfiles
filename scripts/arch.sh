@@ -44,6 +44,7 @@ xorg-xrandr  # for screen configuration
 xorg-xbacklight
 numlockx
 alsa-utils
+polkit  # allows poweroff,reboot,etc. commands without sudo
 gvim  # includes clipboard support
 neovim
 xsel  # clipboard support for neovim
