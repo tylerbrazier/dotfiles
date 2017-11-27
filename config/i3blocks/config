@@ -1,5 +1,13 @@
 # https://github.com/vivien/i3blocks
 
+[ethernet]
+command=~/.config/i3blocks/net.sh en
+interval=10
+
+[wifi]
+command=~/.config/i3blocks/net.sh wl
+interval=10
+
 [datetime]
 command=date '+%F %H:%M'
 interval=10

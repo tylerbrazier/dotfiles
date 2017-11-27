@@ -36,6 +36,7 @@ if [[ " $@ " == *" -g "* ]]; then
 
   mkdir -p ~/.config/i3blocks/
   eval $cmd "$(realpath config/i3blocks/config)" ~/.config/i3blocks/config
+  eval $cmd "$(realpath config/i3blocks/net.sh)" ~/.config/i3blocks/net.sh
 
   # https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
   if ! grep -q startx ~/.bashrc.local 2>/dev/null; then
