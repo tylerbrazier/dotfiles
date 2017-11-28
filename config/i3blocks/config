@@ -8,6 +8,10 @@ interval=10
 command=~/.config/i3blocks/net.sh wl
 interval=10
 
+[battery]
+command=/usr/lib/i3blocks/battery
+interval=10
+
 [datetime]
 command=date '+%F %H:%M'
 interval=10

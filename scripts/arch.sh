@@ -27,10 +27,10 @@ htop
 openssh
 bash-completion
 
-# for wireless networking (wifi-menu)
-# https://wiki.archlinux.org/index.php/netctl
-dialog
+# laptop stuff
+dialog  # for wifi-menu
 wpa_supplicant
+acpi  # for battery status
 
 # gui stuff
 i3
