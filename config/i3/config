@@ -1,4 +1,5 @@
-# i3 config file (v4) https://i3wm.org/docs/userguide.html
+# i3 config file (v4)
+# https://i3wm.org/docs/userguide.html
 
 # logo key
 set $mod Mod4
@@ -73,9 +74,6 @@ bindsym $mod+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
-
-# focus the child container
-#bindsym $mod+d focus child
 
 # switch to workspace
 bindsym $mod+1 workspace 1
