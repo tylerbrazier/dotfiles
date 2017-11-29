@@ -31,6 +31,7 @@ bash-completion
 dialog  # for wifi-menu
 wpa_supplicant
 acpi  # for battery status
+wpa_actiond # auto connect; https://wiki.archlinux.org/index.php/netctl#Wireless
 
 # gui stuff
 i3
