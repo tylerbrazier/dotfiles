@@ -96,4 +96,12 @@ git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
 ~/dotfiles/scripts/dotfiles.sh -f -p -g
 "
 
+# enable auto login on tty1
+# https://wiki.archlinux.org/index.php/getty#Automatic_login_to_virtual_console
+mkdir -p /etc/systemd/system/getty@tty1.service.d/
+echo "[Service]
+  ExecStart=
+  ExecStart=-/usr/bin/agetty --autologin $user --noclear %I \$TERM" \
+    > /etc/systemd/system/getty@tty1.service.d/override.conf
+
 echo "finished $0"
