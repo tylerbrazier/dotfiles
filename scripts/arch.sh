@@ -38,6 +38,7 @@ i3
 dmenu
 rxvt-unicode
 ttf-dejavu
+ttf-font-awesome # for status bar icons
 xorg-server
 xorg-xinit
 xorg-xset

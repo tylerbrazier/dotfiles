@@ -1,4 +1,8 @@
 # https://github.com/vivien/i3blocks
+#
+# font-awesome is required to see the button icons.
+# http://fontawesome.io/cheatsheet shows icons with their unicode values.
+# In vim, see :help i_CTRL-V_digit on how to enter hexidecimal unicode values.
 
 [ethernet]
 command=~/.config/i3blocks/net.sh en
@@ -15,3 +19,8 @@ interval=10
 [datetime]
 command=date '+%F %H:%M'
 interval=10
+
+[power]
+# fa-power-off x0000f011
+full_text=
+command=i3-msg -q mode $(i3-msg -t get_binding_modes | grep -oi '"bye[^"]*"')
