@@ -1,8 +1,8 @@
 # i3 config file (v4)
 # https://i3wm.org/docs/userguide.html
 
-# logo key
-set $mod Mod4
+# alt key
+set $mod Mod1
 
 font pango:DejaVu Sans Mono 9
 #font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
@@ -36,9 +36,9 @@ bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# alt-tab works similar to other desktop environments
-bindsym Mod1+Tab focus right
-bindsym Mod1+Shift+Tab focus left
+# $mod+tab works similar to other desktop environments
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 
 # move focused window
 bindsym $mod+Shift+h move left
