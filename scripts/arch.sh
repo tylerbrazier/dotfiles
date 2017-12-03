@@ -52,6 +52,7 @@ gvim  # includes clipboard support (conflicts with vim)
 xsel  # clipboard support for neovim
 firefox
 chromium
+#xf86-video-fbdev  # xorg driver for raspberry pi
 
 # laptop stuff
 dialog  # for wifi-menu
