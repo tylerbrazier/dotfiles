@@ -15,6 +15,13 @@ separator=false
 full_text=
 command=urxvt >/dev/null
 
+[volume]
+# unicode eighth x0000266a
+label=♪
+command=/usr/lib/i3blocks/volume
+interval=once
+signal=1
+
 [ethernet]
 command=~/.config/i3blocks/net.sh en
 interval=10
