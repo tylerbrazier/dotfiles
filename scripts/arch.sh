@@ -22,16 +22,17 @@ packages=(
 # essentials
 vim
 git
+sudo
 tmux
-htop
 openssh
 bash-completion
 
-# laptop stuff
-dialog  # for wifi-menu
-wpa_supplicant
-acpi  # for battery status
-wpa_actiond # auto connect; https://wiki.archlinux.org/index.php/netctl#Wireless
+# extras
+htop
+tree
+neovim
+mlocate
+ntfs-3g  # to write to ntfs formatted drives
 
 # gui stuff
 i3
@@ -47,10 +48,15 @@ xorg-xbacklight
 numlockx
 alsa-utils
 polkit  # allows poweroff,reboot,etc. commands without sudo
-gvim  # includes clipboard support
-neovim
+gvim  # includes clipboard support (conflicts with vim)
 xsel  # clipboard support for neovim
 firefox
+
+# laptop stuff
+dialog  # for wifi-menu
+wpa_supplicant
+acpi  # for battery status
+wpa_actiond # auto connect; https://wiki.archlinux.org/index.php/netctl#Wireless
 
 # retro game stuff
 retroarch
@@ -63,7 +69,7 @@ systemd-timesyncd.service  # ntp (can be enabled but not started in chroot)
 #dhcpcd.service  # for wired network
 )
 
-pacman -Sy --needed sudo git ${packages[@]}
+pacman -Sy --needed ${packages[@]}
 
 systemctl enable ${services[@]}
 
