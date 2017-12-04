@@ -7,12 +7,14 @@
 [firefox]
 # fa-firefox x0000f269
 full_text=
+color=#ff6700
 command=firefox >/dev/null
 separator=false
 
 [urxvt]
 # fa-terminal x0000f120
 full_text=
+color=#00ff00
 command=urxvt >/dev/null
 
 [volume]
