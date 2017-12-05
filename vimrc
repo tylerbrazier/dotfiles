@@ -35,10 +35,8 @@ set listchars=tab:>\ ,trail:-,nbsp:+
 set linebreak
 set showbreak=>
 
-set laststatus=2  "always show statusline
-set statusline=%F\ %r%m\ %= "full filename, readonly, modified, separator
-set statusline+=spell=%{&spell}\ tw=%{&tw}\ ts=%{&ts}\ et=%{&et} "options
-set statusline+=\ L:%l\ C:%c%V\ %P "line & col number, percentage thru file
+set laststatus=2 "always show statusline
+set ruler "show the cursor's line,col number and position of view in file
 
 set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
 set errorformat=%f:%l:%m,%m\ %f  "for git grep,status
