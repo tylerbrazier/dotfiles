@@ -70,11 +70,11 @@ nnoremap P Pmx=`]`x
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
-" tab after non-whitespace character does word completion
-inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
-
 " c-l also clears search highlighting
 nnoremap <c-l> :nohlsearch<cr><c-l>
+
+" tab after non-whitespace character does word completion
+inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 
 
 " use <space> instead of <leader> to avoid conflicts with plugin mappings
