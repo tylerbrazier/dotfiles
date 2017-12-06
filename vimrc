@@ -71,9 +71,7 @@ nnoremap P Pmx=`]`x
 vnoremap p pgvy
 
 " tab after non-whitespace character does word completion
-" shift-tab does 'smart' completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
-inoremap <expr> <s-tab> pumvisible() ? "\<c-n>" : "\<c-x>\<c-o>"
 
 " c-l also clears search highlighting
 nnoremap <c-l> :nohlsearch<cr><c-l>
