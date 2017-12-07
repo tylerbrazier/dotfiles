@@ -43,6 +43,8 @@ set errorformat=%f:%l:%m,%m\ %f  "for git grep,status
 
 set notimeout ttimeout "disable timing out on mappings
 
+set splitbelow splitright
+
 set foldmethod=indent
 set foldlevelstart=99 "initially open all folds
 
@@ -84,21 +86,21 @@ nnoremap <space>e :e<cr>
 nnoremap <space>x :e $HOME/.scratch<cr>
 
 nnoremap <space>g :grep<space>
-nnoremap <space>s :cexpr system('git status --porcelain')<cr>
-nnoremap <space>n :cnext<cr>
-nnoremap <space>p :cprevious<cr>
+nnoremap <space>c :cexpr system('git status --porcelain')<cr>
+nnoremap <space>n :cn<cr>
+nnoremap <space>p :cp<cr>
 
-nnoremap <space>b :tab .R git blame %<cr>
-nnoremap <space>y :tab R git log -p -10 %
-nnoremap <space>z :tab R git show <c-r>=expand('<cword>')<cr>
-
-nnoremap <space>- :rightbelow new<cr>
-nnoremap <space>\ :rightbelow vnew<cr>
-nnoremap <space>o :only<cr>
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
+nnoremap <space>s <c-w>s
+nnoremap <space>v <c-w>v
+nnoremap <space>o <c-w>o
+
+nnoremap <space>b :tab .R git blame %<cr>
+nnoremap <space>y :tab R git log -p -10 %
+nnoremap <space>z :tab R git show <c-r>=expand('<cword>')<cr>
 
 nnoremap <space>t :tabnew<cr>
 nnoremap <space>< :tabmove -<cr>
