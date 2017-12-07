@@ -88,6 +88,10 @@ nnoremap <space>s :cexpr system('git status --porcelain')<cr>
 nnoremap <space>n :cnext<cr>
 nnoremap <space>p :cprevious<cr>
 
+nnoremap <space>b :tab .R git blame %<cr>
+nnoremap <space>y :tab R git log -p -10 %
+nnoremap <space>z :tab R git show <c-r>=expand('<cword>')<cr>
+
 nnoremap <space>- :rightbelow new<cr>
 nnoremap <space>\ :rightbelow vnew<cr>
 nnoremap <space>o :only<cr>
@@ -104,6 +108,13 @@ nnoremap <space><s-tab> gT
 
 nnoremap <space><cr> :!<up>
 vnoremap <space><cr> :w !<up>
+
+
+" Make a command :R similar to :r! but dumps output into a new scratch window.
+" Prepend a count to start the cursor on that line number.
+" Allows modifiers like :tab and :virt to control how the window opens.
+command! -count -nargs=+ -complete=file R
+      \ exe <q-mods> 'new'|set bt=nofile|exe '0r!'<q-args>|filet detect|<count>
 
 
 " reset all autocommands in case vimrc is sourced twice
@@ -140,7 +151,6 @@ try
   Plug 'tpope/vim-repeat'
   Plug 'airblade/vim-gitgutter'
   Plug 'tylerbrazier/vim-flintstone'
-  Plug 'tylerbrazier/vim-chronolog'
   Plug 'tylerbrazier/vim-bracepair'
   Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
   Plug 'pangloss/vim-javascript', {'for': 'javascript'}
@@ -158,10 +168,6 @@ try
   nnoremap <space>d :GitGutterPreviewHunk<cr>
   nnoremap <space>a :GitGutterStageHunk<cr>
   nnoremap <space>u :GitGutterUndoHunk<cr>
-  nnoremap <space>b :tab ChronoBlame %<cr>
-  nnoremap <space>y :tab ChronoLog -p -10 %
-  nnoremap <space>z :tab ChronoShow <c-r>=expand('<cword>')<cr>
-
   colorscheme flintstone
 catch
 endtry
