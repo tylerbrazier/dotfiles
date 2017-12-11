@@ -152,7 +152,7 @@ try
   " https://github.com/junegunn/vim-plug
   call plug#begin()
   Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'scrooloose/nerdtree'
+  Plug 'justinmk/vim-dirvish'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
@@ -171,7 +171,6 @@ try
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
   nnoremap <leader>r :TabooRename<space>
-  nnoremap <leader>f :NERDTreeFind<cr>
   nmap <leader>d <plug>GitGutterPreviewHunk
   nmap <leader>a <plug>GitGutterStageHunk
   nmap <leader>u <plug>GitGutterUndoHunk
