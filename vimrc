@@ -75,6 +75,11 @@ vnoremap p pgvy
 " c-l also clears search highlighting
 nnoremap <c-l> :nohlsearch<cr><c-l>
 
+" make some command mode bindings behave better
+cnoremap <c-n> <down>
+cnoremap <c-p> <up>
+cnoremap <c-a> <home>
+
 " tab after non-whitespace character does word completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 
