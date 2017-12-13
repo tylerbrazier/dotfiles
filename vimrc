@@ -39,7 +39,7 @@ set laststatus=2 "always show statusline
 set ruler "show the cursor's line,col number and position of view in file
 
 set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
-set errorformat=%f:%l:%m,%m\ %f  "for git grep,status
+set errorformat+=%m\ %f  "for :cexpr git status --porcelain
 
 set notimeout ttimeout "disable timing out on mappings
 
