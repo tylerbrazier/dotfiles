@@ -124,29 +124,30 @@ command! -count -nargs=+ -complete=file R
       \ exe <q-mods> 'new'|set bt=nofile|exe '0r!'<q-args>|filet detect|<count>
 
 
-" reset all autocommands in case vimrc is sourced twice
-autocmd!
+augroup vimrc
+  "reset the group so that if vimrc is sourced again autocmds don't run twice
+  autocmd!
+
+  autocmd FileType gitcommit setlocal spell tw=72
+  autocmd FileType markdown setlocal spell tw=79
+  autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
+
+  " auto open the quickfix window for commands that use it
+  autocmd QuickFixCmdPost * cwindow
+
+  " auto close the quickfix window if it is the last one open
+  autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | endif
+
+  " autoread seems to only kick in on :! and c-z so this fires it on buf change
+  autocmd BufEnter * checktime
+
+  " highlight trailing whitespace in normal mode
+  autocmd InsertLeave * match Error /\s\+$/
+  autocmd InsertEnter * match none
+augroup end
 
 syntax on
 filetype plugin indent on
-
-autocmd FileType gitcommit setlocal spell tw=72
-autocmd FileType markdown setlocal spell tw=79
-autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
-
-" auto open the quickfix window for commands that use it
-autocmd QuickFixCmdPost * cwindow
-
-" auto close the quickfix window if it is the last one open
-autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | endif
-
-" autoread seems to only kick in on :! and c-z so this fires it on buf change
-autocmd BufEnter * checktime
-
-" highlight trailing whitespace in normal mode
-autocmd InsertLeave * match Error /\s\+$/
-autocmd InsertEnter * match none
-
 
 try
   " https://github.com/junegunn/vim-plug
