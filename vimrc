@@ -129,7 +129,7 @@ augroup vimrc
   autocmd!
 
   autocmd FileType gitcommit setlocal spell tw=72
-  autocmd FileType markdown setlocal spell tw=79
+  autocmd FileType markdown setlocal spell tw=80
   autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
 
   " auto open the quickfix window for commands that use it
