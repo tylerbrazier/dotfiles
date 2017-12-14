@@ -88,7 +88,7 @@ let mapleader = ' '
 nnoremap <leader>w :w<cr>
 nnoremap <leader>q :q<cr>
 nnoremap <leader>e :e<cr>
-nnoremap <leader>x :e $HOME/.scratch<cr>
+nnoremap <leader>x :new $HOME/.scratch<cr>
 
 nnoremap <leader>g :grep<space>
 nnoremap <leader>c :cexpr system('git status --porcelain')<cr>
