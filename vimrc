@@ -179,3 +179,5 @@ try
   colorscheme flintstone
 catch
 endtry
+
+silent! source $HOME/.vimrc.local
