@@ -90,6 +90,7 @@ nnoremap <leader>q :q<cr>
 nnoremap <leader>e :e<cr>
 nnoremap <leader>x :new $HOME/.scratch<cr>
 
+nnoremap <leader>m :make <up>
 nnoremap <leader>g :grep<space>
 nnoremap <leader>c :cexpr system('git status --porcelain')<cr>
 nnoremap <leader>n :cn<cr>
@@ -128,6 +129,7 @@ augroup vimrc
   "reset the group so that if vimrc is sourced again autocmds don't run twice
   autocmd!
 
+  autocmd FileType javascript setlocal mp=./node_modules/.bin/eslint\ -f\ unix
   autocmd FileType gitcommit setlocal spell tw=72
   autocmd FileType markdown setlocal spell tw=80
   autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
