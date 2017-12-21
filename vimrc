@@ -92,7 +92,7 @@ nnoremap <leader>x :new $HOME/.scratch<cr>
 
 nnoremap <leader>m :make <up>
 nnoremap <leader>g :grep<space>
-nnoremap <leader>c :cexpr system('git status --porcelain')<cr>
+nnoremap <leader>s :cexpr system('git status --porcelain')<cr>
 nnoremap <leader>n :cn<cr>
 nnoremap <leader>p :cp<cr>
 
@@ -100,9 +100,6 @@ nnoremap <leader>h <c-w>h
 nnoremap <leader>j <c-w>j
 nnoremap <leader>k <c-w>k
 nnoremap <leader>l <c-w>l
-nnoremap <leader>s <c-w>s
-nnoremap <leader>v <c-w>v
-nnoremap <leader>o <c-w>o
 
 nnoremap <leader>b :tab .R git blame %<cr>
 nnoremap <leader>y :tab R git log -p -10 %
