@@ -83,36 +83,36 @@ cnoremap <c-a> <home>
 " tab after non-whitespace character does word completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 
-let mapleader = ' '
 
-nnoremap <leader>w :w<cr>
-nnoremap <leader>q :q<cr>
-nnoremap <leader>e :e<cr>
-nnoremap <leader>x :new $HOME/.scratch<cr>
+" use <space> instead of <leader> to avoid conflicts with plugin mappings
+nnoremap <space>w :w<cr>
+nnoremap <space>q :q<cr>
+nnoremap <space>e :e<cr>
+nnoremap <space>x :new $HOME/.scratch<cr>
 
-nnoremap <leader>m :make <up>
-nnoremap <leader>g :grep<space>
-nnoremap <leader>s :cexpr system('git status --porcelain')<cr>
-nnoremap <leader>n :cn<cr>
-nnoremap <leader>p :cp<cr>
+nnoremap <space>m :make <up>
+nnoremap <space>g :grep<space>
+nnoremap <space>s :cexpr system('git status --porcelain')<cr>
+nnoremap <space>n :cn<cr>
+nnoremap <space>p :cp<cr>
 
-nnoremap <leader>h <c-w>h
-nnoremap <leader>j <c-w>j
-nnoremap <leader>k <c-w>k
-nnoremap <leader>l <c-w>l
+nnoremap <space>h <c-w>h
+nnoremap <space>j <c-w>j
+nnoremap <space>k <c-w>k
+nnoremap <space>l <c-w>l
 
-nnoremap <leader>b :tab .R git blame %<cr>
-nnoremap <leader>y :tab R git log -p -10 %
-nnoremap <leader>z :tab R git show <c-r>=expand('<cword>')<cr>
+nnoremap <space>b :tab .R git blame %<cr>
+nnoremap <space>y :tab R git log -p -10 %
+nnoremap <space>z :tab R git show <c-r>=expand('<cword>')<cr>
 
-nnoremap <leader>t :tabnew<cr>
-nnoremap <leader>< :tabmove -<cr>
-nnoremap <leader>> :tabmove +<cr>
-nnoremap <leader><tab> gt
-nnoremap <leader><s-tab> gT
+nnoremap <space>t :tabnew<cr>
+nnoremap <space>< :tabmove -<cr>
+nnoremap <space>> :tabmove +<cr>
+nnoremap <space><tab> gt
+nnoremap <space><s-tab> gT
 
-nnoremap <leader><cr> :!<up>
-vnoremap <leader><cr> :w !<up>
+nnoremap <space><cr> :!<up>
+vnoremap <space><cr> :w !<up>
 
 
 " Make a command :R similar to :r! but dumps output into a new scratch window.
@@ -170,10 +170,12 @@ try
   let g:ctrlp_switch_buffer = 0
   let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-  nnoremap <leader>r :TabooRename<space>
-  nmap <leader>d <plug>GitGutterPreviewHunk
-  nmap <leader>a <plug>GitGutterStageHunk
-  nmap <leader>u <plug>GitGutterUndoHunk
+  "shortcuts to add/diff/undo changes (faster typing than the default \h maps)
+  nnoremap <space>a :GitGutterStageHunk<cr>
+  nnoremap <space>d :GitGutterPreviewHunk<cr>
+  nnoremap <space>u :GitGutterUndoHunk<cr>
+
+  nnoremap <space>r :TabooRename<space>
 
   colorscheme flintstone
 catch
