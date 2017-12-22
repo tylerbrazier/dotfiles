@@ -105,7 +105,7 @@ nnoremap <space>b :tab .R git blame %<cr>
 nnoremap <space>y :tab R git log -p -10 %
 nnoremap <space>z :tab R git show <c-r>=expand('<cword>')<cr>
 
-nnoremap <space>t :tabnew<cr>
+nnoremap <space>t :$tabnew<cr>
 nnoremap <space>< :tabmove -<cr>
 nnoremap <space>> :tabmove +<cr>
 nnoremap <space><tab> gt
