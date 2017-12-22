@@ -72,6 +72,10 @@ nnoremap P Pmx=`]`x
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
+" quickfix navigation from vim-unimpaired (don't needing the whole plugin)
+nnoremap ]q :cnext<cr>
+nnoremap [q :cprevious<cr>
+
 " c-l also clears search highlighting
 nnoremap <c-l> :nohlsearch<cr><c-l>
 
@@ -93,8 +97,6 @@ nnoremap <space>x :new $HOME/.scratch<cr>
 nnoremap <space>m :make <up>
 nnoremap <space>g :grep<space>
 nnoremap <space>s :cexpr system('git status --porcelain')<cr>
-nnoremap <space>n :cn<cr>
-nnoremap <space>p :cp<cr>
 
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
