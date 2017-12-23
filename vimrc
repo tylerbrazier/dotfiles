@@ -92,6 +92,7 @@ inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
 nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
 nnoremap <space>e :e<cr>
+nnoremap <space>i :set invspell invnumber invlist<cr>
 nnoremap <space>x :new $HOME/.scratch<cr>
 
 nnoremap <space>m :make <up>
