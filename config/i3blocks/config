@@ -37,7 +37,7 @@ command=~/.config/i3blocks/bat.sh
 interval=10
 
 [datetime]
-command=date '+%F %H:%M'
+command=test -z $BLOCK_BUTTON || date '+%F' | xsel -b; date '+%F %H:%M'
 interval=10
 
 [power]
