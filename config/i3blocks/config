@@ -4,6 +4,13 @@
 # http://fontawesome.io/cheatsheet shows icons with their unicode values.
 # In vim, see :help i_CTRL-V_digit on how to enter hexidecimal unicode values.
 
+[chromium]
+# fa-chrome x0000f268
+full_text=
+color=#4488ff
+command=chromium >/dev/null
+separator=false
+
 [firefox]
 # fa-firefox x0000f269
 full_text=

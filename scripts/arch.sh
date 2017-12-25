@@ -51,6 +51,7 @@ polkit  # allows poweroff,reboot,etc. commands without sudo
 gvim  # includes clipboard support (conflicts with vim)
 xsel  # clipboard support for neovim
 firefox
+chromium
 
 # laptop stuff
 dialog  # for wifi-menu
