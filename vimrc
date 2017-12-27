@@ -72,7 +72,7 @@ nnoremap P Pmx=`]`x
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
-" quickfix navigation from vim-unimpaired (don't needing the whole plugin)
+" quickfix navigation from vim-unimpaired (don't need the whole plugin)
 nnoremap ]q :cnext<cr>
 nnoremap [q :cprevious<cr>
 
