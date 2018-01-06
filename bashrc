@@ -22,6 +22,7 @@ cd() { builtin cd "$@" && ls; }
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 set_custom_ps1() {
   local status=$?  # status of last command; must come first
+  local jobs=$(jobs -p)
   local red='\[\e[1;31m\]' # red
   local grn='\[\e[1;32m\]' # green
   local blu='\[\e[1;34m\]' # blue
@@ -34,6 +35,9 @@ set_custom_ps1() {
 
   # white current working dir
   PS1+="${wht}\\w "
+
+  # number of stopped/background jobs if any
+  [ -n "$jobs" ] && PS1+="[$(echo "$jobs" | grep -c ^)] "
 
   # red git branch if there are uncommitted changes, green otherwise
   [ -n "$(git status --porcelain 2>/dev/null)" ] && PS1+="$red" || PS1+="$grn"
