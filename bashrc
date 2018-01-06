@@ -35,8 +35,9 @@ set_custom_ps1() {
   # white current working dir
   PS1+="${wht}\\w "
 
-  # red current git branch
-  PS1+="${red}$(git branch 2>/dev/null | grep ^* | cut -c 3- | sed 's/$/ /')"
+  # red git branch if there are uncommitted changes, green otherwise
+  [ -n "$(git status --porcelain 2>/dev/null)" ] && PS1+="$red" || PS1+="$grn"
+  PS1+="$(git branch 2>/dev/null | grep ^* | cut -c 3- | sed 's/$/ /')"
 
   # blue prompt if over ssh and white otherwise; '#' for root, '$' for others
   [ "$SSH_CLIENT" == "" ] && PS1+="${wht}\\\$ " || PS1+="${blu}\\\$ "
