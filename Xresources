@@ -14,6 +14,8 @@ URxvt.font: xft:DejaVu Sans Mono-9:style=Book
 URxvt.scrollBar: false
 
 ! `man 1 urxvt` section COLOURS AND GRAPHICS
+! 0-7 are normal colors and 8-15 are their bright variants
+! 0,8black 1,9red 2,10green 3,11yellow 4,12blue 5,13magenta 6,14cyan 7,15white
 URxvt.color0:  #000000
 URxvt.color1:  #aa0000
 URxvt.color2:  #00aa00
