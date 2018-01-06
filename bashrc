@@ -20,14 +20,14 @@ alias s='sudo'
 cd() { builtin cd "$@" && ls; }
 
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
-customPS1() {
-  status=$?  # status of last command; must come first
-  red='\[\e[1;31m\]' # red
-  grn='\[\e[1;32m\]' # green
-  blu='\[\e[1;34m\]' # blue
-  blk='\[\e[1;30m\]' # black
-  wht='\[\e[1;37m\]' # white
-  rst='\[\e[00m\]'   # color reset
+set_custom_ps1() {
+  local status=$?  # status of last command; must come first
+  local red='\[\e[1;31m\]' # red
+  local grn='\[\e[1;32m\]' # green
+  local blu='\[\e[1;34m\]' # blue
+  local blk='\[\e[1;30m\]' # black
+  local wht='\[\e[1;37m\]' # white
+  local rst='\[\e[00m\]'   # color reset
 
   # smiley or unsmiley for status of last command
   [ $status -eq 0 ] && PS1="${grn}:) " || PS1="${red}:( "
@@ -45,7 +45,7 @@ customPS1() {
   PS1+="$rst"
 }
 
-PROMPT_COMMAND="customPS1"
+PROMPT_COMMAND="set_custom_ps1"
 HISTCONTROL=ignoredups
 EDITOR=vim
 export EDITOR
