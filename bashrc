@@ -43,8 +43,8 @@ set_custom_ps1() {
   [ -n "$(git status --porcelain 2>/dev/null)" ] && PS1+="$red" || PS1+="$grn"
   PS1+="$(git branch 2>/dev/null | grep ^* | cut -c 3- | sed 's/$/ /')"
 
-  # blue prompt if over ssh and white otherwise; '#' for root, '$' for others
-  [ "$SSH_CLIENT" == "" ] && PS1+="${wht}\\\$ " || PS1+="${blu}\\\$ "
+  # prompt is '#' for root, '$' for others, and blue if in ssh session
+  [ -n "$SSH_CLIENT" ] && PS1+="${blu}" || PS1+="${wht}"; PS1+='\$ '
 
   # reset the color
   PS1+="$rst"
