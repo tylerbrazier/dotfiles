@@ -27,7 +27,7 @@ set formatoptions+=j
 
 set showcmd
 set cursorline
-set colorcolumn=+1 "relative to textwidth
+set colorcolumn=+0 "relative to textwidth
 set numberwidth=3
 set scrolloff=1
 set display=lastline
