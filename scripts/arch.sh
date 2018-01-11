@@ -1,5 +1,4 @@
 #!/bin/bash
-set -e
 
 # Custom configuration script to be run after a fresh Arch linux installation.
 # Follow the steps in the installation guide first:
@@ -17,8 +16,12 @@ set -e
 # decided to include them so the script can be run on "preinstalled" systems
 # such as raspberry pi or a VPS.
 
-timezone=America/Chicago
-packages=(
+set -e
+[ $(id -u) -ne 0 ] && echo 'Must be root' >&2 && exit 1
+
+cat > /tmp/packages <<HERE_DOC
+# Packages to install
+
 # essentials
 vim
 git
@@ -65,16 +68,18 @@ retroarch
 retroarch-assets-xmb
 retroarch-autoconfig-udev
 libretro-nestopia  # nes core
-)
-services=(
+HERE_DOC
+vi /tmp/packages
+pacman -Sy --needed $(cat /tmp/packages | sed 's/#.*//g')
+
+cat > /tmp/services <<HERE_DOC
 systemd-timesyncd.service  # ntp (can be enabled but not started in chroot)
 #dhcpcd.service  # for wired network
-)
+HERE_DOC
+vi /tmp/services
+systemctl enable $(cat /tmp/services | sed 's/#.*//g')
 
-pacman -Sy --needed ${packages[@]}
-
-systemctl enable ${services[@]}
-
+timezone=America/Chicago
 ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
 
 # uncomment localization
