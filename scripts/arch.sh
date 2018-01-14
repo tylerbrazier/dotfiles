@@ -19,105 +19,129 @@
 set -e
 [ $(id -u) -ne 0 ] && echo 'Must be root' >&2 && exit 1
 
-cat > /tmp/packages <<HERE_DOC
-# Packages to install
+install_packages() {
+  echo '# Packages to install
+  # essentials
+  vim
+  git
+  sudo
+  tmux
+  openssh
+  bash-completion
 
-# essentials
-vim
-git
-sudo
-tmux
-openssh
-bash-completion
+  # extras
+  htop
+  tree
+  neovim
+  mlocate
+  ntfs-3g  # to write to ntfs formatted drives
 
-# extras
-htop
-tree
-neovim
-mlocate
-ntfs-3g  # to write to ntfs formatted drives
+  # gui stuff
+  i3
+  dmenu
+  rxvt-unicode
+  ttf-dejavu
+  ttf-font-awesome # for status bar icons
+  xorg-server
+  xorg-xinit
+  xorg-xset
+  xorg-xrandr  # for screen configuration
+  xorg-xbacklight
+  numlockx
+  alsa-utils
+  polkit  # allows poweroff,reboot,etc. commands without sudo
+  gvim  # includes clipboard support (conflicts with vim)
+  xsel  # clipboard support for neovim
+  firefox
+  chromium
+  #xf86-video-fbdev  # xorg driver for raspberry pi
 
-# gui stuff
-i3
-dmenu
-rxvt-unicode
-ttf-dejavu
-ttf-font-awesome # for status bar icons
-xorg-server
-xorg-xinit
-xorg-xset
-xorg-xrandr  # for screen configuration
-xorg-xbacklight
-numlockx
-alsa-utils
-polkit  # allows poweroff,reboot,etc. commands without sudo
-gvim  # includes clipboard support (conflicts with vim)
-xsel  # clipboard support for neovim
-firefox
-chromium
-#xf86-video-fbdev  # xorg driver for raspberry pi
+  # laptop stuff
+  dialog  # for wifi-menu
+  wpa_supplicant
+  acpi  # for battery status
+  wpa_actiond # auto connect; https://wiki.archlinux.org/index.php/netctl#Wireless
 
-# laptop stuff
-dialog  # for wifi-menu
-wpa_supplicant
-acpi  # for battery status
-wpa_actiond # auto connect; https://wiki.archlinux.org/index.php/netctl#Wireless
+  # retro game stuff
+  retroarch
+  retroarch-assets-xmb
+  retroarch-autoconfig-udev
+  libretro-nestopia  # nes core
+  ' | sed 's/^ *//' > /tmp/packages
+  vi /tmp/packages
+  pacman -Sy --needed $(sed 's/#.*//' /tmp/packages)
+}
 
-# retro game stuff
-retroarch
-retroarch-assets-xmb
-retroarch-autoconfig-udev
-libretro-nestopia  # nes core
-HERE_DOC
-vi /tmp/packages
-pacman -Sy --needed $(cat /tmp/packages | sed 's/#.*//g')
+enable_services() {
+  echo '# Services to enable
+  systemd-timesyncd.service  # ntp (can be enabled but not started in chroot)
+  #dhcpcd.service  # for wired network
+  ' | sed 's/^ *//' > /tmp/services
+  vi /tmp/services
+  systemctl enable $(sed 's/#.*//' /tmp/services)
+}
 
-cat > /tmp/services <<HERE_DOC
-systemd-timesyncd.service  # ntp (can be enabled but not started in chroot)
-#dhcpcd.service  # for wired network
-HERE_DOC
-vi /tmp/services
-systemctl enable $(cat /tmp/services | sed 's/#.*//g')
+set_timezone() {
+  ln -sf /usr/share/zoneinfoAmerica/Chicago /etc/localtime
+}
 
-timezone=America/Chicago
-ln -sf /usr/share/zoneinfo/$timezone /etc/localtime
+set_locale() {
+  # uncomment localization
+  sed -i~ -e 's/^#\(en_US\.UTF-8 UTF-8\)/\1/' /etc/locale.gen
+  locale-gen
 
-# uncomment localization
-sed -i~ -e 's/^#\(en_US\.UTF-8 UTF-8\)/\1/' /etc/locale.gen
-locale-gen
+  echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+}
 
-echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+set_hostname() {
+  read -p "hostname: [$(hostname)] " hostname
+  [ -z "$hostname" ] && return
 
-read -p "hostname: [$(hostname)] " hostname
-if [ -n "$hostname" ]; then
   echo $hostname > /etc/hostname
   hostname $hostname  # keygen.sh won't read /etc/hostname until reboot
-fi
+}
 
-echo 'Root password'
-passwd root
+set_root_password() {
+  echo 'Root password'
+  passwd root
+}
 
-# allow member of wheel group to run sudo without a password
-sed -i~ -e 's/^# *\(%wheel ALL=(ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
+edit_sudoers() {
+  # allow member of wheel group to run sudo without a password
+  sed -i~ -e 's/^# *\(%wheel ALL=(ALL) NOPASSWD: ALL\)/\1/' /etc/sudoers
+}
 
-read -p 'new user: ' user
-useradd -m -g wheel -s /bin/bash $user
+add_user() {
+  read -p 'new user: ' user
+  [ -z "$user" ] && return
 
-echo "Password for $user"
-passwd $user
+  useradd -m -g wheel -s /bin/bash $user
 
-sudo -H -u $user bash -c "
-$(dirname "$0")/keygen.sh
-git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
-~/dotfiles/scripts/dotfiles.sh -f -p -g
-"
+  echo "Password for $user"
+  passwd $user
 
-# enable auto login on tty1
-# https://wiki.archlinux.org/index.php/getty#Automatic_login_to_virtual_console
-mkdir -p /etc/systemd/system/getty@tty1.service.d/
-echo "[Service]
+  sudo -H -u $user bash -c "
+  $(dirname "$0")/keygen.sh
+  git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
+  ~/dotfiles/scripts/dotfiles.sh -f -p -g
+  "
+
+  # enable auto login on tty1
+  # https://wiki.archlinux.org/index.php/getty#Automatic_login_to_virtual_console
+  mkdir -p /etc/systemd/system/getty@tty1.service.d/
+  echo "[Service]
   ExecStart=
   ExecStart=-/usr/bin/agetty --autologin $user --noclear %I \$TERM" \
     > /etc/systemd/system/getty@tty1.service.d/override.conf
+}
+
+install_packages
+enable_services
+set_timezone
+set_locale
+set_hostname
+set_root_password
+edit_sudoers
+add_user
 
 echo "finished $0"
