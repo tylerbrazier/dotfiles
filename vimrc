@@ -98,6 +98,7 @@ nnoremap <space>c :set colorcolumn=80
 
 nnoremap <space>m :make <up>
 nnoremap <space>g :grep<space>
+vnoremap <space>g "xy:split\|grep -F '<c-r>x'
 nnoremap <space>s :cexpr system('git status --porcelain')<cr>
 
 nnoremap <space>h <c-w>h
