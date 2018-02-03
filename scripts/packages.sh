@@ -19,7 +19,14 @@ neovim
 mlocate
 ntfs-3g  # to write to ntfs formatted drives
 
-# gui stuff
+# gnome packages
+gdm
+gnome-shell
+gnome-terminal
+networkmanager
+nautilus
+
+# i3 packages
 i3
 dmenu
 rxvt-unicode
@@ -33,6 +40,8 @@ xorg-xbacklight
 numlockx
 alsa-utils
 polkit  # allows poweroff,reboot,etc. commands without sudo
+
+# extra gui packages
 gvim  # includes clipboard support (conflicts with vim)
 xsel  # clipboard support for neovim
 firefox
