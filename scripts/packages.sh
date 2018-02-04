@@ -23,8 +23,10 @@ cat >/tmp/packages <<PACKAGES
 #gdm
 #gnome-shell
 #gnome-terminal
+#gnome-keyring
 #networkmanager
 #nautilus
+#ttf-dejavu
 
 ### i3 packages
 #i3
