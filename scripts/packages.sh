@@ -24,6 +24,8 @@ cat >/tmp/packages <<PACKAGES
 #gnome-shell
 #gnome-terminal
 #gnome-keyring
+#gnome-control-center
+#dconf-editor
 #networkmanager
 #nautilus
 #ttf-dejavu
