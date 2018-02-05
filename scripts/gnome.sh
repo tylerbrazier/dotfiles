@@ -7,9 +7,6 @@ gsettings set org.gnome.settings-daemon.peripherals.keyboard numlock-state on
 # faster key repeat delay
 gsettings set org.gnome.desktop.peripherals.keyboard delay 200
 
-# show files as list view in nautilus
-gsettings set org.gnome.nautilus.preferences default-folder-viewer list-view
-
 # show the date on the clock
 gsettings set org.gnome.desktop.interface clock-show-date true
 
