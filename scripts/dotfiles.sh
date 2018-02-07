@@ -31,6 +31,9 @@ if [[ " $@ " == *" -g "* ]]; then
   eval $cmd "$(realpath Xresources)" ~/.Xresources
   eval $cmd "$(realpath gvimrc)" ~/.gvimrc
 
+  mkdir -p ~/.config/gtk-3.0/
+  eval $cmd "$(realpath config/gtk-3.0/settings.ini)" ~/.config/gtk-3.0/settings.ini
+
   mkdir -p ~/.config/i3/
   eval $cmd "$(realpath config/i3/config)" ~/.config/i3/config
 
