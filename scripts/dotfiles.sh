@@ -37,10 +37,8 @@ if [[ " $@ " == *" -g "* ]]; then
   mkdir -p ~/.config/i3/
   eval $cmd "$(realpath config/i3/config)" ~/.config/i3/config
 
-  mkdir -p ~/.config/i3blocks/
-  eval $cmd "$(realpath config/i3blocks/config)" ~/.config/i3blocks/config
-  eval $cmd "$(realpath config/i3blocks/net.sh)" ~/.config/i3blocks/net.sh
-  eval $cmd "$(realpath config/i3blocks/bat.sh)" ~/.config/i3blocks/bat.sh
+  mkdir -p ~/.config/i3status/
+  eval $cmd "$(realpath config/i3status/config)" ~/.config/i3status/config
 fi
 
 if [[ " $@ " == *" -r "* ]]; then

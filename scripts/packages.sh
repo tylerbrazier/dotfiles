@@ -25,11 +25,11 @@ cat >/tmp/packages <<PACKAGES
 #ttf-dejavu
 
 ### i3 packages
-#i3
+#i3-wm
+#i3status
 #dmenu
 #rxvt-unicode
 #ttf-dejavu
-#ttf-font-awesome # for status bar icons
 #xorg-server
 #xorg-xinit
 #xorg-xset
