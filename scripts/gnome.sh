@@ -18,3 +18,6 @@ gsettings set org.gnome.desktop.screensaver lock-enabled false
 
 # disable the annoying beep
 gsettings set org.gnome.desktop.sound event-sounds false
+
+# make touchpad scrolling consistent with mouse
+gsettings set org.gnome.desktop.peripherals.touchpad natural-scroll false
