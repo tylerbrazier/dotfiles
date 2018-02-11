@@ -11,6 +11,7 @@ cat >/tmp/packages <<PACKAGES
 #tmux
 #openssh
 #bash-completion
+#networkmanager  # nmtui is easier than netctl
 
 ### extras
 #htop
@@ -26,7 +27,6 @@ cat >/tmp/packages <<PACKAGES
 #gnome-keyring
 #gnome-control-center
 #dconf-editor
-#networkmanager
 #nautilus
 #ttf-dejavu
 
@@ -51,12 +51,6 @@ cat >/tmp/packages <<PACKAGES
 #firefox
 #chromium
 #xf86-video-fbdev  # xorg driver for raspberry pi
-
-### laptop stuff
-#dialog  # for wifi-menu
-#wpa_supplicant
-#acpi  # for battery status
-#wpa_actiond # auto connect; https://wiki.archlinux.org/index.php/netctl#Wireless
 
 ### retro game stuff
 #retroarch
