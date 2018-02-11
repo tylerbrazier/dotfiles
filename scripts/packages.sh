@@ -9,16 +9,10 @@ cat >/tmp/packages <<PACKAGES
 #git
 #sudo
 #tmux
+#htop
 #openssh
 #bash-completion
 #networkmanager  # nmtui is easier than netctl
-
-### extras
-#htop
-#tree
-#neovim
-#mlocate
-#ntfs-3g  # to write to ntfs formatted drives
 
 ### gnome packages
 #gdm
@@ -45,9 +39,13 @@ cat >/tmp/packages <<PACKAGES
 #alsa-utils
 #polkit  # allows poweroff,reboot,etc. commands without sudo
 
-### extra gui packages
-#gvim  # includes clipboard support (conflicts with vim)
+### extras
+#tree
+#mlocate
+#ntfs-3g  # to write to ntfs formatted drives
+#neovim
 #xsel  # clipboard support for neovim
+#gvim  # includes clipboard support (conflicts with vim)
 #firefox
 #chromium
 #xf86-video-fbdev  # xorg driver for raspberry pi
