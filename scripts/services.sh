@@ -6,6 +6,7 @@ test $(id -u) -ne 0 && echo 'Run as root' >&2 && exit 1
 cat >/tmp/services <<SERVICES
 #NetworkManager
 #gdm
+#org.cups.cupsd
 SERVICES
 
 # edit the list before installing

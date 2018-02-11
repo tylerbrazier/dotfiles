@@ -48,6 +48,8 @@ cat >/tmp/packages <<PACKAGES
 #gvim  # includes clipboard support (conflicts with vim)
 #firefox
 #chromium
+#cups  # for printing
+#hplip # hp printer driver
 #xf86-video-fbdev  # xorg driver for raspberry pi
 
 ### retro game stuff
