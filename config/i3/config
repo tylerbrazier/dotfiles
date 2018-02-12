@@ -1,88 +1,123 @@
 # i3 config file (v4)
 # https://i3wm.org/docs/userguide.html
+# Mostly default settings and bindings in here except:
+# - begin in tabbed layout
+# - hjkl for movement, like vim
+# - horizontal split is $mod+b since $mod+h is bound to focus left, like sway
+# Some extra bindings:
+# - $mod+Tab to focus left/right similar to browser tabs
+# - $mod+BackSpace mode binding prompts for poweroff, reboot, suspend
+# - bindings to make other keys work such as volume, brightness, etc.
+
+font pango:DejaVu Sans Mono 9
 
 # alt key
 set $mod Mod1
 
-font pango:DejaVu Sans Mono 9
-#font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
-
-# windows open in new tab by default
-workspace_layout tabbed
-
-# Use Mouse+$mod to drag floating windows to their wanted position
-floating_modifier $mod
+set $left h
+set $down j
+set $up k
+set $right l
 
 # start a terminal
 bindsym $mod+Return exec i3-sensible-terminal
+# start dmenu program launcher
+bindsym $mod+d exec dmenu_run
 
 # kill focused window
 bindsym $mod+Shift+q kill
+# reload config
+bindsym $mod+Shift+c reload
+# restart i3 inplace
+bindsym $mod+Shift+r restart
+# end your X session
+bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '' -b 'Exit i3' 'i3-msg exit'"
 
-# start dmenu (a program launcher)
-bindsym $mod+d exec dmenu_run
-# dmenu wrapper that only shows applications with a .desktop file:
-#bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
+# change container layout
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# starts in tabbed layout
+workspace_layout tabbed
+
+bindsym $mod+b split horizontal
+bindsym $mod+v split vertical
+bindsym $mod+f fullscreen toggle
+
+# focus parent container
+bindsym $mod+a focus parent
+
+# $mod+tab works similar to browser tabs
+bindsym $mod+Tab focus right
+bindsym $mod+Shift+Tab focus left
 
 # change focus
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+$left focus left
+bindsym $mod+$down focus down
+bindsym $mod+$up focus up
+bindsym $mod+$right focus right
 
-# alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
 bindsym $mod+Down focus down
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
-# $mod+tab works similar to other desktop environments
-bindsym $mod+Tab focus right
-bindsym $mod+Shift+Tab focus left
+# move focused windows
+bindsym $mod+Shift+$left move left
+bindsym $mod+Shift+$down move down
+bindsym $mod+Shift+$up move up
+bindsym $mod+Shift+$right move right
 
-# move focused window
-bindsym $mod+Shift+h move left
-bindsym $mod+Shift+j move down
-bindsym $mod+Shift+k move up
-bindsym $mod+Shift+l move right
-
-# alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
-# split in horizontal orientation
-bindsym $mod+b split horizontal
+# move focused window to the scratchpad
+bindsym $mod1+Shift+minus move scratchpad
+# show/hide/cycle scratchpad windows
+bindsym $mod1+minus scratchpad show
 
-# split in vertical orientation
-bindsym $mod+v split vertical
-
-# enter fullscreen mode for the focused container
-bindsym $mod+f fullscreen toggle
-
-# change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
-
-# toggle tiling / floating
+# float/tile focused window
 bindsym $mod+Shift+space floating toggle
-
-# change focus between tiling / floating windows
+# change focus between floating/tiling windows
 bindsym $mod+space focus mode_toggle
+# move floating windows around with $mod+mouse
+floating_modifier $mod
 
-# focus the parent container
-bindsym $mod+a focus parent
+# resize windows (mouse works too)
+bindsym $mod+r mode "resize"
+mode "resize" {
+        bindsym $left resize shrink width 10 px or 10 ppt
+        bindsym $down resize grow height 10 px or 10 ppt
+        bindsym $up resize shrink height 10 px or 10 ppt
+        bindsym $right resize grow width 10 px or 10 ppt
 
-# move the currently focused window to the scratchpad
-bindsym $mod+Shift+minus move scratchpad
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
 
-# Show the next scratchpad window or hide the focused scratchpad window.
-# If there are multiple scratchpad windows, this command cycles through them.
-bindsym $mod+minus scratchpad show
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
 
-# switch to workspace
+# power options
+bindsym $mod+BackSpace mode "$mode_power"
+set $mode_power Bye! [p]oweroff [r]eboot [s]uspend [Esc]
+mode "$mode_power" {
+        bindsym p exec --no-startup-id systemctl poweroff; mode "default"
+        bindsym r exec --no-startup-id systemctl reboot; mode "default"
+        bindsym s exec --no-startup-id systemctl suspend; mode "default"
+        bindsym Escape mode "default"
+}
+
+bar {
+        status_command i3status
+}
+
+# go to workspace
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
 bindsym $mod+3 workspace 3
@@ -107,55 +142,10 @@ bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
 # make brightness keys work
-bindsym XF86MonBrightnessUp   exec xbacklight -inc 10
+bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
 
 # make volume keys work
 bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
 bindsym XF86AudioLowerVolume exec amixer set Master 5%-
 bindsym XF86AudioMute exec amixer set Master toggle
-
-# reload the configuration file
-bindsym $mod+Shift+c reload
-# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
-bindsym $mod+Shift+r restart
-# exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m '' -b 'Exit i3' 'i3-msg exit'"
-
-# resize window (you can also use the mouse for that)
-mode "resize" {
-        # These bindings trigger as soon as you enter the resize mode
-
-        bindsym h resize shrink width 10 px or 10 ppt
-        bindsym j resize grow height 10 px or 10 ppt
-        bindsym k resize shrink height 10 px or 10 ppt
-        bindsym l resize grow width 10 px or 10 ppt
-
-        # same bindings, but for the arrow keys
-        bindsym Left resize shrink width 10 px or 10 ppt
-        bindsym Down resize grow height 10 px or 10 ppt
-        bindsym Up resize shrink height 10 px or 10 ppt
-        bindsym Right resize grow width 10 px or 10 ppt
-
-        # back to normal: Enter or Escape
-        bindsym Return mode "default"
-        bindsym Escape mode "default"
-}
-
-bindsym $mod+r mode "resize"
-
-# Start i3bar to display a workspace bar (plus the system information i3status
-# finds out, if available)
-bar {
-        status_command i3status
-}
-
-# $mod+BackSpace for power options
-bindsym $mod+BackSpace mode "$mode_power"
-set $mode_power Bye! [p]oweroff [r]eboot [s]uspend [Esc]
-mode "$mode_power" {
-        bindsym p exec --no-startup-id systemctl poweroff; mode "default"
-        bindsym r exec --no-startup-id systemctl reboot; mode "default"
-        bindsym s exec --no-startup-id systemctl suspend; mode "default"
-        bindsym Escape mode "default"
-}
