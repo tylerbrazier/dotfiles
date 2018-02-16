@@ -35,4 +35,5 @@
   sd = stash drop
   up = push --set-upstream
   down = pull --rebase --autostash
-  out = "!f(){ git branch -D $1; git push --delete origin $1; };f"
+  out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
+  bent = "!git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d"
