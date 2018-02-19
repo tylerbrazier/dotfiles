@@ -1,16 +1,16 @@
 ! https://wiki.archlinux.org/index.php/X_resources
 ! https://wiki.archlinux.org/index.php/rxvt-unicode
 
-! Run `fc-list` to see installed fonts.
-! https://keithp.com/~keithp/render/Xft.tutorial
-URxvt.font: xft:DejaVu Sans Mono-9:style=Book
-
 ! xft isn't as performant as XLFD but it's so much easier on the eyes.
 ! https://wiki.archlinux.org/index.php/Rxvt-unicode/Tips_and_tricks#Improving_performance
 ! If the difference in performance is really that significant, you can use this:
 ! URxvt.font: -misc-fixed-medium-r-normal--13-120-75-75-c-70-iso10646-1
 ! Run `xfontsel` to preview other XLFD fonts.
+! Run `fc-list` to see installed fonts.
+! https://keithp.com/~keithp/render/Xft.tutorial
+URxvt.font: xft:DejaVu Sans Mono-9:style=Book
 
+! don't show the scrollbar
 URxvt.scrollBar: false
 
 ! white foreground, black background
