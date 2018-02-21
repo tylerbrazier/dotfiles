@@ -106,16 +106,16 @@ nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
 
-nnoremap <space><cr> :R <up>
-nnoremap <space>rb :tab .R git blame %<cr>
-nnoremap <space>rl :tab R git log -p -10 %
-nnoremap <space>rs :tab R git show <c-r>=expand('<cword>')<cr>
-
 nnoremap <space>t :$tabnew<cr>
 nnoremap <space>< :tabmove -<cr>
 nnoremap <space>> :tabmove +<cr>
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
+
+nnoremap <space><cr> :R <up>
+nnoremap <space>rb :tab .R git blame %<cr>
+nnoremap <space>rl :tab R git log -p -10 %
+nnoremap <space>rs :tab R git show <c-r>=expand('<cword>')<cr>
 
 
 " Make a command :R similar to :r! but dumps output into a new scratch window.
