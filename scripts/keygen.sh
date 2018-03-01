@@ -11,8 +11,9 @@
 #   revoked individually (what if your laptop gets stolen?)
 # https://wiki.archlinux.org/index.php/Secure_Shell
 
-# make sure ssh is installed
-command -v ssh >/dev/null 2>&1 || { echo 'install openssh first' >&1; exit 1; }
+# make sure ssh and curl are installed
+command -v ssh >/dev/null 2>&1 || { echo 'requires openssh' >&1; exit 1; }
+command -v curl >/dev/null 2>&1 || { echo 'requires curl' >&1; exit 1; }
 
 key=~/.ssh/id_rsa
 comment="$(whoami)@$(hostname) $(date -I)"
