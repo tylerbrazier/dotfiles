@@ -86,6 +86,7 @@ cnoremap <c-a> <home>
 
 " tab after non-whitespace character does word completion
 inoremap <expr> <tab> getline('.')[col('.')-2] =~ '\S' ? "\<c-p>" : "\<tab>"
+inoremap <expr> <s-tab> pumvisible() ? "\<c-n>" : "\<s-tab>"
 
 
 " use <space> instead of <leader> to avoid conflicts with plugin mappings
