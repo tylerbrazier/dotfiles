@@ -3,7 +3,9 @@ set -e
 
 test $(id -u) -ne 0 && echo 'Run as root' >&2 && exit 1
 
-cat >/tmp/packages <<PACKAGES
+tmpfile="$(mktemp)"
+
+cat >"$tmpfile" <<PACKAGES
 ### essentials
 #vim
 #git
@@ -60,7 +62,7 @@ cat >/tmp/packages <<PACKAGES
 PACKAGES
 
 # edit the list before installing
-eval "${EDITOR:-vi}" /tmp/packages
+eval "${EDITOR:-vi} $tmpfile"
 
 # strip comments and install
-pacman -Sy --needed $(sed 's/#.*//' /tmp/packages)
+pacman -Sy --needed $(sed 's/#.*//' "$tmpfile")
