@@ -2,7 +2,6 @@
 
 # Make symlinks in home to dotfiles.
 # Pass -f to overwrite existing dotfiles.
-# Pass -p to also install vim plugins.
 # Pass -g to include config files for gui
 # Pass -r to include retroarch stuff and download roms
 
@@ -17,14 +16,11 @@ eval $cmd "$(realpath gitconfig)" ~/.gitconfig
 eval $cmd "$(realpath tmux.conf)" ~/.tmux.conf
 eval $cmd "$(realpath vimrc)" ~/.vimrc
 
+mkdir -p ~/.vim/plugin/
+eval $cmd "$(realpath vim/plugin/plugs.vim)" ~/.vim/plugin/plugs.vim
+
 mkdir -p ~/.config/nvim/
 eval $cmd "$(realpath config/nvim/init.vim)" ~/.config/nvim/init.vim
-
-if [[ " $@ " == *" -p "* ]]; then
-  curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
-    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-  vim +PlugInstall
-fi
 
 if [[ " $@ " == *" -g "* ]]; then
   eval $cmd "$(realpath xinitrc)" ~/.xinitrc

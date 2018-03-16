@@ -152,37 +152,4 @@ augroup end
 syntax on
 filetype plugin indent on
 
-try
-  " https://github.com/junegunn/vim-plug
-  call plug#begin()
-  Plug 'ctrlpvim/ctrlp.vim'
-  Plug 'justinmk/vim-dirvish'
-  Plug 'tpope/vim-surround'
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-repeat'
-  Plug 'airblade/vim-gitgutter'
-  Plug 'tylerbrazier/vim-flintstone'
-  Plug 'tylerbrazier/vim-bracepair'
-  Plug 'tylerbrazier/vim-tagpair', {'for': 'html'}
-  Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-  Plug 'gcmt/taboo.vim'
-  call plug#end()
-
-  " idle delay before firing CursorHold, updating gitgutter
-  set updatetime=1000
-
-  let g:ctrlp_switch_buffer = 0
-  let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-
-  "shortcuts to add/diff/undo changes (faster typing than the default \h maps)
-  nnoremap <space>a :GitGutterStageHunk<cr>
-  nnoremap <space>d :GitGutterPreviewHunk<cr>
-  nnoremap <space>u :GitGutterUndoHunk<cr>
-
-  nnoremap <space>n :TabooRename<space>
-
-  colorscheme flintstone
-catch
-endtry
-
 silent! source $HOME/.vimrc.local
