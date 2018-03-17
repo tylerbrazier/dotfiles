@@ -1,9 +1,10 @@
 " Plugin management and settings script.
-" Each key in s:plugins is a plugin repo from github and
-" each value is either 'start' (load on starup) or 'opt' (load with :packadd).
-" See :help packages
+" This leverages the packages feature of vim 8 (:help packages).
+" Each key in s:plugins is a plugin repo from Github and
+" each value is either 'start' (load on startup) or 'opt' (load with :packadd)
 "
 " The :Plugs command clones missing repos and pulls out of date repos.
+" All of these plugins will be kept in the "plugs" package.
 let s:plugins = {
       \ 'ctrlpvim/ctrlp.vim': 'start',
       \ 'justinmk/vim-dirvish': 'start',
