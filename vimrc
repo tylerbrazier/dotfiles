@@ -152,4 +152,5 @@ augroup end
 syntax on
 filetype plugin indent on
 
+" put machine-local stuff in ~/.vimrc.local (e.g. set background)
 silent! source $HOME/.vimrc.local
