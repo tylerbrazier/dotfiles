@@ -1,10 +1,22 @@
 # dotfiles
+Personal configuration files and scripts
 
-- `scripts/dotfiles.sh [-f] [-p] [-g] [-r]` makes symlinks in home to dotfiles
-  - `-f` to overwrite existing files in home
-  - `-g` to include config files for gui
-  - `-r` to include retroarch stuff and download roms
-- `scripts/keygen.sh` generates ssh keys
-- `scripts/packages.*.sh` installs packages
-- `scripts/superuseradd.sh` adds a new user who can sudo
-- `scripts/autologin.sh <user>` automatically login as `<user>` on boot
+## Arch linux
+What to run after a fresh [installation][1]:
+```
+systemctl start dhcpcd  #start wired internet
+pacman -Sy git sudo
+git clone https://github.com/tylerbrazier/dotfiles
+
+cd dotfiles/scripts
+./packages.arch.sh  #install packages
+./services.sh       #enable services
+./superuseradd.sh   #add a user who can sudo
+
+su <new user>
+./keygen.sh  #generate ssh key pair
+git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
+~/dotfiles/scripts/dotfiles.sh -f -g  #makes symlinks in home to dotfiles
+```
+
+[1]: https://wiki.archlinux.org/index.php/installation_guide
