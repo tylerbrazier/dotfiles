@@ -26,7 +26,6 @@ set nrformats-=octal
 set formatoptions+=j
 
 set showcmd
-set cursorline
 set colorcolumn=+0 "relative to textwidth
 set numberwidth=3
 set scrolloff=1
@@ -94,7 +93,11 @@ nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
 nnoremap <space>e :e<cr>
 nnoremap <space>x :new $HOME/.scratch<cr>
-nnoremap <space>i :set invspell invnumber invlist<cr>
+
+nnoremap <space>is :set invspell spell?<cr>
+nnoremap <space>in :set invnumber number?<cr>
+nnoremap <space>ic :set invcursorline cursorline?<cr>
+nnoremap <space>iw :set invwrap wrap?<cr>
 nnoremap <space>c :set colorcolumn=80
 
 nnoremap <space>m :make <up>
@@ -133,7 +136,7 @@ augroup vimrc
   autocmd FileType javascript setlocal mp=./node_modules/.bin/eslint\ -f\ unix
   autocmd FileType gitcommit setlocal spell tw=72
   autocmd FileType markdown setlocal spell tw=80
-  autocmd FileType qf setlocal colorcolumn=0 nowrap nocursorline
+  autocmd FileType qf setlocal colorcolumn=0 nowrap
 
   " auto open the quickfix window for commands that use it
   autocmd QuickFixCmdPost * botright cwindow
