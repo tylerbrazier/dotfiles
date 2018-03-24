@@ -1,7 +1,5 @@
 #!/bin/sh
-
-# Start X by running `startx` in a virtual terminal or automatically at login:
-# https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
+# https://wiki.archlinux.org/index.php/Xinit
 
 # key repeat delay(ms) and rate(Hz)
 xset r rate 200 30
