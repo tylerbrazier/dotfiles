@@ -19,4 +19,21 @@ git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
 ~/dotfiles/scripts/dotfiles.sh -f -g  #makes symlinks in home to dotfiles
 ```
 
+## Termux
+After [installing][2], press `Volume Up + q` for extra keys row, then run:
+```
+# for sdcard access (https://wiki.termux.com/wiki/Termux-setup-storage)
+termux-setup-storage
+
+pkg install git
+git clone https://github.com/tylerbrazier/dotfiles
+
+cd dotfiles/scripts
+./packages.termux.sh
+./dotfiles.sh -f
+./keygen.sh
+```
+Pinch to zoom, `Volume Down` for ctrl, long press for copy/paste/help menu.
+
 [1]: https://wiki.archlinux.org/index.php/installation_guide
+[2]: https://play.google.com/store/apps/details?id=com.termux&hl=en
