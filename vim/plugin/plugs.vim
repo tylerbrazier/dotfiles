@@ -48,7 +48,5 @@ nnoremap <space>a :GitGutterStageHunk<cr>
 nnoremap <space>d :GitGutterPreviewHunk<cr>
 nnoremap <space>u :GitGutterUndoHunk<cr>
 
-nnoremap <space>n :TabooRename<space>
-
 " silent in case the plugin hasn't been installed yet
 silent! colorscheme flintstone
