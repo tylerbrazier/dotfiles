@@ -1,30 +1,45 @@
-" Plugin management and settings script.
-" This leverages the packages feature of vim 8 (:help packages).
-" Each key in s:plugins is a plugin repo from Github and
-" each value is either 'start' (load on startup) or 'opt' (load with :packadd)
+" Simple plugin management and settings script using vim 8's packages feature.
+" :help packages
 "
-" The :Plugs command clones missing repos and pulls out of date repos.
-" All of these plugins will be kept in the "plugs" package.
-let s:plugins = {
-      \ 'ctrlpvim/ctrlp.vim': 'start',
-      \ 'justinmk/vim-dirvish': 'start',
-      \ 'tpope/vim-surround': 'start',
-      \ 'tpope/vim-commentary': 'start',
-      \ 'tpope/vim-repeat': 'start',
-      \ 'airblade/vim-gitgutter': 'start',
-      \ 'tylerbrazier/vim-flintstone': 'start',
-      \ 'tylerbrazier/vim-bracepair': 'start',
-      \ 'tylerbrazier/vim-tagpair': 'start',
-      \ 'pangloss/vim-javascript': 'start',
-      \ 'gcmt/taboo.vim': 'start',
-      \}
+" The script defines a :Plugs command that clones (or updates) repos listed
+" in s:plugins below. These will be kept in opt/ so that disabling or
+" removing them doesn't require deleting the whole plugin from the file
+" system. This means that each plugin will need to be enabled manually with
+" :packadd.
+
+let s:plugins = [
+      \ 'ctrlpvim/ctrlp.vim',
+      \ 'justinmk/vim-dirvish',
+      \ 'tpope/vim-surround',
+      \ 'tpope/vim-commentary',
+      \ 'tpope/vim-repeat',
+      \ 'airblade/vim-gitgutter',
+      \ 'tylerbrazier/vim-flintstone',
+      \ 'tylerbrazier/vim-bracepair',
+      \ 'tylerbrazier/vim-tagpair',
+      \ 'pangloss/vim-javascript',
+      \ 'gcmt/taboo.vim',
+      \]
+" enable plugins with :packadd (not necessary for colorschemes)
+" :help pack-add
+packadd ctrlp.vim
+packadd vim-dirvish
+packadd vim-surround
+packadd vim-commentary
+packadd vim-repeat
+packadd vim-gitgutter
+packadd vim-bracepair
+packadd vim-tagpair
+packadd vim-javascript
+packadd taboo.vim
 
 command! Plugs call <sid>plugs()
+
 function! s:plugs()
-  for [repo, packdir] in items(s:plugins)
+  for repo in s:plugins
     let url = 'https://github.com/'.repo
     let plugin = split(repo, '/')[1]
-    let path = $HOME.'/.vim/pack/plugs/'.packdir.'/'.plugin
+    let path = $HOME.'/.vim/pack/plugs/opt/'.plugin
     if isdirectory(path)
       let cmd = join(['git -C', path, 'pull'])
     else
