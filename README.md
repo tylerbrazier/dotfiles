@@ -17,6 +17,7 @@ su <new user>
 ./keygen.sh  #generate ssh key pair
 git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
 ~/dotfiles/scripts/dotfiles.sh -f -g  #makes symlinks in home to dotfiles
+~/dotfiles/scripts/gnome.sh  #if gnome was installed
 ```
 
 ## Termux

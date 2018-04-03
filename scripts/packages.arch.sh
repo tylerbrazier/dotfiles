@@ -16,7 +16,7 @@ cat >"$tmpfile" <<PACKAGES
 #bash-completion
 #networkmanager  # nmtui is easier than netctl
 
-### gnome packages
+### gnome packages (gui for machines with more resources)
 #gdm
 #gnome-shell
 #gnome-terminal
@@ -26,7 +26,7 @@ cat >"$tmpfile" <<PACKAGES
 #nautilus
 #ttf-dejavu
 
-### i3 packages
+### i3 packages (gui for machines with less resources)
 #i3-wm
 #i3status
 #dmenu
