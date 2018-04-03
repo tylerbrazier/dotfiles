@@ -3,7 +3,6 @@
 # Make symlinks in home to dotfiles.
 # Pass -f to overwrite existing dotfiles.
 # Pass -g to include config files for gui
-# Pass -r to include retroarch stuff and download roms
 
 # make sure we're in the root of the project
 cd "$(dirname "$0")/.."
@@ -35,13 +34,4 @@ if [[ " $@ " == *" -g "* ]]; then
 
   mkdir -p ~/.config/i3status/
   eval $cmd "$(realpath config/i3status/config)" ~/.config/i3status/config
-fi
-
-if [[ " $@ " == *" -r "* ]]; then
-  mkdir -p ~/.config/retroarch/
-  eval $cmd "$(realpath config/retroarch/retroarch.cfg)" ~/.config/retroarch/retroarch.cfg
-
-  mkdir -p ~/retro/saves
-  mkdir -p ~/retro/cache
-  git clone https://github.com/earlharrier/nes ~/retro/nes
 fi

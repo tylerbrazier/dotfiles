@@ -53,12 +53,6 @@ cat >"$tmpfile" <<PACKAGES
 #cups  # for printing
 #hplip # hp printer driver
 #xf86-video-fbdev  # xorg driver for raspberry pi
-
-### retro game stuff
-#retroarch
-#retroarch-assets-xmb
-#retroarch-autoconfig-udev
-#libretro-nestopia  # nes core
 PACKAGES
 
 # edit the list before installing
