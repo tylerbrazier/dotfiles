@@ -16,7 +16,7 @@ cd dotfiles/scripts
 su <new user>
 ./keygen.sh  #generate ssh key pair
 git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
-~/dotfiles/scripts/dotfiles.sh -f  #makes symlinks in home to dotfiles
+~/dotfiles/scripts/mklinks.sh -f  #makes symlinks in home to dotfiles
 ~/dotfiles/scripts/gnome.sh  #if gnome was installed
 ```
 
@@ -31,7 +31,7 @@ git clone https://github.com/tylerbrazier/dotfiles
 
 cd dotfiles/scripts
 ./packages.termux.sh
-./dotfiles.sh -f
+./mklinks.sh -f
 ./keygen.sh
 ```
 Pinch to zoom, `Volume Down` for ctrl, long press for copy/paste/help menu.
