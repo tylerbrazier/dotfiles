@@ -98,12 +98,12 @@ nnoremap <space>e :e<cr>
 nnoremap <space>x :new $HOME/.scratch<cr>
 
 " toggles for common options, and prints if option is on or off
-nnoremap <space>in :set invnumber number?<cr>
-nnoremap <space>is :set invspell spell?<cr>
-nnoremap <space>it :set invexpandtab expandtab?<cr>
-nnoremap <space>ic :set invcursorline cursorline?<cr>
-nnoremap <space>iw :set invwrap wrap?<cr>
-nnoremap <space>il :set invlist list?<cr>
+nnoremap <space>in :setlocal invnumber number?<cr>
+nnoremap <space>is :setlocal invspell spell?<cr>
+nnoremap <space>it :setlocal invexpandtab expandtab?<cr>
+nnoremap <space>ic :setlocal invcursorline cursorline?<cr>
+nnoremap <space>iw :setlocal invwrap wrap?<cr>
+nnoremap <space>il :setlocal invlist list?<cr>
 
 " show colorcolumn at textwidth by default
 set colorcolumn=+0
