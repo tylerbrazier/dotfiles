@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Make symlinks in home to dotfiles.
+# Makes symlinks in home to dotfiles.
 # Any -i or -f given to the script will be passed along to each underlying ln
 # command for interactive overwrite (-i) or force overwrite (-f).
 

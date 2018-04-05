@@ -1,6 +1,10 @@
 #!/bin/bash
-set -e
 
+# Enables services for Arch linux packages that I use.
+# The list will be opened in your editor so you can uncomment the services
+# you want to be enabled.
+
+set -e
 test $(id -u) -ne 0 && echo 'Run as root' >&2 && exit 1
 
 tmpfile="$(mktemp)"

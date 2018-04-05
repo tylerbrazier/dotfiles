@@ -1,4 +1,6 @@
 #!/bin/bash
+
+# Gnome is configured via gsettings rather than a configuration file
 # https://wiki.archlinux.org/index.php/GNOME#Configuration
 
 # turn on numlock on login

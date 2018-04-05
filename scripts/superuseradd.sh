@@ -1,6 +1,9 @@
 #!/bin/bash
-set -e
 
+# Adds a new user to the wheel group and modifies /etc/sudoers.d/custom
+# allowing members of wheel to run sudo without a password (for convenience).
+
+set -e
 test $(id -u) -ne 0 && echo 'Run as root' >&2 && exit 1
 test ! -d /etc/sudoers.d && echo 'Make sure sudo is installed' >&2 && exit 1
 

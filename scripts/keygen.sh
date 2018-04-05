@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
-# Generate a ssh keypair for this host and offer to upload the
+# Generates a local ssh keypair and offers to upload the
 # public key to github, digital ocean, and other servers.
 #
 # It's better to generate a key pair per machine rather than
@@ -9,6 +9,7 @@
 #   your private key should ALWAYS be kept secret!
 # - having one set of keys per machine means they can be
 #   revoked individually (what if your laptop gets stolen?)
+#
 # https://wiki.archlinux.org/index.php/Secure_Shell
 
 # make sure ssh and curl are installed
