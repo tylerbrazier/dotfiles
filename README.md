@@ -33,6 +33,13 @@ cd dotfiles/scripts
 ./packages.termux.sh
 ./mklinks.sh -f
 ./keygen.sh
+
+# for push access
+git remote set-url origin git@github.com:tylerbrazier/dotfiles
+
+# to disable the annoying vibrate bell (https://termux.com/configuration.html)
+mkdir -p ~/.termux
+echo bell-character=ignore > ~/.termux/termux.properties
 ```
 Pinch to zoom, `Volume Down` for ctrl, long press for copy/paste/help menu.
 
