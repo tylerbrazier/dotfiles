@@ -4,9 +4,10 @@
 " The script defines a :Plugs command that clones (or updates) repos listed
 " in s:plugins below. These will be kept in opt/ so that disabling or
 " removing them doesn't require deleting the whole plugin from the file
-" system. This means that each plugin will need to be enabled manually with
-" :packadd.
-
+" system. This also means they will need to be enabled manually with :packadd.
+"
+" Some lines in here are preceded with :silent! so vim doesn't startup with
+" errors if plugins haven't been installed.
 let s:plugins = [
       \ 'ctrlpvim/ctrlp.vim',
       \ 'justinmk/vim-dirvish',
@@ -20,18 +21,17 @@ let s:plugins = [
       \ 'pangloss/vim-javascript',
       \ 'gcmt/taboo.vim',
       \]
-" enable plugins with :packadd (not necessary for colorschemes)
-" :help pack-add
-packadd ctrlp.vim
-packadd vim-dirvish
-packadd vim-surround
-packadd vim-commentary
-packadd vim-repeat
-packadd vim-gitgutter
-packadd vim-bracepair
-packadd vim-tagpair
-packadd vim-javascript
-packadd taboo.vim
+" enable plugins (not necessary for colorschemes) :help pack-add
+silent! packadd ctrlp.vim
+silent! packadd vim-dirvish
+silent! packadd vim-surround
+silent! packadd vim-commentary
+silent! packadd vim-repeat
+silent! packadd vim-gitgutter
+silent! packadd vim-bracepair
+silent! packadd vim-tagpair
+silent! packadd vim-javascript
+silent! packadd taboo.vim
 
 command! Plugs call <sid>plugs()
 
@@ -63,5 +63,4 @@ nnoremap <space>a :GitGutterStageHunk<cr>
 nnoremap <space>d :GitGutterPreviewHunk<cr>
 nnoremap <space>u :GitGutterUndoHunk<cr>
 
-" silent in case the plugin hasn't been installed yet
 silent! colorscheme flintstone
