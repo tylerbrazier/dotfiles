@@ -15,6 +15,7 @@ cat >"$tmpfile" <<PACKAGES
 #curl
 #grep  #for color output
 #openssh
+#bash-completion
 PACKAGES
 
 # edit the list before installing
