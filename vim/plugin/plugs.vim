@@ -47,6 +47,7 @@ function! s:plugs()
     endif
     echo plugin.': '.system(cmd)
   endfor
+  helptags ALL
 endfunction
 
 
