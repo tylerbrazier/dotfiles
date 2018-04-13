@@ -146,7 +146,7 @@ nnoremap <space><cr> :R <up>
 
 " simple alternative to fugitive.vim
 nnoremap <space>rb :tab .R git blame %<cr>
-nnoremap <space>rl :tab R git log -p -10 %
+nnoremap <space>rl :tab R git log -p --follow -10 %
 nnoremap <space>rs :tab R git show <c-r>=expand('<cword>')<cr>
 
 augroup vimrc
