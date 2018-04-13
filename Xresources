@@ -10,7 +10,7 @@
 ! https://keithp.com/~keithp/render/Xft.tutorial
 URxvt.font: xft:DejaVu Sans Mono-9:style=Book
 
-! don't show the scrollbar
+! no scrollbar
 URxvt.scrollBar: false
 
 ! white foreground, black background
