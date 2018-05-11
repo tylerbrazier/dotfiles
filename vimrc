@@ -1,4 +1,4 @@
-" use two spaces instead of tabs
+" use two spaces instead of tabs by default
 set expandtab
 set tabstop=2
 set shiftwidth=0 "match tabstop
@@ -32,6 +32,9 @@ set ttimeout
 " wrap lines at word boundaries and show > on wrapped lines
 set linebreak
 set showbreak=>
+
+" show colorcolumn at textwidth by default
+set colorcolumn=+0
 
 " sensible settings and neovim defaults
 " https://github.com/tpope/vim-sensible
@@ -97,17 +100,16 @@ nnoremap <space>e :e<cr>
 
 nnoremap <space>x :new $HOME/.scratch<cr>
 
-" toggles for common options, and prints if option is on or off
-nnoremap <space>in :setlocal invnumber number?<cr>
-nnoremap <space>is :setlocal invspell spell?<cr>
-nnoremap <space>it :setlocal invexpandtab expandtab?<cr>
-nnoremap <space>ic :setlocal invcursorline cursorline?<cr>
-nnoremap <space>iw :setlocal invwrap wrap?<cr>
-nnoremap <space>il :setlocal invlist list?<cr>
-
-" show colorcolumn at textwidth by default
-set colorcolumn=+0
-nnoremap <space>c :set colorcolumn=80
+" shortcuts to toggle or set options
+nnoremap <space>on :setlocal invnumber number?<cr>
+nnoremap <space>os :setlocal invspell spell?<cr>
+nnoremap <space>ow :setlocal invwrap wrap?<cr>
+nnoremap <space>ol :setlocal invlist list?<cr>
+nnoremap <space>oet :setlocal invexpandtab expandtab?<cr>
+nnoremap <space>ocl :setlocal invcursorline cursorline?<cr>
+nnoremap <space>occ :setlocal colorcolumn=<c-r>=&cc<cr>
+nnoremap <space>otw :setlocal textwidth=<c-r>=&tw<cr>
+nnoremap <space>ots :setlocal tabstop=<c-r>=&ts<cr>
 
 " auto write on :make (and some other commands)
 set autowrite
