@@ -138,6 +138,11 @@ nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
 
+nnoremap <space>a :!git add -A <up>
+nnoremap <space>c :!git commit -v <up>
+nnoremap <space>u :!git push -u <up>
+nnoremap <space>d :!git pull --rebase --autostash <up>
+
 " Make a command :R similar to :r! but dumps output into a new scratch window.
 " Prepend a count to start the cursor on that line number.
 " Allows modifiers like :tab and :vert to control how the window opens.

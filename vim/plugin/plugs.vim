@@ -59,9 +59,4 @@ set updatetime=100
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
-"shortcuts to add/diff/undo changes (faster typing than the default \h maps)
-nnoremap <space>a :GitGutterStageHunk<cr>
-nnoremap <space>d :GitGutterPreviewHunk<cr>
-nnoremap <space>u :GitGutterUndoHunk<cr>
-
 silent! colorscheme flintstone
