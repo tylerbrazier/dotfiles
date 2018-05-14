@@ -16,7 +16,7 @@
 
 [alias]
   s = status
-  a = add --all     # -p to add changes interactively
+  a = add -A        # -p to add changes interactively
   c = commit -v     # --amend to fix last commit
   co = checkout     # -b <new-branch> to create and checkout a new branch
   cl = clean -f -d  # -x to also remove gitignored stuff
@@ -33,7 +33,7 @@
   sp = stash pop
   sa = stash apply
   sd = stash drop
-  up = push --set-upstream
+  up = push -u
   down = pull --rebase --autostash
   out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
   bent = "!git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d"
