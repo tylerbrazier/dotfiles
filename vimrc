@@ -98,8 +98,6 @@ nnoremap <space>w :w<cr>
 nnoremap <space>q :q<cr>
 nnoremap <space>e :e<cr>
 
-nnoremap <space>x :new $HOME/.scratch<cr>
-
 " shortcuts to toggle or set options
 nnoremap <space>on :setlocal invnumber number?<cr>
 nnoremap <space>os :setlocal invspell spell?<cr>
@@ -111,9 +109,14 @@ nnoremap <space>occ :setlocal colorcolumn=<c-r>=&cc<cr>
 nnoremap <space>otw :setlocal textwidth=<c-r>=&tw<cr>
 nnoremap <space>ots :setlocal tabstop=<c-r>=&ts<cr>
 
-" auto write on :make (and some other commands)
-set autowrite
-nnoremap <space>m :make <up>
+nnoremap <space>a :!git add -A <up>
+nnoremap <space>c :!git commit -v <up>
+nnoremap <space>u :!git push -u <up>
+nnoremap <space>d :!git pull --rebase --autostash <up>
+
+" git status: show changed files in the quickfix list
+set errorformat+=%m\ %f
+nnoremap <space>s :cexpr system('git status --porcelain')<cr>
 
 " grep in tracked files, works on visual selection
 " NOTE grep is relative to :pwd. Start vim in project root or use :cd
@@ -121,27 +124,29 @@ set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
 nnoremap <space>g :grep<space>
 vnoremap <space>g "xy:split\|grep -F '<c-r>x'
 
-" git status: show changed files in the quickfix list
-set errorformat+=%m\ %f
-nnoremap <space>s :cexpr system('git status --porcelain')<cr>
+" auto write on :make (and some other commands)
+set autowrite
+nnoremap <space>m :make <up>
 
+" easier quickfix navigation
 nnoremap <space>n :cn<cr>
 nnoremap <space>p :cp<cr>
 
+" new tab shortcut opens it at the end of the list
 nnoremap <space>t :$tabnew<cr>
 
-" easier tab and window navigation
+" easier tab navigation
 nnoremap <space><tab> gt
 nnoremap <space><s-tab> gT
+
+" shortcut to open a scratch file in a new window
+nnoremap <space>x :new $HOME/.scratch<cr>
+
+" easier window navigation
 nnoremap <space>h <c-w>h
 nnoremap <space>j <c-w>j
 nnoremap <space>k <c-w>k
 nnoremap <space>l <c-w>l
-
-nnoremap <space>a :!git add -A <up>
-nnoremap <space>c :!git commit -v <up>
-nnoremap <space>u :!git push -u <up>
-nnoremap <space>d :!git pull --rebase --autostash <up>
 
 " Make a command :R similar to :r! but dumps output into a new scratch window.
 " Prepend a count to start the cursor on that line number.
@@ -151,7 +156,6 @@ command! -count -nargs=+ -complete=file R
 
 nnoremap <space><cr> :R <up>
 
-" simple alternative to fugitive.vim
 nnoremap <space>rb :tab .R git blame %<cr>
 nnoremap <space>rl :tab R git log -p -10 --follow %
 nnoremap <space>rs :R git show <c-r>=expand('<cword>')<cr>
