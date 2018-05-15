@@ -159,7 +159,7 @@ nnoremap <space><cr> :R <up>
 nnoremap <space>rb :tab .R git blame %<cr>
 nnoremap <space>rl :tab R git log -p -10 --follow %
 nnoremap <space>rs :R git show <c-r>=expand('<cword>')<cr>
-nnoremap <space>rd :R git diff<space>
+nnoremap <space>rd :R git diff <up>
 
 augroup vimrc
   "reset the group so that if vimrc is sourced again autocmds don't run twice
