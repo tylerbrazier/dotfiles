@@ -2,22 +2,22 @@
 Personal configuration files and scripts
 
 ## Arch linux
-What to run after a fresh [installation][1]:
+What to run after a fresh [installation][1] (as root):
 ```
-systemctl start dhcpcd  #start wired internet
+systemctl start dhcpcd  # start wired internet
 pacman -Sy git sudo
 git clone https://github.com/tylerbrazier/dotfiles
 
 cd dotfiles/scripts
-./packages.arch.sh  #install packages
-./services.sh       #enable services
-./superuseradd.sh   #add a user who can sudo
+./packages.arch.sh  # install packages
+./services.sh       # enable services
+./superuseradd.sh   # add a user who can sudo
 
 su <new user>
-./keygen.sh  #generate ssh key pair
+./keygen.sh  # generate ssh key pair
 git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
-~/dotfiles/scripts/mklinks.sh -f  #makes symlinks in home to dotfiles
-~/dotfiles/scripts/gnome.sh  #if gnome was installed
+~/dotfiles/scripts/mklinks.sh -f  # makes symlinks in home to dotfiles
+~/dotfiles/scripts/gnome.sh  # if gnome was installed
 ```
 
 ## Termux
