@@ -36,6 +36,9 @@ set showbreak=>
 " show colorcolumn at textwidth by default
 set colorcolumn=+0
 
+" bash-like command completion
+set wildmode=list:longest
+
 " sensible settings and neovim defaults
 " https://github.com/tpope/vim-sensible
 " https://neovim.io/doc/user/vim_diff.html
