@@ -3,44 +3,43 @@ Personal configuration files and scripts
 
 ## Arch linux
 What to run after a fresh [installation][1] (as root):
-```
-systemctl start dhcpcd  # start wired internet
-pacman -Sy git sudo
-git clone https://github.com/tylerbrazier/dotfiles
 
-cd dotfiles/scripts
-./packages.arch.sh  # install packages
-./services.sh       # enable services
-./superuseradd.sh   # add a user who can sudo
+    systemctl start dhcpcd  # start wired internet
+    pacman -Sy git sudo
+    git clone https://github.com/tylerbrazier/dotfiles
 
-su <new user>
-./keygen.sh  # generate ssh key pair
-git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
-~/dotfiles/scripts/mklinks.sh -f  # makes symlinks in home to dotfiles
-~/dotfiles/scripts/gnome.sh  # if gnome was installed
-```
+    cd dotfiles/scripts
+    ./packages.arch.sh  # install packages
+    ./services.sh       # enable services
+    ./superuseradd.sh   # add a user who can sudo
+
+    su <new user>
+    ./keygen.sh  # generate ssh key pair
+    git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
+    ~/dotfiles/scripts/mklinks.sh -f  # makes symlinks in home to dotfiles
+    ~/dotfiles/scripts/gnome.sh  # if gnome was installed
 
 ## Termux
 After [installing][2], press `Volume Up + q` for extra keys row, then run:
-```
-# for sdcard access (https://wiki.termux.com/wiki/Termux-setup-storage)
-termux-setup-storage
 
-pkg install git
-git clone https://github.com/tylerbrazier/dotfiles
+    # for sdcard access (https://wiki.termux.com/wiki/Termux-setup-storage)
+    termux-setup-storage
 
-cd dotfiles/scripts
-./packages.termux.sh
-./mklinks.sh -f
-./keygen.sh
+    pkg install git
+    git clone https://github.com/tylerbrazier/dotfiles
 
-# for push access
-git remote set-url origin git@github.com:tylerbrazier/dotfiles
+    cd dotfiles/scripts
+    ./packages.termux.sh
+    ./mklinks.sh -f
+    ./keygen.sh
 
-# to disable the annoying vibrate bell (https://termux.com/configuration.html)
-mkdir -p ~/.termux
-echo bell-character=ignore > ~/.termux/termux.properties
-```
+    # for push access
+    git remote set-url origin git@github.com:tylerbrazier/dotfiles
+
+    # to disable the annoying vibrate bell (https://termux.com/configuration.html)
+    mkdir -p ~/.termux
+    echo bell-character=ignore > ~/.termux/termux.properties
+
 Pinch to zoom, `Volume Down` for ctrl, long press for copy/paste/help menu.
 
 [1]: https://wiki.archlinux.org/index.php/installation_guide
