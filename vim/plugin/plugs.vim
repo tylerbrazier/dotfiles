@@ -46,8 +46,11 @@ function! s:plugs()
       let cmd = join(['git clone --depth 1', url, path])
     endif
     echo plugin.': '.system(cmd)
+
+    if isdirectory(path.'/doc')
+      execute 'helptags' path.'/doc'
+    endif
   endfor
-  helptags ALL
 endfunction
 
 
