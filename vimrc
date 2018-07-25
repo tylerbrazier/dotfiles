@@ -160,7 +160,7 @@ command! -count -nargs=+ -complete=file R
 nnoremap <space><cr> :R <up>
 
 nnoremap <space>rb :tab .R git blame %<cr>
-nnoremap <space>rl :tab R git log -p -10 --follow %
+nnoremap <space>rl :tab R git log --stat -p -9 %
 nnoremap <space>rs :R git show <c-r>=expand('<cword>')<cr>
 nnoremap <space>rd :R git diff <up>
 
