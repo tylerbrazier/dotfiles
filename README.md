@@ -19,8 +19,17 @@ What to run after a fresh [installation][1] (as root):
     ~/dotfiles/scripts/mklinks.sh -f  # makes symlinks in home to dotfiles
     ~/dotfiles/scripts/gnome.sh  # if gnome was installed
 
-## Termux
-After [installing][2], press `Volume Up + q` for extra keys row, then run:
+## [Termux][2]
+Pinch to zoom, `VolumeDown` for `Ctrl`, long press for copy/paste/help menu.
+
+    VolumeUp + e for Escape
+    VolumeUp + t for Tab
+    VolumeUp + q to toggle extra keyboard buttons
+
+Swipe left on the extra buttons row for text input, to be used for pasting and
+swipe typing. Unless I need the text input, I usually hide the extra buttons
+because they take up too much space, and use an index finger to hit the volume
+keys.
 
     # for sdcard access (https://wiki.termux.com/wiki/Termux-setup-storage)
     termux-setup-storage
@@ -39,8 +48,6 @@ After [installing][2], press `Volume Up + q` for extra keys row, then run:
     # to disable the annoying vibrate bell (https://termux.com/configuration.html)
     mkdir -p ~/.termux
     echo bell-character=ignore > ~/.termux/termux.properties
-
-Pinch to zoom, `Volume Down` for ctrl, long press for copy/paste/help menu.
 
 [1]: https://wiki.archlinux.org/index.php/installation_guide
 [2]: https://play.google.com/store/apps/details?id=com.termux&hl=en
