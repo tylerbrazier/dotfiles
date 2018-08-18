@@ -22,6 +22,7 @@ let s:plugins = [
       \ 'gcmt/taboo.vim',
       \]
 " enable plugins (not necessary for colorschemes) :help pack-add
+" silent to suppress startup errors when plugins haven't been installed yet
 silent! packadd ctrlp.vim
 silent! packadd vim-dirvish
 silent! packadd vim-surround
