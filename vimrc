@@ -36,6 +36,9 @@ set showbreak=>
 " show colorcolumn at textwidth by default
 set colorcolumn=+0
 
+" don't wrap search at end of file because I tend to lose context
+set nowrapscan
+
 " bash-like command completion
 set wildmode=list:longest
 
