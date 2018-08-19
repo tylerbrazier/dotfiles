@@ -20,6 +20,7 @@ let s:plugins = [
       \ 'tylerbrazier/vim-tagpair',
       \ 'pangloss/vim-javascript',
       \ 'gcmt/taboo.vim',
+      \ 'editorconfig/editorconfig-vim',
       \]
 " enable plugins (not necessary for colorschemes) :help pack-add
 " silent to suppress startup errors when plugins haven't been installed yet
@@ -33,6 +34,7 @@ silent! packadd vim-bracepair
 silent! packadd vim-tagpair
 silent! packadd vim-javascript
 silent! packadd taboo.vim
+silent! packadd editorconfig-vim
 
 command! Plugs call <sid>plugs()
 

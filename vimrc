@@ -1,8 +1,3 @@
-" use two spaces instead of tabs by default
-set expandtab
-set tabstop=2
-set shiftwidth=0 "match tabstop
-
 " don't make unnecessary files
 set nobackup
 set noswapfile
