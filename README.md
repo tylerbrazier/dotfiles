@@ -2,7 +2,7 @@
 Personal configuration files and scripts
 
 ## Arch linux
-What to run after a fresh [installation][1] (as root):
+What to run after a fresh [installation][1] (as root in `~`):
 
     systemctl start dhcpcd  # start wired internet
     pacman -Sy git sudo
@@ -13,13 +13,29 @@ What to run after a fresh [installation][1] (as root):
     ./services.sh       # enable services
     ./superuseradd.sh   # add a user who can sudo
 
-    su <new user>
+    su tyler  # or whatever you named your superuser
     ./keygen.sh  # generate ssh key pair
     git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
     ~/dotfiles/scripts/mklinks.sh -f  # makes symlinks in home to dotfiles
     ~/dotfiles/scripts/gnome.sh  # if gnome was installed
 
-## [Termux][2]
+## Ubuntu server
+What to run after creating a droplet on [Digital Ocean][2] (as root in `~`):
+
+    git clone https://github.com/tylerbrazier/dotfiles
+    cd dotfiles/scripts
+    ./superuseradd.sh   # add a user who can sudo
+
+    su tyler  # or whatever you named your superuser
+    ./keygen.sh  # generate ssh key pair
+    git clone git@github.com:tylerbrazier/dotfiles ~/dotfiles
+    ~/dotfiles/scripts/mklinks.sh -f  # makes symlinks in home to dotfiles
+
+    exit  # become root again
+    cp ~/.ssh/authorized_keys /home/tyler/.ssh/authorized_keys
+    chown tyler:wheel /home/tyler/.ssh/authorized_keys
+
+## [Termux][3]
 Pinch to zoom, `VolumeDown` for `Ctrl`, long press for copy/paste/help menu.
 
     VolumeUp + e for Escape
@@ -50,4 +66,5 @@ keys.
     echo bell-character=ignore > ~/.termux/termux.properties
 
 [1]: https://wiki.archlinux.org/index.php/installation_guide
-[2]: https://play.google.com/store/apps/details?id=com.termux&hl=en
+[2]: https://www.digitalocean.com/
+[3]: https://play.google.com/store/apps/details?id=com.termux&hl=en

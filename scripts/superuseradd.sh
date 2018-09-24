@@ -11,6 +11,7 @@ read -p 'New user: ' user
 test -z "$user" && exit 1
 id "$user" >/dev/null 2>&1 && echo "$user already exists" && exit 1
 
+groupadd wheel 2>/dev/null
 useradd -m -g wheel -s /bin/bash "$user"
 passwd "$user"
 
