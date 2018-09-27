@@ -29,6 +29,7 @@ cat >"$tmpfile" <<PACKAGES
 #dconf-editor
 #nautilus
 #ttf-dejavu
+#gvfs-mtp  # for transfering files from android phone
 
 ### i3 packages (gui for machines with less resources)
 #i3-wm
