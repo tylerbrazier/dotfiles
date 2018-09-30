@@ -9,6 +9,7 @@ augroup nvimrc
   autocmd BufLeave term://* stopinsert
 augroup end
 
-nnoremap <space><cr> :split term://<up>
+nnoremap <space><cr> :split term://
+nnoremap <space><bs> :split term://<up>
 tnoremap <esc> <c-\><c-n>
 " can use <c-o> to escape from insert mode if stuck in a nested vim

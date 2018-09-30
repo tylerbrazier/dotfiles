@@ -110,6 +110,9 @@ nnoremap <space>occ :setlocal colorcolumn=<c-r>=&cc<cr>
 nnoremap <space>otw :setlocal textwidth=<c-r>=&tw<cr>
 nnoremap <space>ots :setlocal tabstop=<c-r>=&ts<cr>
 
+nnoremap <space><cr> :!
+nnoremap <space><bs> :!<up>
+
 nnoremap <space>a :!git add -A <up>
 nnoremap <space>c :!git commit -v <up>
 nnoremap <space>u :!git push -u <up>
@@ -155,7 +158,8 @@ nnoremap <space>l <c-w>l
 command! -count -nargs=+ -complete=file R
       \ exe <q-mods> 'new'|set bt=nofile|exe '0r!'<q-args>|filet detect|<count>
 
-nnoremap <space><cr> :R <up>
+nnoremap <space>r<cr> :R<space>
+nnoremap <space>r<bs> :R <up>
 
 nnoremap <space>rb :tab .R git blame %<cr>
 nnoremap <space>rl :tab R git log --stat -p -9 %
