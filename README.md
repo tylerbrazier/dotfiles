@@ -35,6 +35,24 @@ What to run after creating a droplet on [Digital Ocean][2] (as root in `~`):
     cp ~/.ssh/authorized_keys /home/tyler/.ssh/authorized_keys
     chown tyler:wheel /home/tyler/.ssh/authorized_keys
 
+    # optionally set root's password
+    passwd
+
+To enable 2 factor authentication for password logins
+
+    apt update
+    apt install libpam-google-authenticator
+    sudo -H -u tyler google-authenticator
+    # answer the questions
+
+    # add the following at the end of /etc/pam.d/sshd:
+    auth required pam_google_authenticator.so
+
+    # set the following in /etc/ssh/sshd_config:
+    ChallengeResponseAuthentication yes
+
+    systemctl restart sshd.service
+
 ## [Termux][3]
 Pinch to zoom, `VolumeDown` for `Ctrl`, long press for copy/paste/help menu.
 
