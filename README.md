@@ -53,6 +53,24 @@ To enable 2 factor authentication for password logins
 
     systemctl restart sshd.service
 
+Web server
+
+    apt install nginx
+    rm /etc/nginx/sites-enabled/default  # remove link to default welcome page
+
+    # in /etc/nginx/nginx.conf, add the following in the existing http directive
+    http {
+      server {
+        location / {
+          root /home/tyler/web;  # or wherever
+          autoindex on;  # for directory index listing
+        }
+      }
+    }
+
+    # reload conf
+    nginx -s reload
+
 ## [Termux][3]
 Pinch to zoom, `VolumeDown` for `Ctrl`, long press for copy/paste/help menu.
 
