@@ -144,6 +144,10 @@ bindsym $mod+Shift+0 move container to workspace 10
 # make brightness keys work
 bindsym XF86MonBrightnessUp exec xbacklight -inc 10
 bindsym XF86MonBrightnessDown exec xbacklight -dec 10
+# xbacklight only works for intel cards
+# for others, add scripts/backlight.sh to PATH and do something like:
+#bindsym XF86MonBrightnessUp exec sudo brightness.sh inc 10
+#bindsym XF86MonBrightnessDown exec sudo brightness.sh dec 10
 
 # make volume keys work
 bindsym XF86AudioRaiseVolume exec amixer set Master 5%+
