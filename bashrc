@@ -26,7 +26,7 @@ set_custom_ps1() {
   local jobs=$(jobs -p)
   local red='\[\e[31m\]'
   local grn='\[\e[32m\]'
-  local blu='\[\e[34m\]'
+  local blu='\[\e[1;34m\]'  # bold for better visibility on dark background
   local rst='\[\e[0m\]'  # reset
 
   # smiley or unsmiley for status of last command
