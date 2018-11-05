@@ -52,7 +52,6 @@ set_custom_ps1() {
 PROMPT_COMMAND="set_custom_ps1"
 HISTCONTROL=ignoredups
 EDITOR=vim
-MANPAGER="env MAN_PN=1 vim -M +MANPAGER -"  # :help manpager.vim
 export EDITOR
 export MANPAGER
 
