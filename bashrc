@@ -1,59 +1,36 @@
-[[ $- != *i* ]] && return  # if not running interactively, don't do anything
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
 
-stty -ixon  # disable flow control (ctrl-s won't stop the term)
-bind 'set completion-ignore-case on'
-
-alias rm='rm -rf'
-alias cp='cp -r'
-alias scp='scp -r'
-alias chown='chown -R'
-alias chmod='chmod -R'
-alias mkdir='mkdir -p'
-alias df='df -h'
-alias du='du -h --summarize'
-alias curl='curl -L'  # follow redirects
-alias grep='grep --color=auto -I'  # ignore binaries
 alias ls='ls --color=auto'
-alias ll='ls -lh'
-alias la='ls -alh'
-alias s='sudo'
+alias ll='ls -l -h'
+alias la='ls -l -h -a'
+
+alias cp='cp -r'
+alias rm='rm -r'
+alias mkdir='mkdir -p'
+
+alias grep='grep --color=auto -I'
+alias df='df -h'
+alias du='du -h'
+
+# auto ls after cd
 cd() { builtin cd "$@" && ls; }
 
-# https://wiki.archlinux.org/index.php/Bash/Prompt_customization
-# https://en.wikipedia.org/wiki/ANSI_escape_code#CSI_sequences
-set_custom_ps1() {
-  local status=$?  # status of last command; must come first
-  local jobs=$(jobs -p)
-  local red='\[\e[31m\]'
-  local grn='\[\e[32m\]'
-  local blu='\[\e[1;34m\]'  # bold for better visibility on dark background
-  local rst='\[\e[0m\]'  # reset
+# case insensitive completion
+bind 'set completion-ignore-case on'
 
-  # smiley or unsmiley for status of last command
-  [ $status -eq 0 ] && PS1="${grn}:) " || PS1="${red}:( "
+# make history navigation with arrows filter by what's already been typed
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
 
-  # current working dir
-  PS1+="${rst}\\w "
-
-  # number of stopped/background jobs if any
-  [ -n "$jobs" ] && PS1+="[$(echo "$jobs" | grep -c ^)] "
-
-  # red git branch if there are uncommitted changes, green otherwise
-  [ -n "$(git status --porcelain 2>/dev/null)" ] && PS1+="$red" || PS1+="$grn"
-  PS1+="$(git branch 2>/dev/null | grep ^* | cut -c 3- | sed 's/$/ /')"
-
-  # prompt is '#' for root, '$' for others, and blue if in ssh session
-  [ -n "$SSH_CLIENT" ] && PS1+="$blu" || PS1+="$rst"; PS1+='\$'
-
-  # reset the color
-  PS1+="${rst} "
-}
-
-PROMPT_COMMAND="set_custom_ps1"
 HISTCONTROL=ignoredups
 EDITOR=vim
-export EDITOR
-export MANPAGER
 
-# put machine-local stuff in ~/.bashrc.local
-[ ! -f ~/.bashrc.local ] || source ~/.bashrc.local
+# https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Bash
+source ~/.git-prompt.sh
+if [ $? -eq 0 ]; then
+	GIT_PS1_SHOWDIRTYSTATE=1
+	GIT_PS1_SHOWUNTRACKEDFILES=1
+	GIT_PS1_SHOWCOLORHINTS=1
+	PROMPT_COMMAND='__git_ps1 "\w" " $([[ $(jobs) ]]&&echo \\j\\040)\\\$ "'
+fi
