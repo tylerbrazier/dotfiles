@@ -1,5 +1,7 @@
 # dotfiles
-Personal configuration files and scripts
+Personal configuration files and scripts. For quick installation:
+
+    curl -L http://tylerbrazier.com/dotfiles/install.sh | bash
 
 ## Arch linux
 What to run after a fresh [installation][1] (as root in `~`):
