@@ -28,12 +28,18 @@
   r = remote -v
   rb = rebase       # -i <commit> to rebase interactively on top of <commit>
   rs = reset
+
   ss = stash save
   sl = stash list --stat  # -p to see diff
   sp = stash pop
   sa = stash apply
   sd = stash drop
+
   up = push -u
   down = pull --rebase --autostash
+
+  # deletes branch locally and on remote
   out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
+
+  # deletes all old local branches where the upstream branch has been deleted
   bent = "!git branch -vv | awk '/: gone]/{print $1}' | xargs git branch -d"
