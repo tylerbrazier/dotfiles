@@ -23,9 +23,13 @@ bind 'set completion-ignore-case on'
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
 
+# prevent ctrl-s from freezing output
+stty -ixon
+
 HISTCONTROL=ignoredups
 EDITOR=vim
 
+# Prompt shows stopped jobs (if any) and git status
 # https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Bash
 source ~/.git-prompt.sh
 if [ $? -eq 0 ]; then
