@@ -189,5 +189,11 @@ augroup vimrc
   autocmd InsertEnter * match none
 augroup end
 
+" idle delay before firing CursorHold, updating gitgutter
+set updatetime=100
+
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
 " put machine-local stuff in ~/.vimrc.local (e.g. set background)
 silent! source $HOME/.vimrc.local
