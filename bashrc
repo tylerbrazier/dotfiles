@@ -26,8 +26,9 @@ bind '"\e[B": history-search-forward'
 # prevent ctrl-s from freezing output
 stty -ixon
 
-HISTCONTROL=ignoredups
-EDITOR=vim
+# environment variables
+export HISTCONTROL=ignoredups
+export EDITOR=vim
 
 # Prompt shows stopped jobs (if any) and git status
 # https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Bash
