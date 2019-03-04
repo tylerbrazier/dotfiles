@@ -53,6 +53,12 @@ set nowrapscan
 " show all completion suggestions, like bash
 set wildmode=list:longest
 
+" idle delay before firing CursorHold (updates gitgutter right away)
+set updatetime=100
+
+" make ctrlp ignore files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+
 " make j and k work over wrapped lines
 nnoremap j gj
 nnoremap k gk
