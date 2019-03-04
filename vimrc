@@ -81,6 +81,9 @@ nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
 nnoremap <Space><CR> :!<Up>
 
+" copy current filename to system clipboard (for e.g. cli operations)
+nnoremap <Space>c :let @*=@%<Bar>let @+=@%<CR>
+
 " git status: show changed files in the quickfix list
 set errorformat+=%m\ %f
 nnoremap <Space>s :cexpr system('git status --porcelain')<CR>
