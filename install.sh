@@ -5,6 +5,7 @@ dotfiles=bash_profile,bashrc,vimrc,gitconfig,tmux.conf
 vim_plugins=(
 tpope/vim-sensible
 tpope/vim-commentary
+tpope/vim-unimpaired
 tpope/vim-surround
 tpope/vim-repeat
 ctrlpvim/ctrlp.vim
