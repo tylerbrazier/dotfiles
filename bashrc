@@ -25,6 +25,9 @@ bind 'set completion-ignore-case on'
 # completion shows suggestions on first Tab press
 bind 'set show-all-if-ambiguous on'
 
+# color the completion suggestions
+bind 'set colored-stats on'
+
 # make history navigation with arrows filter by what's already been typed
 bind '"\e[A": history-search-backward'
 bind '"\e[B": history-search-forward'
