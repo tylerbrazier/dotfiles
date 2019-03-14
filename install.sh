@@ -11,8 +11,8 @@ tpope/vim-commentary
 tpope/vim-unimpaired
 tpope/vim-surround
 tpope/vim-repeat
+tylerbrazier/vim-bracepair
 ctrlpvim/ctrlp.vim
-jiangmiao/auto-pairs
 airblade/vim-gitgutter
 pangloss/vim-javascript
 editorconfig/editorconfig-vim
