@@ -3,7 +3,7 @@
 # bail on error
 set -e
 
-dotfiles=bash_profile,bashrc,vimrc,gitconfig,tmux.conf
+dotfiles=bashrc,vimrc,gitconfig,tmux.conf
 
 vim_plugins=(
 tpope/vim-sensible
