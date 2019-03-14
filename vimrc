@@ -83,6 +83,7 @@ nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e<CR>
 nnoremap <Space>t :tabedit<CR>
+nnoremap <Space>b :ls<CR>:b
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
 nnoremap <Space><CR> :!<Up>
