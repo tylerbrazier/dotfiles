@@ -6,7 +6,7 @@ export HISTCONTROL=ignoredups
 
 alias ls='ls --color=auto'
 alias ll='ls -l -h'
-alias la='ls -l -h -a'
+alias la='ls -l -h -A'
 
 alias cp='cp -r'
 alias rm='rm -r'
