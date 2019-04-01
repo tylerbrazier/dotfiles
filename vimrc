@@ -77,13 +77,13 @@ nnoremap P P=`]
 vnoremap p pgvy
 
 " use Tab to complete words (suggest recent words first)
-inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-p>" : "\<Tab>"
+inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
-nnoremap <Space>e :e<CR>
-nnoremap <Space>t :tabedit<CR>
+nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :ls<CR>:b
+nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
 nnoremap <Space><CR> :!<Up>
