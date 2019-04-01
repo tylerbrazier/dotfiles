@@ -100,18 +100,18 @@ set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
 nnoremap <Space>g :grep<Space>
 
 augroup vimrc
-  autocmd!
+	autocmd!
 
-  autocmd FileType gitcommit setlocal spell
-  autocmd FileType qf setlocal nowrap colorcolumn=0
+	autocmd FileType gitcommit setlocal spell
+	autocmd FileType qf setlocal nowrap colorcolumn=0
 
-  " auto open the quickfix window for commands that use it
-  autocmd QuickFixCmdPost * botright cwindow
+	" auto open the quickfix window for commands that use it
+	autocmd QuickFixCmdPost * botright cwindow
 
-  " auto close the quickfix window if it is the last one open
-  autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | endif
+	" auto close the quickfix window if it is the last one open
+	autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | endif
 
-  " highlight trailing whitespace in normal mode
-  autocmd InsertLeave * match Error /\s\+$/
-  autocmd InsertEnter * match none
+	" highlight trailing whitespace in normal mode
+	autocmd InsertLeave * match Error /\s\+$/
+	autocmd InsertEnter * match none
 augroup end
