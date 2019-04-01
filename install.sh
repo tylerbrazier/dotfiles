@@ -12,6 +12,7 @@ tpope/vim-unimpaired
 tpope/vim-surround
 tpope/vim-repeat
 tylerbrazier/vim-bracepair
+tylerbrazier/vim-flintstone
 ctrlpvim/ctrlp.vim
 airblade/vim-gitgutter
 pangloss/vim-javascript

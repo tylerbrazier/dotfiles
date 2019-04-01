@@ -115,3 +115,9 @@ augroup vimrc
 	autocmd InsertLeave * match Error /\s\+$/
 	autocmd InsertEnter * match none
 augroup end
+
+try
+	colorscheme flintstone
+catch
+	colorscheme slate
+endtry
