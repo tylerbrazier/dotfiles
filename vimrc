@@ -105,6 +105,9 @@ augroup vimrc
 	autocmd FileType gitcommit setlocal spell
 	autocmd FileType qf setlocal nowrap colorcolumn=0
 
+	" don't insert comment chars when using o or O from a commented line
+	autocmd FileType * setlocal formatoptions-=o
+
 	" auto open the quickfix window for commands that use it
 	autocmd QuickFixCmdPost * botright cwindow
 
@@ -114,7 +117,7 @@ augroup vimrc
 	" highlight trailing whitespace in normal mode
 	autocmd InsertLeave * match Error /\s\+$/
 	autocmd InsertEnter * match none
-augroup end
+augroup END
 
 try
 	colorscheme flintstone
