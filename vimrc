@@ -47,9 +47,6 @@ set linebreak showbreak=>
 " show colorcolumn at textwidth
 set colorcolumn=+0
 
-" helps not to lose context when searching
-set nowrapscan
-
 " show all completion suggestions, like bash
 set wildmode=list:longest
 
