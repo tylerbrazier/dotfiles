@@ -67,8 +67,8 @@ nnoremap Y y$
 nnoremap ' `
 
 " auto indent on put
-nnoremap p p=`]
-nnoremap P P=`]
+nnoremap p p=`]`]
+nnoremap P P=`]`]
 
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
