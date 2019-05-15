@@ -85,11 +85,14 @@ nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
 nnoremap <Space><CR> :!<Up>
 
+" git log in new tab (# will refer to current file)
+nnoremap <Space>l :tabe\|set bt=nofile ft=git\|0r!git log --reverse -p #
+
 " git status: show changed files in the quickfix list
 set errorformat+=%m\ %f
 nnoremap <Space>s :cexpr system('git status --porcelain')<CR>
 
-" grep tracked files (relative to :pwd)
+" git grep tracked files (relative to :pwd)
 set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
 nnoremap <Space>g :grep<Space>
 
