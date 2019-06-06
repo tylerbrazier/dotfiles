@@ -18,7 +18,6 @@ set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
 set mouse=a
 set nrformats-=octal
 set ruler
-set scrolloff=5 sidescrolloff=5
 set showcmd
 set sidescroll=1
 set smarttab
