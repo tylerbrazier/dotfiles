@@ -83,6 +83,7 @@ nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
 nnoremap <Space><CR> :!<Up>
+nnoremap <Space>f zfi{
 
 " git log in new tab (# will refer to current file)
 nnoremap <Space>l :tabe\|set bt=nofile ft=git\|0r!git log --reverse -p #
