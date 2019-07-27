@@ -93,7 +93,8 @@ set errorformat+=%m\ %f
 nnoremap <Space>s :cexpr system('git status --porcelain')<CR>
 
 " git grep tracked files (relative to :pwd)
-set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n
+set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n\ --column
+set grepformat=%f:%l:%c:%m
 nnoremap <Space>g :grep<Space>
 
 augroup vimrc
