@@ -3,7 +3,7 @@
 # bail on error
 set -e
 
-dotfiles=bashrc,vimrc,gitconfig,tmux.conf
+dotfiles=bashrc,vimrc,gitconfig,tmux.conf,config/nvim/init.vim
 
 vim_plugins=(
 tpope/vim-sensible
@@ -20,7 +20,7 @@ editorconfig/editorconfig-vim
 gcmt/taboo.vim
 )
 
-curl -L https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{$dotfiles} -o ~/.#1
+curl -L --create-dirs https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{$dotfiles} -o ~/.#1
 
 # git-prompt.sh is used by bashrc
 curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
