@@ -65,15 +65,15 @@ nnoremap Y y$
 " ' will jump to marked line and column
 nnoremap ' `
 
-" auto indent on put
-nnoremap p p=`]`]
-nnoremap P P=`]`]
-
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
 " use Tab to complete words (suggest recent words first)
 inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
+
+" x to operate on previously edited text (:help omap-info, :help `[)
+" e.g. =x to fix indent after put, g~x to capitalize last inserted text
+onoremap x :<C-U>normal! `[v`]<CR>
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
