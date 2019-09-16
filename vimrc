@@ -49,6 +49,9 @@ set colorcolumn=+0
 " show all completion suggestions, like bash
 set wildmode=list:longest
 
+" don't time out while typing a mapping
+set notimeout
+
 " idle delay before firing CursorHold (updates gitgutter right away)
 set updatetime=100
 
