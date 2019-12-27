@@ -40,6 +40,9 @@ set smartcase "case sensitive if search contains a capital letter
 " stop shitting out unnecessary files
 set nobackup noswapfile
 
+" sensible window splitting
+set splitbelow splitright
+
 " wrap lines at word boundaries and show > on wrapped lines
 set linebreak showbreak=>
 
