@@ -16,6 +16,8 @@ alias grep='grep --color=auto -I'
 alias df='df -h'
 alias du='du -h'
 
+alias x='tar -zxvf'
+
 # auto ls after cd
 cd() { builtin cd "$@" && ls; }
 
