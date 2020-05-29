@@ -92,9 +92,9 @@ nnoremap <Space><CR> :!
 nnoremap <Space>f zfi{
 
 " git log in new tab (# will refer to current file)
-nnoremap <Space>l :tabe\|set bt=nofile ft=git\|0r!git log --reverse -p #
+nnoremap <Space>l :tabe\|set bt=nofile ft=git\|0r!git log --reverse -p --full-diff #
 
-" git status: show changed files in the quickfix list
+" git status of changed files in the quickfix list
 set errorformat+=%m\ %f
 nnoremap <Space>s :cexpr system('git status --porcelain')<CR>
 
