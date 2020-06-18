@@ -90,7 +90,7 @@ augroup vimrc
 	autocmd!
 
 	autocmd FileType gitcommit setlocal spell
-	autocmd FileType qf setlocal nowrap colorcolumn=0
+	autocmd FileType qf setlocal nowrap colorcolumn=0 scrolloff=0
 
 	" don't insert comment chars when using o or O from a commented line
 	autocmd FileType * setlocal formatoptions-=o
