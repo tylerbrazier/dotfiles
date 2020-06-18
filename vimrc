@@ -4,6 +4,9 @@ source $VIMRUNTIME/defaults.vim
 " use the system clipboard for yank, delete, change, and put operations
 set clipboard=unnamed,unnamedplus
 
+" mouse dragging in tmux doesn't work without this
+set ttymouse=xterm2
+
 " background color detection doesn't work very well so set it manually
 set bg=dark
 
