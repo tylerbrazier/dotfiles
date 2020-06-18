@@ -1,46 +1,26 @@
-" common settings (defaults.vim, sensible, neovim defaults)
-syntax enable
-filetype plugin indent on
-set autoindent
-set autoread
-set background=dark
-set backspace=indent,eol,start
-set belloff=all
-set complete-=i
-set display+=lastline
-set encoding=utf-8
-set formatoptions+=j
-set history=1000
-set hlsearch
-set incsearch
-set laststatus=2
-set listchars=tab:>\ ,trail:-,extends:>,precedes:<,nbsp:+
-set mouse=a
-set nrformats-=octal
-set ruler
-set showcmd
-set sidescroll=1
-set smarttab
-set tabpagemax=50
-set tags=./tags;,tags
-set ttimeout
-set ttimeoutlen=100
-set wildmenu
-
-" write a file when leaving it
-set autowriteall
+" load default settings (see also sensible.vim and other installed plugins)
+source $VIMRUNTIME/defaults.vim
 
 " use the system clipboard for yank, delete, change, and put operations
 set clipboard=unnamed,unnamedplus
+
+" background color detection doesn't work very well so set it manually
+set bg=dark
+
+" highlight search matches (sensible.vim binds ctrl-l to clear them)
+set hlsearch
+
+" write unsaved changes when leaving a file
+set autowriteall
 
 " case insensitive search and completion
 set ignorecase wildignorecase infercase
 set smartcase "case sensitive if search contains a capital letter
 
-" stop shitting out unnecessary files
+" don't make backup~ and .swp files
 set nobackup noswapfile
 
-" sensible window splitting
+" right to left, top to bottom window splitting; consistent with tmux
 set splitbelow splitright
 
 " wrap lines at word boundaries and show > on wrapped lines
