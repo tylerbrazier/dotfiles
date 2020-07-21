@@ -29,6 +29,9 @@ set splitbelow splitright
 " wrap lines at word boundaries and show > on wrapped lines
 set linebreak showbreak=>
 
+" fold code by indentation; all folds start open
+set foldmethod=indent foldlevelstart=99
+
 " show colorcolumn at textwidth
 set colorcolumn=+0
 
@@ -72,7 +75,6 @@ nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
 nnoremap <Space><CR> :!
-nnoremap <Space>f zfi{
 
 " git log in new tab (# will refer to current file)
 nnoremap <Space>l :tabe\|set bt=nofile ft=git\|0r!git log --reverse -p --full-diff #
