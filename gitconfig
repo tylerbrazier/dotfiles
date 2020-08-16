@@ -11,6 +11,9 @@
 [push]
 	default = simple
 
+[pull]
+	ff = only
+
 [blame]
 	date = short
 
