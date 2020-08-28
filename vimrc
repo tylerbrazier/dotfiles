@@ -41,8 +41,8 @@ set wildmode=list:longest
 " don't time out while typing a mapping
 set notimeout
 
-" idle delay before firing CursorHold (updates gitgutter right away)
-set updatetime=100
+" idle delay before firing CursorHold (updating gitgutter)
+set updatetime=1000
 
 " make ctrlp ignore files in .gitignore
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
