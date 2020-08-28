@@ -77,10 +77,10 @@ nnoremap <Space>b :ls<CR>:b
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
-nnoremap <Space><CR> :!
+nnoremap <Space><CR> :term<Space>
 
-" git log in new tab (# will refer to current file)
-nnoremap <Space>l :tabe\|set bt=nofile ft=git\|0r!git log --reverse -p --full-diff #
+" git log (% refers to the current file)
+nnoremap <Space>l :term git --no-pager log --stat -p --full-diff %
 
 " git status of changed files in the quickfix list
 set errorformat+=%m\ %f
