@@ -77,6 +77,7 @@ nnoremap <Space>b :ls<CR>:b
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>m :make <Up>
+nnoremap <Space>; :<Up><CR>
 nnoremap <Space><CR> :term<Space>
 
 " git log (% refers to the current file)
