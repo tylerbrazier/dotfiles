@@ -44,9 +44,6 @@ set notimeout
 " idle delay before firing CursorHold (updating gitgutter)
 set updatetime=1000
 
-" make ctrlp ignore files in .gitignore
-let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
-
 " refresh gitgutter when resuming from suspend
 nnoremap <silent> <C-Z> <C-Z>:silent! GitGutterAll<CR>
 
@@ -82,6 +79,10 @@ nnoremap <Space><CR> :term<Space>
 
 " git log (% refers to the current file)
 nnoremap <Space>l :term git --no-pager log --stat -p --full-diff %
+
+" find files in git tracked directories
+let &path = ',,' . join(systemlist('git ls-tree -rd --name-only HEAD'), ',')
+nnoremap <Space>f :find<Space>
 
 " git status of changed files in the quickfix list
 set errorformat+=%m\ %f

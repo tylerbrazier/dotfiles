@@ -11,7 +11,6 @@ tpope/vim-commentary
 tpope/vim-surround
 tpope/vim-repeat
 tylerbrazier/vim-flintstone
-ctrlpvim/ctrlp.vim
 airblade/vim-gitgutter
 pangloss/vim-javascript
 editorconfig/editorconfig-vim
