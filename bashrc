@@ -37,12 +37,11 @@ bind '"\e[B": history-search-forward'
 # prevent ctrl-s from freezing output
 stty -ixon
 
-# Prompt shows stopped jobs (if any) and git status
-# https://git-scm.com/book/en/v2/Appendix-A%3A-Git-in-Other-Environments-Git-in-Bash
-source ~/.git-prompt.sh
-if [ $? -eq 0 ]; then
-	GIT_PS1_SHOWDIRTYSTATE=1
-	GIT_PS1_SHOWUNTRACKEDFILES=1
-	GIT_PS1_SHOWCOLORHINTS=1
-	PROMPT_COMMAND='__git_ps1 "\w" " $([[ $(jobs) ]]&&echo \\j\\040)\\\$ "'
-fi
+# prompt shows cwd, git branch (red if dirty, green otherwise), and stopped jobs
+# https://wiki.archlinux.org/index.php/Bash/Prompt_customization
+PS1='\w '
+PS1+='\[$([[ $(git status -s 2>/dev/null) ]] && tput setaf 1 || tput setaf 2)\]'
+PS1+='$(git branch 2>/dev/null | sed -e "/^[^*]/d" -e "s/^* \(.*\)/\1 /")'
+PS1+='\[$(tput sgr0)\]'
+PS1+='$([[ $(jobs) ]] && printf "\j ")'
+PS1+='\$ '

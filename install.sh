@@ -19,9 +19,6 @@ gcmt/taboo.vim
 
 curl -L --create-dirs https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{$dotfiles} -o ~/.#1
 
-# git-prompt.sh is used by bashrc
-curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-
 # :help packages
 package_dir=~/.vim/pack/x/start
 mkdir -p $package_dir
