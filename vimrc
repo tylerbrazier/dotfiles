@@ -47,15 +47,8 @@ set updatetime=1000
 " refresh gitgutter when resuming from suspend
 nnoremap <silent> <C-Z> <C-Z>:silent! GitGutterAll<CR>
 
-" make j and k work over wrapped lines
-nnoremap j gj
-nnoremap k gk
-
 " capital Y should behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
-
-" ' will jump to marked line and column
-nnoremap ' `
 
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
@@ -63,17 +56,12 @@ vnoremap p pgvy
 " use Tab to complete words (suggest recent words first)
 inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
 
-" x to operate on previously edited text (:help omap-info, :help `[)
-" e.g. =x to fix indent after put, g~x to capitalize last inserted text
-onoremap x :<C-U>normal! `[v`]<CR>
-
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :ls<CR>:b
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
-nnoremap <Space>m :make <Up>
 nnoremap <Space>; :<Up><CR>
 nnoremap <Space><CR> :term<Space>
 
