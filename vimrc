@@ -57,9 +57,10 @@ nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :ls<CR>:b
 nnoremap <Space>t :tabedit<CR>
+nnoremap <Space>n :cn<CR>
+nnoremap <Space>p :cp<CR>
 nnoremap <Space>h :nohlsearch<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
-nnoremap <Space>; :<Up><CR>
 nnoremap <Space><CR> :term<Space>
 
 " git log (% refers to the current file)
