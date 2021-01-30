@@ -6,7 +6,6 @@ set -e
 dotfiles=bashrc,bash_profile,tmux.conf,gitconfig,vimrc
 
 vim_plugins=(
-tpope/vim-sensible
 tpope/vim-commentary
 tpope/vim-surround
 tpope/vim-repeat

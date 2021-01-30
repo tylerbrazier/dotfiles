@@ -1,45 +1,41 @@
-" load default settings (see also sensible.vim and other installed plugins)
+" include default settings
 source $VIMRUNTIME/defaults.vim
 
-" use the system clipboard for yank, delete, change, and put operations
+set autoread
+set autowriteall
+set autoindent
+set smarttab
+set hlsearch
+set notimeout
+set laststatus=2      " always show status line
+set formatoptions+=j  " delete comment characters when joining comment lines
+set ttymouse=xterm2   " mouse dragging in tmux doesn't work without this
+set bg=dark           " background color detection doesn't work very well
+set colorcolumn=+0    " show colorcolumn at textwidth
+set wildmode=list:longest  " show all completion suggestions, like bash
 set clipboard=unnamed,unnamedplus
 
-" mouse dragging in tmux doesn't work without this
-set ttymouse=xterm2
-
-" background color detection doesn't work very well so set it manually
-set bg=dark
-
-" highlight search matches (sensible.vim binds ctrl-l to clear them)
-set hlsearch
-
-" write unsaved changes when leaving a file
-set autowriteall
-
 " case insensitive search and completion
-set ignorecase wildignorecase infercase
+set ignorecase
+set wildignorecase
+set infercase
 set smartcase "case sensitive if search contains a capital letter
 
 " don't make backup~ and .swp files
-set nobackup noswapfile
+set nobackup
+set noswapfile
 
-" right to left, top to bottom window splitting; consistent with tmux
-set splitbelow splitright
+" window splitting from left to right, top to bottom
+set splitright
+set splitbelow
 
 " wrap lines at word boundaries and show > on wrapped lines
-set linebreak showbreak=>
+set linebreak
+set showbreak=>
 
-" fold code by indentation; all folds start open
-set foldmethod=indent foldlevelstart=99
-
-" show colorcolumn at textwidth
-set colorcolumn=+0
-
-" show all completion suggestions, like bash
-set wildmode=list:longest
-
-" don't time out while typing a mapping
-set notimeout
+" fold code by indentation
+set foldmethod=indent
+set foldlevelstart=99 " all folds start open
 
 " idle delay before firing CursorHold (updating gitgutter)
 set updatetime=1000
@@ -61,6 +57,7 @@ nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :ls<CR>:b
 nnoremap <Space>t :tabedit<CR>
+nnoremap <Space>h :nohlsearch<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>; :<Up><CR>
 nnoremap <Space><CR> :term<Space>
