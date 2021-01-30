@@ -63,9 +63,6 @@ nnoremap <Space>h :nohlsearch<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space><CR> :term<Space>
 
-" git log (% refers to the current file)
-nnoremap <Space>l :term git --no-pager log --stat -p --full-diff %
-
 " find files in directories tracked by git
 let &path = join(systemlist('git ls-tree -rd --name-only HEAD'), ',') . ',,'
 nnoremap <Space>f :find<Space>
