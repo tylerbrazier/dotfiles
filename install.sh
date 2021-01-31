@@ -1,11 +1,20 @@
-#/bin/bash
+#!/bin/bash
 
 # bail on error
 set -e
 
-dotfiles=bashrc,bash_profile,tmux.conf,gitconfig,vimrc
+echo '
+bashrc
+bash_profile
+tmux.conf
+gitconfig
+vimrc
+' | xargs -I {} curl https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{} -o ~/.{}
 
-vim_plugins=(
+# :help packages
+mkdir -p ~/.vim/pack/x/start
+cd ~/.vim/pack/x/start
+echo '
 tpope/vim-commentary
 tpope/vim-surround
 tpope/vim-repeat
@@ -14,20 +23,7 @@ airblade/vim-gitgutter
 pangloss/vim-javascript
 editorconfig/editorconfig-vim
 gcmt/taboo.vim
-)
+' | xargs -I {} git clone --depth 1 https://github.com/{}
 
-curl -L --create-dirs https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{$dotfiles} -o ~/.#1
-
-# :help packages
-package_dir=~/.vim/pack/x/start
-mkdir -p $package_dir
-
-for plugin in ${vim_plugins[@]}; do
-	dest=$package_dir/${plugin#*/}
-	if [ -d $dest ]; then
-		git -C $dest pull
-	else
-		git clone --depth 1 https://github.com/$plugin $dest
-	fi
-done
-echo "Run ':helptags ALL' in vim to regenerate helptags (may require sudo)"
+# To update the plugins:
+#   ls -d ~/.vim/pack/x/start/* | xargs -I {} git -C {} pull
