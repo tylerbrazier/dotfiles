@@ -13,6 +13,7 @@ set ttymouse=xterm2   " mouse dragging in tmux doesn't work without this
 set bg=dark           " background color detection doesn't work very well
 set colorcolumn=+0    " show colorcolumn at textwidth
 set wildmode=list:longest  " show all completion suggestions, like bash
+set nowildmenu  " <Up> after completion cycles thru history, not suggestions
 set clipboard=unnamed,unnamedplus
 
 " case insensitive search and completion
