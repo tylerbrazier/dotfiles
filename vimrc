@@ -56,7 +56,7 @@ inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
-nnoremap <Space>b :ls<CR>:b
+nnoremap <Space>b :ls<CR>:b<Space>
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
