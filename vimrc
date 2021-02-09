@@ -52,6 +52,7 @@ nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
 nnoremap <Space>h :nohl<CR>
+nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space><CR> :term<Space>
 
