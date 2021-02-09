@@ -34,10 +34,6 @@ set splitbelow
 set linebreak
 set showbreak=>
 
-" fold code by indentation
-set foldmethod=indent
-set foldlevelstart=99 " all folds start open
-
 " capital Y should behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
 
