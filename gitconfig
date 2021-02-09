@@ -23,7 +23,7 @@
 	c = commit -v
 	co = checkout
 	cl = clean -f -d
-	l = log --stat
+	l = log --stat -p
 	b = branch
 	d = diff
 	f = fetch --all
