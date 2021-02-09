@@ -57,6 +57,7 @@ nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :ls<CR>:b<Space>
+nnoremap <Space>s :set<Space>
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
@@ -68,11 +69,11 @@ nnoremap <Space><CR> :term<Space>
 let &path = join(systemlist('git ls-tree -rd --name-only HEAD'), ',') . ',,'
 nnoremap <Space>f :find<Space>
 
-" git status of changed files in the quickfix list
+" see changed files since the last git commit
 set errorformat+=%m\ %f
-nnoremap <Space>s :cexpr system('git status --porcelain')<CR>
+nnoremap <Space>c :cexpr system('git status --porcelain')<CR>
 
-" git grep tracked files (relative to :pwd)
+" grep files tracked by git (relative to :pwd)
 set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n\ --column
 set grepformat=%f:%l:%c:%m
 nnoremap <Space>g :grep<Space>
