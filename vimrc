@@ -38,12 +38,6 @@ set showbreak=>
 set foldmethod=indent
 set foldlevelstart=99 " all folds start open
 
-" idle delay before firing CursorHold (updating gitgutter)
-set updatetime=1000
-
-" refresh gitgutter when resuming from suspend
-nnoremap <silent> <C-Z> <C-Z>:silent! GitGutterAll<CR>
-
 " capital Y should behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
 
@@ -84,9 +78,6 @@ augroup vimrc
 	autocmd FileType gitcommit setlocal spell
 	autocmd FileType qf setlocal nowrap colorcolumn=0
 
-	" don't insert comment chars when using o or O from a commented line
-	autocmd FileType * setlocal formatoptions-=o
-
 	" auto open the quickfix window for commands that use it
 	autocmd QuickFixCmdPost * botright cwindow
 
@@ -97,9 +88,3 @@ augroup vimrc
 	autocmd InsertLeave * match Error /\s\+$/
 	autocmd InsertEnter * match none
 augroup END
-
-try
-	colorscheme flintstone
-catch
-	colorscheme slate
-endtry
