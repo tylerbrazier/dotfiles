@@ -4,6 +4,9 @@
 export EDITOR=vim
 export HISTCONTROL=ignoredups
 
+# auto ls after cd
+cd() { builtin cd "$@" && ls; }
+
 alias ls='ls --color=auto'
 alias ll='ls -l -h'
 alias la='ls -l -h -A'
@@ -17,9 +20,10 @@ alias df='df -h'
 alias du='du -h'
 
 alias x='tar -zxvf'
+alias s='sudo '
 
-# auto ls after cd
-cd() { builtin cd "$@" && ls; }
+# tab-complete command names after s alias (sudo)
+complete -c s
 
 # case insensitive completion
 bind 'set completion-ignore-case on'
