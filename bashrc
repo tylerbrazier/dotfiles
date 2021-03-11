@@ -5,7 +5,7 @@ export EDITOR=vim
 export HISTCONTROL=ignoredups
 
 # auto ls after cd
-cd() { builtin cd "$@" && ls --color=auto; }
+cd() { builtin cd "$@" && ls; }
 
 alias ls='ls --color=auto'
 alias ll='ls -l -h'
