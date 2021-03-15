@@ -5,14 +5,10 @@ export HISTCONTROL=ignoredups
 export EDITOR=vim
 export MANPAGER='vim -M +MANPAGER -' # :help manpager.vim
 
-alias ls='ls --color=auto'
-alias ll='ls -l -h'
-alias la='ls -l -h -A'
-
+alias ls='ls -h --color=auto'
 alias cp='cp -r'
 alias rm='rm -r'
 alias mkdir='mkdir -p'
-
 alias grep='grep --color=auto -I'
 alias df='df -h'
 alias du='du -h'
