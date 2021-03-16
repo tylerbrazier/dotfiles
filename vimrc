@@ -40,6 +40,9 @@ nnoremap Y y$
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
+" allow scrolling in terminal window without having to escape first
+tnoremap <ScrollWheelUp> <C-\><C-N>
+
 " use Tab to complete words (suggest recent words first)
 inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
 
