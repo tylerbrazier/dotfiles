@@ -12,8 +12,8 @@ set formatoptions+=j  " delete comment characters when joining comment lines
 set ttymouse=xterm2   " mouse dragging in tmux doesn't work without this
 set bg=dark           " background color detection doesn't work very well
 set colorcolumn=+0    " show colorcolumn at textwidth
-set wildmode=list:longest  " show all completion suggestions, like bash
-set nowildmenu  " <Up> after completion cycles thru history, not suggestions
+set wildcharm=<Tab>   " <Tab> starts completion in mappings
+set wildmode=list:lastused,full
 set clipboard=unnamed,unnamedplus
 
 " case insensitive search and completion
@@ -48,8 +48,8 @@ inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
-nnoremap <Space>e :e <C-D>
-nnoremap <Space>b :ls<CR>:b<Space>
+nnoremap <Space>e :e <Tab>
+nnoremap <Space>b :b <Tab>
 nnoremap <Space>s :set<Space>
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>n :cn<CR>
