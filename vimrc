@@ -13,7 +13,7 @@ set ttymouse=xterm2   " mouse dragging in tmux doesn't work without this
 set bg=dark           " background color detection doesn't work very well
 set colorcolumn=+0    " show colorcolumn at textwidth
 set wildcharm=<Tab>   " <Tab> starts completion in mappings
-set wildmode=list:lastused,full
+set wildmode=list:longest:lastused,full
 set clipboard=unnamed,unnamedplus
 
 " case insensitive search and completion
