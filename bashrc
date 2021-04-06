@@ -34,6 +34,11 @@ bind '"\e[B": history-search-forward'
 # prevent ctrl-s from freezing output
 stty -ixon
 
+# use current working dir as the terminal's title
+# https://wiki.archlinux.org/index.php/Alacritty#%22user@host:cwd%22_in_Window_Title_Bar
+# https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+PROMPT_COMMAND='printf "\033]0;%s\007" "${PWD/#$HOME/\~}"'
+
 # prompt shows cwd, git branch (red if dirty, green otherwise), and stopped jobs
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 PS1='\w '
