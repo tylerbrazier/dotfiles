@@ -7,7 +7,6 @@ set autoindent
 set smarttab
 set hlsearch
 set notimeout
-set laststatus=2      " always show status line
 set formatoptions+=j  " delete comment characters when joining comment lines
 set ttymouse=xterm2   " mouse dragging in tmux doesn't work without this
 set bg=dark           " background color detection doesn't work very well
