@@ -22,7 +22,6 @@ tylerbrazier/vim-flintstone
 airblade/vim-gitgutter
 pangloss/vim-javascript
 editorconfig/editorconfig-vim
-gcmt/taboo.vim
 ' | xargs -I {} git clone --depth 1 https://github.com/{}
 
 # To update the plugins:
