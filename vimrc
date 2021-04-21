@@ -7,9 +7,9 @@ set autoindent
 set smarttab
 set hlsearch
 set notimeout
-set formatoptions+=j  " delete comment characters when joining comment lines
-set ttymouse=xterm2   " mouse dragging in tmux doesn't work without this
 set bg=dark           " background color detection doesn't work very well
+set ttymouse=xterm2   " mouse detection doesn't work very well
+set formatoptions+=j  " delete comment characters when joining comment lines
 set colorcolumn=+0    " show colorcolumn at textwidth
 set wildcharm=<Tab>   " <Tab> starts completion in mappings
 set wildmode=list:longest:lastused,full

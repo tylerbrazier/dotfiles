@@ -5,7 +5,6 @@ set -e
 
 echo '
 bashrc
-tmux.conf
 gitconfig
 vimrc
 ' | xargs -I {} curl https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{} -o ~/.{}
