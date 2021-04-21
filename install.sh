@@ -5,7 +5,6 @@ set -e
 
 echo '
 bashrc
-bash_profile
 tmux.conf
 gitconfig
 vimrc
