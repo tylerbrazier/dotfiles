@@ -67,7 +67,7 @@ set errorformat+=%m\ %f
 nnoremap <Space>c :cexpr system('git status --porcelain')<CR>
 
 " grep files tracked by git (relative to :pwd)
-set grepprg=git\ --no-pager\ grep\ --no-color\ -I\ -n\ --column
+set grepprg=git\ grep\ -I\ -n\ --column
 set grepformat=%f:%l:%c:%m
 nnoremap <Space>g :grep<Space>
 
