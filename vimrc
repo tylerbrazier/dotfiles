@@ -75,7 +75,7 @@ augroup vimrc
 	autocmd!
 
 	autocmd FileType gitcommit setlocal spell
-	autocmd FileType qf setlocal nowrap colorcolumn=0
+	autocmd FileType qf setlocal nowrap colorcolumn=0 scrolloff=0
 
 	" auto open the quickfix window for commands that use it
 	autocmd QuickFixCmdPost * botright cwindow
