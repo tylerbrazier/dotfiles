@@ -49,6 +49,7 @@ nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <Tab>
 nnoremap <Space>b :b <Tab>
+nnoremap <Space>d :bd<CR>
 nnoremap <Space>s :set<Space>
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>n :cn<CR>
