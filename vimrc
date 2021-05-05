@@ -39,6 +39,10 @@ nnoremap Y y$
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
+" make command history navigation filter by the text before the cursor
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+
 " allow scrolling in terminal window without having to escape first
 tnoremap <ScrollWheelUp> <C-\><C-N>
 
