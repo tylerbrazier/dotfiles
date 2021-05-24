@@ -27,9 +27,9 @@ bind 'set show-all-if-ambiguous on'
 # color the completion suggestions
 bind 'set colored-stats on'
 
-# make history navigation filter by the text before the cursor
-bind '"\C-p": history-search-backward'
-bind '"\C-n": history-search-forward'
+# make history navigation with arrows filter by the text before the cursor
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
 
 # prevent ctrl-s from freezing output
 stty -ixon
