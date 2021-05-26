@@ -88,3 +88,8 @@ augroup vimrc
 	autocmd InsertLeave * match Error /\s\+$/
 	autocmd InsertEnter * match none
 augroup END
+
+" plugin settings
+silent! colorscheme flintstone
+set updatetime=800 " update gitgutter more frequently
+nnoremap <silent> <C-Z> <C-Z>:silent! GitGutterAll<CR>
