@@ -87,7 +87,28 @@ augroup vimrc
 	autocmd InsertEnter * match none
 augroup END
 
-" plugin settings
-silent! colorscheme flintstone
-set updatetime=800 " update gitgutter more frequently
+"
+" Plugins (:help packages)
+"
+command InstallPlugins :term sh -c "
+	\ mkdir -p $HOME/.vim/pack/x/start; cd $HOME/.vim/pack/x/start; pwd;
+	\ echo -n
+	\ 'tpope/vim-commentary'
+	\ 'tpope/vim-surround'
+	\ 'tpope/vim-repeat'
+	\ 'tylerbrazier/vim-flintstone'
+	\ 'airblade/vim-gitgutter'
+	\ 'pangloss/vim-javascript'
+	\ 'editorconfig/editorconfig-vim'
+	\ | xargs -t -d' ' -I{}
+	\ git clone -q --depth 1 https://github.com/{}"
+
+command UpdatePlugins :term sh -c "
+	\ find $HOME/.vim/pack/x/start/* -maxdepth 0 -type d
+	\ | xargs -t -I{} git -C {} pull"
+
+" update gitgutter more frequently
+set updatetime=800
 nnoremap <silent> <C-Z> <C-Z>:silent! GitGutterAll<CR>
+
+silent! colorscheme flintstone
