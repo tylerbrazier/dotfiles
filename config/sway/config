@@ -1,4 +1,4 @@
-# Default config for sway
+# Based on the default sway config (diff with /etc/sway/config)
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
@@ -6,8 +6,8 @@
 
 ### Variables
 #
-# Logo key. Use Mod1 for Alt.
-set $mod Mod4
+# Alt is easiest to press. Use Mod4 for logo key.
+set $mod Mod1
 # Home row direction keys, like vim
 set $left h
 set $down j
@@ -31,6 +31,14 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
+### Window configuration
+hide_edge_borders smart
+# To hide window title bars:
+default_border pixel 2
+# For gaps between windows and edges of the screen:
+#gaps inner 8
+#gaps outer 8
+
 ### Idle configuration
 #
 # Example configuration:
@@ -43,6 +51,13 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
+
+exec swayidle \
+         timeout 300 'swaymsg "output * dpms off"' \
+         resume 'swaymsg "output * dpms on"'
+# Don't idle if the focused window is fullscreen
+for_window [class=".*"] inhibit_idle fullscreen
+for_window [app_id=".*"] inhibit_idle fullscreen
 
 ### Input configuration
 #
@@ -57,6 +72,8 @@ output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
 #
 # You can get the names of your inputs by running: swaymsg -t get_inputs
 # Read `man 5 sway-input` for more information about this section.
+input * repeat_delay 200
+input * xkb_numlock enabled
 
 ### Key bindings
 #
@@ -195,6 +212,18 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+#
+# Make audio and brightness keys work (depends on alsa, playerctl, brightnessctl)
+#
+bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ && killall -USR1 i3status
+bindsym XF86AudioLowerVolume exec amixer set Master 5%- && killall -USR1 i3status
+bindsym XF86AudioMute exec amixer set Master toggle && killall -USR1 i3status
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioStop exec playerctl stop
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
+bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
 
 #
 # Status Bar:
@@ -204,8 +233,11 @@ bar {
     position top
 
     # When the status_command prints a new line to stdout, swaybar updates.
-    # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+    status_command i3status
+
+    # To only show the bar while $mod is held:
+    #mode hide
+    #modifier $mod
 
     colors {
         statusline #ffffff
