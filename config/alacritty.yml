@@ -1,0 +1,69 @@
+# https://github.com/alacritty/alacritty/blob/master/alacritty.yml
+
+background_opacity: 0.8
+
+# copy/paste bindings consistent with everything else
+# (type ctrl+shift+c/v to input ctrl+c/v in terminal)
+key_bindings:
+  - { key: C, mods: Control, action: Copy }
+  - { key: V, mods: Control, action: Paste }
+  - { key: C, mods: Shift|Control, chars: "\x03" }
+  - { key: V, mods: Shift|Control, chars: "\x16" }
+
+env:
+  # This fixes issues with typing over ssh,
+  # vim bg color detection and ttymouse detection, and who knows what else:
+  TERM: xterm-256color
+
+# https://github.com/alacritty/alacritty/wiki/Color-schemes
+schemes:
+  # light and dark themes based loosely on html color names:
+  # https://www.w3.org/TR/REC-html40/types.html#h-6.5
+  light: &light
+    primary:
+      background: '#ffffff'
+      foreground: '#000000'
+    normal:
+      black:   '#000000'
+      red:     '#ff0000'
+      green:   '#008000'
+      blue:    '#0000ff'
+      yellow:  '#ff8000'
+      magenta: '#ff00ff'
+      cyan:    '#0080ff'
+      white:   '#808080'
+    bright:
+      black:   '#c0c0c0'
+      red:     '#ff0000'
+      green:   '#00ff00'
+      blue:    '#0000ff'
+      yellow:  '#ffff00'
+      magenta: '#ff00ff'
+      cyan:    '#00ffff'
+      white:   '#ffffff'
+  dark: &dark
+    primary:
+      background: '#000000'
+      foreground: '#ffffff'
+    normal:
+      black:   '#000000'
+      red:     '#ff0000'
+      green:   '#00ff80'
+      blue:    '#0080ff'
+      yellow:  '#ff8000'
+      magenta: '#ff0080'
+      cyan:    '#00ffff'
+      white:   '#808080'
+    bright:
+      black:   '#c0c0c0'
+      red:     '#ff0000'
+      green:   '#00ff00'
+      blue:    '#0080ff'
+      yellow:  '#ffff00'
+      magenta: '#ff00ff'
+      cyan:    '#00ffff'
+      white:   '#ffffff'
+
+colors: *dark
+
+# vim: et ts=2 sw=2
