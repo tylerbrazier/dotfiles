@@ -12,5 +12,6 @@ vimrc
 gitconfig
 config/sway/config
 config/i3status/config
+local/bin/dmenu_history
 ' | xargs -p -I{} curl -o .{} \
 	https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{}
