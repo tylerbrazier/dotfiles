@@ -50,6 +50,7 @@ nnoremap <Space>b :b <Tab>
 nnoremap <Space>d :bd<CR>
 nnoremap <Space>s :set<Space>
 nnoremap <Space>t :tabedit<CR>
+nnoremap <Space>m :make<Space><Up>
 nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
 nnoremap <Space>h :nohl<CR>
@@ -75,6 +76,7 @@ augroup vimrc
 
 	autocmd FileType gitcommit setlocal spell
 	autocmd FileType qf setlocal nowrap colorcolumn=0 scrolloff=0
+	autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc
 
 	" auto open the quickfix window for commands that use it
 	autocmd QuickFixCmdPost * botright cwindow
