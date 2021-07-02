@@ -3,7 +3,18 @@
 	email = tyler@tylerbrazier.com
 
 [core]
+	# type K on a commit hash to `git show` that commit (git ftplugin sets keywordprg)
+	pager = vim -c 'set ft=git' -R -
 	editor = vim
+
+[color]
+	# don't send color escape characters to vim pager (:syntax handles coloring)
+	pager = false
+
+[pager]
+	# don't use pager (vim) for these commands (https://stackoverflow.com/a/49862151)
+	branch = false
+	tag = false
 
 [fetch]
 	prune = true
@@ -23,7 +34,7 @@
 	c = commit -v
 	co = checkout
 	cl = clean -f -d
-	l = log --stat -p
+	l = log --stat
 	b = branch
 	d = diff
 	f = fetch --all
