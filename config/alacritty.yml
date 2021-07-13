@@ -41,6 +41,9 @@ schemes:
       magenta: '#ff00ff'
       cyan:    '#00ffff'
       white:   '#ffffff'
+    cursor:
+      text:   '#ffffff'
+      cursor: '#000000'
   dark: &dark
     primary:
       background: '#000000'
@@ -63,6 +66,9 @@ schemes:
       magenta: '#ff00ff'
       cyan:    '#00ffff'
       white:   '#ffffff'
+    cursor:
+      text:   '#000000'
+      cursor: '#ffffff'
 
 colors: *dark
 
