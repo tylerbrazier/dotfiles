@@ -1,6 +1,9 @@
 # https://github.com/alacritty/alacritty/blob/master/alacritty.yml
 
-background_opacity: 0.8
+env:
+  # This fixes issues with typing over ssh,
+  # vim bg color detection and ttymouse detection, and who knows what else:
+  TERM: xterm-256color
 
 # copy/paste bindings consistent with everything else
 # (type ctrl+shift+c/v to input ctrl+c/v in terminal)
@@ -9,11 +12,6 @@ key_bindings:
   - { key: V, mods: Control, action: Paste }
   - { key: C, mods: Shift|Control, chars: "\x03" }
   - { key: V, mods: Shift|Control, chars: "\x16" }
-
-env:
-  # This fixes issues with typing over ssh,
-  # vim bg color detection and ttymouse detection, and who knows what else:
-  TERM: xterm-256color
 
 # https://github.com/alacritty/alacritty/wiki/Color-schemes
 schemes:
@@ -71,5 +69,6 @@ schemes:
       cursor: '#ffffff'
 
 colors: *dark
+background_opacity: 0.8
 
 # vim: et ts=2 sw=2
