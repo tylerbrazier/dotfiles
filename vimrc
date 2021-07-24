@@ -81,8 +81,8 @@ augroup vimrc
 	" auto open the quickfix window for commands that use it
 	autocmd QuickFixCmdPost * botright cwindow
 
-	" auto close the quickfix window if it is the last one open
-	autocmd WinEnter * if &ft == 'qf' && winnr('$') == 1 | quit | endif
+	" auto close the quickfix window if it's the last one open
+	autocmd QuitPre * if winnr('$') == 2 | cclose | endif
 
 	" highlight trailing whitespace in normal mode
 	autocmd InsertLeave * match Error /\s\+$/
