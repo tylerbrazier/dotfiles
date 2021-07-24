@@ -7,9 +7,12 @@ set autoindent
 set smarttab
 set hlsearch
 set notimeout
-set formatoptions+=j  " delete comment characters when joining comment lines
-set colorcolumn=+0    " show colorcolumn at textwidth
-set wildcharm=<Tab>   " <Tab> starts completion in mappings
+set grepprg=git\ grep\ -I\ -n\ --column
+set grepformat=%f:%l:%c:%m
+set errorformat+=%m\ %f " for git status :cexpr
+set formatoptions+=j    " delete comment characters when joining comment lines
+set colorcolumn=+0      " show colorcolumn at textwidth
+set wildcharm=<Tab>     " <Tab> starts completion in mappings
 set wildmode=list:longest:lastused,full
 set clipboard=unnamed,unnamedplus
 
@@ -48,28 +51,18 @@ nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <Tab>
 nnoremap <Space>b :b <Tab>
 nnoremap <Space>d :bd<CR>
+nnoremap <Space>f :find<Space>
+nnoremap <Space>g :grep<Space>
 nnoremap <Space>s :set<Space>
 nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>m :make<Space><Up>
 nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
 nnoremap <Space>h :nohl<CR>
-nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
-nnoremap <Space><CR> :term<Space>
-
-" find files in directories tracked by git
-let &path = join(systemlist('git ls-tree -rd --name-only HEAD'), ',') . ',,'
-nnoremap <Space>f :find<Space>
-
-" see changed files since the last git commit
-set errorformat+=%m\ %f
+nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
 nnoremap <Space>c :cexpr system("git status --porcelain \| sed '/^ D/d'")<CR>
-
-" grep files tracked by git (relative to :pwd)
-set grepprg=git\ grep\ -I\ -n\ --column
-set grepformat=%f:%l:%c:%m
-nnoremap <Space>g :grep<Space>
+nnoremap <Space><CR> :term<Space>
 
 augroup vimrc
 	autocmd!
@@ -87,6 +80,11 @@ augroup vimrc
 	" highlight trailing whitespace in normal mode
 	autocmd InsertLeave * match Error /\s\+$/
 	autocmd InsertEnter * match none
+
+	" :find in dirs tracked by git, or in cwd and all subdirs
+	autocmd VimEnter,DirChanged * let &path = systemlist(
+		\ 'git ls-tree -rd --name-only HEAD')->join(',').',,'
+		\ | if v:shell_error | let &path = ',,**' | endif
 augroup END
 
 "
