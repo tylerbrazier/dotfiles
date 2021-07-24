@@ -64,7 +64,7 @@ nnoremap <Space>f :find<Space>
 
 " see changed files since the last git commit
 set errorformat+=%m\ %f
-nnoremap <Space>c :cexpr system('git status --porcelain')<CR>
+nnoremap <Space>c :cexpr system("git status --porcelain \| sed '/^ D/d'")<CR>
 
 " grep files tracked by git (relative to :pwd)
 set grepprg=git\ grep\ -I\ -n\ --column
