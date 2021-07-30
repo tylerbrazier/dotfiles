@@ -61,7 +61,7 @@ nnoremap <Space>p :cp<CR>
 nnoremap <Space>h :nohl<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
-nnoremap <Space>c :cexpr system("git status --porcelain \| sed '/^ D/d'")<CR>
+nnoremap <Space>c :cexpr system("git status -s -uall \| sed '/^ D/d'")<CR>
 nnoremap <Space><CR> :term<Space>
 
 augroup vimrc
