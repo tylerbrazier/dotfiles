@@ -69,6 +69,6 @@ schemes:
       cursor: '#ffffff'
 
 colors: *dark
-background_opacity: 0.8
+#background_opacity: 0.8
 
 # vim: et ts=2 sw=2
