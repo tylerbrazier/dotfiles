@@ -13,12 +13,37 @@ set $left h
 set $down j
 set $up k
 set $right l
+# Light colors
+#set $normal_bg      #ffffff
+#set $normal_text    #000000
+#set $normal_border  #808080
+#set $focused_bg     #0080ff
+#set $focused_text   #ffffff
+#set $focused_border #0080ff
+#set $urgent_bg      #ff0000
+#set $urgent_text    #ffffff
+#set $urgent_border  #ff0000
+# Dark colors
+set $normal_bg      #000000
+set $normal_text    #ffffff
+set $normal_border  #808080
+set $focused_bg     #0080ff
+set $focused_text   #ffffff
+set $focused_border #0080ff
+set $urgent_bg      #ff0000
+set $urgent_text    #ffffff
+set $urgent_border  #ff0000
 # Your preferred terminal emulator
 set $term alacritty
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu $HOME/.local/bin/dmenu_history -l 12 | xargs swaymsg exec --
+set $menu $HOME/.local/bin/dmenu_history -l 12 \
+                                         -nb '$normal_bg'    \
+                                         -nf '$normal_text'  \
+                                         -sb '$focused_bg'   \
+                                         -sf '$focused_text' \
+                                         | xargs swaymsg exec --
 
 ### Output configuration
 #
@@ -38,6 +63,11 @@ default_border pixel 2
 # For gaps between windows and edges of the screen:
 #gaps inner 8
 #gaps outer 8
+# Window colors:        #border         #background #text
+client.focused          $focused_border $focused_bg $focused_text
+client.focused_inactive $normal_border  $normal_bg  $normal_text
+client.unfocused        $normal_border  $normal_bg  $normal_text
+client.urgent           $urgent_border  $urgent_bg  $urgent_text
 
 ### Idle configuration
 #
@@ -240,9 +270,15 @@ bar {
     #modifier $mod
 
     colors {
-        statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        statusline $normal_text
+        background $normal_bg
+        separator  $focused_bg
+
+        # Workspaces       #border         #background #text
+        focused_workspace  $focused_border $focused_bg $focused_text
+        active_workspace   $normal_border  $normal_bg  $normal_text
+        inactive_workspace $normal_border  $normal_bg  $normal_text
+        urgent_workspace   $urgent_border  $urgent_bg  $urgent_text
     }
 }
 
