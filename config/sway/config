@@ -14,18 +14,8 @@ set $down j
 set $up k
 set $right l
 # Light colors
-#set $normal_bg      #ffffff
-#set $normal_text    #000000
-#set $normal_border  #808080
-#set $focused_bg     #0080ff
-#set $focused_text   #ffffff
-#set $focused_border #0080ff
-#set $urgent_bg      #ff0000
-#set $urgent_text    #ffffff
-#set $urgent_border  #ff0000
-# Dark colors
-set $normal_bg      #000000
-set $normal_text    #ffffff
+set $normal_bg      #ffffff
+set $normal_text    #000000
 set $normal_border  #808080
 set $focused_bg     #0080ff
 set $focused_text   #ffffff
@@ -33,6 +23,16 @@ set $focused_border #0080ff
 set $urgent_bg      #ff0000
 set $urgent_text    #ffffff
 set $urgent_border  #ff0000
+# Dark colors
+#set $normal_bg      #000000
+#set $normal_text    #ffffff
+#set $normal_border  #808080
+#set $focused_bg     #0080ff
+#set $focused_text   #ffffff
+#set $focused_border #0080ff
+#set $urgent_bg      #ff0000
+#set $urgent_text    #ffffff
+#set $urgent_border  #ff0000
 # Your preferred terminal emulator
 set $term alacritty
 # Your preferred application launcher
