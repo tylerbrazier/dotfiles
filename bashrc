@@ -1,10 +1,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export HISTCONTROL=ignoredups
-export EDITOR=vim
-export MANPAGER='vim -M +MANPAGER -' # :help manpager.vim
-
 alias ls='ls -h --color=auto'
 alias cp='cp -r'
 alias rm='rm -r'
@@ -33,6 +29,12 @@ bind '"\e[B": history-search-forward'
 
 # prevent ctrl-s from freezing output
 stty -ixon
+
+[[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && export PATH="$HOME/.local/bin:$PATH"
+
+export HISTCONTROL=ignoredups
+export EDITOR=vim
+export MANPAGER='vim -M +MANPAGER -' # :help manpager.vim
 
 # use current working dir as the terminal's title
 # https://wiki.archlinux.org/index.php/Alacritty#%22user@host:cwd%22_in_Window_Title_Bar
