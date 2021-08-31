@@ -1,0 +1,33 @@
+#!/bin/sh
+
+# youtube-dl wrapper that downloads the binary if it doesn't exist
+# and adds some options depending on if the last argument is a link to a video or playlist
+
+video_opts='--restrict-filenames --no-playlist -o "%(title)s.%(ext)s"'
+playlist_opts='--restrict-filenames -o "%(playlist)s/%(playlist_index)s-%(title)s.%(ext)s"'
+bin_dir="$HOME/.local/bin"
+
+PATH="$bin_dir:$PATH"
+
+if [ ! -x "$(command -v youtube-dl)" ]; then
+	echo "youtube-dl command not found; downloading to $bin_dir"
+	mkdir -p "$bin_dir"
+	curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "$bin_dir/youtube-dl"
+	chmod a+rx "$bin_dir/youtube-dl"
+fi
+
+# https://stackoverflow.com/a/1853993
+for last_arg; do true; done
+
+case $last_arg in
+	https://*/playlist*)
+		extra_opts="$playlist_opts"
+		;;
+	https://*)
+		extra_opts="$video_opts"
+		;;
+esac
+
+cmd="youtube-dl $extra_opts $(printf "%s" "$*" | sed 's/&/\\&/g')"
+echo "$cmd"
+eval "$cmd"
