@@ -63,11 +63,11 @@ default_border pixel 2
 # For gaps between windows and edges of the screen:
 #gaps inner 8
 #gaps outer 8
-# Window colors:        #border         #background #text
-client.focused          $focused_border $focused_bg $focused_text
-client.focused_inactive $normal_border  $normal_bg  $normal_text
-client.unfocused        $normal_border  $normal_bg  $normal_text
-client.urgent           $urgent_border  $urgent_bg  $urgent_text
+# Window colors:        #title border   #title bg   #title text   #indicator     #window border
+client.focused          $focused_border $focused_bg $focused_text $urgent_border $focused_border
+client.focused_inactive $normal_border  $normal_bg  $normal_text  $urgent_border $normal_border
+client.unfocused        $normal_border  $normal_bg  $normal_text  $urgent_border $normal_border
+client.urgent           $urgent_border  $urgent_bg  $urgent_text  $urgent_border $urgent_border
 
 ### Idle configuration
 #
