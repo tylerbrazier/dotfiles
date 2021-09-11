@@ -243,7 +243,8 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 #
-# Make audio and brightness keys work (depends on alsa, playerctl, brightnessctl)
+# Make audio, brightness, and printscr keys work
+# (depends on alsa, playerctl, brightnessctl, grim, slurp)
 #
 bindsym XF86AudioRaiseVolume exec amixer set Master 5%+ && killall -USR1 i3status
 bindsym XF86AudioLowerVolume exec amixer set Master 5%- && killall -USR1 i3status
@@ -254,6 +255,7 @@ bindsym XF86AudioNext exec playerctl next
 bindsym XF86AudioPrev exec playerctl previous
 bindsym XF86MonBrightnessUp exec brightnessctl set 5%+
 bindsym XF86MonBrightnessDown exec brightnessctl set 5%-
+bindsym Print exec grim -g "$(slurp)" screenshot.png
 
 #
 # Status Bar:
