@@ -10,6 +10,7 @@ gitconfig
 config/sway/config
 config/i3status/config
 config/alacritty.yml
+termux/termux.properties
 local/bin/dmenu_history
 local/bin/yd
 ' | xargs -p -I{} curl --create-dirs -o .{} \
