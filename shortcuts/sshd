@@ -1,0 +1,17 @@
+#!/bin/sh
+# https://github.com/termux/termux-widget
+# https://wiki.termux.com/wiki/Remote_Access
+
+echo 'Starting sshd...'
+sshd || exit
+
+printf "\n%s@%s (port 8022)\n\n" \
+	"$(whoami)" \
+	"$(ip address show wlan0 \
+	| grep 'inet ' \
+	| awk '{print $2}' \
+	| cut -d / -f 1)"
+
+printf 'Press Enter to end the process...'
+read _
+killall sshd
