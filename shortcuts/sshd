@@ -12,6 +12,8 @@ printf "\n%s@%s (port 8022)\n\n" \
 	| awk '{print $2}' \
 	| cut -d / -f 1)"
 
+printf "e.g. rsync -vrt -e 'ssh -p 8022' user@ip:~/docs/ docs\n\n"
+
 printf 'Press Enter to end the process...'
 read _
 killall sshd
