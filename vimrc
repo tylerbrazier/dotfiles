@@ -37,6 +37,10 @@ set showbreak=>
 " capital Y should behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
 
+" k/j over wrapped lines
+noremap k gk
+noremap j gj
+
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
