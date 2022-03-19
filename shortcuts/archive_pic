@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# For archiving receipts. Moves latest file in the DCIM dir to an archive dir.
+# https://github.com/termux/termux-widget
+
+dcim_dir="$HOME/storage/dcim/Camera"
+archive_dir="$HOME/storage/shared/Documents"
+
+latest_file="$(ls -1t "$dcim_dir" | head -n 1)"
+
+fail() {
+	echo "$1 Exiting." >&2
+	exit 1
+}
+
+[ -f "$dcim_dir/$latest_file" ] || fail "$latest_file is not a file."
+
+echo "Move $latest_file to?"
+read -e -r -i "$archive_dir/" dest
+
+[ -n "$dest" ] || fail "No destination."
+[ ! -e "$dest" ] || fail "Destination already exists."
+
+mv "$dcim_dir/$latest_file" "$dest"
