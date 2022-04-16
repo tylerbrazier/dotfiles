@@ -17,9 +17,9 @@ set $right l
 set $normal_bg      #ffffff
 set $normal_text    #000000
 set $normal_border  #808080
-set $focused_bg     #0080ff
+set $focused_bg     #0000ff
 set $focused_text   #ffffff
-set $focused_border #0080ff
+set $focused_border #0000ff
 set $urgent_bg      #ff0000
 set $urgent_text    #ffffff
 set $urgent_border  #ff0000

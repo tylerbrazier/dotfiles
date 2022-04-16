@@ -19,7 +19,7 @@ schemes:
   # https://www.w3.org/TR/REC-html40/types.html#h-6.5
   light: &light
     primary:
-      background: '#ffffff'
+      background: '#ffffee'
       foreground: '#000000'
     normal:
       black:   '#000000'
