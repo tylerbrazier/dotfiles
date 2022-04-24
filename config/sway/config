@@ -48,7 +48,8 @@ set $menu $HOME/.local/bin/dmenu_history -l 12 \
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+output * bg $normal_bg solid_color
 #
 # Example configuration:
 #
