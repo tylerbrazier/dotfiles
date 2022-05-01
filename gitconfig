@@ -3,8 +3,8 @@
 	email = tyler@tylerbrazier.com
 
 [core]
-	# type K on a commit hash to `git show` that commit (git ftplugin sets keywordprg)
-	pager = vim -c 'set ft=git' -R -
+	# type K on a commit hash to `git show` that commit
+	pager = vim -c 'set keywordprg=git\\ show' -R -
 	editor = vim
 
 [color]
