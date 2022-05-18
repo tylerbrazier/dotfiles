@@ -5,14 +5,8 @@
 echo 'Starting sshd...'
 sshd || exit
 
-printf "\n%s@%s (port 8022)\n\n" \
-	"$(whoami)" \
-	"$(ip address show wlan0 \
-	| grep 'inet ' \
-	| awk '{print $2}' \
-	| cut -d / -f 1)"
-
-printf "e.g. rsync -vrt -e 'ssh -p 8022' user@ip:~/docs/ docs\n\n"
+address="$(ip address show wlan0|grep 'inet '|awk '{print $2}'|cut -d / -f 1)"
+printf "\nTo connect: ssh -p 8022 %s@%s\n\n" "$(whoami)" "$address"
 
 printf 'Press Enter to end the process...'
 read _
