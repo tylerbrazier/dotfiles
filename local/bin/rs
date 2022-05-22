@@ -16,8 +16,9 @@ music
 # -E preserve executability
 # -e specify the remote shell to use (e.g. for termux sshd: -e 'ssh -p 8022')
 # -n dry run
-pull_opts="-vhrute 'ssh -p 8022'"
-push_opts="-vhrute 'ssh -p 8022'"
+# --exclude '.*' exclude hidden files/dirs
+pull_opts="-vhrute 'ssh -p 8022' --exclude '.*'"
+push_opts="-vhrute 'ssh -p 8022' --exclude '.*'"
 
 if [[ $# -ne 1 || $1 == -* ]]; then
 	echo "Usage: $0 [user@]host" >&2
