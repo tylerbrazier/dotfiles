@@ -1,4 +1,4 @@
-# Based on the default sway config (diff with /etc/sway/config)
+# Based on the default /etc/sway/config
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
@@ -130,7 +130,7 @@ input * xkb_numlock enabled
     bindsym $mod+Shift+c reload
 
     # Exit sway (logs you out of your Wayland session)
-    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+    bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -B 'Yes, exit sway' 'swaymsg exit'
 #
 # Moving around:
 #
