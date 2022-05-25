@@ -7,8 +7,6 @@ set autoindent
 set smarttab
 set hlsearch
 set notimeout
-set grepprg=git\ grep\ -I\ -n\ --column
-set grepformat=%f:%l:%c:%m
 set errorformat+=%m\ %f " for git status :cexpr
 set formatoptions+=j    " delete comment characters when joining comment lines
 set colorcolumn=+0      " show colorcolumn at textwidth
@@ -85,11 +83,24 @@ augroup vimrc
 	autocmd InsertLeave * match Error /\s\+$/
 	autocmd InsertEnter * match none
 
-	" :find in dirs tracked by git, or in cwd and all subdirs
-	autocmd VimEnter,DirChanged * let &path = systemlist(
-		\ 'git ls-tree -rd --name-only HEAD')->join(',').',,'
-		\ | if v:shell_error | let &path = ',,**' | endif
+	autocmd DirChanged * call s:oncd()
 augroup END
+
+function s:oncd()
+	" :find and :grep in tracked dirs/files if cwd is in a git project
+	let pathcmd = 'git ls-tree -rd --name-only HEAD'
+	let &path = systemlist(pathcmd)->join(',').',,'
+	if v:shell_error
+		" not in a git dir
+		let &path = ',,**' "cwd and all subdirs
+		set grepprg=grep\ -n\ -r
+		set grepformat=%f:%l:%m
+	else
+		set grepprg=git\ grep\ -I\ -n\ --column
+		set grepformat=%f:%l:%c:%m
+	endif
+endfunction
+call s:oncd()
 
 "
 " Plugins (:help packages)
