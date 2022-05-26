@@ -16,7 +16,7 @@ set $right l
 # Light colors
 set $normal_bg      #ffffff
 set $normal_text    #000000
-set $normal_border  #808080
+set $normal_border  #c0c0c0
 set $focused_bg     #0000ff
 set $focused_text   #ffffff
 set $focused_border #0000ff
@@ -26,7 +26,7 @@ set $urgent_border  #ff0000
 # Dark colors
 #set $normal_bg      #000000
 #set $normal_text    #ffffff
-#set $normal_border  #808080
+#set $normal_border  #404040
 #set $focused_bg     #0080ff
 #set $focused_text   #ffffff
 #set $focused_border #0080ff
