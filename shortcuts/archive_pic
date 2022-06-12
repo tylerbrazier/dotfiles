@@ -29,3 +29,6 @@ ext="${latest_file##*.}"
 [ ! -e "$dest" ] || fail "Destination already exists."
 
 mv "$dcim_dir/$latest_file" "$dest"
+
+printf 'Moved to %s\nPress Enter...' "$dest"
+read _
