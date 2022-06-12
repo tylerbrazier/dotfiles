@@ -18,6 +18,9 @@ fail() {
 echo "Move $latest_file to?"
 read -e -r -i "$archive_dir/" dest
 
+# replace all spaces with underscores
+dest="${dest// /_}"
+
 [ -n "$dest" ] || fail "No destination."
 [ ! -e "$dest" ] || fail "Destination already exists."
 
