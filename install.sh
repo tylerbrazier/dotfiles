@@ -9,7 +9,7 @@ vimrc
 gitconfig
 config/sway/config
 config/i3status/config
-config/alacritty.yml
+config/foot/foot.ini
 termux/termux.properties
 shortcuts/sshd
 shortcuts/archive_pic
