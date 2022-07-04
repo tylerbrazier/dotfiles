@@ -1,13 +1,14 @@
 #!/bin/sh
 
 # youtube-dl wrapper that downloads the binary if it doesn't exist
-# and adds some options depending on if the last argument is a link to a video or playlist
+# and adds some options depending if the last link arg is a video or playlist
 
 video_opts='--restrict-filenames --no-playlist -o "%(title)s.%(ext)s"'
 playlist_opts='--restrict-filenames -o "%(playlist)s/%(playlist_index)s-%(title)s.%(ext)s"'
 bin_dir="$HOME/.local/bin"
 
 PATH="$bin_dir:$PATH"
+original_args="$*"
 
 if [ ! -x "$(command -v youtube-dl)" ]; then
 	echo "youtube-dl command not found; downloading to $bin_dir"
@@ -16,18 +17,18 @@ if [ ! -x "$(command -v youtube-dl)" ]; then
 	chmod a+rx "$bin_dir/youtube-dl"
 fi
 
-# https://stackoverflow.com/a/1853993
-for last_arg; do true; done
+while [ $# -gt 0 ]; do
+	case "$1" in
+		https://*/playlist*)
+			extra_opts="$playlist_opts"
+			;;
+		https://*)
+			extra_opts="$video_opts"
+			;;
+	esac
+	shift
+done
 
-case $last_arg in
-	https://*/playlist*)
-		extra_opts="$playlist_opts"
-		;;
-	https://*)
-		extra_opts="$video_opts"
-		;;
-esac
-
-cmd="youtube-dl $extra_opts $(printf "%s" "$*" | sed 's/&/\\&/g')"
+cmd="youtube-dl $extra_opts $(printf "%s" "$original_args" | sed 's/&/\\&/g')"
 echo "$cmd"
 eval "$cmd"
