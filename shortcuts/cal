@@ -1,3 +1,4 @@
 #!/bin/sh
+cat $HOME/docs/calendar
 cal -y
 read _
