@@ -11,6 +11,8 @@ config/sway/config
 config/i3status/config
 config/foot/foot.ini
 termux/termux.properties
+shortcuts/cal
+shortcuts/notes
 shortcuts/sshd
 shortcuts/archive_pic
 local/bin/dmenu_history
@@ -18,7 +20,5 @@ local/bin/yd
 ' | xargs -p -I{} curl --create-dirs -o .{} \
 	https://raw.githubusercontent.com/tylerbrazier/dotfiles/master/{}
 
-chmod -f +x "$HOME/.shortcuts/sshd"
-chmod -f +x "$HOME/.shortcuts/archive_pic"
 chmod -f +x "$HOME/.local/bin/dmenu_history"
 chmod -f +x "$HOME/.local/bin/yd"
