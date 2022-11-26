@@ -36,11 +36,6 @@ export HISTCONTROL=ignoredups
 export EDITOR=vim
 export MANPAGER='vim -M +MANPAGER -' # :help manpager.vim
 
-# use current working dir as the terminal's title
-# https://wiki.archlinux.org/index.php/Alacritty#%22user@host:cwd%22_in_Window_Title_Bar
-# https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
-PROMPT_COMMAND='printf "\033]0;%s\007" "${PWD/#$HOME/\~}"'
-
 # Prompt shows cwd, git branch (red if dirty, green otherwise), stopped jobs,
 # and blue $ in ssh session (white otherwise).
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
@@ -52,3 +47,12 @@ PS1+='$([[ $(jobs) ]] && printf "\j ")'
 PS1+='\[$([ -z "$SSH_CONNECTION" ] || tput setaf 4)\]'
 PS1+='\$'
 PS1+='\[$(tput sgr0)\] '
+
+# Use current working dir as the terminal's title:
+# https://wiki.archlinux.org/index.php/Alacritty#%22user@host:cwd%22_in_Window_Title_Bar
+# https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
+PROMPT_COMMAND='printf "\033]0;%s\007" "${PWD/#$HOME/\~}"'
+
+# Save cmds to history when they're run, not just on shell exit
+# so history isn't lost when using multiple terminals.
+PROMPT_COMMAND="history -a;$PROMPT_COMMAND"
