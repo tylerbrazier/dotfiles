@@ -16,6 +16,8 @@ fail() {
 [ -f "$dcim_dir/$latest_file" ] || fail "$latest_file is not a file."
 
 echo "Move $latest_file to?"
+echo "Spaces will be underscores and missing file ext will be added."
+echo
 read -e -r -i "$docs_dir/" dest
 
 # replace all spaces with underscores
