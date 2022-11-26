@@ -1,2 +1,2 @@
 #!/bin/sh
-vim $HOME/docs/notes
+vim $HOME/storage/shared/backup/docs/notes

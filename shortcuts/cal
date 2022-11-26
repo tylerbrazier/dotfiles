@@ -1,4 +1,4 @@
 #!/bin/sh
-cat $HOME/docs/calendar
+cat $HOME/storage/shared/backup/docs/calendar
 cal -y
 read _

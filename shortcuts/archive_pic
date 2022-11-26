@@ -4,7 +4,7 @@
 # https://github.com/termux/termux-widget
 
 dcim_dir="$HOME/storage/dcim/Camera"
-archive_dir="$HOME/storage/shared/Documents"
+archive_dir="$HOME/storage/shared/backup/docs"
 
 latest_file="$(ls -1t "$dcim_dir" | head -n 1)"
 
