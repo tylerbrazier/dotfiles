@@ -14,7 +14,7 @@ termux/termux.properties
 shortcuts/cal
 shortcuts/notes
 shortcuts/sshd
-shortcuts/archive_pic
+shortcuts/docpic
 local/bin/dmenu_history
 local/bin/yd
 ' | xargs -p -I{} curl --create-dirs -o .{} \
