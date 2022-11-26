@@ -1,3 +1,3 @@
 #!/bin/sh
 # https://github.com/termux/termux-widget
-vim $HOME/storage/shared/backup/docs/notes
+vim $HOME/storage/shared/backup/docs/notes.txt
