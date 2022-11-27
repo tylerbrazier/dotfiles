@@ -28,9 +28,27 @@ ext="${latest_file##*.}"
 [[ $dest == *.$ext ]] || dest="$dest.$ext"
 
 [ -n "$dest" ] || fail "No destination."
-[ ! -e "$dest" ] || fail "Destination already exists."
 
-mv "$dcim_dir/$latest_file" "$dest"
+if [ -e "$dest" ]; then
+	read -n 1 -p "$dest exists. Continue? [y/N] "
+	[ "${REPLY,,}" != "y" ] && exit 1
+	echo
+fi
 
-printf 'Moved to %s\nPress Enter...' "$dest"
+read -p 'Compress to percentage? (Empty skips) ' quality
+if [ -n "$quality" ]; then
+	magick "$dcim_dir/$latest_file" -quality "$quality" "$dest"
+	[ $? -eq 0 ] || fail 'No changes were made.'
+else
+	cp "$dcim_dir/$latest_file" "$dest"
+fi
+
+echo "Opening for preview $dest"
+termux-open "$dest"
+
+read -n 1 -p "Delete original $latest_file? [Y/n] "
+[ "${REPLY,,}" != "n" ] && rm "$dcim_dir/$latest_file"
+echo
+
+echo 'Press Enter...'
 read _
