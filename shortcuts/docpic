@@ -35,7 +35,7 @@ if [ -e "$dest" ]; then
 	echo
 fi
 
-read -p 'Compress to percentage? (Empty skips) ' quality
+read -p 'Compress to percentage? (Empty skips) ' -ei 10% quality
 if [ -n "$quality" ]; then
 	magick "$dcim_dir/$latest_file" -quality "$quality" "$dest"
 	[ $? -eq 0 ] || fail 'No changes were made.'
