@@ -5,7 +5,7 @@
 echo 'Starting sshd...'
 sshd || exit
 
-address="$(ip address show wlan0|grep 'inet '|awk '{print $2}'|cut -d / -f 1)"
+address="$(ifconfig 2>/dev/null|grep -A1 wlan0|grep 'inet '|awk '{print $2}'|cut -d / -f 1)"
 printf "\nTo connect: ssh -p 8022 %s@%s\n\n" "$(whoami)" "$address"
 
 printf 'Press Enter to end the process...'
