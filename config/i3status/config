@@ -7,19 +7,13 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        interval = 5
+        interval = 1
 
         colors = true
 
-        # Light colors
-        color_good =     "#008000"
+        color_good =     "#00ff80"
         color_degraded = "#ff8000"
         color_bad =      "#ff0000"
-
-        # Dark colors
-        #color_good =     "#00ff80"
-        #color_degraded = "#ff8000"
-        #color_bad =      "#ff0000"
 }
 
 order += "volume master"

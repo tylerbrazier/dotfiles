@@ -13,43 +13,32 @@ set $left h
 set $down j
 set $up k
 set $right l
-# Light colors
-set $normal_bg      #ffffff
-set $normal_text    #000000
-set $normal_border  #c0c0c0
-set $focused_bg     #0000ff
-set $focused_text   #ffffff
-set $focused_border #0000ff
-set $urgent_bg      #ff0000
-set $urgent_text    #ffffff
-set $urgent_border  #ff0000
-# Dark colors
-#set $normal_bg      #000000
-#set $normal_text    #ffffff
-#set $normal_border  #404040
-#set $focused_bg     #0080ff
-#set $focused_text   #ffffff
-#set $focused_border #0080ff
-#set $urgent_bg      #ff0000
-#set $urgent_text    #ffffff
-#set $urgent_border  #ff0000
+# Colors
+set $white #ffffff
+set $black #000000
+set $grey  #808080
+set $red   #ff0000
+set $clear #00000000
 # Your preferred terminal emulator
 set $term foot
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu $HOME/.local/bin/dmenu_history -l 12 \
-                                         -nb '$normal_bg'    \
-                                         -nf '$normal_text'  \
-                                         -sb '$focused_bg'   \
-                                         -sf '$focused_text' \
+                                         -fn 'monospace-12' \
+                                         -nb '$black'    \
+                                         -nf '$grey'  \
+                                         -sb '$black'   \
+                                         -sf '$white' \
                                          | xargs swaymsg exec --
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
-# output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-output * bg $normal_bg solid_color
+#output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+#output * bg /usr/share/backgrounds/archlinux/gritty.png fill $black
+output * bg /usr/share/backgrounds/archlinux/landscape.jpg fill $black
+#output * bg $black solid_color
 #
 # Example configuration:
 #
@@ -58,17 +47,22 @@ output * bg $normal_bg solid_color
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Window configuration
-hide_edge_borders smart
-# To hide window title bars:
-default_border pixel 2
+font monospace 12
+# Don't show borders if there's only one window:
+smart_borders on
+# This will hide window title bars:
+default_border pixel 4
 # For gaps between windows and edges of the screen:
 #gaps inner 8
 #gaps outer 8
-# Window colors:        #title border   #title bg   #title text   #indicator     #window border
-client.focused          $focused_border $focused_bg $focused_text $urgent_border $focused_border
-client.focused_inactive $normal_border  $normal_bg  $normal_text  $urgent_border $normal_border
-client.unfocused        $normal_border  $normal_bg  $normal_text  $urgent_border $normal_border
-client.urgent           $urgent_border  $urgent_bg  $urgent_text  $urgent_border $urgent_border
+# No gaps if there's only one window:
+#smart_gaps on
+# Window colors:         #title border  #title bg  #title text  #indicator  #window border
+client.focused           $white         $white     $black       $grey       $white
+client.focused_tab_title $white         $white     $black       $grey       $white
+client.focused_inactive  $grey          $black     $white       $grey       $clear
+client.unfocused         $grey          $black     $white       $grey       $clear
+client.urgent            $red           $red       $white       $red        $red
 
 ### Idle configuration
 #
@@ -105,6 +99,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 # Read `man 5 sway-input` for more information about this section.
 input * repeat_delay 200
 input * xkb_numlock enabled
+#input * tap enabled
 
 ### Key bindings
 #
@@ -264,6 +259,7 @@ bindsym Print exec grim -g "$(slurp)" screenshot.png
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
+    font monospace 12
 
     # When the status_command prints a new line to stdout, swaybar updates.
     status_command i3status
@@ -273,15 +269,15 @@ bar {
     #modifier $mod
 
     colors {
-        statusline $normal_text
-        background $normal_bg
-        separator  $focused_bg
+        statusline $white
+        background $black
+        separator  $grey
 
-        # Workspaces       #border         #background #text
-        focused_workspace  $focused_border $focused_bg $focused_text
-        active_workspace   $normal_border  $normal_bg  $normal_text
-        inactive_workspace $normal_border  $normal_bg  $normal_text
-        urgent_workspace   $urgent_border  $urgent_bg  $urgent_text
+        # Workspaces       #border  #background  #text
+        focused_workspace  $black   $black       $white
+        active_workspace   $black   $black       $grey
+        inactive_workspace $black   $black       $grey
+        urgent_workspace   $black   $black       $red
     }
 }
 

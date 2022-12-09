@@ -1,0 +1,21 @@
+font=monospace 12
+
+[error]
+text=ff0000
+background=000000
+border-bottom=ff0000
+details-background=000000
+button-text=ffffff
+button-background=000000
+button-border-size=2
+border=808080
+
+[warning]
+text=ff8000
+background=000000
+border-bottom=ff8000
+details-background=000000
+button-text=ffffff
+button-background=000000
+button-border-size=2
+border=808080

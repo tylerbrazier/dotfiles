@@ -8,6 +8,7 @@ bashrc
 vimrc
 gitconfig
 config/sway/config
+config/swaynag/config
 config/i3status/config
 config/foot/foot.ini
 termux/termux.properties
