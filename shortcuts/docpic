@@ -16,8 +16,7 @@ fail() {
 [ -f "$dcim_dir/$latest_file" ] || fail "$latest_file is not a file."
 
 echo "Move $latest_file to?"
-echo "Spaces will be underscores and missing file ext will be added."
-echo
+echo "Spaces will be underscores and missing file ext will be added:"
 read -e -r -i "$docs_dir/" dest
 
 # replace all spaces with underscores
@@ -30,9 +29,8 @@ ext="${latest_file##*.}"
 [ -n "$dest" ] || fail "No destination."
 
 if [ -e "$dest" ]; then
-	read -n 1 -p "$dest exists. Continue? [y/N] "
-	[ "${REPLY,,}" != "y" ] && exit 1
-	echo
+	read -p "$dest exists. Continue? [y/N] "
+	[[ "${REPLY,,}" != y* ]] && exit 1
 fi
 
 read -p 'Compress to percentage? (Empty skips) ' -ei 10% quality
@@ -46,9 +44,8 @@ fi
 echo "Opening for preview $dest"
 termux-open "$dest"
 
-read -n 1 -p "Delete original $latest_file? [Y/n] "
-[ "${REPLY,,}" != "n" ] && rm "$dcim_dir/$latest_file"
-echo
+read -p "Delete original $latest_file? [Y/n] "
+[[ "${REPLY,,}" != n* ]] && rm "$dcim_dir/$latest_file"
 
-echo 'Press Enter...'
+printf 'Press Enter...'
 read _
