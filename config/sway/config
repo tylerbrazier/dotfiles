@@ -17,8 +17,8 @@ set $right l
 set $white #ffffff
 set $black #000000
 set $grey  #808080
+set $dark  #404040
 set $red   #ff0000
-set $clear #00000000
 # Your preferred terminal emulator
 set $term foot
 # Your preferred application launcher
@@ -51,17 +51,17 @@ font monospace 12
 # Don't show borders if there's only one window:
 smart_borders on
 # This will hide window title bars:
-default_border pixel 4
+default_border pixel
 # For gaps between windows and edges of the screen:
 #gaps inner 8
 #gaps outer 8
 # No gaps if there's only one window:
 #smart_gaps on
 # Window colors:         #title border  #title bg  #title text  #indicator  #window border
-client.focused           $white         $white     $black       $grey       $white
-client.focused_tab_title $white         $white     $black       $grey       $white
-client.focused_inactive  $grey          $black     $white       $grey       $clear
-client.unfocused         $grey          $black     $white       $grey       $clear
+client.focused           $white         $black     $white       $grey       $white
+client.focused_tab_title $white         $black     $white
+client.focused_inactive  $dark          $black     $grey        $grey       $dark
+client.unfocused         $dark          $black     $grey        $grey       $dark
 client.urgent            $red           $red       $white       $red        $red
 
 ### Idle configuration
@@ -260,6 +260,7 @@ bindsym Print exec grim -g "$(slurp)" screenshot.png
 bar {
     position top
     font monospace 12
+    separator_symbol ' | '
 
     # When the status_command prints a new line to stdout, swaybar updates.
     status_command i3status
@@ -271,7 +272,7 @@ bar {
     colors {
         statusline $white
         background $black
-        separator  $grey
+        separator  $dark
 
         # Workspaces       #border  #background  #text
         focused_workspace  $black   $black       $white
