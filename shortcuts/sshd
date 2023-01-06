@@ -8,6 +8,9 @@ sshd || exit
 address="$(ifconfig 2>/dev/null|grep -A1 wlan0|grep 'inet '|awk '{print $2}'|cut -d / -f 1)"
 printf "\nTo connect: ssh -p 8022 %s@%s\n\n" "$(whoami)" "$address"
 
+fingerprints="$(cat $PREFIX/etc/ssh/ssh_host_*.pub | ssh-keygen -lf -)"
+printf "Fingerprints:\n%s\n\n" "$fingerprints"
+
 printf 'Press Enter to end the process...'
 read _
 killall sshd
