@@ -1,21 +1,21 @@
 font=monospace 12
 
 [error]
-text=ff0000
-background=000000
+text=ffffff
+background=000000bf
 border-bottom=ff0000
-details-background=000000
+details-background=000000bf
 button-text=ffffff
-button-background=000000
+button-background=000000bf
 button-border-size=2
-border=808080
+border=ff0000
 
 [warning]
-text=ff8000
-background=000000
+text=ffffff
+background=000000bf
 border-bottom=ff8000
-details-background=000000
+details-background=000000bf
 button-text=ffffff
-button-background=000000
+button-background=000000bf
 button-border-size=2
-border=808080
+border=ff8000

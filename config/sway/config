@@ -19,6 +19,8 @@ set $black #000000
 set $grey  #808080
 set $dark  #404040
 set $red   #ff0000
+set $blue  #0080ff
+set $glass #000000bf
 # Your preferred terminal emulator
 set $term foot
 # Your preferred application launcher
@@ -36,8 +38,8 @@ set $menu $HOME/.local/bin/dmenu_history -l 12 \
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-#output * bg /usr/share/backgrounds/archlinux/gritty.png fill $black
-output * bg /usr/share/backgrounds/archlinux/landscape.jpg fill $black
+output * bg /usr/share/backgrounds/archlinux/gritty.png fill $black
+#output * bg /usr/share/backgrounds/archlinux/landscape.jpg fill $black
 #output * bg $black solid_color
 #
 # Example configuration:
@@ -58,11 +60,11 @@ default_border pixel
 # No gaps if there's only one window:
 #smart_gaps on
 # Window colors:         #title border  #title bg  #title text  #indicator  #window border
-client.focused           $white         $black     $white       $grey       $white
-client.focused_tab_title $white         $black     $white
-client.focused_inactive  $dark          $black     $grey        $grey       $dark
-client.unfocused         $dark          $black     $grey        $grey       $dark
-client.urgent            $red           $red       $white       $red        $red
+client.focused           $blue          $glass     $white       $white      $blue
+client.focused_tab_title $blue          $glass     $white
+client.focused_inactive  $dark          $glass     $grey        $dark       $dark
+client.unfocused         $dark          $glass     $grey        $dark       $dark
+client.urgent            $red           $glass     $white       $red        $red
 
 ### Idle configuration
 #
@@ -271,14 +273,14 @@ bar {
 
     colors {
         statusline $white
-        background $black
-        separator  $dark
+        background $glass
+        separator  $blue
 
         # Workspaces       #border  #background  #text
-        focused_workspace  $black   $black       $white
-        active_workspace   $black   $black       $grey
-        inactive_workspace $black   $black       $grey
-        urgent_workspace   $black   $black       $red
+        focused_workspace  $glass   $glass       $white
+        active_workspace   $glass   $glass       $grey
+        inactive_workspace $glass   $glass       $grey
+        urgent_workspace   $red     $glass       $white
     }
 }
 
