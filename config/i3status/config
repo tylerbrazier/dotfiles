@@ -49,7 +49,7 @@ battery all {
         status_unk = "?"
         status_full = "="
         integer_battery_capacity = "true"
-        low_threshold = "15"
+        low_threshold = "30"
         threshold_type = "percentage"
         format_down = ""
 }
