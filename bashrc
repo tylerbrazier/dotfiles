@@ -49,7 +49,7 @@ PS1+='\$'
 PS1+='\[$(tput sgr0)\] '
 
 # Use current working dir as the terminal's title:
-# https://wiki.archlinux.org/index.php/Alacritty#%22user@host:cwd%22_in_Window_Title_Bar
+# https://wiki.archlinux.org/title/Alacritty#%22user@host:cwd%22_in_window_title_bar
 # https://www.gnu.org/software/bash/manual/html_node/Shell-Parameter-Expansion.html
 PROMPT_COMMAND='printf "\033]0;%s\007" "${PWD/#$HOME/\~}"'
 
