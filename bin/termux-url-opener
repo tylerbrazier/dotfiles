@@ -1,0 +1,4 @@
+#!/bin/sh
+# https://wiki.termux.com/wiki/Intents_and_Hooks
+echo "I haven't decided how to handle opening urls yet." >&2
+exit 1
