@@ -38,8 +38,10 @@ set $menu $HOME/.local/bin/dmenu_history -l 12 \
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
+# These are from package archlinux-wallpaper:
 output * bg /usr/share/backgrounds/archlinux/gritty.png fill $black
 #output * bg /usr/share/backgrounds/archlinux/landscape.jpg fill $black
+# For a solid color:
 #output * bg $black solid_color
 #
 # Example configuration:
@@ -240,6 +242,7 @@ mode "resize" {
     bindsym Escape mode "default"
 }
 bindsym $mod+r mode "resize"
+
 #
 # Make audio, brightness, and printscr keys work
 # (depends on alsa, playerctl, brightnessctl, grim, slurp)
