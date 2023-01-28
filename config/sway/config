@@ -23,6 +23,8 @@ set $blue  #0080ff
 set $glass #000000bf
 # Your preferred terminal emulator
 set $term foot
+# Scratch term launched with mod+shift+enter
+set $scratch_term foot --app-id=scratch
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
@@ -111,6 +113,10 @@ input * xkb_numlock enabled
 #
     # Start a terminal
     bindsym $mod+Return exec $term
+
+    # Start scratch terminal
+    bindsym $mod+Shift+Return exec $scratch_term
+    for_window [app_id="scratch"] move to scratchpad; scratchpad show
 
     # Kill focused window
     bindsym $mod+Shift+q kill
