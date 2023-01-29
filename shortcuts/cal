@@ -1,5 +1,0 @@
-#!/bin/sh
-# https://github.com/termux/termux-widget
-cat $HOME/storage/shared/backup/docs/calendar
-cal -y
-read _

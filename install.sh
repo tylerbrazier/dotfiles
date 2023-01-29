@@ -13,7 +13,6 @@ config/foot/foot.ini
 config/mpv/mpv.conf
 termux/termux.properties
 termux/colors.properties
-shortcuts/cal
 shortcuts/notes
 shortcuts/sshd
 shortcuts/docpic
