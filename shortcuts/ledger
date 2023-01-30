@@ -6,7 +6,7 @@
 # multiple tags for the same entry are separated by spaces.
 # Later you can make some fancy awk scripts for the csv to build reports.
 
-csv="$HOME/storage/shared/backup/docs/ledger/ledger.csv"
+csv="$HOME/storage/shared/backup/docs/ledger.csv"
 date=
 amount=
 description=
