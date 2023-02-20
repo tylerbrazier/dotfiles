@@ -10,7 +10,7 @@ cache="${XDG_CACHE_HOME:-"$HOME/.cache"}/backup_source"
 mkdir -p "$(dirname "$cache")"
 touch "$cache"
 
-read -erp "Backup from: " -i "$(head -n1 "$cache")"
+read -erp "Backup from user@host: " -i "$(head -n1 "$cache")"
 echo "$REPLY" > "$cache"
 read -eri "rsync -vhrte 'ssh -p 8022' --progress --chmod=F-w --del --backup-dir=.trash --exclude='.*' $REPLY:storage/shared/backup/ ~/backup"
 eval "$REPLY"
