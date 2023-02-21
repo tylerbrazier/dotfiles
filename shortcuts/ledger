@@ -1,16 +1,16 @@
 #!/bin/bash
 
 # Add an entry to ledger.csv that has 4 columns:
-# Date,Amount,Description,Tags
-# Tags can be used to categorize entries and identify rows;
-# multiple tags for the same entry are separated by spaces.
+# Date,Amount,Description,Categories
+# Categories can be used to group rows;
+# multiple categories for the same entry are separated by spaces.
 # Later you can make some fancy awk scripts for the csv to build reports.
 
 csv="$HOME/storage/shared/backup/docs/ledger.csv"
 date=
 amount="-"
 description=
-tags=
+categories=
 
 [ -f "$csv" ] || { echo "No $csv" >&2; exit 1; }
 
@@ -26,15 +26,16 @@ while [[ ! "$description" =~ ^[^,]+$ ]]; do
 	read -rp "Description (no commas): " -i "$description" description
 done
 
-existing_tags="$(awk -F, 'NR>1{print $4}' "$csv" \
+existing_categories="$(awk -F, 'NR>1{print $4}' "$csv" \
 	| tr ' ' '\n' \
 	| sort --ignore-case \
 	| uniq --ignore-case \
 	| paste -sd' ')"
-while [[ ! "$tags" =~ ^[a-zA-Z0-9\ ]+$ ]]; do
-	read -rp "Tags ($existing_tags): " -i "$tags" tags
+while [[ ! "$categories" =~ ^[a-z0-9\ ]+$ ]]; do
+	read -rp "Categories ($existing_categories): " \
+		-i "$categories" categories
 done
 
-echo "$date,$amount,$description,$tags" >> "$csv"
+echo "$date,$amount,$description,$categories" >> "$csv"
 
 column -ts, "$csv" | sort -n | less -S +G
