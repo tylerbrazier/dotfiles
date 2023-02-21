@@ -37,5 +37,4 @@ done
 
 echo "$date,$amount,$description,$tags" >> "$csv"
 
-tail "$csv"
-read -rp "Press Enter..."
+column -ts, "$csv" | sort -n | less -S +G
