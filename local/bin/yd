@@ -1,20 +1,31 @@
 #!/bin/sh
 
 # youtube-dl wrapper that downloads the binary if it doesn't exist
-# and adds some options depending if the last link arg is a video or playlist
+# and adds some options depending if the last link arg is a video or playlist.
+# As of 2023, youtube-dl hasn't pushed a release since 2021 and downloads are
+# failing so use yt-dlp instead.
 
 video_opts='--restrict-filenames --no-playlist -o "%(title)s.%(ext)s"'
 playlist_opts='--restrict-filenames -o "%(playlist)s/%(playlist_index)s-%(title)s.%(ext)s"'
 bin_dir="$HOME/.local/bin"
+#bin="youtube-dl"
+#download_link="https://yt-dl.org/downloads/latest/youtube-dl"
+bin="yt-dlp"
+download_link="https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp"
 
 PATH="$bin_dir:$PATH"
 original_args="$*"
 
-if [ ! -x "$(command -v youtube-dl)" ]; then
-	echo "youtube-dl command not found; downloading to $bin_dir"
+if [ ! -x "$(command -v curl)" -o ! -x "$(command -v python)" -o ! -x "$(command -v ffmpeg)" ]; then
+	echo "Install curl, python, and ffmpeg first" >&2
+	exit 1
+fi
+
+if [ ! -x "$(command -v "$bin")" ]; then
+	echo "$bin command not found; downloading to $bin_dir"
 	mkdir -p "$bin_dir"
-	curl -L https://yt-dl.org/downloads/latest/youtube-dl -o "$bin_dir/youtube-dl"
-	chmod a+rx "$bin_dir/youtube-dl"
+	curl -L "$download_link" -o "$bin_dir/$bin"
+	chmod a+rx "$bin_dir/$bin"
 fi
 
 while [ $# -gt 0 ]; do
@@ -29,6 +40,6 @@ while [ $# -gt 0 ]; do
 	shift
 done
 
-cmd="youtube-dl $extra_opts $(printf "%s" "$original_args" | sed 's/&/\\&/g')"
+cmd="$bin $extra_opts $(printf "%s" "$original_args" | sed 's/&/\\&/g')"
 echo "$cmd"
 eval "$cmd"
