@@ -1,16 +1,15 @@
 #!/bin/bash
 
 # Add an entry to ledger.csv that has 4 columns:
-# Date,Amount,Description,Categories
-# Categories can be used to group rows;
-# multiple categories for the same entry are separated by spaces.
+# Date,Amount,Description,Category
+# Categories can be used to group rows.
 # Later you can make some fancy awk scripts for the csv to build reports.
 
 csv="$HOME/storage/shared/backup/docs/ledger.csv"
 date=
 amount="-"
 description=
-categories=
+category=
 
 [ -f "$csv" ] || { echo "No $csv" >&2; exit 1; }
 
@@ -31,11 +30,10 @@ existing_categories="$(awk -F, 'NR>1{print $4}' "$csv" \
 	| sort --ignore-case \
 	| uniq --ignore-case \
 	| paste -sd' ')"
-while [[ ! "$categories" =~ ^[a-z0-9\ ]+$ ]]; do
-	read -erp "Categories ($existing_categories): " \
-		-i "$categories" categories
+while [[ ! "$category" =~ ^[a-z0-9]+$ ]]; do
+	read -erp "Category ($existing_categories): " -i "$category" category
 done
 
-echo "$date,$amount,$description,$categories" >> "$csv"
+echo "$date,$amount,$description,$category" >> "$csv"
 
 column -ts, "$csv" | sort -n | less -S +G
