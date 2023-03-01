@@ -44,14 +44,15 @@ ethernet _first_ {
 
 battery all {
         format = "B: %percentage %remaining %status"
+        format_down = ""
         status_chr = "+"
         status_bat = "-"
         status_unk = "?"
         status_full = "="
         integer_battery_capacity = "true"
-        low_threshold = "30"
-        threshold_type = "percentage"
-        format_down = ""
+        # color red when less than 60 minutes left
+        low_threshold = "60"
+        threshold_type = "time"
 }
 
 disk "/" {
