@@ -2,7 +2,7 @@
 # https://github.com/termux/termux-widget
 # For backing up receipts, licenses, manuals, etc.
 # Prompts to move latest file in the DCIM dir to somewhere in backup docs.
-dcim_dir="$HOME/storage/dcim"
+dcim_dir="$HOME/storage/dcim/Camera"
 docs_dir="$HOME/storage/shared/backup/docs"
 
 latest_file="$(find -L "$dcim_dir" -type f -name '*.jpg' -printf '%T@ %P\n' \
@@ -19,7 +19,7 @@ fail() {
 
 echo "Move $latest_file to?"
 echo "Spaces will be underscores and missing file ext will be added:"
-read -e -r -i "$docs_dir/" dest
+read -eri "$docs_dir/" dest
 
 # replace all spaces with underscores
 dest="${dest// /_}"
@@ -31,11 +31,11 @@ ext="${latest_file##*.}"
 [ -n "$dest" ] || fail "No destination."
 
 if [ -e "$dest" ]; then
-	read -p "$dest exists. Continue? [y/N] "
+	read -rp "$dest exists. Continue? [y/N] "
 	[[ "${REPLY,,}" != y* ]] && exit 1
 fi
 
-read -p 'Compress to percentage? (Empty skips) ' -ei 10% quality
+read -rp 'Compress to percentage? (Empty skips) ' -ei 5% quality
 if [ -n "$quality" ]; then
 	magick "$dcim_dir/$latest_file" -quality "$quality" "$dest"
 	[ $? -eq 0 ] || fail 'No changes were made.'
@@ -44,10 +44,10 @@ else
 fi
 
 echo "Opening for preview $dest"
-termux-open "$dest"
+termux-share "$dest"
 
-read -p "Delete original $latest_file? [Y/n] "
+read -rp "Delete original $latest_file? [Y/n] "
 [[ "${REPLY,,}" != n* ]] && rm "$dcim_dir/$latest_file"
 
 printf 'Press Enter...'
-read _
+read
