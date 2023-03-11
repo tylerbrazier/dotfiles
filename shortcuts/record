@@ -1,0 +1,52 @@
+#!/bin/bash
+# https://github.com/termux/termux-widget
+
+cmd=termux-microphone-record
+dest_dir=$HOME/storage/shared/backup/temp
+
+# check if it can be run
+eval "$cmd -h" >/dev/null || exit
+
+is_recording() {
+	[[ "$(eval "$cmd -i" | awk '/isRecording/ {print $2}')" == true* ]]
+}
+
+if is_recording; then
+	printf "Already recording. Press anything to stop..."
+	read -rsn 1
+else
+	eval "$cmd -l 0"
+	SECONDS=0  # bash will update this var each second
+	echo 'Press anything to stop.'
+	while ! read -rsn 1 -t 1; do # wait 1 second for input...
+		# then show the updated elapsed time:
+		# \r (carriage return) moves the cursor to beginning of line
+		# \e[0K clears the line
+		# https://en.wikipedia.org/wiki/ANSI_escape_code
+		printf "\r\e[0K%02i:%02i" $((SECONDS/60)) $((SECONDS%60))
+		is_recording || break
+	done
+fi
+
+echo
+q="$(eval "$cmd -q")"
+echo "$q"
+f="$(echo "$q" | awk '/\.m4a$/ {print $NF}')"
+[ -f "$f" ] || exit
+
+until [[ "$keep" =~ [ynYN].* ]]; do
+	read -erp "Keep it? " -i 'y' keep
+done
+[[ "$keep" =~ [yY].* ]] || { rm "$f"; exit; }
+
+read -erp "Where? " -i "$dest_dir/" dest
+[ -n "$dest" ] || { echo 'Nothing moved.'; exit; }
+
+# replace all spaces with underscores
+dest="${dest// /_}"
+# append extension if missing
+ext="${f##*.}"
+[[ "$dest" == *.$ext ]] || dest="$dest.$ext"
+
+mv -i "$f" "$dest"
+[ -f "$dest" ] && du -h "$dest"
