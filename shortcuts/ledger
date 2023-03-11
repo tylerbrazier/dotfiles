@@ -1,5 +1,5 @@
 #!/bin/bash
-
+# https://github.com/termux/termux-widget
 # Add an entry to ledger.csv that has 4 columns:
 # Date,Amount,Description,Category
 # Categories can be used to group rows.
