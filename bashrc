@@ -40,13 +40,13 @@ export MANPAGER='vim -M +MANPAGER -' # :help manpager.vim
 # and blue $ in ssh session (white otherwise).
 # https://wiki.archlinux.org/index.php/Bash/Prompt_customization
 PS1='\w '
-PS1+='\[$([[ $(git status -s 2>/dev/null) ]] && tput setaf 1 || tput setaf 2)\]'
-PS1+='$(git branch 2>/dev/null | sed -e "/^[^*]/d" -e "s/^* \(.*\)/\1 /")'
-PS1+='\[$(tput sgr0)\]'
+PS1+='\[\e[3$([[ $(git status -s 2>/dev/null) ]] && printf 1 || printf 2)m\]'
+PS1+='$(git branch 2>/dev/null | awk "/^*/ {printf \"%s \",substr(\$0,3)}")'
+PS1+='\[\e[39m\]' # reset foreground color
 PS1+='$([[ $(jobs) ]] && printf "\j ")'
-PS1+='\[$([ -z "$SSH_CONNECTION" ] || tput setaf 4)\]'
-PS1+='\$'
-PS1+='\[$(tput sgr0)\] '
+PS1+='$([ -z "$SSH_CONNECTION" ] || printf "\[\e[34m\]")'
+PS1+='\$ '
+PS1+='\[\e[39m\]' # reset foreground color
 
 # Use current working dir as the terminal's title:
 # https://wiki.archlinux.org/title/Alacritty#%22user@host:cwd%22_in_window_title_bar
