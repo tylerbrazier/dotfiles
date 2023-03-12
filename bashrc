@@ -2,12 +2,13 @@
 [[ $- != *i* ]] && return
 
 alias ls='ls -h --color=auto'
-alias cp='cp -r'
 alias rm='rm -r'
+alias cp='cp -r'
+alias scp='scp -r'
 alias mkdir='mkdir -p'
-alias grep='grep --color=auto -I'
+alias grep='grep --color=auto -i -I'
 alias df='df -h'
-alias du='du -h'
+alias du='du -h -s'
 
 alias x='tar -xzvf'
 
