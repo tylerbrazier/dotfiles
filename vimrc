@@ -42,6 +42,9 @@ noremap j gj
 " put over visual selection won't overwrite register with the replaced text
 vnoremap p pgvy
 
+" make * work on visual selection (doesn't work over multiple lines tho)
+vnoremap * y/\V<C-R>=escape(@",'/\')<CR><CR>
+
 " escape twice to get out of terminal mode
 tnoremap <Esc><Esc> <C-\><C-N>
 
