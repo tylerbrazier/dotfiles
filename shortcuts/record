@@ -18,7 +18,7 @@ else
 	eval "$cmd -l 0"
 	SECONDS=0  # bash will update this var each second
 	echo 'Press anything to stop.'
-	while ! read -rsn 1 -t 1; do # wait 1 second for input...
+	until read -rsn 1 -t 1; do # wait 1 second for input...
 		# then show the updated elapsed time:
 		# \r (carriage return) moves the cursor to beginning of line
 		# \e[0K clears the line
@@ -50,3 +50,5 @@ ext="${f##*.}"
 
 mv -i "$f" "$dest"
 [ -f "$dest" ] && du -h "$dest"
+
+read -rp 'Press Enter...'
