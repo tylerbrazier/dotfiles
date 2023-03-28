@@ -50,5 +50,4 @@ termux-share "$dest"
 read -rp "Delete original $latest_file? [Y/n] "
 [[ "${REPLY,,}" != n* ]] && rm "$dcim_dir/$latest_file"
 
-printf 'Press Enter...'
-read -r
+read -rp 'Press Enter...'
