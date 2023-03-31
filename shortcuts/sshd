@@ -14,8 +14,15 @@ printf "\nTo sftp:    sftp -P %s ..." "$port"
 printf "\n\n"
 
 fingerprints="$(cat "$PREFIX"/etc/ssh/ssh_host_*.pub | ssh-keygen -lf -)"
-printf "Fingerprints:\n%s\n\n" "$fingerprints"
+printf "Fingerprints:\n%s" "$fingerprints"
 
-printf 'Press Enter to end the process...'
+printf "\n\nAcquiring wakelock..."
+termux-wake-lock
+
+printf '\n\nPress Enter to end the process...'
 read -r _
+
+printf "\nReleasing wakelock..."
+termux-wake-unlock
+
 killall sshd
