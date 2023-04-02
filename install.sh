@@ -1,9 +1,17 @@
-#!/bin/sh
+#!/bin/bash
 
 cd "$(dirname "$0")" || exit
-echo "Type 'y' to confirm:"
-git ls-files \
-	| awk '! /readme|install\.sh/' \
-	| xargs -p -I{} install -D -m644 {} "$HOME/.{}"
 
-chmod -f +x "$HOME"/.local/bin/* "$HOME"/.shortcuts/*
+echo "Press y or n:"
+for f in $(git ls-files); do
+	[[ "$f" =~ readme|install.sh ]] && continue
+
+	REPLY=; until [[ "$REPLY" =~ [ynYN] ]]; do
+		read -rn1 -p "$f? "; echo
+	done
+
+	[[ "$REPLY" =~ [nN] ]] && continue
+
+	[[ "$f" == */* ]] && mkdir -p "$HOME/.${f%/*}"
+	ln -sf "$PWD/$f" "$HOME/.$f"
+done
