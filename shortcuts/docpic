@@ -16,28 +16,26 @@ fail() {
 	exit 1
 }
 
-[ -f "$dcim_dir/$latest_file" ] || fail "$latest_file is not a file."
+[[ -f "$dcim_dir/$latest_file" ]] || fail "$latest_file is not a file."
 
-echo "Move $latest_file to?"
-echo "Spaces will be underscores and missing file ext will be added:"
-read -eri "$docs_dir/" dest
-
-[ -n "$dest" ] || fail "No destination."
+while [[ -z $dest ]] || [[ -d $dest ]]; do
+	echo "Move $latest_file to? (spaces and ext will be fixed)"
+	read -eri "$docs_dir/" dest
+done
 
 # replace all spaces with underscores
 dest="${dest// /_}"
-
 # append extension if missing
 ext="${latest_file##*.}"
-[[ "$dest" == *.$ext ]] || dest="$dest.$ext"
+[[ $dest == *.$ext ]] || dest="$dest.$ext"
 
-if [ -e "$dest" ]; then
-	read -rp "$dest exists. Continue? [y/N] "
-	[[ "${REPLY,,}" != y* ]] && exit 1
+if [[ -e "$dest" ]]; then
+	read -rp "$dest exists. Continue? " -ei 'n'
+	[[ $REPLY =~ [Yy].* ]] || exit 1
 fi
 
 read -rp 'Compress to percentage? (Empty skips) ' -ei 5% quality
-if [ -n "$quality" ]; then
+if [[ -n $quality ]]; then
 	magick "$dcim_dir/$latest_file" -quality "$quality" "$dest" \
 		|| fail 'No changes were made.'
 else
@@ -47,7 +45,7 @@ fi
 echo "Opening for preview $dest"
 termux-share "$dest"
 
-read -rp "Delete original $latest_file? [Y/n] "
-[[ "${REPLY,,}" != n* ]] && rm "$dcim_dir/$latest_file"
+read -rp "Delete original $latest_file? " -ei 'y'
+[[ $REPLY =~ [nN].* ]] || rm "$dcim_dir/$latest_file"
 
 read -rp 'Press Enter...'
