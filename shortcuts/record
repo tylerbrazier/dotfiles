@@ -27,28 +27,29 @@ else
 		is_recording || break
 	done
 fi
-
 echo
+
 q="$(eval "$cmd -q")"
 echo "$q"
 f="$(echo "$q" | awk '/\.m4a$/ {print $NF}')"
-[ -f "$f" ] || exit
+[[ -f $f ]] || exit
 
-until [[ "$keep" =~ [ynYN].* ]]; do
+until [[ $keep =~ [ynYN].* ]]; do
 	read -erp "Keep it? " -i 'y' keep
 done
-[[ "$keep" =~ [yY].* ]] || { rm "$f"; exit; }
+[[ $keep =~ [yY].* ]] || { rm "$f"; exit; }
 
-read -erp "Where? " -i "$dest_dir/" dest
-[ -n "$dest" ] || { echo 'Nothing moved.'; exit; }
+while [[ -z $dest ]] || [[ -d $dest ]]; do
+	read -erp "Where? " -i "$dest_dir/" dest
+done
 
 # replace all spaces with underscores
 dest="${dest// /_}"
 # append extension if missing
 ext="${f##*.}"
-[[ "$dest" == *.$ext ]] || dest="$dest.$ext"
+[[ $dest == *.$ext ]] || dest="$dest.$ext"
 
 mv -i "$f" "$dest"
-[ -f "$dest" ] && du -h "$dest"
+[[ -f $dest ]] && du -h "$dest"
 
 read -rp 'Press Enter...'
