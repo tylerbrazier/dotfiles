@@ -13,14 +13,14 @@ set $left h
 set $down j
 set $up k
 set $right l
-# Colors
-set $white #ffffff
-set $black #000000
-set $grey  #808080
-set $dark  #404040
-set $red   #ff0000
-set $blue  #0080ff
-set $glass #000000bf
+# Colors are set by ~/.local/bin/chtheme from dotfiles
+set $solid_bg #000000
+set $clear_bg #000000c0
+set $focused_txt #ffffff
+set $blurred_txt #808080
+set $focused_bdr #0080ff
+set $blurred_bdr #404040
+set $urgent_bdr #ff0000
 # Your preferred terminal emulator
 set $term foot
 # Scratch term launched with mod+shift+enter
@@ -30,21 +30,21 @@ set $scratch_term foot --app-id=scratch
 # on the original workspace that the command was run on.
 set $menu $HOME/.local/bin/dmenu_history -l 12 \
                                          -fn 'monospace-12' \
-                                         -nb '$black'    \
-                                         -nf '$grey'  \
-                                         -sb '$black'   \
-                                         -sf '$white' \
+                                         -nb '$solid_bg' \
+                                         -nf '$blurred_txt' \
+                                         -sb '$solid_bg' \
+                                         -sf '$focused_txt' \
                                          | xargs swaymsg exec --
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-# These are from package archlinux-wallpaper:
-output * bg /usr/share/backgrounds/archlinux/gritty.png fill $black
-#output * bg /usr/share/backgrounds/archlinux/landscape.jpg fill $black
+# Files in /usr/share/backgrounds/archlinux/ are from package archlinux-wallpaper;
+# image is set by ~/.local/bin/chtheme from dotfiles
+output * bg /usr/share/backgrounds/archlinux/gritty.png fill $solid_bg
 # For a solid color:
-#output * bg $black solid_color
+#output * bg $solid_bg solid_color
 #
 # Example configuration:
 #
@@ -56,19 +56,21 @@ output * bg /usr/share/backgrounds/archlinux/gritty.png fill $black
 font monospace 12
 # Don't show borders if there's only one window:
 smart_borders on
-# This will hide window title bars:
+# This will hide tiling window title bars:
 default_border pixel
+# Same thickness for title border as the window border:
+titlebar_border_thickness 2
 # For gaps between windows and edges of the screen:
 #gaps inner 8
 #gaps outer 8
 # No gaps if there's only one window:
 #smart_gaps on
-# Window colors:         #title border  #title bg  #title text  #indicator  #window border
-client.focused           $blue          $glass     $white       $white      $blue
-client.focused_tab_title $blue          $glass     $white
-client.focused_inactive  $dark          $glass     $grey        $dark       $dark
-client.unfocused         $dark          $glass     $grey        $dark       $dark
-client.urgent            $red           $glass     $white       $red        $red
+# Window colors:         Title Border: Title bg: Title Text:  Indicator:   Window Border:
+client.focused           $focused_bdr  $clear_bg $focused_txt $focused_txt $focused_bdr
+client.focused_tab_title $focused_bdr  $clear_bg $focused_txt
+client.focused_inactive  $blurred_bdr  $clear_bg $blurred_txt $blurred_bdr $blurred_bdr
+client.unfocused         $blurred_bdr  $clear_bg $blurred_txt $blurred_bdr $blurred_bdr
+client.urgent            $urgent_bdr   $clear_bg $focused_txt $urgent_bdr  $urgent_bdr
 
 ### Idle configuration
 #
@@ -281,15 +283,15 @@ bar {
     #modifier $mod
 
     colors {
-        statusline $white
-        background $glass
-        separator  $blue
+        statusline $focused_txt
+        background $clear_bg
+        separator  $focused_bdr
 
-        # Workspaces       #border  #background  #text
-        focused_workspace  $glass   $glass       $white
-        active_workspace   $glass   $glass       $grey
-        inactive_workspace $glass   $glass       $grey
-        urgent_workspace   $red     $glass       $white
+        # Workspaces:      Border:     Background: Text:
+        focused_workspace  $clear_bg   $clear_bg   $focused_txt
+        active_workspace   $clear_bg   $clear_bg   $blurred_txt
+        inactive_workspace $clear_bg   $clear_bg   $blurred_txt
+        urgent_workspace   $urgent_bdr $clear_bg   $focused_txt
     }
 }
 

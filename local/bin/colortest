@@ -1,5 +1,5 @@
 #!/bin/sh
-printf "Current colors:
+printf "See https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
 \e[30m 0 Normal Black (true black)
 \e[31m 1 Normal Red
 \e[32m 2 Normal Green
@@ -16,42 +16,4 @@ printf "Current colors:
 \e[95m13 Bright Magenta
 \e[96m14 Bright Cyan
 \e[97m15 Bright White (true white)
-\e[0m
-Good hex colors for a light background:
-\e[38;2;0;0;0m000000 Normal Black (true black)
-\e[38;2;255;0;0mff0000 Normal Red
-\e[38;2;0;80;0m008000 Normal Green
-\e[38;2;255;80;0mff8000 Normal Yellow
-\e[38;2;0;0;255m0000ff Normal Blue
-\e[38;2;255;0;80mff0080 Normal Magenta
-\e[38;2;0;80;255m0080ff Normal Cyan
-\e[38;2;192;192;192mc0c0c0 Normal White (light grey)
-\e[38;2;80;80;80m808080 Bright Black (dark grey)
-\e[38;2;255;0;0mff0000 Bright Red
-\e[38;2;0;255;0m00ff00 Bright Green
-\e[38;2;255;255;0mffff00 Bright Yellow
-\e[38;2;0;0;255m0000ff Bright Blue
-\e[38;2;255;0;255mff00ff Bright Magenta
-\e[38;2;0;255;255m00ffff Bright Cyan
-\e[38;2;255;255;255mffffff Bright White (true white)
-\e[0m
-Good hex colors for a dark background:
-\e[38;2;0;0;0m000000 Normal Black (true black)
-\e[38;2;255;0;0mff0000 Normal Red
-\e[38;2;0;255;80m00ff80 Normal Green
-\e[38;2;255;80;0mff8000 Normal Yellow
-\e[38;2;0;80;255m0080ff Normal Blue
-\e[38;2;255;0;80mff0080 Normal Magenta
-\e[38;2;0;255;255m00ffff Normal Cyan
-\e[38;2;192;192;192mc0c0c0 Normal White (light grey)
-\e[38;2;80;80;80m808080 Bright Black (dark grey)
-\e[38;2;255;0;0mff0000 Bright Red
-\e[38;2;0;255;0m00ff00 Bright Green
-\e[38;2;255;255;0mffff00 Bright Yellow
-\e[38;2;0;80;255m0080ff Bright Blue
-\e[38;2;255;0;255mff00ff Bright Magenta
-\e[38;2;0;255;255m00ffff Bright Cyan
-\e[38;2;255;255;255mffffff Bright White (true white)
-\e[0m
-See https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
-"
+\e[39m"

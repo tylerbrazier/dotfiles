@@ -1,0 +1,186 @@
+#!/bin/bash
+# Change the color theme of sway, terminal, etc.
+
+theme="$1"
+if [ -z "$theme" ]; then
+	echo 'Needs theme name argument (light/dark)' >&2
+	exit 1
+fi
+
+case "$theme" in
+	light)
+		# Terminal colors:
+		term_black=000000         # (true black)
+		term_red=ff0000
+		term_green=008000
+		term_yellow=ff8000
+		term_blue=0000ff
+		term_magenta=ff0080
+		term_cyan=0080ff
+		term_white=c0c0c0         # (light grey)
+		term_bright_black=808080  # (dark grey)
+		term_bright_red=ff0000
+		term_bright_green=00ff00
+		term_bright_yellow=ffff00
+		term_bright_blue=0000ff
+		term_bright_magenta=ff00ff
+		term_bright_cyan=00ffff
+		term_bright_white=ffffff  # (true white)
+
+		# Sway config:
+		sway_solid_bg=ffffee
+		sway_clear_bg=ffffffc0
+		sway_focused_txt=000000
+		sway_blurred_txt=808080
+		sway_focused_bdr=0000ff
+		sway_blurred_bdr=c0c0c0
+		sway_urgent_bdr=ff0000
+		# from package archlinux-wallpaper:
+		sway_bg_img=/usr/share/backgrounds/archlinux/landscape.jpg
+
+		# swaynag
+		swaynag_txt=$sway_focused_txt
+		swaynag_bg=$sway_clear_bg
+
+		# i3status:
+		i3status_good=008000
+		i3status_degraded=ff8000
+		i3status_bad=ff0000
+
+		# foot terminal:
+		foot_foreground=000000
+		foot_background=ffffff
+
+		# Termux:
+		termux_foreground=000000
+		termux_background=ffffee
+		termux_cursor=$termux_foreground
+		;;
+	dark)
+		# Terminal colors:
+		term_black=000000         # (true black)
+		term_red=ff0000
+		term_green=00ff80
+		term_yellow=ff8000
+		term_blue=0080ff
+		term_magenta=ff0080
+		term_cyan=00ffff
+		term_white=c0c0c0         # (light grey)
+		term_bright_black=808080  # (dark grey)
+		term_bright_red=ff0000
+		term_bright_green=00ff00
+		term_bright_yellow=ffff00
+		term_bright_blue=0080ff
+		term_bright_magenta=ff00ff
+		term_bright_cyan=00ffff
+		term_bright_white=ffffff  # (true white)
+
+		# Sway config:
+		sway_solid_bg=000000
+		sway_clear_bg=000000c0
+		sway_focused_txt=ffffff
+		sway_blurred_txt=808080
+		sway_focused_bdr=0080ff
+		sway_blurred_bdr=404040
+		sway_urgent_bdr=ff0000
+		# from package archlinux-wallpaper:
+		sway_bg_img=/usr/share/backgrounds/archlinux/gritty.png
+
+		# swaynag
+		swaynag_txt=$sway_focused_txt
+		swaynag_bg=$sway_clear_bg
+
+		# i3status:
+		i3status_good=00ff80
+		i3status_degraded=ff8000
+		i3status_bad=ff0000
+
+		# foot terminal:
+		foot_foreground=ffffff
+		foot_background=000000
+
+		# Termux:
+		termux_foreground=ffffff
+		termux_background=000000
+		termux_cursor=$termux_foreground
+		;;
+	*)
+		echo "No theme named '$theme'" >&2
+		exit 1
+		;;
+esac
+
+# Map of file names to sed commands
+# (sed help: https://www.grymoire.com/Unix/Sed.html)
+declare -A changes=(
+["$HOME/.config/sway/config"]="
+/^set \$solid_bg / s/#.*/#$sway_solid_bg/
+/^set \$clear_bg / s/#.*/#$sway_clear_bg/
+/^set \$focused_txt / s/#.*/#$sway_focused_txt/
+/^set \$blurred_txt / s/#.*/#$sway_blurred_txt/
+/^set \$focused_bdr / s/#.*/#$sway_focused_bdr/
+/^set \$blurred_bdr / s/#.*/#$sway_blurred_bdr/
+/^set \$urgent_bdr / s/#.*/#$sway_urgent_bdr/
+/^output \* bg/ s|bg .*|bg $sway_bg_img fill \$solid_bg|
+"
+["$HOME/.config/swaynag/config"]="
+/.*text=/ s/=.*/=$swaynag_txt/
+/.*background=/ s/=.*/=$swaynag_bg/
+"
+["$HOME/.config/i3status/config"]="
+/^general {/,/^}/ {
+/color_good/ s/=.*/= \"#$i3status_good\"/
+/color_degraded/ s/=.*/= \"#$i3status_degraded\"/
+/color_bad/ s/=.*/= \"#$i3status_bad\"/
+}"
+["$HOME/.config/foot/foot.ini"]="
+/^\[colors\]/,/\[.*\]/ {
+/^foreground=/ s/=.*/=$foot_foreground/
+/^background=/ s/=.*/=$foot_background/
+/^regular0=/ s/=.*/=$term_black/
+/^regular1=/ s/=.*/=$term_red/
+/^regular2=/ s/=.*/=$term_green/
+/^regular3=/ s/=.*/=$term_yellow/
+/^regular4=/ s/=.*/=$term_blue/
+/^regular5=/ s/=.*/=$term_magenta/
+/^regular6=/ s/=.*/=$term_cyan/
+/^regular7=/ s/=.*/=$term_white/
+/^bright0=/ s/=.*/=$term_bright_black/
+/^bright1=/ s/=.*/=$term_bright_red/
+/^bright2=/ s/=.*/=$term_bright_green/
+/^bright3=/ s/=.*/=$term_bright_yellow/
+/^bright4=/ s/=.*/=$term_bright_blue/
+/^bright5=/ s/=.*/=$term_bright_magenta/
+/^bright6=/ s/=.*/=$term_bright_cyan/
+/^bright7=/ s/=.*/=$term_bright_white/
+}"
+["$HOME/.termux/colors.properties"]="
+/^foreground=/ s/=.*/=#$termux_foreground/
+/^background=/ s/=.*/=#$termux_background/
+/^cursor=/ s/=.*/=#$termux_cursor/
+/^color0=/ s/=.*/=#$term_black/
+/^color1=/ s/=.*/=#$term_red/
+/^color2=/ s/=.*/=#$term_green/
+/^color3=/ s/=.*/=#$term_yellow/
+/^color4=/ s/=.*/=#$term_blue/
+/^color5=/ s/=.*/=#$term_magenta/
+/^color6=/ s/=.*/=#$term_cyan/
+/^color7=/ s/=.*/=#$term_white/
+/^color8=/ s/=.*/=#$term_bright_black/
+/^color9=/ s/=.*/=#$term_bright_red/
+/^color10=/ s/=.*/=#$term_bright_green/
+/^color11=/ s/=.*/=#$term_bright_yellow/
+/^color12=/ s/=.*/=#$term_bright_blue/
+/^color13=/ s/=.*/=#$term_bright_magenta/
+/^color14=/ s/=.*/=#$term_bright_cyan/
+/^color15=/ s/=.*/=#$term_bright_white/
+")
+
+for f in "${!changes[@]}"; do
+	[ -f "$f" ] || { echo "Skipping $f"; continue; }
+	sed -i~ "${changes["$f"]}" "$f"
+	diff -u --color "$f~" "$f" && echo "Unchanged $f"
+	rm "$f~"
+done
+
+echo "Remember to update your browser theme."

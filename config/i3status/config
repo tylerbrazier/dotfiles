@@ -11,9 +11,10 @@ general {
 
         colors = true
 
-        color_good =     "#00ff80"
+        # These are set by ~/.local/bin/chtheme from dotfiles
+        color_good = "#00ff80"
         color_degraded = "#ff8000"
-        color_bad =      "#ff0000"
+        color_bad = "#ff0000"
 }
 
 order += "volume master"
@@ -80,3 +81,5 @@ memory {
 tztime local {
         format = "%Y-%m-%d %I:%M %p"
 }
+
+# vim: expandtab

@@ -1,21 +1,25 @@
+# Colors are set by ~/.local/bin/chtheme from dotfiles
+# To test what it looks like:
+# echo details | swaynag -l -t error/warning -m text -b button echo
+
 font=monospace 12
 
 [error]
 text=ffffff
-background=000000bf
+background=000000c0
 border-bottom=ff0000
-details-background=000000bf
+details-background=000000c0
 button-text=ffffff
-button-background=000000bf
+button-background=000000c0
 button-border-size=2
 border=ff0000
 
 [warning]
 text=ffffff
-background=000000bf
+background=000000c0
 border-bottom=ff8000
-details-background=000000bf
+details-background=000000c0
 button-text=ffffff
-button-background=000000bf
+button-background=000000c0
 button-border-size=2
 border=ff8000
