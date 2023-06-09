@@ -50,6 +50,7 @@ case "$theme" in
 		# foot terminal:
 		foot_foreground=000000
 		foot_background=ffffff
+		foot_cursor="$foot_background $foot_foreground"
 
 		# Termux:
 		termux_foreground=000000
@@ -98,6 +99,7 @@ case "$theme" in
 		# foot terminal:
 		foot_foreground=ffffff
 		foot_background=000000
+		foot_cursor="$foot_background $foot_foreground"
 
 		# Termux:
 		termux_foreground=ffffff
@@ -153,6 +155,9 @@ declare -A changes=(
 /^bright5=/ s/=.*/=$term_bright_magenta/
 /^bright6=/ s/=.*/=$term_bright_cyan/
 /^bright7=/ s/=.*/=$term_bright_white/
+}
+/^\[cursor\]/,/\[.*\]/ {
+/^color=/ s/=.*/=$foot_cursor/
 }"
 ["$HOME/.termux/colors.properties"]="
 /^foreground=/ s/=.*/=#$termux_foreground/
