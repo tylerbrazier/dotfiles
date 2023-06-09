@@ -177,10 +177,12 @@ declare -A changes=(
 ")
 
 for f in "${!changes[@]}"; do
-	[ -f "$f" ] || { echo "Skipping $f"; continue; }
+	[ -f "$f" ] || { skipped+="${f/$HOME/\~}\n"; continue; }
 	sed -i~ "${changes["$f"]}" "$f"
-	diff -u --color "$f~" "$f" && echo "Unchanged $f"
+	diff -u --color "$f~" "$f" && unchanged+="${f/$HOME/\~}\n"
 	rm "$f~"
 done
 
+[ -n "$unchanged" ] && echo -e "$unchanged" | xargs -L1 echo Unchanged
+[ -n "$skipped" ] && echo -e "$skipped" | xargs -L1 echo Skipped missing
 echo "Remember to update your browser theme."
