@@ -3,5 +3,5 @@
 # Prompt to edit a file
 
 # The -e gets input from readline so tab completion will work
-read -eri "vim ~/storage/shared/backup/docs/"
+read -eri "vim '+cd %:h' ~/storage/shared/backup/docs/"
 bash -c "$REPLY"
