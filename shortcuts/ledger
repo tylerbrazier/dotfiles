@@ -4,24 +4,75 @@
 # Date,Amount,Description,Category
 # Categories can be used to group rows.
 # Later you can make some fancy awk scripts for the csv to build reports.
+# The script is meant to be an interactive shortcut run in termux
+# but can be executed with command line arguments for automation.
 
+usage="Usage:	$0
+	[-h|--help]
+	[-d|--date yyyy-mm-dd]
+	[-a|--amount [+]xx.xx]
+	[-D|--description 'what you spent money on']
+	[-c|--category something]"
 csv="$HOME/storage/shared/backup/docs/ledger.csv"
 date=
 amount="-"
 description=
 category=
 
-[ -f "$csv" ] || { echo "No $csv" >&2; exit 1; }
+fail() { echo "$1" >&2; exit 1; }
+check_arg() { [ -z "$1" ] || [ "${1:0:1}" == "-" ] && fail "$usage"; }
+valid_date() { [[ "$date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; }
+valid_amount() { [[ "$amount" =~ ^[+-]?[0-9]+(\.[0-9]+)?$ ]]; }
+valid_description() { [[ "$description" =~ ^[^,]+$ ]]; }
+valid_category() { [[ "$category" =~ ^[a-z0-9]+$ ]]; }
 
-while [[ ! "$date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; do
+[ -f "$csv" ] || fail "No $csv"
+
+while [ $# -gt 0 ]; do
+	case "$1" in
+		-h|--help)
+			echo "$usage"
+			exit 0
+			;;
+		-d|--date)
+			check_arg "$2"
+			date="$2"
+			valid_date || fail "Invalid date."
+			shift 2
+			;;
+		-a|--amount)
+			check_arg "$2"
+			amount="$2"
+			[ "${2:0:1}" != "+" ] && amount="-$amount"
+			valid_amount || fail "Invalid amount."
+			shift 2
+			;;
+		-D|--description)
+			check_arg "$2"
+			description="$2"
+			valid_description || fail "Invalid description."
+			shift 2
+			;;
+		-c|--category)
+			check_arg "$2"
+			category="$2"
+			valid_category || fail "Invalid category."
+			shift 2
+			;;
+		*)
+			fail "$usage"
+	esac
+done
+
+until valid_date; do
 	read -erp "Date: " -i "$(date +%Y-%m-%d)" date
 done
 
-while [[ ! "$amount" =~ ^[+-]?[0-9]+(\.[0-9]+)?$ ]]; do
+until valid_amount; do
 	read -erp "Amount: $" -i "$amount" amount
 done
 
-while [[ ! "$description" =~ ^[^,]+$ ]]; do
+until valid_description; do
 	read -erp "Description (no commas): " -i "$description" description
 done
 
@@ -30,7 +81,7 @@ existing_categories="$(awk -F, 'NR>1{print $4}' "$csv" \
 	| sort --ignore-case \
 	| uniq --ignore-case \
 	| paste -sd' ')"
-while [[ ! "$category" =~ ^[a-z0-9]+$ ]]; do
+until valid_category; do
 	read -erp "Category ($existing_categories): " -i "$category" category
 done
 
