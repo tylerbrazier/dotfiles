@@ -15,19 +15,6 @@ alias x='tar -xzvf'
 # auto ls after cd
 cd() { builtin cd "$@" && ls; }
 
-# case insensitive completion
-bind 'set completion-ignore-case on'
-
-# completion shows suggestions on first Tab press
-bind 'set show-all-if-ambiguous on'
-
-# color the completion suggestions
-bind 'set colored-stats on'
-
-# make history navigation with arrows filter by the text before the cursor
-bind '"\e[A": history-search-backward'
-bind '"\e[B": history-search-forward'
-
 # prevent ctrl-s from freezing output
 stty -ixon
 

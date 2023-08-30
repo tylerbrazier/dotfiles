@@ -1,0 +1,12 @@
+# Case insensitive completion
+set completion-ignore-case on
+
+# Completion shows suggestions on first Tab press
+set show-all-if-ambiguous on
+
+# Color the completion suggestions
+set colored-stats on
+
+# Make history navigation with arrows filter by the text before the cursor
+"\e[A": history-search-backward
+"\e[B": history-search-forward
