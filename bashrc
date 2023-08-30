@@ -12,12 +12,13 @@ alias du='du -h -s'
 
 alias x='tar -xzvf'
 
-# auto ls after cd
+# Auto ls after cd
 cd() { builtin cd "$@" && ls; }
 
-# prevent ctrl-s from freezing output
+# Prevent ctrl-s from freezing output
 stty -ixon
 
+# Add ~/.local/bin to PATH if not already (e.g. from sourcing ~/.bashrc again)
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && export PATH="$HOME/.local/bin:$PATH"
 
 export HISTCONTROL=ignoredups
