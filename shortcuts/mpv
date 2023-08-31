@@ -1,0 +1,5 @@
+#!/bin/bash
+# https://github.com/termux/termux-widget
+
+read -eri "timeout --foreground 30m mpv ~/storage/shared/backup/audio/"
+eval "$REPLY"
