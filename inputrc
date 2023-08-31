@@ -1,3 +1,8 @@
+# This is the configuration file for readline, the library used by
+# the bash prompt, read -e, and other things for handling
+# key bindings, Tab completion, etc.
+# See the READLINE section in `man 1 bash`.
+
 # Case insensitive completion
 set completion-ignore-case on
 
