@@ -3,3 +3,13 @@
 
 read -eri "timeout --foreground 30m mpv ~/storage/shared/backup/audio/"
 eval "$REPLY"
+
+# You could also do something like this using fzf
+# (tho you'd have to fix this to handle file names with spaces):
+#cd ~/storage/shared/backup/audio
+#files=$(find \
+#	| awk '{print length, $0}' \
+#	| sort -n \
+#	| sed 's/^[0-9]\+ //' \
+#	| fzf --no-sort --multi --exact)
+#timeout 30m mpv "$files"
