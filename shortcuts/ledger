@@ -1,21 +1,21 @@
 #!/bin/bash
 # https://github.com/termux/termux-widget
-# Add an entry to ledger.csv that has 4 columns:
-# Date,Amount,Description,Category
+# Add an entry to the ledger file that has 4 columns separated by tabs:
+# Date	Amount	Category	Description
 # Categories can be used to group rows.
-# Later you can make some fancy awk scripts for the csv to build reports.
+# Later you can make some fancy awk scripts to build reports.
 
-csv="$HOME/storage/shared/backup/docs/ledger.csv"
+ledger="$HOME/storage/shared/backup/docs/ledger"
 taxes="$HOME/storage/shared/backup/docs/taxes"
 docpic="$HOME/.shortcuts/docpic"
 
 valid_date() { [[ "$date" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}$ ]]; }
 valid_amount() { [[ "$amount" =~ ^[+-][0-9]+(\.[0-9]+)?$ ]]; }
-valid_description() { [[ "$description" =~ ^[^,]+$ ]]; }
+valid_description() { [[ "$description" =~ ^[^\	]+$ ]]; }
 valid_category() { [[ "$category" =~ ^[a-z0-9]+$ ]]; }
 valid_answer() { [[ "$1" =~ ^[yn] ]]; }
 
-[ -f "$csv" ] || { echo "No $csv" >&2; exit 1; }
+[ -f "$ledger" ] || { echo "No $ledger" >&2; exit 1; }
 
 until valid_date; do
 	read -erp "Date: " -i "$(date +%Y-%m-%d)" date
@@ -26,10 +26,10 @@ until valid_amount; do
 done
 
 until valid_description; do
-	read -erp "Description (no commas): " -i "$description" description
+	read -erp "Description: " -i "$description" description
 done
 
-existing_categories="$(awk -F, 'NR>1{print $4}' "$csv" \
+existing_categories="$(awk -F '\t' 'NR>1{print $3}' "$ledger" \
 	| tr ' ' '\n' \
 	| sort --ignore-case \
 	| uniq --ignore-case \
@@ -38,9 +38,9 @@ until valid_category; do
 	read -erp "Category ($existing_categories): " -i "$category" category
 done
 
-echo "$date,$amount,$description,$category" >> "$csv"
+echo "$date	$amount	$category	$description" >> "$ledger"
 
-column -ts, "$csv" | sort -n | less -S +G
+less -S +G "$ledger"
 
 until valid_answer "$deductible"; do
 	read -erp "Tax deductible? " -i 'n' deductible
