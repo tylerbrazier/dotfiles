@@ -56,6 +56,7 @@ nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <Tab>
 nnoremap <Space>b :b <Tab>
 nnoremap <Space>d :bd<CR>
+nnoremap <Space>h :help<Space>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>s :set<Space>
@@ -63,7 +64,7 @@ nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>m :make<Space><Up>
 nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
-nnoremap <Space>h :nohl<CR>
+nnoremap <Space>l :nohl<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
 nnoremap <Space>c :cexpr system("git status -s -uall \| sed '/^ D/d'")<CR>
