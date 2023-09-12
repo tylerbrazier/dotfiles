@@ -42,10 +42,10 @@ echo "$date	$amount	$category	$description" >> "$ledger"
 
 less -S +G "$ledger"
 
-until valid_answer "$deductible"; do
-	read -erp "Tax deductible? " -i 'n' deductible
+until valid_answer "$tax_note"; do
+	read -erp "Note for taxes? " -i 'n' tax_note
 done
-if [ "${deductible:0:1}" == "y" ]; then
+if [ "${tax_note:0:1}" == "y" ]; then
 	read -eri "echo '$date	$amount	$category	$description' >> $taxes"
 	eval "$REPLY"
 	less -S +G "$taxes"
