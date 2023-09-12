@@ -25,17 +25,18 @@ until valid_amount; do
 	read -erp "Amount: $" -i "-" amount
 done
 
+# make a tmp file for each category so tab completion works
+t="$(mktemp -d)"
+cd "$t" || exit
+awk -F '\t' 'NR>1{print $3}' "$ledger" | sort | uniq | xargs touch
+until valid_category; do
+	read -erp "Category: " -i "$category" category
+done
+cd "$OLDPWD" || exit
+rm -r "$t"
+
 until valid_description; do
 	read -erp "Description: " -i "$description" description
-done
-
-existing_categories="$(awk -F '\t' 'NR>1{print $3}' "$ledger" \
-	| tr ' ' '\n' \
-	| sort --ignore-case \
-	| uniq --ignore-case \
-	| paste -sd' ')"
-until valid_category; do
-	read -erp "Category ($existing_categories): " -i "$category" category
 done
 
 echo "$date	$amount	$category	$description" >> "$ledger"
