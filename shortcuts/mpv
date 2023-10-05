@@ -1,13 +1,23 @@
 #!/bin/bash
 # https://github.com/termux/termux-widget
 
+default_t=0m  # no timeout
+fzf_q=""
+
+read -erp "Timeout? " -i "$default_t" t
+[ -z "$t" ] && t="$default_t"
+
 cd ~/storage/shared/backup/audio || exit
 
-f="$(find . -printf "%d %p\n" \
-	| sort -n \
-	| sed 's/^[0-9]\+ //' \
-	| fzf --exact)"
+while true; do
+	f="$(find . -printf "%d %p\n" \
+		| sort -n \
+		| sed 's/^[0-9]\+ //' \
+		| fzf --exact -q "$fzf_q")"
 
-[ -z "$f" ] && exit
+	[ -z "$f" ] && exit
 
-timeout --foreground 30m mpv "$f"
+	timeout --foreground "$t" mpv "$f"
+
+	fzf_q="$f"
+done
