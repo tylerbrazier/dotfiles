@@ -13,7 +13,7 @@ find . -type d -printf "%P/\n" \
 	| sed '1s/^/./' \
 	| awk '{print length, $0}' \
 	| sort -n \
-	| cut -d' ' -f2 - \
+	| sed 's/^[0-9]* //' \
 	| vim -N -R -M -u <(echo "
 set nowrap
 set sidescrolloff=10
