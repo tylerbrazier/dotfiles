@@ -6,6 +6,8 @@
 dcim_dir="$HOME/storage/dcim/Camera"
 docs_dir="$HOME/storage/shared/backup/docs"
 
+read -rp "Take the picture and press Enter..."
+
 latest_file="$(find -L "$dcim_dir" -type f -name '*.jpg' -printf '%T@ %P\n' \
 	| sort -r \
 	| head -n1 \
