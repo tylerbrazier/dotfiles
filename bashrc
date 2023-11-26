@@ -23,7 +23,7 @@ stty -ixon
 
 export HISTCONTROL=ignoredups
 export EDITOR=vim
-export MANPAGER='vim -M +MANPAGER -' # :help manpager.vim
+export MANPAGER='vim -M +MANPAGER' # :help manpager.vim (w/o - for mandoc)
 
 # Prompt shows cwd, git branch (red if dirty, green otherwise), stopped jobs,
 # and blue $ in ssh session (white otherwise).
