@@ -12,15 +12,15 @@ touch "$cache"
 
 read -erp "Backup from user@host: " -i "$(head -n1 "$cache")"
 echo "$REPLY" > "$cache"
-read -eri "rsync -vhrte 'ssh -p 8022' --progress --chmod=F-w --del --backup-dir=.trash --exclude='.*' $REPLY:storage/shared/backup/ ~/backup"
+read -eri "rsync -vhrte 'ssh -p 8022' --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' $REPLY:storage/shared/backup/ ~/backup"
 eval "$REPLY"
 
 findmnt -l | grep -q '^/mnt[ \t]' || exit 0
 printf "\n(Ctrl-C to cancel)\n"
-read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='.*' ~/backup/ /mnt/backup"
+read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' ~/backup/ /mnt/backup"
 eval "$REPLY"
 
 # archive has older/larger stuff I don't want on the phone
 echo
-read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='.*' ~/archive/ /mnt/archive"
+read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' ~/archive/ /mnt/archive"
 eval "$REPLY"
