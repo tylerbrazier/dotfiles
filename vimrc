@@ -77,7 +77,7 @@ augroup vimrc
 
 	autocmd FileType gitcommit setlocal spell
 	autocmd FileType qf setlocal nowrap colorcolumn=0 scrolloff=0
-	autocmd FileType sh setlocal makeprg=shellcheck\ -f\ gcc
+	autocmd FileType sh setlocal mp=shellcheck\ -f\ gcc kp=man
 
 	" auto open the quickfix window for commands that use it
 	autocmd QuickFixCmdPost * botright cwindow
