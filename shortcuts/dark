@@ -1,0 +1,5 @@
+#!/bin/bash
+# https://github.com/termux/termux-widget
+
+bash "$HOME/.local/bin/chtheme" dark
+termux-reload-settings
