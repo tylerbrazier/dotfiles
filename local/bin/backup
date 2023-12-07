@@ -19,8 +19,3 @@ findmnt -l | grep -q '^/mnt[ \t]' || exit 0
 printf "\n(Ctrl-C to cancel)\n"
 read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' ~/backup/ /mnt/backup"
 eval "$REPLY"
-
-# archive has older/larger stuff I don't want on the phone
-echo
-read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' ~/archive/ /mnt/archive"
-eval "$REPLY"
