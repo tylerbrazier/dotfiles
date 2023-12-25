@@ -68,9 +68,9 @@ nnoremap <Space>l :nohl<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
 nnoremap <Space>c :cexpr system("git status -s -uall \| sed '/^ D/d'")<CR>
-nnoremap <Space><CR> :term<Space>
 nnoremap <Space>y i<C-R>=strftime("%F")<CR>
 nnoremap <Space>z 1z=
+nnoremap <Space><CR> :term<Space><Up>
 
 augroup vimrc
 	autocmd!
