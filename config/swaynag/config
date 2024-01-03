@@ -2,7 +2,7 @@
 # To test what it looks like:
 # echo details | swaynag -l -t error/warning -m text -b button echo
 
-font=monospace 12
+font=monospace 14
 
 [error]
 text=ffffff

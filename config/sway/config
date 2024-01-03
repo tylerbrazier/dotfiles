@@ -29,7 +29,7 @@ set $scratch_term foot --app-id=scratch
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
 set $menu $HOME/.local/bin/dmenu_history -l 12 \
-                                         -fn 'monospace-12' \
+                                         -fn 'monospace-14' \
                                          -nb '$solid_bg' \
                                          -nf '$blurred_txt' \
                                          -sb '$solid_bg' \
@@ -53,7 +53,7 @@ output * bg /usr/share/backgrounds/archlinux/gritty.png fill $solid_bg
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
 ### Window configuration
-font monospace 12
+font monospace 14
 # Don't show borders if there's only one window:
 smart_borders on
 # This will hide tiling window title bars:
@@ -272,7 +272,7 @@ bindsym Print exec grim -g "$(slurp)" screenshot.png
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-    font monospace 12
+    font monospace 14
     separator_symbol ' | '
 
     # When the status_command prints a new line to stdout, swaybar updates.
