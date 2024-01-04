@@ -12,7 +12,6 @@ set formatoptions+=j    " delete comment characters when joining comment lines
 set colorcolumn=+0      " show colorcolumn at textwidth
 set wildcharm=<Tab>     " <Tab> starts completion in mappings
 set wildmode=list:longest:lastused,full
-set clipboard=unnamed,unnamedplus
 
 " case insensitive search and completion
 set ignorecase
@@ -51,6 +50,13 @@ tnoremap <Esc><Esc> <C-\><C-N>
 " use Tab to complete words (suggest recent words first)
 inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
 
+" put selected text on its own line; useful for linewise cmds like :w !...
+vnoremap <Space>p y`>:put<CR>V`.
+
+" these are useful for wl-copy/paste -n, termux-clipboard-get/set, interpreter
+vnoremap <Space>w :w !<Up>
+nnoremap <Space>r :r !<Up>
+
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <Tab>
@@ -66,7 +72,6 @@ nnoremap <Space>n :cn<CR>
 nnoremap <Space>p :cp<CR>
 nnoremap <Space>l :nohl<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
-nnoremap <Space>r :registers abcdefghijklmnopqrstuvwxyz<CR>
 nnoremap <Space>c :cexpr system("git status -s -uall \| sed '/^ D/d'")<CR>
 nnoremap <Space>y i<C-R>=strftime("%F")<CR>
 nnoremap <Space>z 1z=
