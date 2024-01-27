@@ -27,10 +27,6 @@ set noswapfile
 set splitright
 set splitbelow
 
-" wrap lines at word boundaries and show > on wrapped lines
-set linebreak
-set showbreak=>
-
 " capital Y should behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
 
@@ -49,13 +45,6 @@ tnoremap <Esc><Esc> <C-\><C-N>
 
 " use Tab to complete words (suggest recent words first)
 inoremap <expr> <Tab> getline('.')[col('.')-2] =~ '\S' ? "\<C-P>" : "\<Tab>"
-
-" put selected text on its own line; useful for linewise cmds like :w !...
-vnoremap <Space>p y`>:put<CR>V`.
-
-" these are useful for wl-copy/paste -n, termux-clipboard-get/set, interpreter
-vnoremap <Space>w :w !<Up>
-nnoremap <Space>r :r !<Up>
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
