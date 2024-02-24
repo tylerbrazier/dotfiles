@@ -56,6 +56,18 @@ case "$theme" in
 		termux_foreground=000000
 		termux_background=ffffee
 		termux_cursor=$termux_foreground
+
+		# Vim
+		vim_bg=light
+		vim_normal='ctermfg=Black'
+		vim_comment='ctermfg=DarkGray'
+		vim_constant='ctermfg=DarkBlue'
+		vim_identifier='ctermfg=DarkRed'
+		vim_statement='ctermfg=DarkGreen'
+		vim_preproc='ctermfg=DarkMagenta'
+		vim_type='ctermfg=DarkCyan'
+		vim_special='ctermfg=DarkYellow'
+		vim_visual='ctermbg=LightGray'
 		;;
 	dark)
 		# Terminal colors:
@@ -105,6 +117,18 @@ case "$theme" in
 		termux_foreground=ffffff
 		termux_background=000000
 		termux_cursor=$termux_foreground
+
+		# Vim
+		vim_bg=dark
+		vim_normal='ctermfg=White'
+		vim_comment='ctermfg=Gray'
+		vim_constant='ctermfg=Blue'
+		vim_identifier='ctermfg=Red'
+		vim_statement='ctermfg=Green'
+		vim_preproc='ctermfg=Magenta'
+		vim_type='ctermfg=Cyan'
+		vim_special='ctermfg=Yellow'
+		vim_visual='ctermbg=Gray'
 		;;
 	*)
 		echo "No theme named '$theme'" >&2
@@ -179,6 +203,18 @@ declare -A changes=(
 /^color13=/ s/=.*/=#$term_bright_magenta/
 /^color14=/ s/=.*/=#$term_bright_cyan/
 /^color15=/ s/=.*/=#$term_bright_white/
+"
+["$HOME/.vimrc"]="
+/^set background/ s/=.*/=$vim_bg/
+/^hi.*Normal/ s/cterm.*/$vim_normal/
+/^hi.*Comment/ s/cterm.*/$vim_comment/
+/^hi.*Constant/ s/cterm.*/$vim_constant/
+/^hi.*Identifier/ s/cterm.*/$vim_identifier/
+/^hi.*Statement/ s/cterm.*/$vim_statement/
+/^hi.*PreProc/ s/cterm.*/$vim_preproc/
+/^hi.*Type/ s/cterm.*/$vim_type/
+/^hi.*Special/ s/cterm.*/$vim_special/
+/^hi.*Visual/ s/cterm.*/$vim_visual/
 ")
 
 for f in "${!changes[@]}"; do

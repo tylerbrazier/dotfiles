@@ -91,6 +91,7 @@ hi DiffAdd	ctermbg=Green	ctermfg=Black
 hi DiffDelete	ctermbg=Red	ctermfg=White
 hi DiffChange	ctermbg=Blue	ctermfg=White
 hi DiffText	ctermbg=Cyan	ctermfg=Black
+hi Visual	ctermbg=Gray
 hi! link ColorColumn	Visual
 hi! link MatchParen	Visual
 hi! link QuickFixLine	Visual
