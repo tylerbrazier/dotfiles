@@ -59,7 +59,6 @@ case "$theme" in
 
 		# Vim
 		vim_bg=light
-		vim_normal='ctermfg=Black'
 		vim_comment='ctermfg=DarkGray'
 		vim_constant='ctermfg=DarkBlue'
 		vim_identifier='ctermfg=DarkRed'
@@ -120,7 +119,6 @@ case "$theme" in
 
 		# Vim
 		vim_bg=dark
-		vim_normal='ctermfg=White'
 		vim_comment='ctermfg=Gray'
 		vim_constant='ctermfg=Blue'
 		vim_identifier='ctermfg=Red'
@@ -206,7 +204,6 @@ declare -A changes=(
 "
 ["$HOME/.vimrc"]="
 /^set background/ s/=.*/=$vim_bg/
-/^hi.*Normal/ s/cterm.*/$vim_normal/
 /^hi.*Comment/ s/cterm.*/$vim_comment/
 /^hi.*Constant/ s/cterm.*/$vim_constant/
 /^hi.*Identifier/ s/cterm.*/$vim_identifier/

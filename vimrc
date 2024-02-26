@@ -78,7 +78,6 @@ packadd! editorconfig
 " :help group-name
 set background=dark
 hi clear
-hi Normal	ctermfg=White
 hi Comment	ctermfg=Gray
 hi Constant	ctermfg=Blue
 hi Identifier	ctermfg=Red
