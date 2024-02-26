@@ -6,10 +6,12 @@ set autoindent
 set autoread
 set hlsearch
 set smarttab
+set scrolloff&
 set wildignorecase " case insensitive filename completion
 set infercase      " and insert mode completion
 set ignorecase     " and search
 set smartcase      " unless search contains a capital letter
+set listchars=tab:>\ ,trail:-,nbsp:+
 set wildoptions=pum,tagfile
 set formatoptions+=j    " delete comment characters when joining comment lines
 set colorcolumn=+0      " show colorcolumn at textwidth
@@ -42,8 +44,10 @@ nnoremap <Space>t :tabedit<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>m :make<Space><Up>
-nnoremap <Space>n :cn<CR>
-nnoremap <Space>p :cp<CR>
+nnoremap <Space>o :copen<CR>
+nnoremap <Space>c :cclose<CR>
+nnoremap <Space>n :cnext<CR>
+nnoremap <Space>p :cprevious<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space><CR> :!<Up>
 
@@ -52,24 +56,7 @@ nnoremap <Space>D :vnew +set\ bt=nofile<CR>
 			\:r !git show HEAD:#<CR>:1d _<CR>:diffthis<CR>
 			\<C-W>p:diffthis<CR>
 
-augroup vimrc
-	autocmd!
-
-	autocmd FileType gitcommit setlocal spell
-	autocmd FileType qf setlocal nowrap colorcolumn=0 scrolloff=0
-	autocmd FileType sh setlocal mp=shellcheck\ -f\ gcc kp=man
-
-	" auto open the quickfix window for commands that use it
-	autocmd QuickFixCmdPost * botright cwindow
-
-	" auto close the quickfix window if it's the last one open
-	autocmd QuitPre * if winnr('$') == 2 | cclose | endif
-
-	" highlight trailing whitespace in normal mode
-	autocmd InsertLeave * match Error /\s\+$/
-	autocmd InsertEnter * match none
-augroup END
-
+runtime! ftplugin/man.vim
 packadd! editorconfig
 
 " $VIMRUNTIME/colors/README.txt
