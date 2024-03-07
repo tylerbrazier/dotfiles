@@ -28,13 +28,12 @@ set $scratch_term foot --app-id=scratch
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu $HOME/.local/bin/dmenu_history -l 12 \
-                                         -fn 'monospace-14' \
-                                         -nb '$solid_bg' \
-                                         -nf '$blurred_txt' \
-                                         -sb '$solid_bg' \
-                                         -sf '$focused_txt' \
-                                         | xargs swaymsg exec --
+set $menu $HOME/.local/bin/xmenu dmenu  -fn 'monospace-14' \
+                                        -nb '$solid_bg' \
+                                        -nf '$blurred_txt' \
+                                        -sb '$solid_bg' \
+                                        -sf '$focused_txt' \
+                                        | xargs swaymsg exec --
 
 ### Output configuration
 #
