@@ -13,14 +13,6 @@ set $left h
 set $down j
 set $up k
 set $right l
-# Colors are set by ~/.local/bin/chtheme from dotfiles
-set $solid_bg #000000
-set $clear_bg #000000c0
-set $focused_txt #ffffff
-set $blurred_txt #808080
-set $focused_bdr #0080ff
-set $blurred_bdr #404040
-set $urgent_bdr #ff0000
 # Your preferred terminal emulator
 set $term foot
 # Scratch term launched with mod+shift+enter
@@ -28,22 +20,13 @@ set $scratch_term foot --app-id=scratch
 # Your preferred application launcher
 # Note: pass the final command to swaymsg so that the resulting window can be opened
 # on the original workspace that the command was run on.
-set $menu $HOME/.local/bin/xmenu dmenu  -fn 'monospace-14' \
-                                        -nb '$solid_bg' \
-                                        -nf '$blurred_txt' \
-                                        -sb '$solid_bg' \
-                                        -sf '$focused_txt' \
-                                        | xargs swaymsg exec --
+set $menu $HOME/.local/bin/xmenu wmenu -f 'Monospace 14' | xargs swaymsg exec --
 
 ### Output configuration
 #
 # Default wallpaper (more resolutions are available in /usr/share/backgrounds/sway/)
 #output * bg /usr/share/backgrounds/sway/Sway_Wallpaper_Blue_1920x1080.png fill
-# Files in /usr/share/backgrounds/archlinux/ are from package archlinux-wallpaper;
-# image is set by ~/.local/bin/chtheme from dotfiles
-output * bg /usr/share/backgrounds/archlinux/gritty.png fill $solid_bg
-# For a solid color:
-#output * bg $solid_bg solid_color
+output * bg #323232 solid_color
 #
 # Example configuration:
 #
@@ -51,25 +34,11 @@ output * bg /usr/share/backgrounds/archlinux/gritty.png fill $solid_bg
 #
 # You can get the names of your outputs by running: swaymsg -t get_outputs
 
-### Window configuration
 font monospace 14
 # Don't show borders if there's only one window:
 smart_borders on
 # This will hide tiling window title bars:
-default_border pixel
-# Same thickness for title border as the window border:
-titlebar_border_thickness 2
-# For gaps between windows and edges of the screen:
-#gaps inner 8
-#gaps outer 8
-# No gaps if there's only one window:
-#smart_gaps on
-# Window colors:         Title Border: Title bg: Title Text:  Indicator:   Window Border:
-client.focused           $focused_bdr  $clear_bg $focused_txt $focused_txt $focused_bdr
-client.focused_tab_title $focused_bdr  $clear_bg $focused_txt
-client.focused_inactive  $blurred_bdr  $clear_bg $blurred_txt $blurred_bdr $blurred_bdr
-client.unfocused         $blurred_bdr  $clear_bg $blurred_txt $blurred_bdr $blurred_bdr
-client.urgent            $urgent_bdr   $clear_bg $focused_txt $urgent_bdr  $urgent_bdr
+default_border pixel 3
 
 ### Idle configuration
 #
@@ -77,16 +46,16 @@ client.urgent            $urgent_bdr   $clear_bg $focused_txt $urgent_bdr  $urge
 #
 # exec swayidle -w \
 #          timeout 300 'swaylock -f -c 000000' \
-#          timeout 600 'swaymsg "output * dpms off"' resume 'swaymsg "output * dpms on"' \
+#          timeout 600 'swaymsg "output * power off"' resume 'swaymsg "output * power on"' \
 #          before-sleep 'swaylock -f -c 000000'
 #
 # This will lock your screen after 300 seconds of inactivity, then turn off
 # your displays after another 300 seconds, and turn your screens back on when
 # resumed. It will also lock your screen before your computer goes to sleep.
 
-exec swayidle \
-         timeout 300 'swaymsg "output * dpms off"' \
-         resume 'swaymsg "output * dpms on"'
+exec swayidle -w \
+         timeout 300 'swaymsg "output * power off"' \
+         resume 'swaymsg "output * power on"'
 # Don't idle if the focused window is fullscreen
 for_window [class=".*"] inhibit_idle fullscreen
 for_window [app_id=".*"] inhibit_idle fullscreen
@@ -106,7 +75,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 # Read `man 5 sway-input` for more information about this section.
 input * repeat_delay 200
 input * xkb_numlock enabled
-#input * tap enabled
+input * tap enabled
 
 ### Key bindings
 #
@@ -271,27 +240,18 @@ bindsym Print exec grim -g "$(slurp)" screenshot.png
 # Read `man 5 sway-bar` for more information about this section.
 bar {
     position top
-    font monospace 14
     separator_symbol ' | '
 
     # When the status_command prints a new line to stdout, swaybar updates.
     status_command i3status
 
-    # To only show the bar while $mod is held:
-    #mode hide
-    #modifier $mod
-
     colors {
-        statusline $focused_txt
-        background $clear_bg
-        separator  $focused_bdr
-
-        # Workspaces:      Border:     Background: Text:
-        focused_workspace  $clear_bg   $clear_bg   $focused_txt
-        active_workspace   $clear_bg   $clear_bg   $blurred_txt
-        inactive_workspace $clear_bg   $clear_bg   $blurred_txt
-        urgent_workspace   $urgent_bdr $clear_bg   $focused_txt
+        statusline #ffffff
+        background #323232
+        inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
 
 include /etc/sway/config.d/*
+
+# vim: expandtab

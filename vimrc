@@ -58,40 +58,4 @@ nnoremap <Space>D :vnew +set\ bt=nofile<CR>
 
 runtime! ftplugin/man.vim
 packadd! editorconfig
-
-" $VIMRUNTIME/colors/README.txt
-" Use color names instead of numbers for cterms because vim can choose the
-" correct number based on what the terminal supports (:help cterm-colors)
-" :help group-name
-set background=dark
-hi clear
-hi Comment	ctermfg=Gray
-hi Constant	ctermfg=Blue
-hi Identifier	ctermfg=Red
-hi Statement	ctermfg=Green
-hi PreProc	ctermfg=Magenta
-hi Type		ctermfg=Cyan
-hi Special	ctermfg=Yellow
-" :help highlight-groups
-hi DiffAdd	ctermbg=Green	ctermfg=Black
-hi DiffDelete	ctermbg=Red	ctermfg=White
-hi DiffChange	ctermbg=Blue	ctermfg=White
-hi DiffText	ctermbg=Cyan	ctermfg=Black
-hi Visual	ctermbg=Gray
-hi! link ColorColumn	Visual
-hi! link MatchParen	Visual
-hi! link QuickFixLine	Visual
-hi! link Search		Visual
-hi! link IncSearch	Search
-hi! link SpecialKey	Special
-hi! link Question	Type
-hi! link MoreMsg	Statement
-hi! link Title		Identifier
-hi! link Directory	Constant
-hi! link LineNr		Comment
-hi! link WarningMsg	Todo
-hi! link Pmenu		Normal
-hi! link PmenuSel	DiffChange
-hi! link PmenuSbar	Pmenu
-hi! link TabLine	TabLineFill
-hi! link WildMenu	TabLineSel
+colorscheme slate
