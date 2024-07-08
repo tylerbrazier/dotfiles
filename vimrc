@@ -11,6 +11,7 @@ set wildignorecase " case insensitive filename completion
 set infercase      " and insert mode completion
 set ignorecase     " and search
 set smartcase      " unless search contains a capital letter
+set display=lastline
 set listchars=tab:>\ ,trail:-,nbsp:+
 set wildoptions=pum,tagfile
 set formatoptions+=j    " delete comment characters when joining comment lines
