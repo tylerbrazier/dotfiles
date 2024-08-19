@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # Backs up to local machine from my phone running sshd in termux.
 # If something is mounted at /mnt offer to backup to it also.
 # I exclude the write permission on files to avoid making accidental
@@ -15,7 +15,7 @@ echo "$REPLY" > "$cache"
 read -eri "rsync -vhrte 'ssh -p 8022' --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' $REPLY:storage/shared/backup/ ~/backup"
 eval "$REPLY"
 
-findmnt -l | grep -q '^/mnt[ \t]' || exit 0
+mount | grep -q 'on /mnt ' || exit 0
 printf "\n(Ctrl-C to cancel)\n"
 read -eri "sudo rsync -vhrt --progress --chmod=F-w --del --backup-dir=.trash --exclude='/.trash' ~/backup/ /mnt/backup"
 eval "$REPLY"
