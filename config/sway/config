@@ -75,7 +75,7 @@ for_window [app_id=".*"] inhibit_idle fullscreen
 # Read `man 5 sway-input` for more information about this section.
 input * repeat_delay 200
 input * xkb_numlock enabled
-input * tap enabled
+#input * tap enabled
 
 ### Key bindings
 #
