@@ -81,7 +81,7 @@ ask_cover_url() {
 }
 
 run_ytdl() {
-	cmd="$BIN --restrict-filenames --add-metadata"
+	cmd="python $BIN --restrict-filenames --add-metadata"
 	[ "$A_OR_V" = a ] && cmd="$cmd -x --audio-format mp3"
 	[ "$USE_THUMBNAIL" -eq 1 ] && cmd="$cmd --embed-thumbnail"
 	if [ "$IS_PLAYLIST" -eq 1 ]; then

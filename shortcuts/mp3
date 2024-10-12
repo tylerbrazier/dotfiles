@@ -1,69 +1,7 @@
 #!/bin/sh
 # https://github.com/termux/termux-widget
-# Download a youtube video as an mp3 and add cover art
 
-YTDL_BIN="$HOME/.local/bin/yt-dlp"
-
-if [ ! -f "$YTDL_BIN" ]; then
-	echo "No $YTDL_BIN" >&2
-	exit 1
-fi
-
-printf "Video URL: "
-read -r v_url
-[ -z "$v_url" ] && exit 1
-
-printf "Use the video's thumbnail? "
-read -r use_thumbnail
-case "$use_thumbnail" in
-	[Yy]*) use_thumbnail=1;;
-	*) use_thumbnail=;;
-esac
-
-if [ -z "$use_thumbnail" ]; then
-	printf "Cover URL (jpg): "
-	read -r c_url
-	[ -z "$c_url" ] && exit 1
-
-	o="'%(title)s.tmp.%(ext)s'"
-else
-	o="'%(title)s.%(ext)s'"
-fi
-
-cmd="python3 $YTDL_BIN \
---restrict-filenames \
--x --audio-format mp3 \
---add-metadata -o $o"
-[ -n "$use_thumbnail" ] && cmd="$cmd --embed-thumbnail"
-cmd="$cmd '$v_url'"
-echo "$cmd"
-eval "$cmd" || exit 1
-
-if [ -z "$use_thumbnail" ]; then
-	f="$(basename ./*.tmp.mp3)"
-
-	if [ ! -f "$f" ]; then
-		echo "Couldn't find the downloaded file; f=$f" >&2
-		exit 1
-	fi
-
-	cmd="curl -o cover.jpg '$c_url'"
-	echo "$cmd"
-	eval "$cmd" || exit 1
-
-	cmd="ffmpeg -i $f -i cover.jpg \
-		-map 0:0 -map 1:0 \
-		-c copy -id3v2_version 3 \
-		-metadata:s:v title=cover \
-		-metadata:s:v comment='Cover (front)' \
-		$(echo "$f" | sed 's/.tmp.mp3$/.mp3/')"
-	echo "$cmd"
-	eval "$cmd" || exit 1
-
-	cmd="rm cover.jpg $f"
-	echo "$cmd"
-	eval "$cmd"
-fi
+/bin/sh "$HOME"/.local/bin/yd
 
 printf "Press Enter..."
 read -r _
