@@ -1,7 +1,7 @@
 #!/bin/sh
 # https://github.com/termux/termux-widget
 
-/bin/sh "$HOME"/.local/bin/yd
+DEST_DIR="$HOME"/storage/downloads /bin/sh "$HOME"/.local/bin/yd
 
 printf "Press Enter..."
 read -r _
