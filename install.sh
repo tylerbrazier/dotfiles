@@ -30,11 +30,9 @@ for f in $(git ls-files); do
 				echo "Skipping $f"
 				continue
 			fi;;
-		config/foot*|\
 		config/i3*|\
 		config/sway*|\
-		local/bin/xmenu*|\
-		local/bin/backup)
+		config/foot*)
 			if [ "$OS" = "Android" ]; then
 				echo "Skipping $f"
 				continue
