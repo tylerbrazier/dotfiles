@@ -30,6 +30,17 @@ for f in $(git ls-files); do
 				echo "Skipping $f"
 				continue
 			fi;;
+		config/foot*|\
+		config/i3*|\
+		config/sway*|\
+		local/bin/xmenu*|\
+		local/bin/backup)
+			if [ "$OS" = "Android" ]; then
+				echo "Skipping $f"
+				continue
+			else
+				symlink "$f"
+			fi;;
 		*) symlink "$f";;
 	esac
 done
