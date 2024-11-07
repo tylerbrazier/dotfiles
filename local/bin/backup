@@ -1,6 +1,16 @@
 #!/bin/sh
 
-BACKUP_DIR="$HOME"/backup
-REMOTE=proton  # https://rclone.org/protondrive/
+BACKUP_SRC="${BACKUP_SRC:-/backup0/}"
+BACKUP_DEST="${BACKUP_DEST:-/backup1}"
 
-rclone copy -uv "$BACKUP_DIR" "$REMOTE":
+rsync -vhru \
+	--progress \
+	--perms \
+	--chown=:backup \
+	--chmod=g+rw \
+	--delete \
+	--backup-dir=.trash \
+	--exclude=/.trash \
+	--exclude=/lost+found \
+	"$BACKUP_SRC" \
+	"$BACKUP_DEST"
