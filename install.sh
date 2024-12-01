@@ -11,11 +11,11 @@ symlink() {
 
 	# Files in ~/.shortcuts can't be symlinks so use cp instead:
 	# https://github.com/termux/termux-widget/issues/57
-	[ "${f%%/*}" = "shortcuts" ] && cmd="cp"
+	[ "${dotfile%%/*}" = "shortcuts" ] && cmd="cp"
 
 	cmdline="$cmd $PWD/$dotfile $HOME/.$dotfile"
 
-	mkdir -p "$HOME/.$(dirname "$f")"
+	mkdir -p "$HOME/.$(dirname "$dotfile")"
 	echo "$cmdline"
 	eval "$cmdline" || exit 1
 }
