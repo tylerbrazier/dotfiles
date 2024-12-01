@@ -19,7 +19,8 @@ set colorcolumn=+0      " show colorcolumn at textwidth
 set errorformat+=%m\ %f " for git status :cexpr
 set grepprg=git\ grep\ -I\ -n\ --column
 set grepformat=%f:%l:%c:%m
-let &path = systemlist('git ls-tree -rd --name-only HEAD')->join(',').",,"
+let &path = systemlist("git ls-tree -rd --name-only HEAD")
+			\->join(",").",,"
 
 " make capital Y behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
@@ -41,7 +42,7 @@ nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>d :bd<CR>
 nnoremap <Space>s :set<Space>
-nnoremap <Space>t :tabedit<CR>
+nnoremap <Space>t :tabnew<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>m :make<Space><Up>
@@ -52,9 +53,11 @@ nnoremap <Space>p :cprevious<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space><CR> :!<Up>
 
-nnoremap <Space>S :cexpr system("git status -s -uall \| sed '/^ D/d'")<CR>
+nnoremap <Space>S :cexpr system("git status -s -uall
+			\ \| sed '/^ D/d'")<CR>
 nnoremap <Space>D :vnew +set\ bt=nofile<CR>
-			\:r !git show HEAD:#<CR>:1d _<CR>:diffthis<CR>
+			\:r !git show HEAD:#<CR>
+			\:1d _<CR>:diffthis<CR>
 			\<C-W>p:diffthis<CR>
 
 runtime! ftplugin/man.vim
