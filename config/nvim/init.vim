@@ -2,6 +2,7 @@ set wildignorecase " case insensitive filename completion
 set infercase      " and insert mode completion
 set ignorecase     " and search
 set smartcase      " unless search contains a capital letter
+set wildcharm=<Tab>     " let tab start wildmenu in mappings
 set colorcolumn=+0      " show colorcolumn at textwidth
 set errorformat+=%m\ %f " for git status :cexpr
 set grepprg=git\ grep\ -I\ -n\ --column
@@ -15,17 +16,17 @@ inoremap <Tab> <C-P>
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
-nnoremap <Space>b :b <C-D>
+nnoremap <Space>b :b <Tab>
 nnoremap <Space>d :bd<CR>
-nnoremap <Space>s :set<Space>
 nnoremap <Space>t :tabnew<CR>
-nnoremap <Space>f :find<Space>
+nnoremap <Space>s :set<Space>
+nnoremap <Space>f :find <C-D>
+nnoremap <Space>m :make <Up>
 nnoremap <Space>g :grep<Space>
-nnoremap <Space>m :make<Space><Up>
 nnoremap <Space>o :copen<CR>
 nnoremap <Space>c :cclose<CR>
 nnoremap <Space>n :cnext<CR>
-nnoremap <Space>p :cprevious<CR>
+nnoremap <Space>p :cprev<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
 nnoremap <Space><CR> :!<Up>
 
