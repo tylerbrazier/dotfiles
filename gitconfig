@@ -3,8 +3,7 @@
 	email = tyler@brazier.us
 
 [core]
-	# type K on a commit hash to `git show` that commit
-	pager = vim -c 'set keywordprg=git\\ show' -R -
+	pager = vim -R -
 	editor = vim
 
 [color]
