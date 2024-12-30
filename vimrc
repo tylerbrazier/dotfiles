@@ -55,11 +55,11 @@ nnoremap <Space><CR> :!<Up>
 
 nnoremap <Space>S :cexpr system("git status -s -uall
 			\ \| sed '/^ D/d'")<CR>
-nnoremap <Space>D :vnew +set\ bt=nofile<CR>
+nnoremap <Space>D :vnew +set\ bt=nofile\ bh=wipe<CR>
 			\:r !git show HEAD:#<CR>
 			\:1d _<CR>:diffthis<CR>
 			\<C-W>p:diffthis<CR>
-nnoremap <Space>B zz:vnew +set\ bt=nofile\ nowrap<CR>
+nnoremap <Space>B zz:vnew +set\ bt=nofile\ bh=wipe\ nowrap<CR>
 			\:r !git blame #<CR>:1d _<CR>
 			\:exe line('.', bufwinid('#'))<CR>zz
 
