@@ -62,6 +62,10 @@ nnoremap <Space>D :vnew +set\ bt=nofile\ bh=wipe<CR>
 nnoremap <Space>B zz:vnew +set\ bt=nofile\ bh=wipe\ nowrap<CR>
 			\:r !git blame #<CR>:1d _<CR>
 			\:exe line('.', bufwinid('#'))<CR>zz
+nnoremap <Space>L :tabnew +set\ bt=nofile\ bh=wipe\ ft=gitcommit<CR>
+			\:r !git log -p #<CR>:1d _<CR>
+nnoremap <Space>O "xyiw:tabnew +set\ bt=nofile\ bh=wipe\ ft=gitcommit<CR>
+			\:r !git show <C-R>x<CR>:1d _<CR>
 
 runtime! ftplugin/man.vim
 packadd! editorconfig
