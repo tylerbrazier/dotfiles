@@ -36,3 +36,6 @@ nnoremap <Space>D :vnew +set\ bt=nofile<CR>
 			\:r !git show HEAD:#<CR>
 			\:1d _<CR>:diffthis<CR>
 			\<C-W>p:diffthis<CR>
+nnoremap <Space>B zz:vnew +set\ bt=nofile\ nowrap<CR>
+			\:r !git blame #<CR>:1d _<CR>
+			\:exe line('.', bufwinid('#'))<CR>zz
