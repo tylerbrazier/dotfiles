@@ -33,9 +33,6 @@ vnoremap # y/\V<C-R>=substitute(escape(@",'/\'), '\n', '\\n', 'g')<CR><CR>
 " ctrl-l clears highlighting and syncs diff
 nnoremap <C-L> :nohl<CR>:diffupdate<CR><C-L>
 
-" tab-completion in Insert mode (shift-tab to insert a tab)
-inoremap <Tab> <C-P>
-
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>

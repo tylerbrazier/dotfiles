@@ -10,9 +10,6 @@ set grepformat=%f:%l:%c:%m
 let &path = systemlist("git ls-tree -rd --name-only HEAD")
 			\->join(",").",,"
 
-" tab-completion in Insert mode (shift-tab to insert a tab)
-inoremap <Tab> <C-P>
-
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
