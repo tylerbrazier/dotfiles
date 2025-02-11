@@ -23,4 +23,3 @@ nnoremap <Space>c :cclose<CR>
 nnoremap <Space>n :cnext<CR>
 nnoremap <Space>p :cprev<CR>
 nnoremap <Space>x :new $HOME/.scratch<CR>
-nnoremap <Space><CR> :!<Up>
