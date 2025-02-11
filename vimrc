@@ -14,7 +14,6 @@ set smartcase      " unless search contains a capital letter
 set display=lastline
 set listchars=tab:>\ ,trail:-,nbsp:+
 set wildoptions=pum,tagfile
-set wildcharm=<Tab>     " let tab start wildmenu in mappings
 set formatoptions+=j    " delete comment characters when joining comment lines
 set colorcolumn=+0      " show colorcolumn at textwidth
 set errorformat+=%m\ %f " for git status :cexpr
@@ -36,7 +35,7 @@ nnoremap <C-L> :nohl<CR>:diffupdate<CR><C-L>
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
-nnoremap <Space>b :b <Tab>
+nnoremap <Space>b :b <C-D>
 nnoremap <Space>d :bd<CR>
 nnoremap <Space>t :tabnew<CR>
 nnoremap <Space>s :set<Space>
