@@ -35,9 +35,7 @@ nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :b <C-D>
-nnoremap <Space>d :bd<CR>
 nnoremap <Space>t :tabnew<CR>
-nnoremap <Space>s :set<Space>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>m :make <Up>
