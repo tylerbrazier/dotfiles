@@ -3,10 +3,6 @@ set infercase      " and insert mode completion
 set ignorecase     " and search
 set smartcase      " unless search contains a capital letter
 set colorcolumn=+0 " show colorcolumn at textwidth
-set grepprg=git\ grep\ -I\ -n\ --column
-set grepformat=%f:%l:%c:%m
-let &path = systemlist("git ls-tree -rd --name-only HEAD")
-			\->join(",").",,"
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>

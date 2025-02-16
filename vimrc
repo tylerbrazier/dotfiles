@@ -16,10 +16,6 @@ set listchars=tab:>\ ,trail:-,nbsp:+
 set wildoptions=pum,tagfile
 set formatoptions+=j    " delete comment characters when joining comment lines
 set colorcolumn=+0      " show colorcolumn at textwidth
-set grepprg=git\ grep\ -I\ -n\ --column
-set grepformat=%f:%l:%c:%m
-let &path = systemlist("git ls-tree -rd --name-only HEAD")
-			\->join(",").",,"
 
 " make capital Y behave like capital C and D (use yy to yank whole line)
 nnoremap Y y$
