@@ -22,8 +22,8 @@ stty -ixon
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && export PATH="$HOME/.local/bin:$PATH"
 
 export HISTCONTROL=ignoredups
-export EDITOR=vim
-export MANPAGER='vim -M +MANPAGER' # :help manpager.vim (w/o - for mandoc)
+export EDITOR=nvim
+export MANPAGER='nvim +Man!' # :help :Man (gO for outline)
 
 # Prompt shows cwd, git branch (red if dirty, green otherwise), stopped jobs,
 # and blue $ in ssh session (white otherwise).

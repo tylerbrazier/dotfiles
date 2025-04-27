@@ -3,15 +3,15 @@
 	email = tyler@brazier.us
 
 [core]
-	pager = vim -R -
-	editor = vim
+	pager = nvim -R -
+	editor = nvim
 
 [color]
-	# don't send color escape characters to vim pager (:syntax handles coloring)
+	# don't send color escape characters to nvim pager (:syntax handles coloring)
 	pager = false
 
 [pager]
-	# don't use pager (vim) for these commands (https://stackoverflow.com/a/49862151)
+	# don't use pager for these commands (https://stackoverflow.com/a/49862151)
 	branch = false
 	tag = false
 
