@@ -10,4 +10,4 @@ if [ -z "$BACKUP_DEST" ]; then
 fi
 
 set -x
-rsync -vhrtu --progress "$BACKUP_SRC" "$BACKUP_DEST"
+rsync -vhrtu --progress "$@" "$BACKUP_SRC" "$BACKUP_DEST"
