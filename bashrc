@@ -18,9 +18,6 @@ cd() { builtin cd "$@" && ls; }
 # Prevent ctrl-s from freezing output
 stty -ixon
 
-# Add ~/.local/bin to PATH if not already (e.g. from sourcing ~/.bashrc again)
-[[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && export PATH="$HOME/.local/bin:$PATH"
-
 export HISTCONTROL=ignoredups
 export EDITOR=nvim
 export MANPAGER='nvim +Man!' # :help :Man (gO for outline)
