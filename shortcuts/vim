@@ -1,5 +1,0 @@
-#!/bin/bash
-# https://github.com/termux/termux-widget
-
-read -eri "nvim '+cd %:h' ~/storage/shared/backup/docs/"
-eval "$REPLY"
