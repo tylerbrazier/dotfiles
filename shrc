@@ -1,0 +1,13 @@
+#!/bin/sh
+
+alias ls='ls -h --color'
+alias cp='cp -r'
+alias rm='rm -r'
+alias df='df -h'
+alias du='du -h -s'
+alias grep='grep --color=auto -I'
+
+cd() { builtin cd "$@" 2>/dev/null || command cd "$@" && ls; }
+
+export EDITOR=nvim
+export MANPAGER='nvim +Man!' # :help :Man (gO for outline)
