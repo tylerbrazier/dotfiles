@@ -1,5 +1,8 @@
 set wildmode=full:lastused
 
+noremap j gj
+noremap k gk
+
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
