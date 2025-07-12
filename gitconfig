@@ -2,18 +2,6 @@
 	name = Tyler Brazier
 	email = tyler@brazier.us
 
-[fetch]
-	prune = true
-
-[push]
-	default = simple
-
-[pull]
-	ff = only
-
-[blame]
-	date = short
-
 [alias]
 	s = status
 	a = add -A
@@ -23,7 +11,7 @@
 	l = log --stat
 	b = branch
 	d = diff
-	f = fetch --all
+	f = fetch --all --prune
 	m = merge
 	r = remote -v
 	rb = rebase
