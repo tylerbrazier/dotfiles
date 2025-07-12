@@ -1,3 +1,5 @@
+set ignorecase
+set notimeout
 set wildmode=full:lastused
 
 noremap j gj
