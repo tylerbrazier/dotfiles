@@ -51,7 +51,8 @@ In `~/.config/nvim/init.lua`:
 
     vim.cmd('source ~/dotfiles/vimrc')
 
-    vim.opt.clipboard = { 'unnamed', 'unnamedplus' }
+    vim.o.clipboard = 'unnamed,unnamedplus'
+    vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
 
 # Git
 

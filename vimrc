@@ -20,7 +20,6 @@ nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 
 nnoremap <Space>s <C-W>s
 nnoremap <Space>v <C-W>v
-
 nnoremap <Space>h <C-W>h
 nnoremap <Space>j <C-W>j
 nnoremap <Space>k <C-W>k
