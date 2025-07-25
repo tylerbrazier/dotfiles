@@ -1,4 +1,5 @@
 set ignorecase
+set smartcase
 set notimeout
 set wildmode=full:lastused
 
