@@ -1,44 +1,33 @@
-# Shell
-
-In `~/.bashrc` or `~/.zshrc`:
+# ~/.bashrc
 
     . ~/dotfiles/shrc
 
-## Git status in prompt
+    PS1='\w \$ '
 
-    curl -o ~/.git-prompt.sh https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-prompt.sh
+# ~/.zshrc
 
-for bash also get the completion file:
+    . ~/dotfiles/shrc
 
-    curl -o ~/.git-completion.bash https://raw.githubusercontent.com/git/git/refs/heads/master/contrib/completion/git-completion.bash
+    # https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information
+    # https://gist.github.com/chrisnolet/d3582cd63eb3d7b4fcb4d5975fd91d04
+    autoload -Uz compinit vcs_info
+    compinit # completion
+    # Don't bother using check-for-changes to set %c and %u
+    # since a hook is needed for checking untracked files anyways.
+    zstyle ':vcs_info:*' enable git
+    zstyle ':vcs_info:git:*' formats '%F{green}%b%f '
+    zstyle ':vcs_info:git:*' actionformats '%F{green}%b (%a)%f '
+    zstyle ':vcs_info:git+set-message:*' hooks git_status
+    +vi-git_status() {
+    	if [ -n "$(git status -s 2>/dev/null)" ]; then
+    		hook_com[branch]="%F{red}${hook_com[branch]}"
+    	fi
+    }
+    precmd () { vcs_info }
+    setopt PROMPT_SUBST
+    PS1='%~ ${vcs_info_msg_0_}%# '
 
-in `~/.bashrc`:
-
-    . ~/.git-completion.bash
-    . ~/.git-prompt.sh
-    GIT_PS1_SHOWCOLORHINTS=1
-    GIT_PS1_SHOWDIRTYSTATE=1
-    GIT_PS1_SHOWSTASHSTATE=1
-    GIT_PS1_SHOWUNTRACKEDFILES=1
-    PROMPT_COMMAND='__git_ps1 "\w " "\$ " "%s "'
-
-<https://git-scm.com/book/en/v2/Appendix-A:-Git-in-Other-Environments-Git-in-Bash>
-
-in `~/.zshrc`:
-
-    autoload -Uz compinit && compinit
-    . ~/.git-prompt.sh
-    GIT_PS1_SHOWCOLORHINTS=1
-    GIT_PS1_SHOWDIRTYSTATE=1
-    GIT_PS1_SHOWSTASHSTATE=1
-    GIT_PS1_SHOWUNTRACKEDFILES=1
-    precmd() { __git_ps1 '%~ ' '%# ' '%s ' }
-
-<https://git-scm.com/book/en/v2/Appendix-A:-Git-in-Other-Environments-Git-in-Zsh>
-
-# (Neo)Vim
-
-In `~/.vimrc`:
+# ~/.vimrc
 
     silent! unlet skip_defaults_vim
     source $VIMRUNTIME/defaults.vim
@@ -47,16 +36,14 @@ In `~/.vimrc`:
 
     set clipboard=unnamed,unnamedplus
 
-In `~/.config/nvim/init.lua`:
+# ~/.config/nvim/init.lua
 
     vim.cmd('source ~/dotfiles/vimrc')
 
     vim.o.clipboard = 'unnamed,unnamedplus'
     vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
 
-# Git
-
-In `~/.gitconfig`:
+# ~/.gitconfig
 
     [include]
     	path = ~/dotfiles/gitconfig
