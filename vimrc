@@ -2,8 +2,8 @@ set ignorecase
 set notimeout
 set wildmode=full:lastused
 
-noremap j gj
-noremap k gk
+nnoremap j gj
+nnoremap k gk
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
