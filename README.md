@@ -2,21 +2,26 @@
 
     . ~/dotfiles/shrc
 
+    bind 'set completion-ignore-case on'
+
     PS1='\w \$ '
 
 # ~/.zshrc
 
     . ~/dotfiles/shrc
 
+    # https://zsh.sourceforge.io/Doc/Release/Completion-System.html
+    autoload -Uz compinit && compinit
+    zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
+
     # https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information
     # https://gist.github.com/chrisnolet/d3582cd63eb3d7b4fcb4d5975fd91d04
-    autoload -Uz compinit vcs_info
-    compinit # completion
-    # Don't bother using check-for-changes to set %c and %u
-    # since a hook is needed for checking untracked files anyways.
+    autoload -Uz vcs_info
     zstyle ':vcs_info:*' enable git
     zstyle ':vcs_info:git:*' formats '%F{green}%b%f '
     zstyle ':vcs_info:git:*' actionformats '%F{green}%b (%a)%f '
+    # Don't bother using check-for-changes to set %c and %u
+    # since a hook is needed for checking untracked files anyways.
     zstyle ':vcs_info:git+set-message:*' hooks git_status
     +vi-git_status() {
     	if [ -n "$(git status -s 2>/dev/null)" ]; then
