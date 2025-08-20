@@ -2,48 +2,43 @@ Basic shared dotfiles.
 For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
 
 # ~/.bashrc
-```
-. ~/dotfiles/shrc
 
-bind 'set completion-ignore-case on'
+	. ~/dotfiles/shrc
 
-PS1='\w \$ '
-```
+	bind 'set completion-ignore-case on'
+
+	PS1='\w \$ '
 
 # ~/.zshrc
-```
-. ~/dotfiles/shrc
 
-# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
-autoload -Uz compinit && compinit
-zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
+	. ~/dotfiles/shrc
 
-PROMPT='%~ %# '
-```
+	# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
+	autoload -Uz compinit && compinit
+	zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
+
+	PROMPT='%~ %# '
 
 # ~/.vimrc
-```
-silent! unlet skip_defaults_vim
-source $VIMRUNTIME/defaults.vim
 
-source ~/dotfiles/vimrc
+	silent! unlet skip_defaults_vim
+	source $VIMRUNTIME/defaults.vim
 
-set clipboard=unnamed,unnamedplus
-```
+	source ~/dotfiles/vimrc
+
+	set clipboard=unnamed,unnamedplus
 
 # ~/.config/nvim/init.lua
-```
-vim.cmd('source ~/dotfiles/vimrc')
 
-vim.o.clipboard = 'unnamed,unnamedplus'
-vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
-```
+	vim.cmd('source ~/dotfiles/vimrc')
+
+	vim.o.clipboard = 'unnamed,unnamedplus'
+	vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
 
 # ~/.gitconfig
-```
-[include]
-	path = ~/dotfiles/gitconfig
-```
+
+	[include]
+		path = ~/dotfiles/gitconfig
 
 # Why not copy dotfiles or use symlinks?
 
