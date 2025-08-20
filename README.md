@@ -1,3 +1,6 @@
+Basic shared dotfiles.
+For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
+
 # ~/.bashrc
 ```
 . ~/dotfiles/shrc
@@ -15,23 +18,7 @@ PS1='\w \$ '
 autoload -Uz compinit && compinit
 zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
 
-# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information
-# https://gist.github.com/chrisnolet/d3582cd63eb3d7b4fcb4d5975fd91d04
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats '%F{green}%b%f '
-zstyle ':vcs_info:git:*' actionformats '%F{green}%b (%a)%f '
-# Don't bother using check-for-changes to set %c and %u
-# since a hook is needed for checking untracked files anyways.
-zstyle ':vcs_info:git+set-message:*' hooks git_status
-+vi-git_status() {
-	if [ -n "$(git status -s 2>/dev/null)" ]; then
-		hook_com[branch]="%F{red}${hook_com[branch]}"
-	fi
-}
-precmd () { vcs_info }
-setopt PROMPT_SUBST
-PS1='%~ ${vcs_info_msg_0_}%# '
+PROMPT='%~ %# '
 ```
 
 # ~/.vimrc
