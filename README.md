@@ -7,6 +7,8 @@ __~/.bashrc__
 
 	bind 'set completion-ignore-case on'
 
+	export HISTCONTROL=ignoredups
+
 	PS1='\w \$ '
 
 __~/.zshrc__
@@ -16,6 +18,8 @@ __~/.zshrc__
 	# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
 	autoload -Uz compinit && compinit
 	zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
+
+	setopt HIST_IGNORE_DUPS
 
 	PROMPT='%~ %# '
 
