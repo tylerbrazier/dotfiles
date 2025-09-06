@@ -1,7 +1,7 @@
-Basic shared dotfiles.
-For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
+Basic dotfiles.
+For development also use [devfiles](https://github.com/tylerbrazier/devfiles/)
 
-# ~/.bashrc
+__~/.bashrc__
 
 	. ~/dotfiles/shrc
 
@@ -9,7 +9,7 @@ For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
 
 	PS1='\w \$ '
 
-# ~/.zshrc
+__~/.zshrc__
 
 	. ~/dotfiles/shrc
 
@@ -19,7 +19,7 @@ For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
 
 	PROMPT='%~ %# '
 
-# ~/.vimrc
+__~/.vimrc__
 
 	silent! unlet skip_defaults_vim
 	source $VIMRUNTIME/defaults.vim
@@ -28,19 +28,19 @@ For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
 
 	set clipboard=unnamed,unnamedplus
 
-# ~/.config/nvim/init.lua
+__~/.config/nvim/init.lua__
 
 	vim.cmd('source ~/dotfiles/vimrc')
 
 	vim.o.clipboard = 'unnamed,unnamedplus'
 	vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
 
-# ~/.gitconfig
+__~/.gitconfig__
 
 	[include]
 		path = ~/dotfiles/gitconfig
 
-# Why not copy dotfiles or use symlinks?
+__Why not copy dotfiles or use symlinks?__
 
 - local changes can still be made without affecting the repo
 - track shared settings between vim and neovim,
@@ -48,7 +48,7 @@ For development use [devfiles](https://github.com/tylerbrazier/devfiles/).
   same goes for bash and zsh
 - symlinks don't work in Windows
 
-# TODO
+__TODO__
 
 - stash save is deprecated
 - conditionally set EDITOR and MANPAGER
