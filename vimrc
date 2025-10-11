@@ -20,8 +20,6 @@ nnoremap <Space>c :cclose<CR>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
 
-nnoremap <Space>s <C-W>s
-nnoremap <Space>v <C-W>v
 nnoremap <Space>h <C-W>h
 nnoremap <Space>j <C-W>j
 nnoremap <Space>k <C-W>k
