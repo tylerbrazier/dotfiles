@@ -17,12 +17,6 @@
 	rb = rebase
 	rs = restore
 
-	ss = stash save
-	sl = stash list --stat
-	sp = stash pop
-	sa = stash apply
-	sd = stash drop
-
 	up = push -u
 	down = pull --rebase --autostash
 

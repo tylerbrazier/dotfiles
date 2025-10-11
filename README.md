@@ -54,5 +54,4 @@ __Why not copy dotfiles or use symlinks?__
 
 __TODO__
 
-- stash save is deprecated
 - conditionally set EDITOR and MANPAGER
