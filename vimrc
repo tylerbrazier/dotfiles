@@ -30,4 +30,4 @@ nnoremap <Space>K <C-W>K
 nnoremap <Space>L <C-W>L
 
 nnoremap <Space><CR> :below term <Up>
-tnoremap <Esc><Space> <C-\><C-N><C-W>
+tnoremap <Esc><Esc> <C-\><C-N>
