@@ -1,10 +1,10 @@
-set ignorecase
-set smartcase
 set notimeout
 set wildmode=full:lastused
 
 nnoremap j gj
 nnoremap k gk
+nnoremap / /\c
+nnoremap ? ?\c
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
