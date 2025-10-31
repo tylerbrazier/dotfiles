@@ -23,6 +23,7 @@ nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
 nnoremap <Space>in :set invnumber number?<CR>
 nnoremap <Space>is :set invspell spell?<CR>
 nnoremap <Space>iw :set invwrap wrap?<CR>
+nnoremap <Space>ic :let &cc = (&cc > 0) ? 0 : <Up>
 
 nnoremap <Space>h <C-W>h
 nnoremap <Space>j <C-W>j
