@@ -20,6 +20,9 @@ nnoremap <Space>c :cclose<CR>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
 
+nnoremap <Space><CR> :below term <Up>
+tnoremap <Esc><Esc> <C-\><C-N>
+
 nnoremap <Space>in :set invnumber number?<CR>
 nnoremap <Space>is :set invspell spell?<CR>
 nnoremap <Space>iw :set invwrap wrap?<CR>
@@ -34,5 +37,7 @@ nnoremap <Space>J <C-W>J
 nnoremap <Space>K <C-W>K
 nnoremap <Space>L <C-W>L
 
-nnoremap <Space><CR> :below term <Up>
-tnoremap <Esc><Esc> <C-\><C-N>
+nnoremap <Space>D :ls h<CR>:bd <C-R>=getbufinfo()
+			\->filter('v:val.hidden')
+			\->map('v:val.bufnr')
+			\->join(' ')<CR>
