@@ -5,6 +5,8 @@ nnoremap j gj
 nnoremap k gk
 nnoremap / /\c
 nnoremap ? ?\c
+cnoremap <C-P> <Up>
+cnoremap <C-N> <Down>
 
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
