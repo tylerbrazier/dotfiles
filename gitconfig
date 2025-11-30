@@ -17,6 +17,12 @@
 	rb = rebase
 	rs = restore
 
+	sp = stash push --message
+	so = stash pop  # out/obtain (like vim's `do`)
+	sa = stash apply
+	sl = stash list --stat
+	sd = stash drop
+
 	up = push -u
 	down = pull --rebase --autostash
 
