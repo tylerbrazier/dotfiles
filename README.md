@@ -1,6 +1,3 @@
-Basic dotfiles.
-For development also use [devfiles](https://github.com/tylerbrazier/devfiles/)
-
 __~/.bashrc__
 
 	. ~/dotfiles/shrc
@@ -44,10 +41,4 @@ __~/.gitconfig__
 	[include]
 		path = ~/dotfiles/gitconfig
 
-__Why not copy dotfiles or use symlinks?__
-
-- local changes can still be made without affecting the repo
-- track shared settings between vim and neovim,
-  but keep what's different between `.vimrc` and `init.lua` local;
-  same goes for bash and zsh
-- symlinks don't work in Windows
+For development also use [devfiles](https://github.com/tylerbrazier/devfiles/)
