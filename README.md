@@ -51,7 +51,3 @@ __Why not copy dotfiles or use symlinks?__
   but keep what's different between `.vimrc` and `init.lua` local;
   same goes for bash and zsh
 - symlinks don't work in Windows
-
-__TODO__
-
-- conditionally set EDITOR and MANPAGER

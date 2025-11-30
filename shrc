@@ -9,5 +9,10 @@ alias grep='grep --color=auto -I'
 
 cd() { builtin cd "$@" 2>/dev/null || command cd "$@" && ls; }
 
-export EDITOR=nvim
-export MANPAGER='nvim +Man!' # :help :Man (gO for outline)
+export EDITOR=$(command -v nvim || command -v vim || command -v vi)
+case $EDITOR in
+	# :help :Man
+	*nvim*) export MANPAGER='nvim +Man!';; # gO for Outline
+	*vim*) export MANPAGER='vim +MANPAGER --not-a-term -';;
+	*) export MANPAGER='less';;
+esac
