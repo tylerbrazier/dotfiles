@@ -3,7 +3,7 @@
 	email = tyler@brazier.us
 
 [alias]
-	s = status
+	s = status --show-stash
 	a = add -A
 	c = commit -v
 	co = checkout
