@@ -7,7 +7,6 @@
 	a = add -A
 	c = commit -v
 	co = checkout
-	cl = clean -f -d
 	l = log --stat
 	b = branch
 	d = diff
