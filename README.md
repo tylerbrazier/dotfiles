@@ -12,6 +12,9 @@ __~/.zshrc__
 
 	. ~/dotfiles/shrc
 
+	# make ctrl-a/e/... work
+	bindkey -e 
+
 	# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
 	autoload -Uz compinit && compinit
 	zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
