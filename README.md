@@ -35,6 +35,7 @@ __~/.vimrc__
 __~/.config/nvim/init.lua__
 
 	vim.cmd('source ~/dotfiles/vimrc')
+	vim.cmd('source ~/dotfiles/plugs.lua')
 
 	vim.o.clipboard = 'unnamed,unnamedplus'
 	vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
@@ -43,5 +44,3 @@ __~/.gitconfig__
 
 	[include]
 		path = ~/dotfiles/gitconfig
-
-For development also use [devfiles](https://github.com/tylerbrazier/devfiles/)
