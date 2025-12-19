@@ -6,7 +6,7 @@ __~/.bashrc__
 
 	export HISTCONTROL=ignoredups
 
-	PS1='\w \$ '
+	PS1='\w$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") \$ '
 
 __~/.zshrc__
 
@@ -19,9 +19,9 @@ __~/.zshrc__
 	autoload -Uz compinit && compinit
 	zstyle ':completion:*' matcher-list '' 'm:{[:lower:]}={[:upper:]}'
 
-	setopt HIST_IGNORE_DUPS
+	setopt HIST_IGNORE_DUPS PROMPT_SUBST
 
-	PROMPT='%~ %# '
+	PROMPT='%~$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") %# '
 
 __~/.vimrc__
 
