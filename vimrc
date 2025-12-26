@@ -34,10 +34,6 @@ nnoremap <Space>h <C-W>h
 nnoremap <Space>j <C-W>j
 nnoremap <Space>k <C-W>k
 nnoremap <Space>l <C-W>l
-nnoremap <Space>H <C-W>H
-nnoremap <Space>J <C-W>J
-nnoremap <Space>K <C-W>K
-nnoremap <Space>L <C-W>L
 
 nnoremap <Space>D :ls h<CR>:bd <C-R>=getbufinfo()
 			\->filter('v:val.hidden')
