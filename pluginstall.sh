@@ -23,4 +23,4 @@ echo "$plugin_urls" | xargs -t -L 1 git clone
 
 nvim --headless -u NORC -c 'helptags ALL' -c q
 
-npm install -g typescript typescript-language-server
+sudo npm install -g typescript typescript-language-server
