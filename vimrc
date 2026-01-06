@@ -13,7 +13,7 @@ nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>a :e #<CR>
-nnoremap <Space>d :bp<Bar>bd #<CR>
+nnoremap <Space>d :bd<CR>
 nnoremap <Space>t :tabnew<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
@@ -34,8 +34,3 @@ nnoremap <Space>h <C-W>h
 nnoremap <Space>j <C-W>j
 nnoremap <Space>k <C-W>k
 nnoremap <Space>l <C-W>l
-
-nnoremap <Space>D :ls h<CR>:bd <C-R>=getbufinfo()
-			\->filter('v:val.hidden')
-			\->map('v:val.bufnr')
-			\->join(' ')<CR>
