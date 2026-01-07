@@ -17,7 +17,7 @@ nnoremap <Space>d :bd<CR>
 nnoremap <Space>t :tabnew<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
-nnoremap <Space>o :copen<CR>
+nnoremap <Space>o :below copen<CR>
 nnoremap <Space>c :cclose<CR>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
