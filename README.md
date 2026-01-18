@@ -1,6 +1,8 @@
+	git clone git@github.com:tylerbrazier/dotfiles ~/src/dotfiles
+
 __~/.bashrc__
 
-	. ~/dotfiles/shrc
+	. ~/src/dotfiles/shrc
 
 	bind 'set completion-ignore-case on'
 
@@ -9,15 +11,18 @@ __~/.bashrc__
 	bind '"\C-n": history-search-forward'
 
 	export HISTCONTROL=ignoredups
+	export CDPATH="$HOME/src"
 
 	PS1='\w$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") \$ '
 
 __~/.zshrc__
 
-	. ~/dotfiles/shrc
+	. ~/src/dotfiles/shrc
 
 	# make ctrl-a/e/... work
 	bindkey -e 
+
+	export CDPATH="$HOME/src"
 
 	# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
 	autoload -Uz compinit && compinit
@@ -32,14 +37,14 @@ __~/.vimrc__
 	silent! unlet skip_defaults_vim
 	source $VIMRUNTIME/defaults.vim
 
-	source ~/dotfiles/vimrc
+	source ~/src/dotfiles/vimrc
 
 	set clipboard=unnamed,unnamedplus
 
 __~/.config/nvim/init.lua__
 
-	vim.cmd('source ~/dotfiles/vimrc')
-	vim.cmd('source ~/dotfiles/plugs.lua')
+	vim.cmd('source ~/src/dotfiles/vimrc')
+	vim.cmd('source ~/src/dotfiles/plugs.lua')
 
 	vim.o.clipboard = 'unnamed,unnamedplus'
 	vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
@@ -47,4 +52,4 @@ __~/.config/nvim/init.lua__
 __~/.gitconfig__
 
 	[include]
-		path = ~/dotfiles/gitconfig
+		path = ~/src/dotfiles/gitconfig
