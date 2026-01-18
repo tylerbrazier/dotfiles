@@ -4,6 +4,10 @@ __~/.bashrc__
 
 	bind 'set completion-ignore-case on'
 
+	# ctrl-p/n filter by what's already been typed
+	bind '"\C-p": history-search-backward'
+	bind '"\C-n": history-search-forward'
+
 	export HISTCONTROL=ignoredups
 
 	PS1='\w$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") \$ '
