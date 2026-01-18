@@ -14,9 +14,9 @@ nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>a :e #<CR>
 nnoremap <Space>d :bd<CR>
+nnoremap <Space>n :new<CR>
+nnoremap <Space>v :vnew<CR>
 nnoremap <Space>t :tabnew<CR>
-nnoremap <Space>s :belowright split<CR>
-nnoremap <Space>v :belowright vsplit<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>co :below copen<CR>
