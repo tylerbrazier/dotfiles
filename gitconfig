@@ -16,8 +16,8 @@
 	rb = rebase
 	rs = restore
 
-	sp = stash push --message
-	so = stash pop  # out/obtain (like vim's `do`)
+	spu = stash push
+	spo = stash pop
 	sa = stash apply
 	sl = stash list --stat
 	sd = stash drop
