@@ -1,3 +1,5 @@
+vim.cmd('colorscheme flintstone')
+
 vim.lsp.enable('ts_ls')
 
 require('gitsigns').setup {
@@ -31,4 +33,14 @@ vim.keymap.set('n', 'gsr', ':Gitsigns reset_hunk<CR>')
 vim.keymap.set('n', ']g',  ':Gitsigns nav_hunk next<CR>')
 vim.keymap.set('n', '[g',  ':Gitsigns nav_hunk prev<CR>')
 
-vim.cmd('colorscheme flintstone')
+-- TODO contribute to gitsigns and add functionality like this
+-- but without using term:
+vim.api.nvim_create_user_command('GitLog',
+	'exec "vert term git -P log" '
+	..'(<count> > 0 ? "-L"..<line1>..","..<line2>..":%" : "") '
+	..'<q-args>',
+	{ nargs = '*', range = true, })
+-- Because term has limited scrollback you usually want to
+-- include something like `-n 100` in the args:
+vim.keymap.set({'n','v'}, 'gsl', ':GitLog <Up>')
+vim.keymap.set('n', 'gso', ':above term git -P show <Up>')
