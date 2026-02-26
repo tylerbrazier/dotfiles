@@ -19,7 +19,7 @@ nnoremap <Space>v :vnew<CR>
 nnoremap <Space>t :tabnew<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
-nnoremap <Space>co :below copen<CR>
+nnoremap <Space>co :below copen<Bar>setl nowrap<CR>
 nnoremap <Space>cc :cclose<CR>
 nnoremap <Space>cd :lcd<Space>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
