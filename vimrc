@@ -24,10 +24,10 @@ nnoremap <Space>cd :lcd<Space>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
 
-nnoremap <Space>in :set invnumber number?<CR>
-nnoremap <Space>is :set invspell spell?<CR>
-nnoremap <Space>iw :set invwrap wrap?<CR>
-nnoremap <Space>ic :let &cc = (&cc > 0) ? 0 : <Up>
+nnoremap <Space>in :setl invnumber number?<CR>
+nnoremap <Space>is :setl invspell spell?<CR>
+nnoremap <Space>iw :setl invwrap wrap?<CR>
+nnoremap <Space>ic :let &l:cc = (&cc > 0) ? 0 : <Up>
 
 nnoremap <Space>s <C-W>s
 nnoremap <Space>v <C-W>v
