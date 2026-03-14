@@ -14,9 +14,7 @@ nnoremap <Space>e :e <C-D>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>a :e #<CR>
 nnoremap <Space>d :bd<CR>
-nnoremap <Space>n :new<CR>
-nnoremap <Space>v :vnew<CR>
-nnoremap <Space>t :tabnew<CR>
+nnoremap <Space>t :tab split<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>co :below copen<Bar>setl nowrap<CR>
@@ -30,6 +28,8 @@ nnoremap <Space>is :set invspell spell?<CR>
 nnoremap <Space>iw :set invwrap wrap?<CR>
 nnoremap <Space>ic :let &cc = (&cc > 0) ? 0 : <Up>
 
+nnoremap <Space>s <C-W>s
+nnoremap <Space>v <C-W>v
 nnoremap <Space>h <C-W>h
 nnoremap <Space>j <C-W>j
 nnoremap <Space>k <C-W>k
