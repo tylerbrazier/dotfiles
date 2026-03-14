@@ -11,8 +11,9 @@ cnoremap <C-N> <Down>
 nnoremap <Space>w :w<CR>
 nnoremap <Space>q :q<CR>
 nnoremap <Space>e :e <C-D>
-nnoremap <Space>b :b <C-D>
+nnoremap <Space>r :e %:h/<C-D>
 nnoremap <Space>a :e #<CR>
+nnoremap <Space>b :b <C-D>
 nnoremap <Space>d :bd<CR>
 nnoremap <Space>t :tab split<CR>
 nnoremap <Space>f :find<Space>
