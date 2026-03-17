@@ -1,7 +1,6 @@
-	git clone git@github.com:tylerbrazier/dotfiles ~/src/dotfiles
+git clone git@github.com:tylerbrazier/dotfiles ~/src/dotfiles
 
-__~/.bashrc__
-
+~/.bashrc
 	. ~/src/dotfiles/shrc
 
 	bind 'set completion-ignore-case on'
@@ -15,8 +14,7 @@ __~/.bashrc__
 
 	PS1='\w$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") \$ '
 
-__~/.zshrc__
-
+~/.zshrc
 	. ~/src/dotfiles/shrc
 
 	# make ctrl-a/e/... work
@@ -32,8 +30,7 @@ __~/.zshrc__
 
 	PROMPT='%~$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") %# '
 
-__~/.vimrc__
-
+~/.vimrc
 	silent! unlet skip_defaults_vim
 	source $VIMRUNTIME/defaults.vim
 
@@ -41,15 +38,13 @@ __~/.vimrc__
 
 	set clipboard=unnamed,unnamedplus
 
-__~/.config/nvim/init.lua__
-
+~/.config/nvim/init.lua
 	vim.cmd('source ~/src/dotfiles/vimrc')
 	vim.cmd('source ~/src/dotfiles/plugs.lua')
 
 	vim.o.clipboard = 'unnamed,unnamedplus'
 	vim.o.guicursor = 'n-v-c:block,o-r-cr:hor50,i-ci-sm-t:ver25'
 
-__~/.gitconfig__
-
+~/.gitconfig
 	[include]
 		path = ~/src/dotfiles/gitconfig
