@@ -11,7 +11,7 @@ __~/.bashrc__
 	bind '"\C-n": history-search-forward'
 
 	export HISTCONTROL=ignoredups
-	export CDPATH="$HOME/src"
+	export CDPATH=".:$HOME/src"
 
 	PS1='\w$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") \$ '
 
@@ -22,7 +22,7 @@ __~/.zshrc__
 	# make ctrl-a/e/... work
 	bindkey -e 
 
-	export CDPATH="$HOME/src"
+	export CDPATH=".:$HOME/src"
 
 	# https://zsh.sourceforge.io/Doc/Release/Completion-System.html
 	autoload -Uz compinit && compinit
