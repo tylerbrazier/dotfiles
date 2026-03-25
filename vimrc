@@ -15,7 +15,6 @@ nnoremap <Space>r :e %:h/<C-D>
 nnoremap <Space>a :e #<CR>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>d :ls<CR>:bd<Space>
-nnoremap <Space>t :tab split<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>co :below copen<Bar>setl nowrap<CR>
@@ -23,6 +22,9 @@ nnoremap <Space>cc :cclose<CR>
 nnoremap <Space>cd :lcd<Space>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
+
+nnoremap <Space><CR> :below term <Up>
+tnoremap <Esc><Esc> <C-\><C-N>
 
 nnoremap <Space>in :setl invnumber number?<CR>
 nnoremap <Space>is :setl invspell spell?<CR>
@@ -40,5 +42,14 @@ nnoremap <Space>J <C-W>J
 nnoremap <Space>K <C-W>K
 nnoremap <Space>L <C-W>L
 
-nnoremap <Space><CR> :below term <Up>
-tnoremap <Esc><Esc> <C-\><C-N>
+nnoremap <Space>t :tab split<CR>
+nnoremap <Space>1 1gt
+nnoremap <Space>2 2gt
+nnoremap <Space>3 3gt
+nnoremap <Space>4 4gt
+nnoremap <Space>5 5gt
+nnoremap <Space>6 6gt
+nnoremap <Space>7 7gt
+nnoremap <Space>8 8gt
+nnoremap <Space>9 9gt
+nnoremap <Space>0 :tablast<CR>
