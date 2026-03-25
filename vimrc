@@ -14,7 +14,7 @@ nnoremap <Space>e :e <C-D>
 nnoremap <Space>r :e %:h/<C-D>
 nnoremap <Space>a :e #<CR>
 nnoremap <Space>b :b <C-D>
-nnoremap <Space>d :bd<CR>
+nnoremap <Space>d :ls<CR>:bd<Space>
 nnoremap <Space>t :tab split<CR>
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
