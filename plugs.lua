@@ -1,12 +1,12 @@
 -- :help vim.pack (~/.local/share/nvim/site/pack/core/opt)
 local plugins = {
-	'git@github.com:tylerbrazier/vim-forgit',
-	'git@github.com:tylerbrazier/vim-marcos',
-	'git@github.com:tylerbrazier/vim-gh',
-	'git@github.com:tylerbrazier/vim-rwx',
-	'git@github.com:tylerbrazier/vim-y',
-	'git@github.com:tylerbrazier/vim-renegade',
-	'git@github.com:tylerbrazier/vim-flintstone',
+	'https://github.com/tylerbrazier/vim-forgit',
+	'https://github.com/tylerbrazier/vim-marcos',
+	'https://github.com/tylerbrazier/vim-gh',
+	'https://github.com/tylerbrazier/vim-rwx',
+	'https://github.com/tylerbrazier/vim-y',
+	'https://github.com/tylerbrazier/vim-renegade',
+	'https://github.com/tylerbrazier/vim-flintstone',
 	'https://github.com/neovim/nvim-lspconfig',
 	'https://github.com/lewis6991/gitsigns.nvim',
 }
