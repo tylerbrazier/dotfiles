@@ -15,6 +15,12 @@ nnoremap <Space>r :e %:h/<C-D>
 nnoremap <Space>a :e #<CR>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>d :ls<CR>:bd<Space>
+" :bd ctrl-x for all the hidden buffers
+cnoremap <C-X> <C-R>=getbufinfo({'buflisted': 1})
+		\->filter('empty(v:val.windows)')
+		\->map('v:val.bufnr')
+		\->join(' ')<CR>
+
 nnoremap <Space>f :find<Space>
 nnoremap <Space>g :grep<Space>
 nnoremap <Space>co :below copen<Bar>setl nowrap<CR>

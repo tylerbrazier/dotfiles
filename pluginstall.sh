@@ -8,7 +8,6 @@ plugin_urls='
 git@github.com:tylerbrazier/vim-forgit.git
 git@github.com:tylerbrazier/vim-marcos.git
 git@github.com:tylerbrazier/vim-gh.git
-git@github.com:tylerbrazier/vim-gc.git
 git@github.com:tylerbrazier/vim-rwx.git
 git@github.com:tylerbrazier/vim-y.git
 git@github.com:tylerbrazier/vim-renegade.git
