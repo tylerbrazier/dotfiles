@@ -6,13 +6,23 @@ alias rm='rm -r'
 alias df='df -h'
 alias du='du -h -s'
 alias grep='grep --color=auto -I'
-
 cd() { builtin cd "$@" 2>/dev/null || command cd "$@" && ls; }
 
 export EDITOR=$(command -v nvim || command -v vim || command -v vi)
+
 case $EDITOR in
 	# :help :Man
 	*nvim*) export MANPAGER='nvim +Man!';; # gO for Outline
 	*vim*) export MANPAGER='vim +MANPAGER --not-a-term -';;
 	*) export MANPAGER='less';;
+esac
+
+case ":$CDPATH:" in
+	*":.:$HOME/src:"*);;
+	*) export CDPATH=".:$HOME/src:$CDPATH";;
+esac
+
+case ":$PATH:" in
+	*":$HOME/bin:"*);;
+	*) export PATH="$HOME/bin:$PATH";;
 esac
