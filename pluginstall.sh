@@ -11,6 +11,7 @@ git@github.com:tylerbrazier/vim-gh.git
 git@github.com:tylerbrazier/vim-gc.git
 git@github.com:tylerbrazier/vim-rwx.git
 git@github.com:tylerbrazier/vim-y.git
+git@github.com:tylerbrazier/vim-renegade.git
 git@github.com:tylerbrazier/vim-flintstone.git
 https://github.com/neovim/nvim-lspconfig.git
 https://github.com/lewis6991/gitsigns.nvim.git
