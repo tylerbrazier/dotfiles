@@ -1,5 +1,6 @@
 set notimeout
 set wildmode=full:lastused
+set cdpath=,$HOME/src
 
 nnoremap j gj
 nnoremap k gk

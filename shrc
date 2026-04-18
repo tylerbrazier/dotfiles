@@ -17,11 +17,6 @@ case $EDITOR in
 	*) export MANPAGER='less';;
 esac
 
-case ":$CDPATH:" in
-	*":.:$HOME/src:"*);;
-	*) export CDPATH=".:$HOME/src:$CDPATH";;
-esac
-
 case ":$PATH:" in
 	*":$HOME/bin:"*);;
 	*) export PATH="$HOME/bin:$PATH";;
