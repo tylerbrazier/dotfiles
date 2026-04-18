@@ -13,6 +13,8 @@ local plugins = {
 	'https://github.com/tylerbrazier/vim-flintstone',
 	'https://github.com/neovim/nvim-lspconfig',
 	'https://github.com/lewis6991/gitsigns.nvim',
+	'https://github.com/tpope/vim-surround',
+	'https://github.com/tpope/vim-repeat',
 }
 
 -- nvim-lspconfig requires language servers installed
