@@ -1,4 +1,8 @@
--- :help vim.pack (~/.local/share/nvim/site/pack/core/opt)
+-- :help vim.pack
+-- These are cloned into ~/.local/share/nvim/site/pack/core/opt
+-- To work on these, manually clone into ~/.config/nvim/pack/whatever/start
+-- and nvim should load them first as long as 'packpath' has
+-- ~/.config/nvim before ~/.local/share/nvim/site (:set packpath?)
 local plugins = {
 	'https://github.com/tylerbrazier/vim-forgit',
 	'https://github.com/tylerbrazier/vim-marcos',
