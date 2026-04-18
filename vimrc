@@ -16,7 +16,7 @@ nnoremap <Space>r :e %:h/<C-D>
 nnoremap <Space>a :e #<CR>
 nnoremap <Space>b :b <C-D>
 nnoremap <Space>d :ls<CR>:bd<Space>
-" :bd ctrl-x for all the hidden buffers
+" :bd ctrl-x to clean up any buffers without a window
 cnoremap <C-X> <C-R>=getbufinfo({'buflisted': 1})
 		\->filter('empty(v:val.windows)')
 		\->map('v:val.bufnr')
