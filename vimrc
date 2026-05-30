@@ -2,6 +2,9 @@ set notimeout
 set wildmode=full:lastused
 set cdpath=,$HOME/src
 
+" :help package-nohlsearch
+packadd nohlsearch
+
 nnoremap j gj
 nnoremap k gk
 nnoremap / /\c
