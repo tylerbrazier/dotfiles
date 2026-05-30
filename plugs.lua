@@ -6,11 +6,12 @@
 local plugins = {
 	'https://github.com/tylerbrazier/vim-forgit',
 	'https://github.com/tylerbrazier/vim-marcos',
-	'https://github.com/tylerbrazier/vim-gh',
 	'https://github.com/tylerbrazier/vim-rwx',
 	'https://github.com/tylerbrazier/vim-y',
 	'https://github.com/tylerbrazier/vim-renegade',
 	'https://github.com/tylerbrazier/vim-flintstone',
+	'https://github.com/tylerbrazier/nvim-gh',
+	'https://github.com/tylerbrazier/nvim-gx',
 	'https://github.com/neovim/nvim-lspconfig',
 	'https://github.com/lewis6991/gitsigns.nvim',
 	'https://github.com/tpope/vim-surround',
