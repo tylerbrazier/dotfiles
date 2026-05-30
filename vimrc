@@ -31,7 +31,7 @@ nnoremap <Space>g :grep<Space>
 nnoremap <Space>co :below copen<Bar>setl nowrap<CR>
 nnoremap <Space>cc :cclose<CR>
 nnoremap <Space>cd :lcd<Space>
-nnoremap <Space>m :mksession! $HOME/.session.vim<CR>
+nnoremap <Space>m :mksession! <C-R>=v:this_session<CR>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
 
