@@ -35,8 +35,9 @@ nnoremap <Space>m :mksession! <C-R>=v:this_session<CR>
 nnoremap <Space>x :new $HOME/.scratch.txt<CR>
 nnoremap <Space>z :set foldcolumn=auto<CR>zfi{
 
-nnoremap <Space><CR> :below term <Up>
-tnoremap <Esc><Esc> <C-\><C-N>
+nnoremap <Space><CR> :below term<CR>
+nnoremap <Space><BS> :below term <Up>
+tnoremap <C-X> <C-\><C-N>
 
 nnoremap <Space>in :setl invnumber number?<CR>
 nnoremap <Space>is :setl invspell spell?<CR>
