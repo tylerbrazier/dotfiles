@@ -1,4 +1,5 @@
 set notimeout
+set nomore
 set wildmode=full:lastused
 set cdpath=,$HOME/src
 
@@ -40,6 +41,7 @@ tnoremap <Esc><Esc> <C-\><C-N>
 nnoremap <Space>in :setl invnumber number?<CR>
 nnoremap <Space>is :setl invspell spell?<CR>
 nnoremap <Space>iw :setl invwrap wrap?<CR>
+nnoremap <Space>im :setl invmore more?<CR>
 nnoremap <Space>ic :let &l:cc = (&cc > 0) ? 0 : <Up>
 
 nnoremap <Space>s <C-W>s
