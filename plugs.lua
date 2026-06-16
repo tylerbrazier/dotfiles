@@ -18,35 +18,24 @@ local plugins = {
 	'https://github.com/tpope/vim-repeat',
 }
 
--- nvim-lspconfig requires language servers installed
-local function sync_lsp(ev_kind)
-	-- avoid sudo; consider first running
-	-- 	npm config set prefix "$HOME"
-	-- so executables go to ~/bin (and scripts to ~/lib/node_modules)
-	-- https://docs.npmjs.com/cli/v11/configuring-npm/folders
-	local cmd = {
-		'npm',
-		(ev_kind == 'delete') and 'uninstall' or ev_kind,
-		'-g',
-		'typescript', 'typescript-language-server'
-	}
-	print(table.concat(cmd, ' '))
-
-	local obj = vim.system(cmd):wait()
-	print(obj.stdout)
-	print(obj.stderr)
-	print('(exited '..obj.code..')')
-	-- if you don't see output run :messages
-end
+local augroup = vim.api.nvim_create_augroup('plugs', { clear = true })
 
 -- :help vim.pack-events
-vim.api.nvim_create_augroup('plugs', { clear = true })
 vim.api.nvim_create_autocmd('PackChanged', {
-	group = 'plugs',
+	group = augroup,
 	callback = function(ev)
-		if ev.data.spec.name == 'nvim-lspconfig' then
-			sync_lsp(ev.data.kind)
+		if ev.data.spec.name ~= 'nvim-lspconfig' then
+			return
 		end
+		-- show reminder in a scratch buffer
+		local b = vim.api.nvim_create_buf(true, true)
+		vim.bo[b].bufhidden = 'wipe'
+		vim.api.nvim_buf_set_lines(b, 0, -1, false, {
+			'Remember to npm i/up/rm -g:',
+			'typescript',
+			'typescript-language-server',
+		})
+		vim.cmd('sbuffer '..b)
 	end
 })
 
