@@ -13,6 +13,7 @@ local plugins = {
 	'https://github.com/tylerbrazier/nvim-gh',
 	'https://github.com/tylerbrazier/nvim-gx',
 	'https://github.com/neovim/nvim-lspconfig',
+	'https://github.com/mfussenegger/nvim-lint',
 	'https://github.com/lewis6991/gitsigns.nvim',
 	'https://github.com/tpope/vim-surround',
 	'https://github.com/tpope/vim-repeat',
@@ -24,9 +25,6 @@ local augroup = vim.api.nvim_create_augroup('plugs', { clear = true })
 vim.api.nvim_create_autocmd('PackChanged', {
 	group = augroup,
 	callback = function(ev)
-		if ev.data.spec.name ~= 'nvim-lspconfig' then
-			return
-		end
 		-- show reminder in a scratch buffer
 		local b = vim.api.nvim_create_buf(true, true)
 		vim.bo[b].bufhidden = 'wipe'
@@ -34,6 +32,10 @@ vim.api.nvim_create_autocmd('PackChanged', {
 			'Remember to npm i/up/rm -g:',
 			'typescript',
 			'typescript-language-server',
+			'markdownlint-cli2',
+			'',
+			'And pacman/brew:',
+			'shellcheck',
 		})
 		vim.cmd('sbuffer '..b)
 	end
@@ -44,6 +46,15 @@ vim.pack.add(plugins)
 vim.cmd('colorscheme flintstone')
 
 vim.lsp.enable('ts_ls')
+
+require('lint').linters_by_ft = {
+	markdown = { 'markdownlint-cli2' },
+	sh = { 'shellcheck' },
+}
+vim.api.nvim_create_autocmd('BufWritePost', {
+	group = augroup,
+	callback = function(ev) require('lint').try_lint() end
+})
 
 require('gitsigns').setup {
 	signs = {
