@@ -67,3 +67,5 @@ nnoremap <Space>7 7gt
 nnoremap <Space>8 8gt
 nnoremap <Space>9 9gt
 nnoremap <Space>0 :tablast<CR>
+nnoremap <Space>- :tabmove -<CR>
+nnoremap <Space>+ :tabmove +<CR>
