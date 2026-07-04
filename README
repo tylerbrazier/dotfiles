@@ -11,7 +11,7 @@ git clone git@github.com:tylerbrazier/dotfiles ~/src/dotfiles
 
 	export HISTCONTROL=ignoredups
 
-	PS1='\w$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") \$ '
+	PS1='\w\[\e[32m\]$(git branch 2>&1 | sed -n "s/^\* \(.*\)/ \1/p")\[\e[0m\] \$ '
 
 ~/.zshrc
 	. ~/src/dotfiles/shrc
@@ -25,7 +25,7 @@ git clone git@github.com:tylerbrazier/dotfiles ~/src/dotfiles
 
 	setopt HIST_IGNORE_DUPS PROMPT_SUBST
 
-	PROMPT='%~$(git branch --color 2>&1 | sed -n "s/^\* \(.*\)/ \1/p") %# '
+	PROMPT='%~%F{green}$(git branch 2>&1 | sed -n "s/^\* \(.*\)/ \1/p")%f %# '
 
 ~/.vimrc
 	source $VIMRUNTIME/defaults.vim
