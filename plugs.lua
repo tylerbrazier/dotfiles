@@ -28,7 +28,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
 		-- show reminder in a scratch buffer
 		local name = 'plugs_reminder'
 		if vim.fn.bufnr(name) > 0 then return end
-		local b = vim.api.njim_create_buf(true, true)
+		local b = vim.api.nvim_create_buf(true, true)
 		vim.bo[b].bufhidden = 'wipe'
 		vim.api.nvim_buf_set_name(b, name)
 		vim.api.nvim_buf_set_lines(b, 0, -1, false, {
