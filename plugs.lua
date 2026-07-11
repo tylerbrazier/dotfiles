@@ -58,3 +58,9 @@ vim.api.nvim_create_autocmd('BufWritePost', {
 	group = augroup,
 	callback = function(ev) require('lint').try_lint() end
 })
+
+vim.keymap.set('n', 'gsp', ':Gitsigns preview_hunk<CR>')
+vim.keymap.set('n', 'gss', ':Gitsigns stage_hunk<CR>')
+vim.keymap.set('n', 'gsr', ':Gitsigns reset_hunk<CR>')
+vim.keymap.set('n', ']g',  ':Gitsigns nav_hunk next<CR>')
+vim.keymap.set('n', '[g',  ':Gitsigns nav_hunk prev<CR>')
