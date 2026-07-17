@@ -29,4 +29,4 @@
 	out = "!f() { git branch -D $1; git push --delete origin $1; }; f"
 
 	# deletes all old local branches where the upstream branch was deleted
-	bent = "!git f && git b -vv | awk '/: gone]/{print $1}' | xargs git b -D"
+	bent = "!git f && git b -vv | awk '/: gone]/{print $1}' | xargs git b -d"
