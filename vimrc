@@ -7,8 +7,6 @@ packadd nohlsearch
 
 nnoremap j gj
 nnoremap k gk
-nnoremap / /\c
-nnoremap ? ?\c
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
@@ -32,6 +30,7 @@ nnoremap <Space><CR> :below term<CR>
 nnoremap <Space><BS> :below term <Up>
 tnoremap <C-X> <C-\><C-N>
 
+nnoremap <Space>ii :setl invignorecase ignorecase?<CR>
 nnoremap <Space>in :setl invnumber number?<CR>
 nnoremap <Space>is :setl invspell spell?<CR>
 nnoremap <Space>iw :setl invwrap wrap?<CR>

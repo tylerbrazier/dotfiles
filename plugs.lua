@@ -14,6 +14,7 @@ local plugins = {
 	'https://github.com/tylerbrazier/vim-gc',
 	'https://github.com/tylerbrazier/nvim-gh',
 	'https://github.com/tylerbrazier/nvim-gx',
+	'https://github.com/tylerbrazier/nvim-clmt',
 	'https://github.com/neovim/nvim-lspconfig',
 	'https://github.com/mfussenegger/nvim-lint',
 	'https://github.com/lewis6991/gitsigns.nvim',
