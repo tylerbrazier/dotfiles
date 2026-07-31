@@ -25,13 +25,7 @@ local augroup = vim.api.nvim_create_augroup('plugs', { clear = true })
 vim.api.nvim_create_autocmd('PackChanged', {
 	group = augroup,
 	callback = function(ev)
-		-- show reminder in a scratch buffer
-		local name = 'plugs_reminder'
-		if vim.fn.bufnr(name) > 0 then return end
-		local b = vim.api.nvim_create_buf(true, true)
-		vim.bo[b].bufhidden = 'wipe'
-		vim.api.nvim_buf_set_name(b, name)
-		vim.api.nvim_buf_set_lines(b, 0, -1, false, {
+		vim.fn.confirm(table.concat({
 			'Remember to npm i/up/rm -g:',
 			'typescript',
 			'typescript-language-server',
@@ -39,8 +33,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
 			'',
 			'And pacman/brew:',
 			'shellcheck',
-		})
-		vim.cmd('sbuffer '..b)
+		}, '\n'))
 	end
 })
 
