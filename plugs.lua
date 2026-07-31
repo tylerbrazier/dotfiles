@@ -10,6 +10,7 @@ local plugins = {
 	'https://github.com/tylerbrazier/vim-y',
 	'https://github.com/tylerbrazier/vim-renegade',
 	'https://github.com/tylerbrazier/vim-flintstone',
+	'https://github.com/tylerbrazier/vim-mdown',
 	'https://github.com/tylerbrazier/nvim-gh',
 	'https://github.com/tylerbrazier/nvim-gx',
 	'https://github.com/neovim/nvim-lspconfig',
