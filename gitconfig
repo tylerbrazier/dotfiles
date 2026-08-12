@@ -30,3 +30,6 @@
 
 	# deletes all old local branches where the upstream branch was deleted
 	bent = "!git f && git b -vv | awk '/: gone]/{print $1}' | xargs git b -d"
+
+	# bring back a deleted file
+	resurrect = "!f() { git co $(git rev-list -1 HEAD -- \"$1\")^ -- \"$1\"; }; f"
