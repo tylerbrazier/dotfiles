@@ -31,6 +31,7 @@ nnoremap <Space><BS> :below term <Up>
 tnoremap <C-X> <C-\><C-N>
 
 nnoremap <Space>ii :setl invignorecase ignorecase?<CR>
+nnoremap <Space>il :setl invlinebreak linebreak?<CR>
 nnoremap <Space>in :setl invnumber number?<CR>
 nnoremap <Space>is :setl invspell spell?<CR>
 nnoremap <Space>iw :setl invwrap wrap?<CR>
